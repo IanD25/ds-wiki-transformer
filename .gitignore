@@ -1,0 +1,9 @@
+.venv/
+data/chroma_db/
+data/wiki_history.db
+backups/
+__pycache__/
+*.pyc
+.env
+*.db-shm
+*.db-wal

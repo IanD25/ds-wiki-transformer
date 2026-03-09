@@ -1,0 +1,43 @@
+from pathlib import Path
+
+# ── Source (never deleted, never schema-altered) ──────────────────────────────
+SOURCE_DB = (
+    Path.home()
+    / "Library"
+    / "Mobile Documents"
+    / "com~apple~CloudDocs"
+    / "Primary Work Outputs"
+    / "wiki build"
+    / "ds-wiki-repo"
+    / "ds_wiki.db"
+)
+
+# ── Project layout ────────────────────────────────────────────────────────────
+PROJECT_DIR  = Path(__file__).resolve().parent.parent
+DATA_DIR     = PROJECT_DIR / "data"
+HISTORY_DB   = DATA_DIR / "wiki_history.db"
+CHROMA_DIR   = DATA_DIR / "chroma_db"
+BACKUP_DIR   = PROJECT_DIR / "backups"
+
+# ── Embedding ─────────────────────────────────────────────────────────────────
+EMBED_MODEL       = "BAAI/bge-small-en-v1.5"
+EMBED_DIM         = 384
+CHROMA_COLLECTION = "ds_wiki"
+
+# ── Search defaults ───────────────────────────────────────────────────────────
+TOP_K_NEIGHBORS  = 5    # stored in history per chunk
+DEFAULT_SEARCH_K = 5    # default n_results for MCP search tools
+DRIFT_THRESHOLD  = 0.05 # cosine distance — flag as "changed" if above this
+
+# ── Link confidence tiers (derived from cosine similarity, not subjective) ────
+# "1"   ≥ 0.90  — definitionally certain (structural, high-signal)
+# "1.5" 0.85–0.89 — strong semantic bond, not definitional (half-tier)
+# "2"   0.82–0.84 — plausible transitional connection, needs review
+TIER_THRESHOLDS = [(0.90, "1"), (0.85, "1.5"), (0.82, "2")]
+
+def score_to_tier(score: float) -> str:
+    """Map a cosine similarity score to an objective confidence tier."""
+    for threshold, tier in TIER_THRESHOLDS:
+        if score >= threshold:
+            return tier
+    return "2"
