@@ -5,9 +5,11 @@ Safe to re-run: uses INSERT OR IGNORE on entries, checks sections/properties bef
 """
 
 import sqlite3
-import os
+import sys
+from pathlib import Path
 
-SOURCE_DB = "/Users/iandarling/Library/Mobile Documents/com~apple~CloudDocs/Primary Work Outputs/wiki build/ds-wiki-repo/ds_wiki.db"
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+from config import SOURCE_DB
 
 # ---------------------------------------------------------------------------
 # Entry definitions

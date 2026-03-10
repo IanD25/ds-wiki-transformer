@@ -78,9 +78,11 @@ def _build_where(
 mcp = FastMCP(
     "DS Wiki",
     instructions=(
-        "Semantic knowledge base for the Dimensional Scaling (DS) 2.x Wiki. "
-        "57 entries across theorems, laws, constraints, methods, axioms, open questions, "
-        "and instantiations. 16 conjectures (P1-P16), 10 gates (G1-G10). "
+        "Semantic knowledge base for the Dimensional Scaling (DS) 2.x Wiki, "
+        "expanded with 43 cross-domain reference_law entries spanning mathematics, "
+        "computer science, biology, chemistry, and information theory. "
+        "199 entries total (139 reference_law + 60 DS-native), 1562 indexed chunks, "
+        "16 conjectures (P1-P16), 10 gates (G1-G10). "
         "Use search_semantic for concept queries, get_entry for full content, "
         "get_connections to explore the idea graph, and the trajectory/drift tools "
         "to understand how the knowledge base has evolved semantically over time."

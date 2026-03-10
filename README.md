@@ -1,8 +1,8 @@
 # DS Wiki Transformer
 
 Semantic knowledge base for the Dimensional Scaling (DS) 2.x Wiki.
-Exposes 57 entries, 16 conjectures, and 10 gates via an MCP server that any
-capable LLM (Claude Code, Cursor, Copilot) can connect to locally.
+Exposes 199 entries (139 reference_law + 60 DS-native), 16 conjectures, and 10 gates
+via an MCP server that any capable LLM (Claude Code, Cursor, Copilot) can connect to locally.
 
 **No hosting. No LLM backend. No cost beyond your existing Claude subscription.**
 
@@ -57,7 +57,7 @@ Then add to your MCP client config (Claude Code example):
 ```
 ds_wiki.db  (source of truth — read/write, never schema-altered)
      │
-     ├── src/extractor.py   →  426 chunks (sections, conjectures, gates, bridge)
+     ├── src/extractor.py   →  1,562 chunks (sections, conjectures, gates, bridge)
      ├── src/embedder.py    →  ChromaDB (current index) + wiki_history.db (snapshots)
      ├── src/topology.py    →  semantic drift, trajectory, cluster evolution queries
      ├── src/sync.py        →  orchestrator (backup → extract → embed → archive)

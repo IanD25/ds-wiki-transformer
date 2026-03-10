@@ -76,9 +76,9 @@ class TestCoverageAnalyzerLive:
 
     # ── Basic counts ──────────────────────────────────────────────────────────
 
-    def test_total_entities_156(self, live_report):
-        assert live_report.total_entities == 156, (
-            f"Expected 156 entities, got {live_report.total_entities}"
+    def test_total_entities_199(self, live_report):
+        assert live_report.total_entities == 199, (
+            f"Expected 199 entities, got {live_report.total_entities}"
         )
 
     def test_total_sections_above_1200(self, live_report):
@@ -96,7 +96,7 @@ class TestCoverageAnalyzerLive:
     # ── Entity type distribution ───────────────────────────────────────────────
 
     def test_reference_law_count(self, live_report):
-        assert live_report.entity_type_distribution.get("reference_law", 0) == 96
+        assert live_report.entity_type_distribution.get("reference_law", 0) == 139
 
     def test_method_count(self, live_report):
         assert live_report.entity_type_distribution.get("method", 0) == 16
@@ -104,9 +104,9 @@ class TestCoverageAnalyzerLive:
     def test_law_count(self, live_report):
         assert live_report.entity_type_distribution.get("law", 0) == 15
 
-    def test_entity_type_sums_to_156(self, live_report):
+    def test_entity_type_sums_to_199(self, live_report):
         total = sum(live_report.entity_type_distribution.values())
-        assert total == 156
+        assert total == 199
 
     # ── Property coverage ─────────────────────────────────────────────────────
 
@@ -118,35 +118,34 @@ class TestCoverageAnalyzerLive:
 
     def test_mathematical_archetype_100pct(self, live_report):
         pc = self._get_pc(live_report, "mathematical_archetype")
-        assert pc.filled == 156
+        assert pc.filled == 199
         assert pc.coverage_pct == 100.0
 
     def test_dimensional_sensitivity_full_coverage(self, live_report):
         pc = self._get_pc(live_report, "dimensional_sensitivity")
-        # All 156 should have this (one might have been added as '?')
-        assert pc.filled >= 155, (
-            f"Expected ≥ 155 d-sensitivity entries, got {pc.filled}"
+        assert pc.filled >= 198, (
+            f"Expected ≥ 198 d-sensitivity entries, got {pc.filled}"
         )
 
     def test_concept_tags_full_coverage(self, live_report):
         pc = self._get_pc(live_report, "concept_tags")
-        assert pc.filled >= 150, (
-            f"Expected ≥ 150 concept_tag entries, got {pc.filled}"
+        assert pc.filled >= 195, (
+            f"Expected ≥ 195 concept_tag entries, got {pc.filled}"
         )
 
-    def test_archetype_has_15_distinct_values(self, live_report):
-        """We defined exactly 15 archetypes."""
-        assert len(live_report.archetype_distribution) == 15, (
-            f"Expected 15 archetypes, got {len(live_report.archetype_distribution)}: "
+    def test_archetype_has_at_least_15_distinct_values(self, live_report):
+        """At least 15 archetypes (Option E expanded the vocabulary to 22+)."""
+        assert len(live_report.archetype_distribution) >= 15, (
+            f"Expected ≥ 15 archetypes, got {len(live_report.archetype_distribution)}: "
             f"{list(live_report.archetype_distribution.keys())}"
         )
 
     # ── Archetype distribution — spot checks ──────────────────────────────────
 
-    def test_thermodynamic_bound_is_most_common(self, live_report):
+    def test_conservation_law_or_thermodynamic_bound_is_top(self, live_report):
         top = max(live_report.archetype_distribution, key=live_report.archetype_distribution.get)
-        # We know thermodynamic-bound has 21, equilibrium-condition has 20
-        assert top in {"thermodynamic-bound", "equilibrium-condition"}, (
+        # After Option E: conservation-law leads (28), thermodynamic-bound second (27)
+        assert top in {"conservation-law", "thermodynamic-bound", "equilibrium-condition"}, (
             f"Unexpected top archetype: {top}"
         )
 
@@ -193,7 +192,7 @@ class TestCoverageAnalyzerLive:
         assert live_report.network_metrics.link_density > 0
 
     def test_possible_links_count(self, live_report):
-        n = 156
+        n = 199
         expected_possible = n * (n - 1) // 2
         assert live_report.network_metrics.possible_links == expected_possible
 
@@ -233,9 +232,9 @@ class TestCoverageAnalyzerLive:
         md = ca.generate_markdown()
         assert len(md) > 2000, "Markdown report seems too short"
 
-    def test_markdown_contains_156(self, ca):
+    def test_markdown_contains_199(self, ca):
         md = ca.generate_markdown()
-        assert "156" in md
+        assert "199" in md
 
     def test_markdown_contains_archetype_section(self, ca):
         md = ca.generate_markdown()
@@ -243,7 +242,7 @@ class TestCoverageAnalyzerLive:
 
     def test_get_stats_total_entities(self, ca):
         stats = ca.get_stats()
-        assert stats["total_entities"] == 156
+        assert stats["total_entities"] == 199
 
 
 # ── HypothesisGenerator — Live DB ──────────────────────────────────────────────
@@ -468,8 +467,8 @@ class TestToolComposition:
 
         # Coverage report
         assert len(cov_md) > 1000
-        assert "156" in cov_md              # entity count
-        assert "thermodynamic-bound" in cov_md  # most common archetype
+        assert "199" in cov_md              # entity count
+        assert "conservation-law" in cov_md  # most common archetype (post Option E)
 
         # Hypothesis report
         assert len(hyp_md) > 500
