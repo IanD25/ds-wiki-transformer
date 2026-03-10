@@ -1,8 +1,8 @@
 # DS Wiki Transformation — Master Summary
 **The definitive re-entry document. Read this at the start of any new session.**
 
-**Last Updated**: 2026-03-09
-**Status**: Phase 1 Diagnostics complete. Phase 2 (RRB ingestion) designed, not yet coded.
+**Last Updated**: 2026-03-10
+**Status**: Phase 1 Diagnostics complete. Option E (DS Tier 1/2 expansion) complete. Phase 2 (RRB ingestion) designed, not yet coded.
 
 ---
 
@@ -103,20 +103,20 @@ locally, no API calls, no cost.
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Total entities | 156 | 96 reference_law + 60 DS-native |
+| Total entities | 199 | 139 reference_law + 60 DS-native |
 | Entity types | 10 | reference_law, method, law, instantiation, open question, constraint, axiom, parameter, theorem, mechanism |
-| Total sections | 1,249 | 398 original + 851 enrichment |
-| Total links | 254 | 167 original (NULL tier) + 87 discovered (tier 1.5) + 38 Tier 2 |
-| Property rows | 614 | archetype (156) + d-sensitivity (156) + concept_tags (156) + others |
-| ChromaDB chunks | 1,261 | One per section |
+| Total sections | 1,550 | 398 original + 851 enrichment + 301 Option E |
+| Total links | 383 | 167 original (NULL tier) + 174 discovered (tier 1.5) + 38 Tier 2 + 4 other |
+| Property rows | 786 | archetype + d-sensitivity + concept_tags + others |
+| ChromaDB chunks | 1,562 | One per section |
 | Embedding dimension | 384 | BGE-Small |
-| ChromaDB snapshots | 4 | snap_20260309_233846 through snap_20260310_003958 |
-| High-similarity pairs | 983 | Similarity ≥ 0.82 |
-| Cross-domain pairs | 90 | Increased from 53 (+37, +70%) |
+| ChromaDB snapshots | 7 | snap_20260309_233846 through snap_20260310_090912 |
+| High-similarity pairs | 983+ | Similarity ≥ 0.82 (pre-Option E baseline) |
+| Cross-domain pairs | 90+ | Increased from 53 (+37, +70%) — pre-Option E baseline |
 
 ### Entity Type Breakdown
 ```
-reference_law    96    (physics, biology, chemistry, earth sciences, etc.)
+reference_law   139    (physics, biology, chemistry, CS, math, info theory, etc. — 43 added by Option E)
 method           16    (DS computational methods)
 law              15    (DS-native laws, including OmD — the core Ω_D operator)
 instantiation     8    (concrete realisations in specific D_eff regimes)
@@ -205,7 +205,33 @@ Newton ↔ Euler Laws   (CM1 ↔ CM6)  sim=0.9249  (NO existing link — candida
 - ChromaDB import name (`COLLECTION_NAME` vs `CHROMA_COLLECTION`) → fixed
 - Links table column names (`source_entry_id` vs `source_id`) → fixed
 
-### Session 3 (this session)
+### Session 4 (Option E — DS Tier 1/2 Expansion)
+**Goal**: Expand DS wiki Tier 1/2 Primary layers to cover core science broadly, making DS the
+universal vector anchor layer for all future RRB ingestions.
+
+**Chunk 1** (scripts/insert_chunk1_bio_chem.py — 13 entries):
+BIO1–BIO9 (Central Dogma, Hardy-Weinberg, Mendelian Segregation, Independent Assortment,
+Michaelis-Menten, Metabolic Flux Balance, DNA Replication Fidelity, Population Growth/Logistic,
+Natural Selection/Fitness), CHEM1–CHEM4 (Le Chatelier's, Arrhenius, Hess's Law, Henderson-Hasselbalch)
+
+**Chunk 2** (scripts/insert_chunk2_math_info.py — 15 entries):
+MATH1–MATH8 (Bayes' Theorem, CLT, LLN, Gödel Incompleteness, FTC, Prime Number Theorem,
+Euler's Identity, Generalized Stokes' Theorem), INFO1–INFO5 (Shannon Entropy, Source Coding,
+Noisy-Channel, Mutual Information/DPI, Kolmogorov Complexity), STAT1–STAT2 (Max Entropy, Ergodic)
+
+**Chunk 3** (scripts/insert_chunk3_cs.py — 15 entries):
+CS1–CS15 (Church-Turing, Halting Problem, Rice's Theorem, Cook-Levin/NP-completeness, Master
+Theorem, Nyquist-Shannon, CAP Theorem, Amdahl's Law, Little's Law, No Free Lunch, Sort Lower
+Bound Ω(n log n), FLP Impossibility, Perron-Frobenius, Byzantine Fault Tolerance, Time Hierarchy)
+
+**Result**: 43 new reference_law entries, 156→199 total; 1261→1562 vectors; 87→174 tier-1.5 links.
+Final snapshot: snap_20260310_090912. All 3 scripts use INSERT OR IGNORE (safe re-run).
+New domains added: mathematics, computer science, information theory, mathematics · computer science,
+computer science · mathematics, information · mathematics, information · physics, chemistry · biology.
+
+---
+
+### Session 3 (Generic Toolkit Design + Phase 1 Diagnostics)
 **Generic Toolkit Design** (three new specification documents):
 - GENERIC_TOOLKIT_SPEC.md (1,083 lines) — full domain-agnostic architecture
 - IMPLEMENTATION_ROADMAP.md (425 lines) — Phase 1 plan with pseudocode
@@ -360,6 +386,9 @@ File entities           →  sections (embeddable content)
 
 ## Immediate Next Steps (choose one to start next session)
 
+### ✅ Option E: COMPLETE — DS Tier 1/2 Expansion (43 new entries, 1562 vectors)
+All three chunks executed and pushed. DS is now the universal vector anchor layer.
+
 ### Option A: LLM Instruction Package first (fastest to value)
 Build `INGESTION_GUIDE.md` and `SCHEMA_REFERENCE.md` — makes the toolkit immediately
 usable by any LLM (Claude Code, Cursor, Windsurf/Cascade) to guide project owners
@@ -511,10 +540,12 @@ summarised, recent code stays in full. The MEMORY.md file persists across sessio
 
 **Last confirmed working state:**
 ```
-Git commit: 000fc23  (Phase 1: Implement Hypothesis Generator + Coverage Analyzer)
+Git commit: 4744f50  (Option E Chunk 3: Add 15 CS reference_law entries)
 Branch: main
 Remote: https://github.com/IanD25/ds-wiki-transformer.git
 Tests: 139/139 passing (pytest 9.0.2, Python 3.13.12, Apple M4)
-ChromaDB snapshot: snap_20260310_003958 (1,261 chunks)
-DS wiki links: 254 total
+ChromaDB snapshot: snap_20260310_090912 (1,562 chunks)
+DS wiki entries: 199 total (139 reference_law + 60 DS-native)
+DS wiki links: 383 total (167 original + 174 tier-1.5 + 38 Tier 2 + 4 other)
+Option E scripts: insert_chunk1_bio_chem.py, insert_chunk2_math_info.py, insert_chunk3_cs.py
 ```
