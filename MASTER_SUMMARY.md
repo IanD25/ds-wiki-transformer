@@ -395,6 +395,38 @@ Build the complete ingestion stack at once:
 **Deliverables**: 5 Python modules + 2 documents + tests, ~2 weeks.
 **Value**: Complete Phase 2a+2b in one go.
 
+### Option E: Expand DS Tier 1 & 2 Primary Layers — Core Science Knowledge Base ⭐ PROJECT IDEA
+**Background**: The three confirmed RRB test cases (E. coli Core Metabolic Network, Periodic
+Table, Complexity Zoo) will use DS Tier 1 & 2 as supplemental vector reference data —
+meaning the DS knowledge base anchors cross-domain discovery. This only works well if
+Tiers 1 & 2 are broad enough to cover fundamental science, not just the DS framework laws
+currently ingested.
+
+**The idea**: Expand the DS wiki Tier 1 & 2 Primary layers to include canonical entries for:
+- **Physics**: Newton's laws, thermodynamic laws, Maxwell's equations, quantum postulates,
+  relativity principles, statistical mechanics foundations, conservation laws (energy,
+  momentum, charge, baryon number)
+- **Biology**: Central dogma, Mendel's laws, Hardy-Weinberg equilibrium, metabolic
+  principles (Michaelis-Menten, Krebs cycle laws), evolutionary mechanisms
+- **Chemistry**: Periodic law, valence bond theory, reaction kinetics laws, Le Chatelier's
+  principle, Hess's law, thermochemical laws
+- **Computer Science**: Church-Turing thesis, Rice's theorem, CAP theorem, master theorem,
+  Shannon's information theorems, fundamental complexity class containments
+- **Mathematics**: Core theorems that appear across science (Euler's identity, Bayes'
+  theorem, central limit theorem, Gödel incompleteness, Noether's theorem)
+
+**Why this matters**: Each entry should follow the DS schema — entity type, mathematical
+archetype, dimensional sensitivity, concept tags, cross-references. This transforms the DS
+knowledge base from a DS-specific reference into a universal science anchor layer that
+makes cross-domain vector discovery genuinely powerful across all future RRB ingestions.
+
+**Scope estimate**: ~80-120 new entries, following existing DS wiki entry format.
+**Prerequisite**: Should inform the RRB test cases — better to expand DS Tier 1/2 first
+so the vector reference layer is rich when we run the three test ingestions.
+
+**Deliverables**: New wiki entries (schema-compliant), re-sync to ChromaDB + wiki_history.db,
+updated topology metrics. ~1-2 weeks of careful curation.
+
 ---
 
 ## Key Technical Decisions Made (do not revisit without reason)
