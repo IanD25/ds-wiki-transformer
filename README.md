@@ -17,14 +17,17 @@ cd DS_Wiki_Transformation
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# Edit src/config.py — set SOURCE_DB to your ds_wiki.db path
-
-# First run: downloads ~90MB BGE model, ~10s thereafter
-python src/sync.py --trigger "initial"
+# One-time setup: build the vector index from the included ds_wiki.db
+# Downloads ~90MB BGE model on first run, ~15s thereafter
+python src/sync.py
 
 # Start the MCP server
 python src/mcp_server.py
 ```
+
+`ds_wiki.db` (1.3MB) is committed to the repo at `data/ds_wiki.db` — no separate
+download needed. `sync.py` generates `data/chroma_db/` and `data/wiki_history.db`
+locally (these are gitignored built artifacts).
 
 Add to your MCP client config:
 
@@ -32,8 +35,8 @@ Add to your MCP client config:
 {
   "mcpServers": {
     "ds-wiki": {
-      "command": "/path/to/.venv/bin/python",
-      "args": ["/path/to/DS_Wiki_Transformation/src/mcp_server.py"]
+      "command": "/absolute/path/to/.venv/bin/python",
+      "args": ["/absolute/path/to/DS_Wiki_Transformation/src/mcp_server.py"]
     }
   }
 }
@@ -45,7 +48,7 @@ Add to your MCP client config:
 
 ```
 LAYER 1 — SOURCE OF TRUTH
-  ds_wiki.db  (SQLite, read-only for queries, write-only via MCP tools)
+  data/ds_wiki.db  (SQLite, committed to repo; queries are read-only, writes only via MCP tools)
 
 LAYER 2 — VECTOR INDEX
   ChromaDB  (current semantic index, rebuilt on each sync)

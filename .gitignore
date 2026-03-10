@@ -7,3 +7,5 @@ __pycache__/
 .env
 *.db-shm
 *.db-wal
+
+# data/ds_wiki.db is intentionally tracked (source of truth, 1.3MB)
