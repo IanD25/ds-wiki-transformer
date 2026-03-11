@@ -39,7 +39,7 @@ def _detect_device() -> tuple[str, str]:
             )
             if result.returncode == 0:
                 gpu_name = result.stdout.strip().split('\n')[0]
-                print(f"✓ CUDA GPU detected: {gpu_name}")
+                print(f"[OK] CUDA GPU detected: {gpu_name}")
                 return "cuda", "BAAI/bge-large-en-v1.5", 1024
         except (FileNotFoundError, subprocess.TimeoutExpired):
             pass
@@ -54,13 +54,13 @@ def _detect_device() -> tuple[str, str]:
                 timeout=5
             )
             if "Apple" in result.stdout:
-                print("✓ Apple Silicon (MPS) detected")
+                print("[OK] Apple Silicon (MPS) detected")
                 return "mps", "BAAI/bge-large-en-v1.5", 1024
         except (FileNotFoundError, subprocess.TimeoutExpired):
             pass
 
     # ── Fallback to CPU ────────────────────────────────────────────────────────
-    print("⚠ No GPU detected, using CPU (slower embeddings)")
+    print("[WARN] No GPU detected, using CPU (slower embeddings)")
     return "cpu", "BAAI/bge-base-en-v1.5", 768
 
 

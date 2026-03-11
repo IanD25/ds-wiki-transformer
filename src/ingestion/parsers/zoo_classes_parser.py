@@ -367,7 +367,7 @@ def main():
             print(f"  {row[0]}: {row[1]} reference(s)")
 
     conn.close()
-    print(f"\n✓ Bundle written to: {output_db}")
+    print(f"\n[OK] Bundle written to: {output_db}")
 
 
 if __name__ == "__main__":

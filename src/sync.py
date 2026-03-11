@@ -35,9 +35,9 @@ def sync(trigger: str = "manual", notes: str = "", backup: bool = True) -> str:
       3. Embed + store in ChromaDB and wiki_history.db
     Returns snapshot_id.
     """
-    print(f"\n{'═'*60}")
+    print(f"\n{'='*60}")
     print(f"DS Wiki Sync  |  trigger={trigger}")
-    print(f"{'═'*60}")
+    print(f"{'='*60}")
 
     if backup:
         _backup_source(label=trigger.replace(":", "_"))
@@ -45,7 +45,7 @@ def sync(trigger: str = "manual", notes: str = "", backup: bool = True) -> str:
     chunks      = extract_chunks()
     snapshot_id = embed_and_store(chunks, trigger=trigger, notes=notes)
 
-    print(f"\n✓ Sync complete — snapshot: {snapshot_id}")
+    print(f"\n[OK] Sync complete -- snapshot: {snapshot_id}")
     return snapshot_id
 
 

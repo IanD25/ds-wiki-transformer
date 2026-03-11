@@ -27,7 +27,8 @@ def _init_history_db(conn: sqlite3.Connection) -> None:
             created_at    TEXT NOT NULL,
             trigger       TEXT NOT NULL,
             chunk_count   INTEGER NOT NULL,
-            notes         TEXT
+            notes         TEXT,
+            embed_model   TEXT
         );
 
         CREATE TABLE IF NOT EXISTS chunk_embedding_history (
