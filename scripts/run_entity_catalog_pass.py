@@ -54,7 +54,7 @@ def main():
     print(f"  bridges    : {signals['total_bridges']}")
 
     if dtype != "entity_catalog":
-        print(f"\n  ⚠ Dataset classified as '{dtype}', not 'entity_catalog'.")
+        print(f"\n  [WARN] Dataset classified as '{dtype}', not 'entity_catalog'.")
         print(f"    Pass 1.5 is designed for entity catalogs. Proceeding anyway.")
     print()
 
@@ -67,7 +67,7 @@ def main():
     print(f"  category_entries: {stats['category_entries']}")
     print(f"  anomaly_entries : {stats['anomaly_entries']}")
     print(f"  notable_anomalies: {stats['notable_anomaly_entries']}")
-    print(f"  ─────────────────────────────")
+    print(f"  -----------------------------")
     print(f"  total_synthetic : {stats['total_synthetic']}")
     print()
 
@@ -83,7 +83,7 @@ def main():
     # ── Step 4: Top bridges ───────────────────────────────────────────────────
     conn = sqlite3.connect(bundle_db)
     print()
-    print("── Top 15 bridges by similarity ─────────────────────────────────────")
+    print("-- Top 15 bridges by similarity --------------------------------------")
     rows = conn.execute("""
         SELECT b.rrp_entry_id, e.source_type, b.ds_entry_id, b.similarity,
                b.proposed_link_type, b.confidence_tier
@@ -97,11 +97,11 @@ def main():
         print(
             f"  {r[3]:.4f} {src_label:12s} "
             f"{'[' + r[4] + ']':15s} "
-            f"{r[0]:40s} ↔  {r[2]}"
+            f"{r[0]:40s} <->  {r[2]}"
         )
 
     print()
-    print("── Derived pattern top bridges ──────────────────────────────────────")
+    print("-- Derived pattern top bridges ---------------------------------------")
     rows_p = conn.execute("""
         SELECT b.rrp_entry_id, b.ds_entry_id, b.similarity, b.proposed_link_type
         FROM cross_universe_bridges b
@@ -113,7 +113,7 @@ def main():
     for r in rows_p:
         print(
             f"  {r[2]:.4f}  [{r[3]:12s}]  "
-            f"{r[0]:45s} ↔  {r[1]}"
+            f"{r[0]:45s} <->  {r[1]}"
         )
 
     tier_1_5 = conn.execute(

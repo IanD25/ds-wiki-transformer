@@ -367,7 +367,7 @@ def main():
     for b in bridges:
         print(
             f"  {b[4]:.4f}  [{b[5]:12s}] "
-            f"RRP:{b[1][:30]:30s} ↔  DS:{b[3][:35]}"
+            f"RRP:{b[1][:30]:30s} <-> DS:{b[3][:35]}"
         )
 
     print(f"\n  Total bridges stored: {conn.execute('SELECT COUNT(*) FROM cross_universe_bridges').fetchone()[0]}")
