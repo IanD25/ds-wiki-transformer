@@ -95,12 +95,19 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 ## Current Embedding Model
 
 ```python
-# src/config.py
-EMBED_MODEL = "BAAI/bge-base-en-v1.5"   # 768-dim
-# GPU upgrade target: "BAAI/bge-large-en-v1.5"  # 1024-dim, better bridges
+# src/config.py — auto-detected at import time (no manual edit needed)
+# CUDA (ShadowPC RTX 2000): "BAAI/bge-large-en-v1.5"  # 1024-dim
+# MPS  (Mac Apple Silicon): "BAAI/bge-large-en-v1.5"  # 1024-dim
+# CPU  (fallback):          "BAAI/bge-base-en-v1.5"   # 768-dim
+DEVICE, EMBED_MODEL, EMBED_DIM = _detect_device()  # set automatically
 ```
 
-Model downloads automatically from HuggingFace on first use (~100MB).
+Model downloads automatically from HuggingFace on first use (~100MB for base, ~430MB for large).
+
+**Windows note:** DS Wiki entry data contains Unicode math symbols. Always prefix Python commands with `PYTHONUTF8=1` on ShadowPC:
+```powershell
+PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
+```
 
 ---
 
@@ -122,7 +129,9 @@ Model downloads automatically from HuggingFace on first use (~100MB).
 - `src/ingestion/parsers/periodic_table_parser.py` — 119 elements, 1671 properties
 - `src/ingestion/passes/entity_catalog_pass.py` — Pass 1.5 (pattern extraction)
 - `scripts/run_entity_catalog_pass.py` — CLI orchestrator
-- Periodic table result: 500 bridges, 40 tier-1.5, mean_sim 0.818
+- Periodic table result (bge-large 1024-dim): 497 bridges, 35 tier-1.5, mean_sim 0.818
+- Zoo classes result  (bge-large 1024-dim): 1135 bridges, 70 tier-1.5, mean_sim 0.828
+  - Top bridge: thm_Nondeterministic_time_hierarchy_theorem <-> CS15 @ 0.9187 (tier-1)
 
 **Next (Phase 2 remaining):**
 1. **Hyperedge architecture decision** (PREREQUISITE for E. coli parser) — document in `ARCHITECTURE_DECISIONS.md`: Reification (Option A) vs. Native Hyperedge Table (Option B)
