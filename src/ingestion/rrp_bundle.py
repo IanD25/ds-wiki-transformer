@@ -36,9 +36,10 @@ def create_rrp_bundle(db_path: str | Path, name: str, source: str, fmt: str) -> 
 
 
 def open_rrp_bundle(db_path: str | Path) -> sqlite3.Connection:
-    """Open an existing RRP bundle for read/write."""
+    """Open an existing RRP bundle for read/write. Applies incremental migrations."""
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
+    _migrate_schema(conn)
     return conn
 
 
@@ -67,15 +68,16 @@ def _apply_schema(conn: sqlite3.Connection) -> None:
     );
 
     CREATE TABLE IF NOT EXISTS links (
-        id              INTEGER PRIMARY KEY AUTOINCREMENT,
-        link_type       TEXT NOT NULL,
-        source_id       TEXT NOT NULL REFERENCES entries(id),
-        source_label    TEXT,
-        target_id       TEXT NOT NULL REFERENCES entries(id),
-        target_label    TEXT,
-        description     TEXT,
-        link_order      INTEGER DEFAULT 0,
-        confidence_tier TEXT DEFAULT '1.5'
+        id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+        link_type           TEXT NOT NULL,
+        source_id           TEXT NOT NULL REFERENCES entries(id),
+        source_label        TEXT,
+        target_id           TEXT NOT NULL REFERENCES entries(id),
+        target_label        TEXT,
+        description         TEXT,
+        link_order          INTEGER DEFAULT 0,
+        confidence_tier     TEXT DEFAULT '1.5',
+        stoichiometry_coef  REAL    -- signed coefficient for reaction-metabolite links (NULL for non-stoichiometric)
     );
 
     CREATE TABLE IF NOT EXISTS entry_properties (
@@ -113,6 +115,15 @@ def _apply_schema(conn: sqlite3.Connection) -> None:
     CREATE INDEX IF NOT EXISTS idx_bridges_ds     ON cross_universe_bridges(ds_entry_id);
     """)
     conn.commit()
+    _migrate_schema(conn)
+
+
+def _migrate_schema(conn: sqlite3.Connection) -> None:
+    """Apply incremental schema migrations to existing bundles (idempotent)."""
+    existing = {row[1] for row in conn.execute("PRAGMA table_info(links)").fetchall()}
+    if "stoichiometry_coef" not in existing:
+        conn.execute("ALTER TABLE links ADD COLUMN stoichiometry_coef REAL")
+        conn.commit()
 
 
 def _insert_meta(conn: sqlite3.Connection, name: str, source: str, fmt: str) -> None:
@@ -122,7 +133,7 @@ def _insert_meta(conn: sqlite3.Connection, name: str, source: str, fmt: str) -> 
         ("source",       source),
         ("format",       fmt),
         ("ingested_at",  now),
-        ("schema_version", "1.0"),
+        ("schema_version", "1.1"),
     ]
     conn.executemany(
         "INSERT OR REPLACE INTO rrp_meta (key, value) VALUES (?, ?)", rows
