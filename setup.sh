@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# PFD Project — One-command environment setup
+# Run from repo root: bash setup.sh
+#
+# Works on: macOS (M-series), Linux, Windows WSL / ShadowPC
+# Requires: Python 3.11+ already installed
+# ─────────────────────────────────────────────────────────────────────────────
+
+set -e  # exit on first error
+
+echo "═══════════════════════════════════════════════════════"
+echo "  Principia Formal Diagnostics (PFD) — Environment Setup"
+echo "═══════════════════════════════════════════════════════"
+echo ""
+
+# ── 1. Detect Python ──────────────────────────────────────────────────────────
+PYTHON=""
+for cmd in python3.13 python3.12 python3.11 python3 python; do
+    if command -v "$cmd" &>/dev/null; then
+        VER=$($cmd --version 2>&1 | awk '{print $2}')
+        MAJOR=$(echo "$VER" | cut -d. -f1)
+        MINOR=$(echo "$VER" | cut -d. -f2)
+        if [ "$MAJOR" -ge 3 ] && [ "$MINOR" -ge 11 ]; then
+            PYTHON="$cmd"
+            echo "✓ Python found: $cmd ($VER)"
+            break
+        fi
+    fi
+done
+
+if [ -z "$PYTHON" ]; then
+    echo "✗ Python 3.11+ not found. Please install Python 3.11 or higher."
+    echo "  macOS:   brew install python@3.13"
+    echo "  Ubuntu:  sudo apt install python3.13 python3.13-venv"
+    echo "  Windows: https://www.python.org/downloads/"
+    exit 1
+fi
+
+# ── 2. Create virtual environment ─────────────────────────────────────────────
+if [ -d ".venv" ]; then
+    echo "✓ .venv already exists — skipping creation"
+else
+    echo "→ Creating virtual environment..."
+    $PYTHON -m venv .venv
+    echo "✓ .venv created"
+fi
+
+# ── 3. Activate ───────────────────────────────────────────────────────────────
+echo "→ Activating .venv..."
+# shellcheck disable=SC1091
+source .venv/bin/activate
+
+# ── 4. Upgrade pip silently ───────────────────────────────────────────────────
+echo "→ Upgrading pip..."
+pip install --upgrade pip -q
+
+# ── 5. Install dependencies ───────────────────────────────────────────────────
+echo "→ Installing dependencies from requirements.txt..."
+pip install -r requirements.txt -q
+echo "✓ Dependencies installed"
+
+# ── 6. Optional: CUDA detection for GPU install ───────────────────────────────
+echo ""
+echo "→ Checking for CUDA GPU (ShadowPC / RTX upgrade)..."
+if command -v nvidia-smi &>/dev/null; then
+    GPU_NAME=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -1)
+    echo "  GPU detected: $GPU_NAME"
+    echo ""
+    echo "  ┌─ GPU UPGRADE AVAILABLE ──────────────────────────────────────────┐"
+    echo "  │ Install PyTorch with CUDA support for faster embeddings:          │"
+    echo "  │   pip install torch --extra-index-url \                           │"
+    echo "  │         https://download.pytorch.org/whl/cu118                   │"
+    echo "  │                                                                   │"
+    echo "  │ Then edit src/config.py:                                          │"
+    echo "  │   EMBED_MODEL = \"BAAI/bge-large-en-v1.5\"  # 1024-dim             │"
+    echo "  └───────────────────────────────────────────────────────────────────┘"
+else
+    echo "  No NVIDIA GPU detected — CPU mode (M-series or no CUDA)"
+fi
+
+# ── 7. Verify data files ──────────────────────────────────────────────────────
+echo ""
+echo "→ Checking data files..."
+if [ -f "data/ds_wiki.db" ]; then
+    SIZE=$(du -sh data/ds_wiki.db | cut -f1)
+    echo "  ✓ data/ds_wiki.db ($SIZE)"
+else
+    echo "  ✗ data/ds_wiki.db not found — check git clone was complete"
+fi
+
+if [ -d "data/rrp" ]; then
+    echo "  ✓ data/rrp/ present"
+else
+    echo "  ✗ data/rrp/ not found"
+fi
+
+# ── 8. Build generated artifacts ─────────────────────────────────────────────
+echo ""
+read -r -p "→ Rebuild chroma_db + wiki_history.db now? (~30s) [Y/n]: " REBUILD
+REBUILD="${REBUILD:-Y}"
+if [[ "$REBUILD" =~ ^[Yy]$ ]]; then
+    echo "→ Running sync..."
+    python3 -m src.sync
+    echo "✓ Artifacts rebuilt"
+else
+    echo "  Skipped — run 'python3 -m src.sync' manually when ready"
+fi
+
+# ── 9. Run tests ─────────────────────────────────────────────────────────────
+echo ""
+read -r -p "→ Run test suite now? (~15s) [Y/n]: " RUNTESTS
+RUNTESTS="${RUNTESTS:-Y}"
+if [[ "$RUNTESTS" =~ ^[Yy]$ ]]; then
+    echo "→ Running pytest..."
+    python3 -m pytest tests/ -v --tb=short -q
+else
+    echo "  Skipped — run 'python3 -m pytest tests/ -v' manually when ready"
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+echo ""
+echo "═══════════════════════════════════════════════════════"
+echo "  Setup complete!"
+echo ""
+echo "  Next steps:"
+echo "    source .venv/bin/activate   (each new terminal)"
+echo "    python3 src/mcp_server.py   (optional: start MCP server)"
+echo ""
+echo "  Key commands — see CLAUDE.md for full reference"
+echo "═══════════════════════════════════════════════════════"

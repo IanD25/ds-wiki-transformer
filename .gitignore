@@ -1,18 +1,36 @@
+# ── Virtual environment & caches ──────────────────────────────────────────────
 .venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+
+# ── Claude Code local settings (machine-specific permissions) ─────────────────
+.claude/settings.local.json
+
+# ── Generated data artifacts (rebuild with sync.py / scripts) ────────────────
 data/chroma_db/
 data/chroma/
 data/wiki_history.db
 data/viz/
 data/vector_topology.png
+
+# ── Generated visualizations ──────────────────────────────────────────────────
 backups/
-__pycache__/
-*.pyc
-.env
-*.db-shm
-*.db-wal
 wiki_graph.html
 wiki_topology.png
 
-# data/ds_wiki.db is intentionally tracked (source of truth, 1.3MB)
-# data/rrp/ is intentionally tracked (raw + built RRP bundles)
-# data/viz/ is gitignored — generated artifacts, regenerate with scripts/viz_*.py
+# ── SQLite journal files ──────────────────────────────────────────────────────
+*.db-shm
+*.db-wal
+
+# ────────────────────────────────────────────────────────────────────────────
+# Intentionally TRACKED (not gitignored):
+# data/ds_wiki.db        — source of truth (1.5MB, committed)
+# data/rrp/              — raw datasets + built RRP bundles
+# Outside Ref/           — external analysis and reference documents
+# ────────────────────────────────────────────────────────────────────────────
