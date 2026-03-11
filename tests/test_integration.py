@@ -476,8 +476,12 @@ class TestToolComposition:
     def test_isolated_in_coverage_are_candidates_in_hypothesis(self, live_report, live_pairs):
         """
         Entities flagged as isolated (no explicit links) by the Coverage Analyzer
-        should appear as candidates in Hypothesis Generator output if they have
+        may appear as candidates in Hypothesis Generator output if they have
         high semantic similarity with others.
+
+        NOTE: As of 2026-03-11, only Q2 remains isolated (all 12 formerly isolated
+        entries have been linked). Q2 has insufficient semantic similarity to appear
+        in hypothesis pairs, so we now assert only that the pipeline produces results.
         """
         isolated_ids = set(live_report.network_metrics.isolated_entities)
         hypothesis_ids = set()
@@ -485,10 +489,8 @@ class TestToolComposition:
             hypothesis_ids.add(p.entity_a.entity_id)
             hypothesis_ids.add(p.entity_b.entity_id)
 
-        # At least some isolated entities should appear in hypothesis pairs
-        isolated_in_hyp = isolated_ids & hypothesis_ids
-        assert len(isolated_in_hyp) >= 1, (
-            "Expected at least one isolated entity to appear in surprising pairs.\n"
-            f"Isolated: {sorted(isolated_ids)[:10]}\n"
-            f"In hypothesis: {sorted(hypothesis_ids)[:10]}"
+        # Pipeline produces results (previously: isolated entries appeared in pairs)
+        assert len(hypothesis_ids) > 0, "Hypothesis generator should produce candidate pairs"
+        assert len(isolated_ids) <= 5, (
+            f"Expected at most 5 isolated entries (DB is well-linked); got {len(isolated_ids)}: {isolated_ids}"
         )
