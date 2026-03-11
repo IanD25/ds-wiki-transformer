@@ -13,8 +13,24 @@ HISTORY_DB   = DATA_DIR / "wiki_history.db"
 CHROMA_DIR   = DATA_DIR / "chroma_db"
 
 # ── Embedding ─────────────────────────────────────────────────────────────────
-EMBED_MODEL       = "BAAI/bge-base-en-v1.5"
-EMBED_DIM         = 768
+# Auto-detect GPU and select model accordingly
+def _get_embed_model():
+    """Select embedding model based on available hardware.
+
+    - GPU (CUDA available): bge-large-en-v1.5 (1024-dim, faster)
+    - CPU (Mac/no GPU): bge-base-en-v1.5 (768-dim, compatible)
+    """
+    try:
+        import torch
+        if torch.cuda.is_available():
+            return "BAAI/bge-large-en-v1.5", 1024
+        else:
+            return "BAAI/bge-base-en-v1.5", 768
+    except ImportError:
+        # torch not installed, fall back to base model
+        return "BAAI/bge-base-en-v1.5", 768
+
+EMBED_MODEL, EMBED_DIM = _get_embed_model()
 CHROMA_COLLECTION = "ds_wiki"
 
 # ── Search defaults ───────────────────────────────────────────────────────────
