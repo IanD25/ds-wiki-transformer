@@ -12,7 +12,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 from config import (
-    CHROMA_COLLECTION, CHROMA_DIR, EMBED_MODEL,
+    CHROMA_COLLECTION, CHROMA_DIR, EMBED_MODEL, EMBED_DIM,
     HISTORY_DB, TOP_K_NEIGHBORS, DRIFT_THRESHOLD,
 )
 from extractor import Chunk
@@ -60,13 +60,20 @@ def _init_history_db(conn: sqlite3.Connection) -> None:
 # ── Previous snapshot loader ──────────────────────────────────────────────────
 
 def _load_previous_snapshot(conn: sqlite3.Connection) -> dict[str, np.ndarray]:
-    """Return {chunk_id: embedding_array} for the most recent snapshot."""
+    """Return {chunk_id: embedding_array} for the most recent snapshot.
+
+    Returns an empty dict if no prior snapshot exists or if the prior snapshot
+    used a different embedding model — cross-model drift comparison is undefined.
+    """
     row = conn.execute(
-        "SELECT snapshot_id FROM wiki_snapshots ORDER BY created_at DESC LIMIT 1"
+        "SELECT snapshot_id, embed_model FROM wiki_snapshots ORDER BY created_at DESC LIMIT 1"
     ).fetchone()
     if not row:
         return {}
-    snap_id = row[0]
+    snap_id, prev_model = row[0], row[1]
+    if prev_model != EMBED_MODEL:
+        print(f"  Model changed ({prev_model} → {EMBED_MODEL}): skipping drift comparison")
+        return {}
     rows = conn.execute(
         "SELECT chunk_id, embedding FROM chunk_embedding_history WHERE snapshot_id = ?",
         (snap_id,),
@@ -206,7 +213,7 @@ def embed_and_store(
         normalize_embeddings=True,
         device="mps",          # Apple Silicon — falls back to CPU automatically
     )
-    embeddings = np.array(embeddings_raw, dtype=np.float32)  # (N, 384)
+    embeddings = np.array(embeddings_raw, dtype=np.float32)  # (N, EMBED_DIM)
 
     # ── ChromaDB (full rebuild) ───────────────────────────────────────────────
     CHROMA_DIR.mkdir(parents=True, exist_ok=True)
@@ -243,8 +250,8 @@ def embed_and_store(
     created_at  = datetime.now(timezone.utc).isoformat()
 
     hconn.execute(
-        "INSERT INTO wiki_snapshots VALUES (?,?,?,?,?)",
-        (snapshot_id, created_at, trigger, len(chunks), notes or None),
+        "INSERT INTO wiki_snapshots VALUES (?,?,?,?,?,?)",
+        (snapshot_id, created_at, trigger, len(chunks), notes or None, EMBED_MODEL),
     )
 
     # Build content_hash for each chunk

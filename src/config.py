@@ -13,8 +13,8 @@ HISTORY_DB   = DATA_DIR / "wiki_history.db"
 CHROMA_DIR   = DATA_DIR / "chroma_db"
 
 # ── Embedding ─────────────────────────────────────────────────────────────────
-EMBED_MODEL       = "BAAI/bge-small-en-v1.5"
-EMBED_DIM         = 384
+EMBED_MODEL       = "BAAI/bge-base-en-v1.5"
+EMBED_DIM         = 768
 CHROMA_COLLECTION = "ds_wiki"
 
 # ── Search defaults ───────────────────────────────────────────────────────────

@@ -47,10 +47,25 @@ def extract_chunks(db_path: Path = SOURCE_DB) -> list[Chunk]:
     """)
     for row in cur.fetchall():
         entry_id     = row["id"]
+        entry_type   = row["entry_type"] or ""
         section_name = row["section_name"]
         content      = (row["content"] or "").strip()
         if not content:
             continue
+
+        # ── Clean base layer: strip DS-specific sections from reference_law ──
+        # DS Cross-References: entirely DS framework content, excluded from
+        # reference_law embeddings so the base vector layer is domain-pure.
+        if entry_type == "reference_law" and section_name == "DS Cross-References":
+            continue
+
+        # Mathematical Archetype: keep the archetype name (first line) only.
+        # The boilerplate paragraph contains Ω_D / D-sensitive / D-invariant
+        # language that pulls all reference_law entries toward each other.
+        if entry_type == "reference_law" and section_name == "Mathematical Archetype":
+            content = content.split("\n\n")[0].strip()
+            if not content:
+                continue
 
         chunk_id = f"{entry_id}_{_slug(section_name)}"
         embed_text = f"{row['title']}\n[{section_name}]\n{content}"

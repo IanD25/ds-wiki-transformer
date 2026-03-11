@@ -747,6 +747,437 @@ def add_links_batch(links: list[dict]) -> dict:
     }
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# LINK TRIAGE (classifier integration)
+# ══════════════════════════════════════════════════════════════════════════════
+
+@mcp.tool()
+def get_link_candidates(
+    sim_threshold: float = 0.78,
+    max_pairs:     int   = 60,
+    entry_types:   list[str] | None = None,
+) -> dict:
+    """
+    Generate unlinked entry pairs above a cosine similarity threshold,
+    with full WIC + Mathematical Form content for each entry.
+
+    Returns a triage prompt (paste to Claude) plus structured candidate list.
+    Use insert_triage_results() to write approved classifications back to the DB.
+
+    Args:
+        sim_threshold: cosine similarity floor (default 0.78)
+        max_pairs:     max candidate pairs to return (default 60)
+        entry_types:   restrict to specific entry types, e.g. ["reference_law"]
+                       (None = all types)
+
+    Returns:
+        {
+          "candidate_count": int,
+          "sim_threshold": float,
+          "candidates": [ {pair, source_id, source, target_id, target, similarity}, ... ],
+          "triage_prompt": "..."   # full prompt for Claude to classify
+        }
+    """
+    from analysis.link_classifier import LinkClassifier
+
+    lc = LinkClassifier()
+    candidates = lc.get_candidates(
+        sim_threshold=sim_threshold,
+        max_pairs=max_pairs,
+        entry_types=entry_types,
+    )
+
+    candidate_list = [
+        {
+            "pair":       i + 1,
+            "source_id":  c.entry_a.entry_id,
+            "source":     c.entry_a.title,
+            "source_domain": c.entry_a.domain,
+            "target_id":  c.entry_b.entry_id,
+            "target":     c.entry_b.title,
+            "target_domain": c.entry_b.domain,
+            "similarity": c.similarity,
+        }
+        for i, c in enumerate(candidates)
+    ]
+
+    triage_prompt = lc.format_triage_prompt(candidates)
+
+    return {
+        "candidate_count": len(candidates),
+        "sim_threshold":   sim_threshold,
+        "candidates":      candidate_list,
+        "triage_prompt":   triage_prompt,
+    }
+
+
+@mcp.tool()
+def insert_triage_results(
+    classifications_json: str,
+    min_confidence:       float = 0.80,
+    dry_run:              bool  = False,
+) -> dict:
+    """
+    Insert LLM-classified link results into the knowledge graph.
+
+    Takes the JSON array produced by the link classifier (each item must have:
+    pair, source_id, source_label, target_id, target_label, has_link,
+    link_type, confidence, description) and writes approved links to ds_wiki.db.
+
+    Skips: has_link=false, confidence < min_confidence, already-existing pairs.
+    Does NOT auto-sync — call trigger_sync() separately when ready.
+
+    Args:
+        classifications_json: JSON array of classification results
+        min_confidence:       minimum confidence to insert (default 0.80)
+        dry_run:              if True, print without writing (default False)
+
+    Returns:
+        {inserted, skipped_confidence, skipped_no_link, skipped_exists, links}
+    """
+    from analysis.link_classifier import LinkClassifier, ClassificationResult
+
+    try:
+        raw = json.loads(classifications_json)
+    except json.JSONDecodeError as e:
+        return {"error": f"Invalid JSON: {e}"}
+
+    if not isinstance(raw, list):
+        raw = [raw]
+
+    results = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        results.append(ClassificationResult(
+            source_id=item.get("source_id", ""),
+            source_label=item.get("source_label", item.get("source_id", "")),
+            target_id=item.get("target_id", ""),
+            target_label=item.get("target_label", item.get("target_id", "")),
+            has_link=bool(item.get("has_link", False)),
+            link_type=item.get("link_type"),
+            confidence=float(item.get("confidence", 0.0)),
+            description=item.get("description"),
+            reasoning=item.get("reasoning"),
+            similarity=float(item.get("similarity", 0.0)),
+        ))
+
+    lc = LinkClassifier()
+    counts = lc.insert_results(results, min_confidence=min_confidence, dry_run=dry_run)
+
+    return {
+        **counts,
+        "min_confidence": min_confidence,
+        "dry_run":        dry_run,
+        "message": (
+            f"{'[DRY RUN] ' if dry_run else ''}"
+            f"{counts['inserted']} links inserted. "
+            f"{counts['skipped_no_link']} no-link, "
+            f"{counts['skipped_confidence']} low-confidence, "
+            f"{counts['skipped_exists']} already exist."
+        ),
+    }
+
+
+# ── Claim validation ──────────────────────────────────────────────────────────
+
+@mcp.tool()
+def validate_claim(
+    claim:          str,
+    top_k:          int   = 15,
+    high_threshold: float = 0.72,
+    low_threshold:  float = 0.55,
+) -> dict:
+    """
+    Validate a free-text research claim against the knowledge base.
+
+    Embeds the claim with BGE, retrieves the top-k most similar KB chunks,
+    deduplicates to entry level, and classifies each entry as supporting,
+    contradicting (if it has a 'tensions with' link to another high-sim entry),
+    or related.
+
+    Returns a consistency_score (0–1), lists of supporting/contradicting/related
+    entries, and a ready-to-read markdown report.
+
+    Args:
+        claim:          Natural-language claim to validate.
+        top_k:          Number of KB chunks to retrieve (default 15).
+        high_threshold: Cosine sim above which an entry is "directly relevant"
+                        (default 0.72).
+        low_threshold:  Cosine sim above which an entry is "related"
+                        (default 0.55).
+
+    Returns:
+        {consistency_score, supporting_count, contradiction_count, related_count,
+         supporting, contradictions, related, notes, markdown}
+    """
+    from analysis.result_validator import ResultValidator
+
+    validator = ResultValidator(source_db=SOURCE_DB, chroma_dir=CHROMA_DIR)
+    result    = validator.validate_claim(
+        claim,
+        top_k=top_k,
+        high_threshold=high_threshold,
+        low_threshold=low_threshold,
+    )
+
+    def _serialise(items):
+        return [
+            {
+                "entry_id":    e.entry_id,
+                "title":       e.title,
+                "entry_type":  e.entry_type,
+                "domain":      e.domain,
+                "similarity":  round(e.similarity, 4),
+                "link_type":   e.link_type,
+                "linked_to":   e.linked_to,
+                "linked_title": e.linked_title,
+                "excerpt":     e.excerpt,
+            }
+            for e in items
+        ]
+
+    return {
+        "consistency_score":    round(result.consistency_score, 4),
+        "supporting_count":     len(result.supporting_evidence),
+        "contradiction_count":  len(result.contradictions),
+        "related_count":        len(result.related_entities),
+        "supporting":           _serialise(result.supporting_evidence),
+        "contradictions":       _serialise(result.contradictions),
+        "related":              _serialise(result.related_entities),
+        "notes":                result.notes,
+        "markdown":             result.as_markdown(),
+    }
+
+
+# ── Gap analysis ──────────────────────────────────────────────────────────────
+
+@mcp.tool()
+def analyze_gaps(
+    type_minimums_json: str = "{}",
+) -> dict:
+    """
+    Identify knowledge-base gaps and return ranked enrichment priorities.
+
+    Analyses the KB for:
+    - Property coverage gaps per entity type (e.g. 'CS entries missing concept_tags')
+    - Sparse taxonomy values (archetypes or d-sensitivity values with < 3% representation)
+    - Entity type balance gaps (types below expected minimum counts)
+    - Link gaps (isolated entries, entries with no tier-1 links, same-type-only links)
+
+    Returns a full markdown report plus structured lists for each gap category.
+
+    Args:
+        type_minimums_json: Optional JSON object overriding expected minimum counts per
+                            entity type, e.g. '{"open_question": 20, "method": 15}'.
+                            Merged over built-in defaults. Pass '{}' to use defaults.
+
+    Returns:
+        {summary_stats, property_gaps, taxonomy_gaps, type_balance_gaps, link_gaps,
+         enrichment_priorities, markdown}
+    """
+    from analysis.gap_analyzer import GapAnalyzer
+
+    try:
+        overrides = json.loads(type_minimums_json) if type_minimums_json.strip() != "{}" else {}
+    except json.JSONDecodeError as e:
+        return {"error": f"Invalid type_minimums_json: {e}"}
+
+    ga     = GapAnalyzer(source_db=SOURCE_DB, type_minimums=overrides or None)
+    report = ga.analyze()
+
+    def _ser_prop(g):
+        return {
+            "entity_type": g.entity_type, "property_name": g.property_name,
+            "total_of_type": g.total_of_type, "filled": g.filled,
+            "missing_count": g.missing_count, "coverage_pct": g.coverage_pct,
+            "missing_ids": g.missing_ids, "priority": g.priority,
+        }
+
+    def _ser_tax(g):
+        return {
+            "taxonomy_name": g.taxonomy_name, "value": g.value,
+            "count": g.count, "pct_of_filled": g.pct_of_filled, "flag": g.flag,
+        }
+
+    def _ser_type(g):
+        return {
+            "entity_type": g.entity_type, "observed": g.observed,
+            "expected_min": g.expected_min, "deficit": g.deficit,
+            "suggestion": g.suggestion,
+        }
+
+    def _ser_link(g):
+        return {
+            "entry_id": g.entry_id, "title": g.title, "entity_type": g.entity_type,
+            "total_links": g.total_links, "gap_type": g.gap_type, "detail": g.detail,
+        }
+
+    def _ser_pri(p):
+        return {
+            "rank": p.rank, "action": p.action, "target": p.target,
+            "description": p.description, "impact_score": p.impact_score,
+        }
+
+    return {
+        "summary_stats":         report.summary_stats,
+        "property_gaps":         [_ser_prop(g) for g in report.property_gaps],
+        "taxonomy_gaps":         [_ser_tax(g)  for g in report.taxonomy_gaps],
+        "type_balance_gaps":     [_ser_type(g) for g in report.type_balance_gaps],
+        "link_gaps":             [_ser_link(g) for g in report.link_gaps],
+        "enrichment_priorities": [_ser_pri(p)  for p in report.enrichment_priorities],
+        "markdown":              report.as_markdown(),
+    }
+
+
+# ── Visualization tools ───────────────────────────────────────────────────────
+
+def _derive_viz_output_dir(bundle_db: str) -> Path:
+    """
+    Auto-derive visualization output directory from bundle_db path.
+    data/rrp/zoo_classes/rrp_zoo_classes.db  →  data/viz/zoo_classes/
+    """
+    p = Path(bundle_db).resolve()
+    bundle_name = p.parent.name
+    output_dir  = p.parent.parent.parent / "viz" / bundle_name
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def _serialize_viz_result(obj):
+    """Recursively convert Path objects to str for JSON transport."""
+    if isinstance(obj, Path):
+        return str(obj)
+    if isinstance(obj, dict):
+        return {k: _serialize_viz_result(v) for k, v in obj.items()}
+    return obj
+
+
+@mcp.tool()
+def visualize_bridges(
+    bundle_db:     str,
+    ds_wiki_db:    str | None = None,
+    sim_threshold: float = 0.82,
+) -> dict:
+    """
+    Generate a cross-universe bridge network visualization for an RRP bundle.
+    Creates both a static PNG and an interactive self-contained HTML file.
+
+    The network uses a deterministic two-column bipartite layout:
+      Left  = DS Wiki entries (science universe) — squares, sized by bridge count
+      Right = RRP entries (research universe) — circles, coloured by source type
+      Edges = bridges, coloured by link type (analogous to / couples to)
+
+    NOTE: Default threshold 0.82 keeps ~432 edges — the readable zone.
+    Below 0.80 the graph becomes a hairball.
+
+    Args:
+        bundle_db:     Absolute path to the RRP bundle .db file.
+        ds_wiki_db:    Path to ds_wiki.db (default: project SOURCE_DB).
+        sim_threshold: Minimum cosine similarity for bridges (default 0.82).
+
+    Returns:
+        {"html": str, "png": str, "stats": {"rrp_nodes": int, "ds_nodes": int,
+                                             "edges": int, "sim_threshold": float}}
+    """
+    from viz.bridge_network import BridgeNetwork
+    result = BridgeNetwork(bundle_db, ds_wiki_db or SOURCE_DB).generate(
+        output_dir    = _derive_viz_output_dir(bundle_db),
+        sim_threshold = sim_threshold,
+    )
+    return _serialize_viz_result(result)
+
+
+@mcp.tool()
+def visualize_similarity_distribution(
+    bundle_db:     str,
+    sim_threshold: float = 0.75,
+) -> dict:
+    """
+    Generate a histogram of cross-universe bridge similarity scores for an RRP bundle.
+
+    Shows the distribution of cosine similarity across all stored bridges.
+    Bars are stacked and coloured by confidence tier (tier 1.5 = warm red,
+    tier 2 = steel blue). Annotates threshold lines at 0.75, 0.82, and 0.85.
+
+    Args:
+        bundle_db:     Absolute path to the RRP bundle .db file.
+        sim_threshold: Minimum similarity to include (default 0.75 = all bridges).
+
+    Returns:
+        {"html": str, "png": str, "stats": {"total": int, "mean_sim": float, ...}}
+    """
+    from viz.similarity_hist import SimilarityHist
+    result = SimilarityHist(bundle_db).generate(
+        output_dir    = _derive_viz_output_dir(bundle_db),
+        sim_threshold = sim_threshold,
+    )
+    return _serialize_viz_result(result)
+
+
+@mcp.tool()
+def visualize_domain_heatmap(
+    bundle_db:     str,
+    ds_wiki_db:    str | None = None,
+    sim_threshold: float = 0.75,
+) -> dict:
+    """
+    Generate a bridge-density heatmap for an RRP bundle.
+
+    Rows = RRP source type (theorems, classes, conjectures, problems)
+    Cols = DS Wiki type_group (RL, Q, X, H, M, T, B, F, E, Ax, Other)
+    Cell = count of bridges at sim >= sim_threshold. Colour: YlOrRd.
+
+    Highlights which RRP entry types connect to which DS Wiki knowledge clusters.
+
+    Args:
+        bundle_db:     Absolute path to the RRP bundle .db file.
+        ds_wiki_db:    Path to ds_wiki.db (default: project SOURCE_DB).
+        sim_threshold: Minimum similarity to include (default 0.75).
+
+    Returns:
+        {"html": str, "png": str, "stats": {"rows": int, "cols": int, "total_bridges": int}}
+    """
+    from viz.domain_heatmap import DomainHeatmap
+    result = DomainHeatmap(bundle_db, ds_wiki_db or SOURCE_DB).generate(
+        output_dir    = _derive_viz_output_dir(bundle_db),
+        sim_threshold = sim_threshold,
+    )
+    return _serialize_viz_result(result)
+
+
+@mcp.tool()
+def visualize_all(
+    bundle_db:  str,
+    ds_wiki_db: str | None = None,
+) -> dict:
+    """
+    Run all three cross-universe visualizations for an RRP bundle in one call.
+
+    Generates six files in data/viz/{bundle_name}/:
+      similarity_hist.{png,html}  — similarity distribution histogram
+      domain_heatmap.{png,html}   — RRP source type × DS type_group density
+      bridge_network.{png,html}   — bipartite bridge network
+
+    Uses recommended defaults: network at sim ≥ 0.82, histogram+heatmap at sim ≥ 0.75.
+
+    Args:
+        bundle_db:  Absolute path to the RRP bundle .db file.
+        ds_wiki_db: Path to ds_wiki.db (default: project SOURCE_DB).
+
+    Returns:
+        {
+          "histogram": {"html": str, "png": str, "stats": dict},
+          "heatmap":   {"html": str, "png": str, "stats": dict},
+          "network":   {"html": str, "png": str, "stats": dict},
+          "output_dir": str,
+        }
+    """
+    from viz.viz_runner import run_all_viz
+    result = run_all_viz(bundle_db, ds_wiki_db or SOURCE_DB)
+    return _serialize_viz_result(result)
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":

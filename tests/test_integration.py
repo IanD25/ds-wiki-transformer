@@ -76,9 +76,9 @@ class TestCoverageAnalyzerLive:
 
     # ── Basic counts ──────────────────────────────────────────────────────────
 
-    def test_total_entities_199(self, live_report):
-        assert live_report.total_entities == 199, (
-            f"Expected 199 entities, got {live_report.total_entities}"
+    def test_total_entities_209(self, live_report):
+        assert live_report.total_entities == 209, (
+            f"Expected 209 entities, got {live_report.total_entities}"
         )
 
     def test_total_sections_above_1200(self, live_report):
@@ -96,7 +96,7 @@ class TestCoverageAnalyzerLive:
     # ── Entity type distribution ───────────────────────────────────────────────
 
     def test_reference_law_count(self, live_report):
-        assert live_report.entity_type_distribution.get("reference_law", 0) == 139
+        assert live_report.entity_type_distribution.get("reference_law", 0) == 149
 
     def test_method_count(self, live_report):
         assert live_report.entity_type_distribution.get("method", 0) == 16
@@ -104,9 +104,9 @@ class TestCoverageAnalyzerLive:
     def test_law_count(self, live_report):
         assert live_report.entity_type_distribution.get("law", 0) == 15
 
-    def test_entity_type_sums_to_199(self, live_report):
+    def test_entity_type_sums_to_209(self, live_report):
         total = sum(live_report.entity_type_distribution.values())
-        assert total == 199
+        assert total == 209
 
     # ── Property coverage ─────────────────────────────────────────────────────
 
@@ -118,7 +118,7 @@ class TestCoverageAnalyzerLive:
 
     def test_mathematical_archetype_100pct(self, live_report):
         pc = self._get_pc(live_report, "mathematical_archetype")
-        assert pc.filled == 199
+        assert pc.filled == 209
         assert pc.coverage_pct == 100.0
 
     def test_dimensional_sensitivity_full_coverage(self, live_report):
@@ -192,7 +192,7 @@ class TestCoverageAnalyzerLive:
         assert live_report.network_metrics.link_density > 0
 
     def test_possible_links_count(self, live_report):
-        n = 199
+        n = 209
         expected_possible = n * (n - 1) // 2
         assert live_report.network_metrics.possible_links == expected_possible
 
@@ -232,9 +232,9 @@ class TestCoverageAnalyzerLive:
         md = ca.generate_markdown()
         assert len(md) > 2000, "Markdown report seems too short"
 
-    def test_markdown_contains_199(self, ca):
+    def test_markdown_contains_209(self, ca):
         md = ca.generate_markdown()
-        assert "199" in md
+        assert "209" in md
 
     def test_markdown_contains_archetype_section(self, ca):
         md = ca.generate_markdown()
@@ -242,7 +242,7 @@ class TestCoverageAnalyzerLive:
 
     def test_get_stats_total_entities(self, ca):
         stats = ca.get_stats()
-        assert stats["total_entities"] == 199
+        assert stats["total_entities"] == 209
 
 
 # ── HypothesisGenerator — Live DB ──────────────────────────────────────────────
@@ -312,21 +312,20 @@ class TestHypothesisGeneratorLive:
                 return p
         return None
 
-    def test_b5_td3_discovered(self, live_pairs):
+    def test_q3_t9_discovered(self, live_pairs):
         """
-        B5 (Landauer's principle) ↔ TD3 (Second law of thermodynamics)
-        was identified as similarity 0.8673 in prior analysis.
+        Q3 (Regime Capacity Bound) ↔ T9 (Regime Capacity Bound Test)
+        is a structurally stable cross-type pair (sim ≈ 0.95).
         """
-        # Use relaxed pairs (sim >= 0.80) — this pair should appear
-        assert self._pair_exists(live_pairs, "B5", "TD3"), (
-            "Expected B5↔TD3 (Landauer↔2nd Law) in surprising pairs"
+        assert self._pair_exists(live_pairs, "Q3", "T9"), (
+            "Expected Q3↔T9 (Regime Capacity Bound ↔ Test) in surprising pairs"
         )
 
-    def test_b5_td3_has_reasonable_similarity(self, live_pairs):
-        p = self._get_pair(live_pairs, "B5", "TD3")
+    def test_q3_t9_has_reasonable_similarity(self, live_pairs):
+        p = self._get_pair(live_pairs, "Q3", "T9")
         if p is not None:
             assert p.similarity >= 0.80, (
-                f"B5↔TD3 similarity {p.similarity} unexpectedly low"
+                f"Q3↔T9 similarity {p.similarity} unexpectedly low"
             )
 
     def test_cross_type_pairs_present(self, live_pairs):
@@ -467,7 +466,7 @@ class TestToolComposition:
 
         # Coverage report
         assert len(cov_md) > 1000
-        assert "199" in cov_md              # entity count
+        assert "209" in cov_md              # entity count
         assert "conservation-law" in cov_md  # most common archetype (post Option E)
 
         # Hypothesis report

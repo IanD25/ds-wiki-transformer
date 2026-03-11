@@ -1,8 +1,9 @@
 # DS Wiki Transformation — Master Summary
 **The definitive re-entry document. Read this at the start of any new session.**
 
-**Last Updated**: 2026-03-10
-**Status**: Phase 1 Diagnostics complete. Option E (DS Tier 1/2 expansion) complete. Phase 2 (RRB ingestion) designed, not yet coded.
+**Last Updated**: 2026-03-10 (Session 5)
+**Status**: Phase 1 Diagnostics complete. Option E (DS Tier 1/2 expansion) complete. **RRP ingestion pipeline live** — ZooClasses Pass 1 + Pass 2 complete. 1,135 cross-universe bridges stored.
+**Terminology correction**: "RRB" was wrong — correct term is **RRP (Reproducible Research Package)** throughout.
 
 ---
 
@@ -106,11 +107,11 @@ locally, no API calls, no cost.
 | Total entities | 199 | 139 reference_law + 60 DS-native |
 | Entity types | 10 | reference_law, method, law, instantiation, open question, constraint, axiom, parameter, theorem, mechanism |
 | Total sections | 1,550 | 398 original + 851 enrichment + 301 Option E |
-| Total links | 383 | 167 original (NULL tier) + 174 discovered (tier 1.5) + 38 Tier 2 + 4 other |
+| Total links | 573 | 167 NULL tier + 29 tier-1 + 304 tier-1.5 + 73 tier-2 |
 | Property rows | 786 | archetype + d-sensitivity + concept_tags + others |
 | ChromaDB chunks | 1,562 | One per section |
 | Embedding dimension | 384 | BGE-Small |
-| ChromaDB snapshots | 7 | snap_20260309_233846 through snap_20260310_090912 |
+| ChromaDB snapshots | 9 | snap_20260309_233846 through snap_20260310_205639 |
 | High-similarity pairs | 983+ | Similarity ≥ 0.82 (pre-Option E baseline) |
 | Cross-domain pairs | 90+ | Increased from 53 (+37, +70%) — pre-Option E baseline |
 
@@ -172,6 +173,68 @@ Newton ↔ Euler Laws   (CM1 ↔ CM6)  sim=0.9249  (NO existing link — candida
 ---
 
 ## What Was Built: Session-by-Session
+
+### Session 5 (Current — RRP Ingestion Pipeline + ZooClasses Pass 1 & 2)
+
+**Terminology fix**: RRB → RRP (Reproducible Research Package) throughout all docs.
+
+**Gap cleanup — DS Wiki links**:
+- `scripts/insert_gap_links.py`: 18 links — β(λ) cluster, gas law analogs, Maxwell pairs, cross-type; 521 → 539 links, snap_20260310_203547
+- `scripts/insert_isolation_links.py`: 34 links — all 12 isolated reference_laws connected (CM7 DM2 DM3 ES3 ES4 ES7 KC3 KC6 KC7 OP5 OP6 QM5); 539 → 573 links, 0 isolated reference_laws, snap_20260310_205639
+
+**RRP ingestion pipeline built** (src/ingestion/):
+```
+src/ingestion/
+├── __init__.py
+├── rrp_bundle.py               ← SQLite bundle schema (mirrors DS Wiki tables + cross_universe_bridges)
+├── detector.py                 ← Format detection: zoo_classes_json, cobra_json, flat_json, ro_crate, etc.
+├── cross_universe_query.py     ← Pass 2: embed RRP entries → query DS Wiki ChromaDB → store bridges
+├── parsers/
+│   ├── __init__.py
+│   └── zoo_classes_parser.py   ← ZooClasses JSON parser (two-pass: entries then links)
+└── enrichers/
+    ├── __init__.py
+    └── prose_enricher.py       ← Deterministic formal→prose translation (unicode containment grammar)
+```
+
+**RRP test data downloaded** to data/rrp/:
+- `zoo_classes/raw/` — Timeroot/ZooClasses (classes.json, theorems.json, conjectures.json, problems.json, ...)
+- `periodic_table/raw/` — PubChem Periodic Table (flat_json)
+- `ecoli_core/raw/` — BIGG E. coli Core (cobra_json, ~263 reactions/metabolites/genes)
+
+**ZooClasses Bundle — Pass 1 results**:
+- 426 entries (262 theorem, 157 reference_law, 7 open_question)
+- 437 source-data links (impliedby, related, implies, not_implies)
+- 743 sections (497 source-data + 246 WTM supplemental from prose_enricher)
+- Prose enricher: 246/262 theorems enriched, WTM median 316 chars (WIC was median 12 chars, 57% <20)
+- Key sentinel: ObviousConstruction (thm_ObviousConstruction) — 113 dependents, intentionally skipped in Pass 2
+
+**ZooClasses Bundle — Pass 2 results** (cross_universe_bridges table):
+- 1,135 bridges stored across 379/379 queried entries (100% connection rate)
+- Threshold: sim ≥ 0.70 | max 3 bridges per entry | 2 skipped (ObviousConstruction + ProtocolSimulation)
+- Link types: 39 `analogous to` (sim ≥ 0.85), 1,096 `couples to` (sim 0.75–0.84)
+- Top DS Wiki hubs: CS4 (Cook-Levin, 275 bridges), CS15 (Time Hierarchy, 188), CS3 (Rice's, 110)
+
+**Cross-domain bridge highlights** (ZooClasses CS Theory ↔ DS Wiki Science):
+| Bridge | Sim | Why Interesting |
+|--------|-----|-----------------|
+| MinimumCircuitSize ↔ Landauer's Principle (B5) | 0.834 | Circuit minimization = physical entropy cost of computation |
+| NC/AC/TC hierarchy ↔ Landauer's Principle (B5) | 0.81-0.83 | 13 bridges: parallel circuit depth ↔ thermodynamic limits |
+| GI/GA ↔ Kirchhoff's Laws (EM10) | 0.82-0.83 | Graph isomorphism ↔ Kirchhoff defined on graph structure |
+| SZK/QSZK ↔ Kolmogorov Complexity (INFO5) | 0.82 | Zero-knowledge ↔ minimum description length (known deep connection) |
+| P=BPP ↔ Statistical Physics instantiation (X3) | 0.834 | Derandomization ↔ determinism in statistical mechanics |
+| CH (Counting Hierarchy) ↔ Kopp's Law (TD11) | 0.841 | Compositional class stacking ↔ additive heat capacity |
+| Time hierarchy theorems ↔ Fermat's Least Time (OP1) | 0.848 | Both extremal time principles across CS/physics |
+| NC^0 ↔ Ashby's Law of Requisite Variety (F1) | 0.84-0.85 | Bounded circuit variety ↔ controller complexity bounds |
+| NISQ ↔ Information Cost of Synchronization (Q5) | 0.810 | Noisy quantum ↔ synchronization information cost |
+
+**Known noise** (terminological false positives to watch):
+- AC^0 ↔ Ampere's Law (EM12): "circuit" terminology driving match, not semantic content
+- Time-bounded padding ↔ ES13 (geological inclusions): noise
+
+**Architecture rule confirmed**: Cross-universe bridges live IN the RRP bundle (`cross_universe_bridges` table) — the RRP is the diagnostic artifact. No global bridges.db.
+
+---
 
 ### Session 1 (earlier — pre-summary)
 - Designed 3-layer architecture (SPEC.md)
@@ -355,9 +418,9 @@ Discoveries: surprising pairs, coverage gaps, hypothesis prompts
 |-------|--------|-------------|
 | 0: Scaffolding | ✅ Complete | SQLite schema, ChromaDB, BGE embeddings, pairwise analysis, link validation |
 | 1: Diagnostics | ✅ Complete | HypothesisGenerator + CoverageAnalyzer (this session) |
-| 2a: Format Parsers | ❌ Not started | RO-Crate, Frictionless Data, CSV adapters |
-| 2b: LLM Instruction Package | ❌ Not started | INGESTION_GUIDE.md, SCHEMA_REFERENCE.md |
-| 2c: MCP Ingestion Tools | ❌ Not started | Expose parsers via MCP server |
+| 2a: Format Parsers | 🔶 Partial | detector.py ✅ + zoo_classes_parser.py ✅ + periodic_table + ecoli_core pending |
+| 2b: LLM Instruction Package | ❌ Not started | INGESTION_GUIDE.md, SCHEMA_REFERENCE.md — write after all 3 parsers done |
+| 2c: MCP Ingestion Tools | ❌ Not started | detect_rrp_format, parse_rrp, run_cross_universe_query |
 | 3: Usability/Export | ❌ Not started | CLI, interactive HTML visualisation, markdown reports |
 | 4: Packaging | ❌ Not started | PyPI package, examples, documentation |
 
@@ -389,7 +452,23 @@ File entities           →  sections (embeddable content)
 ### ✅ Option E: COMPLETE — DS Tier 1/2 Expansion (43 new entries, 1562 vectors)
 All three chunks executed and pushed. DS is now the universal vector anchor layer.
 
-### Option A: LLM Instruction Package first (fastest to value)
+### ✅ Gap Cleanup: COMPLETE — 573 links, 0 isolated reference_laws
+
+### ✅ ZooClasses RRP: COMPLETE — Pass 1 (426 entries, 246 enriched) + Pass 2 (1,135 bridges)
+
+### Option Next-A: Periodic Table Parser
+Build `src/ingestion/parsers/periodic_table_parser.py` (flat_json format).
+~118 elements, ~20 properties each, straightforward field mapping.
+Pass 1 only (elements link to each other by group/period — structural, not semantic).
+Run Pass 2 against DS Wiki: expect chemistry (CHEM, TD, CM, QM) bridges.
+
+### Option Next-B: E. coli Core Parser
+Build `src/ingestion/parsers/ecoli_core_parser.py` (cobra_json format).
+~263 entities (reactions + metabolites + genes), stoichiometry matrix IS the link graph.
+Most complex parser — reactions have metabolites as substrates/products (bidirectional links).
+Pass 2 bridges: expect BIO, CHEM, TD, INFO connections.
+
+### Option Next-C: LLM Instruction Package first (fastest to value)
 Build `INGESTION_GUIDE.md` and `SCHEMA_REFERENCE.md` — makes the toolkit immediately
 usable by any LLM (Claude Code, Cursor, Windsurf/Cascade) to guide project owners
 through ingestion even before the parsers exist.

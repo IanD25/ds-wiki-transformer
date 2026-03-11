@@ -1,11 +1,18 @@
 .venv/
 data/chroma_db/
+data/chroma/
 data/wiki_history.db
+data/viz/
+data/vector_topology.png
 backups/
 __pycache__/
 *.pyc
 .env
 *.db-shm
 *.db-wal
+wiki_graph.html
+wiki_topology.png
 
 # data/ds_wiki.db is intentionally tracked (source of truth, 1.3MB)
+# data/rrp/ is intentionally tracked (raw + built RRP bundles)
+# data/viz/ is gitignored — generated artifacts, regenerate with scripts/viz_*.py
