@@ -1,10 +1,13 @@
 # Principia Formal Diagnostics (PFD) Project
 ## Foundational Plan & Scope Kickoff
 
-**Document Version:** 1.0
+**Document Version:** 1.1
 **Date:** 2026-03-11
-**Status:** Approved for implementation
+**Status:** Approved for implementation — Stress Test 1 incorporated
 **Project:** Transition from DS_Wiki → Principia Formal Diagnostics (PFD)
+**Changelog:**
+- v1.0 (2026-03-11): Initial foundational plan
+- v1.1 (2026-03-11): Stress Test 1 incorporated (see Section 13) — architectural changes: mandatory extraction gate, probabilistic logic, formality tiers, confidence compounding floor, hyperedge decision gate, 4 new risks added
 
 ---
 
@@ -92,13 +95,23 @@ LAYER 1: Claim Extraction
   [NLP-based: what is being asserted?]
   ↓ TRANSPARENT: extracted claims shown, experts can correct
   ↓
+  ⚠ MANDATORY HARD GATE ⚠
+  Pipeline PAUSES here. Extracted claims presented to human reviewer.
+  Human must CONFIRM, CORRECT, or REJECT each extracted claim before
+  pipeline continues. This is not optional — LLM confabulation at
+  Layer 1 propagates unchecked through all downstream layers if
+  unverified. See Stress Test 1, Vulnerability 1.
+  ↓ [Human confirmed → proceed] [Human corrected → re-extract] [Rejected → stop]
+  ↓
 LAYER 2: Foundation Matching
   [Semantic embedding: which DS Wiki principles are relevant?]
-  ↓ TRANSPARENT: all matches shown with similarity scores + domain applicability
+  [Respects formality_tier: hard science = strict, soft science = probabilistic]
+  ↓ TRANSPARENT: all matches shown with similarity scores + domain applicability + formality tier
   ↓
 LAYER 3: Formal Logic Validation
   [Does the claim follow valid inference rules?]
-  ↓ TRANSPARENT: logical form shown, inference rules cited, confidence per step
+  [PROBABILISTIC: returns path probability, not boolean valid/invalid]
+  ↓ TRANSPARENT: logical form shown, inference rules cited, confidence per step, tier-adjusted
   ↓
 LAYER 4: Rhetorical Quality Check
   [Does the argument form avoid fallacies?]
@@ -113,8 +126,12 @@ LAYER 6: Domain Boundary Validation
   ↓ TRANSPARENT: boundaries shown, violations flagged, valid domains listed
   ↓
 OUTPUT: Diagnostic Report
-  [Transparent reasoning trace + confidence + expert override points]
+  [Transparent reasoning trace + COMPOUNDED confidence score + expert override points]
+  [If compounded confidence < 0.6: "Insufficient confidence — human review required"
+   NOT a verdict. Pipeline does not emit plausible/contradicting at this threshold.]
 ```
+
+**Critical architectural constraint (Stress Test 1):** The pipeline is sequential. Errors compound multiplicatively, not additively. A 6-layer pipeline at 90% per-layer accuracy yields ~53% end-to-end reliability if binary. The mandatory hard gate at Layer 1 and probabilistic outputs at all layers prevent binary error cascades. The confidence floor at 0.6 prevents low-quality verdicts from reaching users.
 
 ### 2.2 Explainability Design (Trust Framework)
 
@@ -163,6 +180,17 @@ PFD maintains **formalized knowledge** across 6 interconnected layers:
 - CS principles (Turing completeness, P vs NP, complexity classes, etc.)
 - Math foundations (axioms, theorems, proof techniques)
 - Database: entries (with entry_type, domain, logical_form, assumptions)
+
+**⚠ Formality Tier (REQUIRED field — Stress Test 1, Vulnerability 3):**
+Not all domains can be formalized to the same degree. Forcing a single boolean logic schema across physics AND biology causes the graph traversal engine to produce invalid results. Each DS Wiki entry MUST carry a `formality_tier`:
+
+| Tier | Description | Domains | Validation Behavior |
+|------|-------------|---------|---------------------|
+| 1 | Hard axioms — deterministic, mathematically provable | Physics, Mathematics, CS Theory | Strict boolean logic chain, high confidence possible |
+| 2 | Statistical tendencies with domain conditions — usually true, with exceptions | Chemistry, Molecular Biology, Materials Science | Probabilistic chain, confidence capped at 0.85 |
+| 3 | Contextual heuristics — environmentally contingent, emergent | Ecology, Economics, Social Sciences, Systems Biology | Probabilistic only, confidence capped at 0.70, always flagged as "domain-dependent" |
+
+The logic chain validator checks `formality_tier` before applying inference rules. Tier 3 entries never produce strict logical derivations — only probabilistic associations. This is not a limitation; it is accurate representation of epistemological reality.
 
 **Layer 3: Relationships & Bridges**
 - Logical connections: derives_from, predicts_for, assumes, contradicts_under
@@ -346,10 +374,20 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
 **Goal:** Complete RRP ingestion framework, tested on all 3 formats
 
 **Tasks:**
+
+0. **⚠ PREREQUISITE DESIGN DECISION: Hyperedge Architecture (Stress Test 1, Vulnerability 4)**
+   - MUST BE RESOLVED before E. coli parser implementation begins
+   - Problem: Standard node-edge binary graphs cannot represent metabolic stoichiometry. A reaction `2A + B → C + 3D` requires a hyperedge connecting 5 nodes simultaneously. Forcing this into pairwise links distorts biochemical reality and invalidates logical validation outputs.
+   - Decision required (choose one and document rationale):
+     - **Option A: Reification** — Convert each reaction into a node, with edges to all reactants/products. Simple, compatible with existing SQLite schema. Loss: stoichiometric coefficients are demoted to properties, not first-class structure.
+     - **Option B: Native Hyperedge Table** — Add `hyperedges` + `hyperedge_members` tables to RRP bundle schema. Accurate. Requires graph traversal engine update to handle N-ary edges.
+   - Recommendation: Option A for Phase 2 (pragmatic), document as known limitation, plan Option B for Phase 4 schema upgrade.
+   - This decision must be committed to `ARCHITECTURE_DECISIONS.md` before any E. coli code is written.
+
 1. **E. coli Core Parser** (hardest case — metabolic networks)
    - COBRA JSON format (95 reactions, 72 metabolites, 137 genes)
    - Challenge: stoichiometry matrix IS the relationship graph
-   - Solution: Parse metabolite↔reaction↔gene networks as RRP links
+   - Solution: Parse metabolite↔reaction↔gene networks as RRP links (using hyperedge decision from task 0)
    - Output: rrp_ecoli_core.db with ~200 entries, ~500+ links (biochemical pathway structure)
 
 2. **Parser Documentation** (INGESTION_GUIDE.md)
@@ -379,6 +417,16 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
 
 **Goal:** Build claim extraction, validation, and reasoning verification for scientific prose
 
+**⚠ Vertical Integration Constraint (Stress Test 1, Vulnerability 6 + Recommendation 1):**
+Phase 3 MUST begin with a single well-covered domain before expanding. Do not attempt cross-domain paper analysis until DS Wiki has sufficient coverage of the target domain.
+
+**Approved starting verticals (in priority order):**
+1. Classical thermodynamics (TD cluster — well-represented in DS Wiki, deterministic laws, Tier 1)
+2. Computational complexity theory (ZooClasses RRP already ingested — proven bridge quality)
+3. Expand to chemistry/biology only after thermodynamics vertical is validated end-to-end
+
+Rationale: The cold-start problem (Stress Test 1, Vulnerability 6) means PFD must demonstrate value in a narrow domain before the knowledge graph is sufficiently broad. Attempting universal analysis immediately will produce low-confidence outputs that undermine user trust before the system can prove itself.
+
 **Components to Build:**
 
 **3.1 Claim Extraction Module** (`src/analysis/claim_extractor.py`)
@@ -389,6 +437,7 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
   - Prompt engineering (5-shot examples per domain)
   - Coreference resolution (what does "it" refer to?)
   - Scope detection (is this a claim or a background statement?)
+- **MANDATORY HARD GATE:** Extracted claims are presented to user for confirmation before downstream processing. Pipeline does not continue without explicit human sign-off. This is a hard architectural requirement, not a UX preference. (Stress Test 1, Vulnerability 1)
 - Test: 50+ examples from real papers (physics, CS, biology)
 
 **3.2 Claim Validator Enhancement** (`src/analysis/claim_validator.py` — extends Phase 1)
@@ -493,12 +542,20 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
 
 **Components to Build:**
 
+**4.0 Schema Migration: formality_tier (PREREQUISITE — Stress Test 1, Vulnerability 3)**
+- Before Phase 4 logic work begins, ALL existing DS Wiki entries must receive a `formality_tier` value (1, 2, or 3)
+- Add column: `ALTER TABLE entries ADD COLUMN formality_tier INTEGER DEFAULT 2`
+- Assign tiers in batch: physics/math/CS theory → 1, chemistry/molecular biology → 2, ecology/economics → 3
+- Domain experts validate tier assignments before Phase 4 logic encoding begins
+- This is a data migration task, not a code task — but it gates all Phase 4 work
+
 **4.1 Formal Logic Axiom Layer** (`data/logic_foundations/`)
 - Propositional logic axioms (law of excluded middle, law of non-contradiction, etc.)
 - First-order logic rules (universal quantification, existential instantiation, etc.)
 - Inference rules (modus ponens, modus tollens, hypothetical syllogism, disjunctive syllogism, etc.)
 - Modal logic (necessity, possibility, counterfactuals)
 - Database tables: logic_axioms, logic_inference_rules, logical_forms (for each DS Wiki entry)
+- Note: Formal axioms apply ONLY to Tier 1 entries. Tier 2/3 entries receive probabilistic association rules, not deterministic axioms.
 
 **4.2 Argument Templates & Fallacy Catalog** (`data/rhetorical_foundations/`)
 - Valid argument forms with examples
@@ -595,26 +652,46 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
 - Threshold tiers: >0.85 (tier-1.5), >0.75 (tier-2), >0.65 (weak)
 - Contextualization: compare within domain when possible
 
-**Confidence Scoring:**
+**Confidence Scoring (updated v1.1 — Stress Test 1, Vulnerability 2):**
 - Not binary (valid/invalid) but graded (0-1)
-- Based on: similarity strength, foundation count, evidence presence, chain length
-- Formula: `confidence = base_sim × domain_match × chain_depth_discount × evidence_multiplier`
+- Cross-layer compounding: errors multiply, not add. This is a feature, not a flaw — it forces honest uncertainty
+- Base formula per layer: `layer_confidence = base_sim × domain_match × chain_depth_discount × evidence_multiplier`
+- Cross-layer formula: `final_confidence = Π(layer_i_confidence for i in 1..6)`
+- Formality tier caps: Tier 1 max 0.95 | Tier 2 max 0.85 | Tier 3 max 0.70
+- **Confidence floor:** If `final_confidence < 0.60`, output is NOT a verdict. Output is: `"Insufficient confidence (score: X) — human expert review required. Specific gaps: [list]"`. Never emit plausible/contradicting/novel below this floor.
+- Rationale: A 0.55 confidence claim flagged as "probably contradicts" IS alert fatigue. A 0.55 claim flagged as "too uncertain to judge, here's why" IS useful diagnostic information.
 
-### 5.2 Logic Chain Validation
+### 5.2 Logic Chain Validation (updated v1.1 — Stress Test 1, Vulnerability 2 & 3)
 
 **Graph Representation:**
-- Nodes: DS Wiki entries
+- Nodes: DS Wiki entries (each tagged with formality_tier)
 - Edges: entry_connections with link_type + confidence_tier
-- Edge weights: confidence + domain applicability
+- Edge weights: confidence + domain applicability + formality_tier of source node
 
-**Path Finding:**
+**Path Finding — PROBABILISTIC (not boolean):**
 - DFS to find paths from claim premises to conclusion
-- Depth limit: 3 hops (longer chains less confident)
+- Depth limit: 3 hops (longer chains less confident — confidence decays by 0.15 per additional hop)
 - Direction validation: link type must support premise→conclusion direction
+- **Never return boolean VALID/INVALID.** Always return `path_probability` (0-1) with path shown.
+- Rationale: Scientific knowledge chains are probabilistic by nature. A boolean engine that fails when a premise is missing is a fragile tool. A probabilistic engine that says "this chain is 0.72 probable given these foundations" is a useful diagnostic.
+
+**Tier-Adjusted Traversal:**
+- Tier 1 nodes: boolean inference rules apply (modus ponens, transitivity)
+- Tier 2 nodes: probabilistic inference (edge weight × statistical confidence)
+- Tier 3 nodes: association only (no logical derivation, only co-occurrence patterns)
+- Mixed-tier chains: final tier = minimum tier of all nodes in path (weakest link determines chain strength)
+
+**Unarticulated Assumption Handling (Stress Test 1, Vulnerability 5):**
+- DS Wiki domain_boundaries encode "standard background knowledge" per domain
+- Type A omissions (standard background for domain): NOT flagged (e.g., conservation of energy in a thermodynamics paper)
+- Type B omissions (non-standard intermediate steps): flagged as "implicit assumption: [entry X]"
+- Type C gaps (no DS Wiki entry exists for a required step): flagged as "DS Wiki gap — requires expert review"
+- PFD explicitly acknowledges it cannot catch all implicit assumptions — this limitation is stated in every report
 
 **Missing Link Detection:**
-- If no path exists, flag: "No support found" or "Contradicts"
-- If weak path, flag: "Requires intermediates"
+- If no path exists: "No DS Wiki support found" (not "INVALID" — DS Wiki may be incomplete)
+- If weak path (prob < 0.6): "Requires intermediates — see Type B assumptions above"
+- If contradicting path: "Found opposing chain — review: [entry chain]"
 - Suggest: "Claim would be stronger if it cited [entry X]"
 
 ### 5.3 LLM Integration Points
@@ -799,6 +876,44 @@ ea170ac — Make repo self-contained: commit ds_wiki.db, use relative path
   - Community contributions (distribute load)
   - Modular structure (can extend without rewriting core)
 
+**Risk 6: Pipeline Error Compounding (Stress Test 1, Vulnerability 2)**
+- Symptom: Sequential 6-layer pipeline compounds errors multiplicatively; low-quality verdicts erode user trust
+- Root cause: If layer accuracies are 0.90 each, end-to-end = 0.90^6 ≈ 0.53 in a binary system
+- Mitigation:
+  - Probabilistic outputs at every layer (no boolean VALID/INVALID)
+  - Cross-layer confidence compounding formula (Section 5.1) — uncertainty is honest, not hidden
+  - Confidence floor: outputs below 0.60 are never verdicts, always "insufficient confidence"
+  - Mandatory human gate at Layer 1 breaks the cascade before it starts
+  - Benchmark calibration ensures per-layer accuracy targets are met before deployment
+
+**Risk 7: Ontological Overreach — Soft Science Formalization Failure (Stress Test 1, Vulnerability 3)**
+- Symptom: System attempts to apply strict logical axioms to biology/economics; produces invalid conclusions; expert community rejects the tool
+- Root cause: Deterministic axioms cannot represent emergent, statistical, context-dependent phenomena
+- Mitigation:
+  - formality_tier system (Tier 1/2/3) enforces appropriate inference rules per domain
+  - Tier 3 entries (ecology, economics, social sciences) never trigger strict logical derivations
+  - Explicit acknowledgment in every Tier 3 report: "This domain relies on probabilistic tendencies, not deterministic laws"
+  - Domain experts validate tier assignments before deployment
+
+**Risk 8: Hypergraph Topology Distortion (Stress Test 1, Vulnerability 4)**
+- Symptom: N-to-N scientific relationships (stoichiometry, multi-factor causation, gene regulatory networks) forced into binary edges; logical validation produces invalid conclusions
+- Root cause: Relational schemas and standard graph databases are optimized for binary relationships
+- Mitigation:
+  - Explicit hyperedge architecture decision required before metabolic/network dataset parsing (Section 4.1, Task 0)
+  - Phase 2: Reification approach (pragmatic, documented as known limitation)
+  - Phase 4: Native hyperedge schema upgrade evaluated
+  - All reports from metabolic/network datasets carry: "Stoichiometric/network relationships approximate — binary graph representation used"
+
+**Risk 9: Cold Start — Insufficient Coverage Undermines Early Trust (Stress Test 1, Vulnerability 6)**
+- Symptom: PFD produces low-confidence outputs across all domains early on; users dismiss the tool before coverage improves; community never reaches critical mass
+- Root cause: System needs critical mass to demonstrate value; needs demonstrated value to attract community
+- Mitigation:
+  - Strict vertical integration discipline (Phase 3 restricted to thermodynamics + CS complexity initially)
+  - ZooClasses + Periodic Table RRP results serve as demonstration proof before Phase 3
+  - Success in narrow domains publicly documented and shared to attract domain expert contributors
+  - DS Wiki coverage dashboard published publicly (shows community which domains need work)
+  - No cross-domain claims until coverage threshold met (>80% of entries in domain have formality_tier + domain_boundaries)
+
 ### 8.2 Mitigation Strategies (Cross-Cutting)
 
 1. **Transparency as Risk Control**
@@ -923,11 +1038,176 @@ WEEK 11+:   Phase 5 (Community governance, federation)
 
 ## 12. Next Immediate Actions (Week of 2026-03-11)
 
-1. **Approve this document** — foundational alignment
-2. **Begin Phase 2:** E. coli parser development
-3. **Start Phase 3 design doc:** detailed claim extraction specification
-4. **Set up GitHub Project board:** track Phase 2-3 work
-5. **Recruit domain experts:** (physics, CS, biology) as advisors
+1. **✅ Foundational plan approved** (v1.0)
+2. **✅ Stress Test 1 completed** (v1.1 incorporates findings — see Section 13)
+3. **Resolve hyperedge architecture decision** — document in `ARCHITECTURE_DECISIONS.md` before any E. coli code
+4. **Begin Phase 2:** E. coli parser (after hyperedge decision)
+5. **Begin formality_tier batch assignment** for existing DS Wiki entries (gates Phase 4)
+6. **Start Phase 3 design doc:** restricted to thermodynamics vertical, claim extraction specification
+7. **Set up GitHub Project board:** track Phase 2-3 work
+8. **Recruit domain experts:** (physics, CS, biology) as advisors — use ZooClasses/Periodic Table results as demonstration
+
+---
+
+---
+
+## 13. Stress Test Record
+
+### 13.1 Stress Test 1 (2026-03-11)
+
+**Source Document:** `Outside Ref/Analysis of Systemic Vulnerabilities.md`
+**Conducted by:** External analysis, incorporated into v1.1
+**Purpose:** Identify critical architectural vulnerabilities and implementation impediments before Phase 3 development begins
+
+**Summary:** 6 vulnerabilities identified, 3 architectural mitigations recommended. All 6 assessed. 3 required immediate architectural changes (incorporated into v1.1). 2 manageable by existing design with clarification. 1 known gap acknowledged as partially unresolvable.
+
+---
+
+#### Vulnerability 1: Linguistic-to-Logical Translation Discrepancy
+
+**Stated Risk:** LLM claim extraction is unreliable. Confabulation and oversimplification corrupt downstream layers. The entire pipeline is only as valid as its first step.
+
+**Assessment: VALID — requires architectural enforcement**
+
+LLMs produce confident-sounding but incorrect structural representations of complex prose. This is well-documented. The downstream layers cannot detect or correct a bad extraction — they will build valid-looking logic chains on invalid premises.
+
+**Resolution in v1.1:**
+- Layer 1 elevated from "optional review" to **mandatory hard gate** — pipeline pauses, human confirms every extracted claim before proceeding
+- This is a hard architectural requirement enforced in the pipeline controller, not a UI preference
+- Extraction module documentation explicitly states: "Output is a hypothesis about what the paper claims, not a ground truth"
+
+**Status:** ✅ Resolved architecturally in v1.1
+
+---
+
+#### Vulnerability 2: Error Propagation and Compounding
+
+**Stated Risk:** 6-layer sequential pipeline compounds errors multiplicatively. At 90% per-layer accuracy, end-to-end reliability is ~53%. Alert fatigue and tool abandonment follow.
+
+**Assessment: VALID for binary systems — resolved by probabilistic design**
+
+The arithmetic is correct. Binary pipelines (VALID/INVALID per step) cascade errors catastrophically. However, our design does not use binary outputs — it uses graded confidence scores. The compounding is real but becomes honest uncertainty representation, not cascading false alarms.
+
+**Resolution in v1.1:**
+- Explicit cross-layer confidence compounding formula added (Section 5.1): `final_confidence = Π(layer_i_confidence)`
+- Confidence floor added: outputs below 0.60 are flagged as "insufficient confidence — human review required" and do NOT produce plausible/contradicting/novel verdicts
+- Formality tier caps prevent overconfident outputs from soft-science chains
+- Mandatory Layer 1 gate interrupts the cascade before it propagates
+
+**Status:** ✅ Resolved by design — compounding is honest, not hidden; floor prevents false verdicts
+
+---
+
+#### Vulnerability 3: Ontological Engineering Dilemma
+
+**Stated Risk:** Formalizing biology, sociology, economics into strict logic axioms is historically intractable. A unified schema across physics AND soft sciences causes graph traversal failures.
+
+**Assessment: VALID — requires multi-tier formality architecture**
+
+This is the core failure mode of CYC, the Semantic Web, and virtually every universal knowledge formalization attempt. Deterministic axioms cannot represent emergent phenomena, statistical tendencies, or context-dependent heuristics.
+
+**Resolution in v1.1:**
+- `formality_tier` field added as required schema element for all DS Wiki entries (Section 2.3, Layer 2)
+- Tier 1 (physics/math/CS): strict logical axioms, boolean inference where warranted
+- Tier 2 (chemistry/molecular biology): probabilistic inference, confidence capped at 0.85
+- Tier 3 (ecology/economics/social sciences): association patterns only, confidence capped at 0.70, always labeled "domain-dependent"
+- Logic chain validator applies tier-appropriate inference rules — no longer one universal engine
+- Phase 4.0 prerequisite: batch formality_tier assignment for all existing DS Wiki entries before logic encoding
+
+**Status:** ✅ Resolved architecturally in v1.1. Tier system is the formal response to this class of failure.
+
+---
+
+#### Vulnerability 4: Hypergraph Topology Distortion
+
+**Stated Risk:** Scientific relationships are often N-to-N (stoichiometry, metabolic networks, multi-factor causation). Binary node-edge graphs distort these relationships and invalidate logical conclusions.
+
+**Assessment: VALID — known issue, design decision required before Phase 2**
+
+This is not a new discovery — the E. coli parser notes ("stoichiometry IS the link graph") already identified this. What the stress test correctly flags is that failing to make an explicit architectural decision before implementation will result in a parser that silently distorts biochemical reality.
+
+**Resolution in v1.1:**
+- Phase 2, Task 0 added: explicit hyperedge architecture decision MUST be documented before any E. coli code
+- Two options presented (reification vs. native hyperedge table)
+- Recommendation: Option A reification for Phase 2 (pragmatic), native hyperedge upgrade in Phase 4
+- All metabolic/network RRP analysis reports carry explicit disclaimer about binary graph approximation
+
+**Status:** ✅ Gated — cannot be ignored, decision forced before implementation
+
+---
+
+#### Vulnerability 5: Contextual Collapse and Unarticulated Assumptions
+
+**Stated Risk:** Papers omit enormous amounts of implicit background knowledge. PFD cannot distinguish a fatal logical gap from a permissible expert assumption. False flagging of standard omissions creates noise.
+
+**Assessment: PARTIALLY VALID — partially convertible to a feature**
+
+Cannot be fully solved. No system can enumerate all implicit assumptions across all domains. However, it is partially addressable:
+
+- DS Wiki domain_boundaries encode "standard background knowledge" per domain
+- Type A omissions (universally assumed for domain) are excluded from flagging
+- Type B omissions (non-standard intermediate steps) ARE flagged — this is genuinely useful
+- Type C (DS Wiki gap, no entry exists) are flagged as DS Wiki improvement requests
+
+**Resolution in v1.1:**
+- Three-tier assumption classification added to Section 5.2: Type A (suppress), Type B (flag), Type C (DS Wiki gap)
+- Every PFD report includes explicit disclaimer: "PFD cannot detect all implicit assumptions. Domain experts should review flagged assumptions in context."
+- Type A assumption lists per domain = Phase 4 contribution task (community-maintained)
+
+**Status:** ⚠ Partially resolved. Known irreducible limitation. Explicitly acknowledged in all report outputs.
+
+---
+
+#### Vulnerability 6: Cold Start Knowledge Deficit
+
+**Stated Risk:** System must demonstrate value before DS Wiki achieves critical mass, but needs critical mass before it can demonstrate value. Paradox.
+
+**Assessment: VALID — managed by roadmap discipline, not architecture**
+
+This is a bootstrapping problem, not an architectural one. No code change solves it. It requires sequence discipline and demonstrating value in narrow domains before attempting breadth.
+
+**Resolution in v1.1:**
+- Phase 3 restricted to thermodynamics + CS complexity vertical (Section 4.2 vertical integration constraint)
+- ZooClasses and Periodic Table analyses serve as pre-Phase-3 demonstration assets
+- DS Wiki coverage dashboard planned (shows community which domains need work)
+- Cross-domain analysis gated behind coverage threshold (>80% entries with formality_tier + domain_boundaries)
+- Cold start acknowledged as ongoing risk (Risk 9)
+
+**Status:** ✅ Managed by roadmap discipline. Not architecturally solvable — requires sustained community building.
+
+---
+
+#### Recommended Mitigations — Adoption Status
+
+| Recommendation | Status | Implementation |
+|----------------|--------|----------------|
+| Vertical integration first (start with one sub-domain) | ✅ Adopted | Phase 3 restricted to thermodynamics + CS complexity; Section 4.2 updated |
+| Probabilistic logic networks (not boolean graph traversal) | ✅ Adopted | Section 5.2 rewritten; probabilistic traversal specified; Tier system enforces domain-appropriate inference |
+| Interactive interventions (human gate between layers) | ✅ Adopted | Layer 1 mandatory hard gate added to Section 2.1; Section 4.2 claim extractor updated |
+
+---
+
+#### Architectural Changes Made in v1.1 (Summary)
+
+| Change | Section | Drives |
+|--------|---------|--------|
+| Layer 1 mandatory hard gate | 2.1 | Stops error cascade at source |
+| Probabilistic pipeline notation | 2.1 | Honest uncertainty representation |
+| `formality_tier` field (Tier 1/2/3) | 2.3 | Prevents soft-science formalization failure |
+| Cross-layer confidence compounding formula | 5.1 | Honest compounding, not hidden |
+| Confidence floor at 0.60 | 5.1 | Prevents low-quality verdicts |
+| Probabilistic logic chain traversal | 5.2 | Not boolean — path probability not VALID/INVALID |
+| Three-tier assumption handling (Type A/B/C) | 5.2 | Reduces false flagging of standard omissions |
+| Phase 2 Task 0: hyperedge decision gate | 4.1 | Forces architectural decision before implementation |
+| Phase 3 vertical integration constraint | 4.2 | Cold start mitigation |
+| 4 new risks added (6-9) | 8.1 | Expands risk register |
+
+---
+
+### 13.2 Stress Test 2 (Pending)
+
+**Scheduled:** After Phase 2 completion
+**Scope:** Validate that E. coli parser hyperedge approach is sound; validate that Phase 3 thermodynamics vertical produces useful outputs before expanding; validate confidence compounding formula calibration
 
 ---
 
@@ -1041,10 +1321,11 @@ Domain Expert Review: None yet (open for annotation)
 ## Document Metadata
 
 **Document:** PFD_PROJECT_FOUNDATIONAL_PLAN.md
-**Version:** 1.0
+**Version:** 1.1
 **Date:** 2026-03-11
 **Author:** Principia Formal Diagnostics Core Team
-**Status:** Approved for Implementation
-**Next Review:** After Phase 2 completion (2026-04-01)
+**Status:** Approved for Implementation — Stress Test 1 Incorporated
+**Stress Tests Completed:** 1 of 2 (ST2 scheduled post Phase 2)
+**Next Review:** After Phase 2 completion + Stress Test 2 (2026-04-01)
 **Git Location:** https://github.com/IanD25/ds-wiki-transformer/blob/main/PFD_PROJECT_FOUNDATIONAL_PLAN.md
 
