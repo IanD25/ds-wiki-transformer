@@ -12,7 +12,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 from config import (
-    CHROMA_COLLECTION, CHROMA_DIR, EMBED_MODEL, EMBED_DIM,
+    CHROMA_COLLECTION, CHROMA_DIR, DEVICE, EMBED_MODEL, EMBED_DIM,
     HISTORY_DB, TOP_K_NEIGHBORS, DRIFT_THRESHOLD,
 )
 from extractor import Chunk
@@ -211,7 +211,7 @@ def embed_and_store(
         batch_size=64,
         show_progress_bar=True,
         normalize_embeddings=True,
-        device="mps",          # Apple Silicon — falls back to CPU automatically
+        device=DEVICE,         # Auto-detected: cuda/mps/cpu
     )
     embeddings = np.array(embeddings_raw, dtype=np.float32)  # (N, EMBED_DIM)
 

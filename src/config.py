@@ -1,3 +1,5 @@
+import platform
+import subprocess
 from pathlib import Path
 
 # ── Project layout ────────────────────────────────────────────────────────────
@@ -12,9 +14,60 @@ SOURCE_DB    = DATA_DIR / "ds_wiki.db"
 HISTORY_DB   = DATA_DIR / "wiki_history.db"
 CHROMA_DIR   = DATA_DIR / "chroma_db"
 
+# ── Device & Embedding Auto-Detection ────────────────────────────────────────
+
+def _detect_device() -> tuple[str, str]:
+    """Auto-detect available device (cuda/mps/cpu) and select embedding model.
+
+    Returns:
+        (device_type, embed_model, embed_dim)
+        - device_type: "cuda" (RTX 2000+ on Windows/Linux), "mps" (Apple Silicon),
+                       "cpu" (fallback)
+        - embed_model: "BAAI/bge-large-en-v1.5" (1024-dim) if GPU available,
+                       "BAAI/bge-base-en-v1.5" (768-dim) otherwise
+    """
+    system = platform.system()
+
+    # ── Check for CUDA (Windows/Linux with NVIDIA GPU) ────────────────────────
+    if system in ("Windows", "Linux"):
+        try:
+            result = subprocess.run(
+                ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            if result.returncode == 0:
+                gpu_name = result.stdout.strip().split('\n')[0]
+                print(f"✓ CUDA GPU detected: {gpu_name}")
+                return "cuda", "BAAI/bge-large-en-v1.5", 1024
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            pass
+
+    # ── Check for Metal Performance Shaders (Apple Silicon) ────────────────────
+    if system == "Darwin":
+        try:
+            result = subprocess.run(
+                ["system_profiler", "SPDisplaysDataType"],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            if "Apple" in result.stdout:
+                print("✓ Apple Silicon (MPS) detected")
+                return "mps", "BAAI/bge-large-en-v1.5", 1024
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            pass
+
+    # ── Fallback to CPU ────────────────────────────────────────────────────────
+    print("⚠ No GPU detected, using CPU (slower embeddings)")
+    return "cpu", "BAAI/bge-base-en-v1.5", 768
+
+
+# Auto-detect on import
+DEVICE, EMBED_MODEL, EMBED_DIM = _detect_device()
+
 # ── Embedding ─────────────────────────────────────────────────────────────────
-EMBED_MODEL       = "BAAI/bge-base-en-v1.5"
-EMBED_DIM         = 768
 CHROMA_COLLECTION = "ds_wiki"
 
 # ── Search defaults ───────────────────────────────────────────────────────────
