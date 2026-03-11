@@ -247,6 +247,19 @@ class PeriodicTableParser:
             props.append(("atomic_mass_u", f"{el['atomic_mass']:.4f}"))
         if el.get("electronegativity_pauling") is not None:
             props.append(("electronegativity_pauling", f"{el['electronegativity_pauling']:.2f}"))
+        if el.get("density") is not None:
+            props.append(("density_g_cm3", f"{el['density']:.4f}"))
+        if el.get("melt") is not None:
+            props.append(("melting_point_K", f"{el['melt']:.3f}"))
+        if el.get("boil") is not None:
+            props.append(("boiling_point_K", f"{el['boil']:.3f}"))
+        ie = el.get("ionization_energies")
+        if ie and len(ie) > 0 and ie[0] is not None:
+            props.append(("first_ionization_energy_kJ_mol", f"{ie[0]:.1f}"))
+        if el.get("electron_affinity") is not None:
+            props.append(("electron_affinity_kJ_mol", f"{el['electron_affinity']:.3f}"))
+        if el.get("molar_heat") is not None:
+            props.append(("molar_heat_J_mol_K", f"{el['molar_heat']:.3f}"))
 
         for pname, pval in props:
             if pval:

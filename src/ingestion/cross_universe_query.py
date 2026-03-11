@@ -58,6 +58,7 @@ SKIP_ENTRY_IDS = {"thm_ObviousConstruction", "thm_ProtocolSimulation"}
 # Section priority order for building embedding text
 EMBED_SECTIONS = [
     "What It Claims",
+    "What It Captures",    # entity catalogs (periodic table, etc.)
     "What The Math Says",
     "Mathematical Form",
     "Notes",
