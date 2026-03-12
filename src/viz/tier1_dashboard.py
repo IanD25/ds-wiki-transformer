@@ -319,8 +319,8 @@ class Tier1Dashboard:
         for source, target in G.edges():
             links.append(
                 {
-                    "source": node_map[source],
-                    "target": node_map[target],
+                    "source": source,  # Use node ID, not index
+                    "target": target,  # Use node ID, not index
                 }
             )
 
