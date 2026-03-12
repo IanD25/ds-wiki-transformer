@@ -289,11 +289,20 @@ class Tier1Dashboard:
         nodes = []
         node_map = {}
 
+        # Load node titles for context
+        conn = sqlite3.connect(self.rrp_db)
+        node_titles = {}
+        rows = conn.execute("SELECT id, title FROM entries").fetchall()
+        for row in rows:
+            node_titles[row[0]] = row[1]
+        conn.close()
+
         for i, node_id in enumerate(G.nodes()):
             result = self.sweep.results.get(node_id)
             regime = "unknown"
             d_eff = 0
             degree = G.degree(node_id)
+            title = node_titles.get(node_id, node_id)
 
             if result and not result.skipped:
                 d_eff = result.d_eff
@@ -309,6 +318,7 @@ class Tier1Dashboard:
             nodes.append(
                 {
                     "id": node_id,
+                    "title": title,
                     "regime": regime,
                     "degree": degree,
                     "d_eff": d_eff,
@@ -494,7 +504,7 @@ class Tier1Dashboard:
                 .on('end', dragEnd))
             .on('mouseover', function(event, d) {{
                 d3.select(this).attr('stroke-width', 3).attr('stroke', '#000');
-                tooltip.text(`${{d.id}} (degree: ${{d.degree}}, regime: ${{d.regime}})`)
+                tooltip.text(`${{d.title || d.id}} (ID: ${{d.id}}, degree: ${{d.degree}})`)
                     .style('opacity', 1)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY + 10) + 'px');

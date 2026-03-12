@@ -50,9 +50,9 @@ class Tier1Report:
         # Load entry metadata
         conn = sqlite3.connect(self.rrp_db)
         entry_data = conn.execute(
-            "SELECT id, entry_type FROM entries"
+            "SELECT id, entry_type, title FROM entries"
         ).fetchall()
-        entry_map = {row[0]: row[1] for row in entry_data}
+        entry_map = {row[0]: (row[1], row[2]) for row in entry_data}
         conn.close()
 
         # Compute metrics
@@ -60,6 +60,7 @@ class Tier1Report:
             result = self.dashboard.sweep.results.get(node_id)
             regime = "unknown"
             d_eff = 0.0
+            entry_type, title = entry_map.get(node_id, ("unknown", node_id))
 
             if result and not result.skipped:
                 d_eff = result.d_eff
@@ -73,8 +74,8 @@ class Tier1Report:
 
             metrics.append(
                 EntryMetrics(
-                    entry_id=node_id,
-                    entry_type=entry_map.get(node_id, "unknown"),
+                    entry_id=f"{node_id}: {title}",
+                    entry_type=entry_type,
                     degree=G.degree(node_id),
                     regime=regime,
                     d_eff=d_eff,
@@ -90,11 +91,11 @@ class Tier1Report:
 
         rows = [
             "<thead><tr>"
-            "<th>Entry ID</th>"
-            "<th>Type</th>"
-            "<th>Degree</th>"
-            "<th>Regime</th>"
-            "<th>D_eff</th>"
+            "<th style='width: 40%'>Entry (ID: Name)</th>"
+            "<th style='width: 15%'>Type</th>"
+            "<th style='width: 10%'>Degree</th>"
+            "<th style='width: 15%'>Regime</th>"
+            "<th style='width: 10%'>D_eff</th>"
             "</tr></thead>"
             "<tbody>"
         ]
@@ -102,7 +103,7 @@ class Tier1Report:
         for m in metrics[:20]:  # Top 20 entries
             rows.append(
                 f"<tr>"
-                f"<td><code>{m.entry_id}</code></td>"
+                f"<td><code style='font-size:11px'>{m.entry_id}</code></td>"
                 f"<td>{m.entry_type}</td>"
                 f"<td style='text-align:center'>{m.degree}</td>"
                 f"<td>{m.regime}</td>"
