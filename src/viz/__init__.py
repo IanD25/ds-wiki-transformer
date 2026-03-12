@@ -1,23 +1,27 @@
 """
-viz/ — Cross-universe bridge visualization package.
+viz/ — Visualization package for PFD analysis.
 
-Generates static PNG (matplotlib) and interactive HTML (plotly) outputs
-from RRP bundle cross_universe_bridges data.
+Generates static PNG charts and interactive D3.js graphs.
 
-Usage:
-    from viz import BridgeNetwork, SimilarityHist, DomainHeatmap, run_all_viz
+Tier-1 Internal Analysis:
+    from viz import Tier1Dashboard
+    dashboard = Tier1Dashboard(rrp_db)
+    dashboard.generate_coherence_png(output_path)
+    dashboard.generate_regime_png(output_path)
+    dashboard.generate_network_html(output_path)
 
-    # Individual generators
+Cross-universe Bridges (Tier-2):
+    from viz import BridgeNetwork, SimilarityHist, DomainHeatmap
     BridgeNetwork(bundle_db, ds_wiki_db).generate(output_dir)
     SimilarityHist(bundle_db).generate(output_dir)
     DomainHeatmap(bundle_db, ds_wiki_db).generate(output_dir)
-
-    # All at once
-    run_all_viz("data/rrp/zoo_classes/rrp_zoo_classes.db")
 """
 
 def __getattr__(name):
     """Lazy-load submodules so partial installs don't block each other."""
+    if name == "Tier1Dashboard":
+        from .tier1_dashboard import Tier1Dashboard
+        return Tier1Dashboard
     if name == "BridgeNetwork":
         from .bridge_network import BridgeNetwork
         return BridgeNetwork
@@ -32,4 +36,4 @@ def __getattr__(name):
         return run_all_viz
     raise AttributeError(f"module 'viz' has no attribute {name!r}")
 
-__all__ = ["BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]
+__all__ = ["Tier1Dashboard", "BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]
