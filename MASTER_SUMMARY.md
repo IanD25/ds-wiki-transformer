@@ -1,8 +1,8 @@
 # DS Wiki Transformation — Master Summary
 **The definitive re-entry document. Read this at the start of any new session.**
 
-**Last Updated**: 2026-03-10 (Session 5)
-**Status**: Phase 1 Diagnostics complete. Option E (DS Tier 1/2 expansion) complete. **RRP ingestion pipeline live** — ZooClasses Pass 1 + Pass 2 complete. 1,135 cross-universe bridges stored.
+**Last Updated**: 2026-03-11 (Session 6)
+**Status**: Fisher Diagnostic Suite Phases A–F complete. **Full 6-step PFD pipeline operational.** E. coli ingestion complete. 403 tests passing. PFD Score smoke test: 0.973/1.000 on ecoli_core.
 **Terminology correction**: "RRB" was wrong — correct term is **RRP (Reproducible Research Package)** throughout.
 
 ---
@@ -26,8 +26,10 @@ for any researcher with a structured knowledge base.
 GitHub: IanD25/ds-wiki-transformer
 Local:  /Users/iandarling/Projects/DS_Wiki_Transformation/
 
-DS_Wiki_Transformation/
+ds-wiki-transformer/
 ├── MASTER_SUMMARY.md              ← THIS FILE
+├── CLAUDE.md                      ← Auto-loaded by Claude Code (quick ref)
+├── FISHER_PIPELINE_REDESIGN.md    ← Canonical 6-step PFD pipeline spec
 ├── SPEC.md                        ← Original DS-specific architecture spec
 ├── GENERIC_TOOLKIT_SPEC.md        ← Full generic toolkit architecture (1,083 lines)
 ├── IMPLEMENTATION_ROADMAP.md      ← Phase 1 implementation plan (complete)
@@ -41,26 +43,42 @@ DS_Wiki_Transformation/
 │   ├── embedder.py                ← Embeds chunks into ChromaDB + snapshots
 │   ├── topology.py                ← Reads wiki_history.db, semantic evolution
 │   ├── sync.py                    ← Full pipeline: extract → embed → snapshot
-│   ├── mcp_server.py              ← MCP server exposing all tools to Claude
-│   └── analysis/                  ← Phase 1 Diagnostics (JUST BUILT)
-│       ├── __init__.py
-│       ├── hypothesis_generator.py
-│       └── coverage_analyzer.py
+│   ├── mcp_server.py              ← MCP server (incl. 3 Fisher MCP tools)
+│   ├── analysis/
+│   │   ├── __init__.py
+│   │   ├── hypothesis_generator.py
+│   │   ├── coverage_analyzer.py
+│   │   ├── fisher_diagnostics.py  ← FIM math, analyze_node, sweep_graph, build_bridge_graph
+│   │   ├── fisher_bridge_filter.py← Per-bridge quality scoring
+│   │   └── fisher_report.py       ← PFDReport dataclass + generate_report()
+│   └── ingestion/
+│       ├── rrp_bundle.py, detector.py, cross_universe_query.py
+│       ├── parsers/
+│       │   ├── zoo_classes_parser.py
+│       │   ├── periodic_table_parser.py
+│       │   └── ecoli_core_parser.py
+│       └── passes/
+│           └── entity_catalog_pass.py
 │
-├── scripts/                       ← One-time enrichment scripts (all completed)
-│   ├── add_phase1_taxonomy.py     ← Mathematical archetypes + D-sensitivity
-│   ├── add_phase2_math_prose.py   ← "What The Math Says" prose sections
-│   ├── add_phase3_concept_tags.py ← Semantic anchor phrases
-│   └── add_tier2_links.py         ← Hand-validated explicit links
+├── scripts/
+│   ├── run_fisher_suite.py        ← Fisher CLI (modes: ds_wiki/node/bridges/internal_rrp/bridge/report)
+│   ├── run_entity_catalog_pass.py
+│   └── migrations/                ← One-time DB insert scripts (all completed)
 │
-├── tests/
-│   ├── test_hypothesis_generator.py   ← 31 unit tests (all passing)
-│   ├── test_coverage_analyzer.py      ← 56 unit tests (all passing)
-│   └── test_integration.py            ← 52 integration tests (all passing)
+├── tests/                         ← 403 tests (all passing)
+│   ├── test_hypothesis_generator.py
+│   ├── test_coverage_analyzer.py
+│   ├── test_integration.py
+│   └── test_fisher_diagnostics.py ← 135 unit + integration tests
 │
 └── data/
-    ├── chroma_db/                 ← ChromaDB persistent storage
-    └── wiki_history.db            ← Append-only embedding snapshot history
+    ├── ds_wiki.db                 ← Source of truth (read-only, committed)
+    ├── chroma_db/                 ← ChromaDB persistent storage (gitignored)
+    ├── wiki_history.db            ← Append-only embedding snapshot history
+    └── rrp/
+        ├── zoo_classes/           ← 426 entries, 1135 bridges
+        ├── periodic_table/        ← 119 entries, 497 bridges
+        └── ecoli_core/            ← 304 entries, 912 bridges
 ```
 
 **Source DB (read-only, never modified):**
@@ -174,7 +192,49 @@ Newton ↔ Euler Laws   (CM1 ↔ CM6)  sim=0.9249  (NO existing link — candida
 
 ## What Was Built: Session-by-Session
 
-### Session 5 (Current — RRP Ingestion Pipeline + ZooClasses Pass 1 & 2)
+### Session 6 (Current — Fisher Diagnostic Suite Phases A–F + PFD Pipeline Redesign)
+
+**Architectural pivot**: DS Wiki redesignated as **reference lake** (analyzed last). RRP universe is the primary diagnostic subject. Formalized as the 6-step PFD pipeline in `FISHER_PIPELINE_REDESIGN.md`.
+
+**Fisher Diagnostic Suite — Phases A–C** (built earlier, complete at session start):
+- Phase A: `decompose_fim`, `build_fim`, `FIMResult`, `analyze_node` — FIM geometry math
+- Phase B: `sweep_graph`, `FisherSweepResult`, `build_wiki_graph` — full graph sweep
+- Phase C: `fisher_bridge_filter.py`, `run_fisher_suite.py` (ds_wiki/node/bridges modes), `TestBridgeFilter`
+
+**E. coli ingestion** (completed before Fisher Suite):
+- `src/ingestion/parsers/ecoli_core_parser.py` — 304 entries, 536 links, 912 bridges
+- Top anchor: CHEM5 (134 bridges), CHEM4 (127 bridges), CHEM3 (116 bridges)
+- Enrichment: CHEM5/F2/KC1 entries updated with primary-source metabolic context
+
+**Phase D** — `build_bridge_graph` + new CLI modes:
+- Added `build_bridge_graph(rrp_db, wiki_db, min_bridge_similarity=0.75) → (nx.Graph, dict)`
+  - Node IDs prefixed: `rrp::<id>` / `wiki::<id>` (prevents collision)
+  - 3 edge types: `rrp`, `wiki`, `bridge` | bridge weight = `1.0 - similarity` (distance semantics)
+  - `try/finally` guarantees connection cleanup on Windows (prevents file lock errors)
+- Added `--mode internal_rrp` (Tier-1 sweep) and `--mode bridge` (Tier-2 sweep) to CLI
+- Added `TestBuildBridgeGraph` (14 unit + 5 integration tests)
+
+**Phase E** — 3 MCP tools in `mcp_server.py`:
+- `fisher_analyze_node(node_id, mode, rrp_db, alpha)` — single node in internal or bridge graph
+- `fisher_sweep_rrp(rrp_db, alpha, top_n)` — Tier-1 sweep, returns `tier1_verdict` + regime counts
+- `fisher_sweep_bridge(rrp_db, min_sim, alpha, top_n)` — Tier-2 sweep, returns `tier2_verdict` + bridge_fraction
+
+**Phase F** — `fisher_report.py` + two-tier output:
+- `PFDReport` dataclass: all Tier-1 + Tier-2 fields, `pfd_score`, `summary`
+- `generate_report(rrp_db, wiki_db, alpha, min_sim, top_n) → PFDReport`
+- `PFDReport.as_text()` — formatted human-readable report
+- `PFDReport.as_dict()` — machine-readable via `dataclasses.asdict()`
+- Added `--mode report` to CLI
+- **Smoke test result (ecoli_core)**: PFD Score 0.973 | INTERNALLY CONSISTENT | WELL-INTEGRATED
+  - Top hub: `met_pyr_c` (pyruvate, d_eff=11) | Top anchor: CHEM5 (134 RRP bridges)
+
+**Phase G** — this documentation pass (CLAUDE.md + MASTER_SUMMARY.md)
+
+**Test suite growth**: 268 → 403 tests (all passing)
+
+---
+
+### Session 5 (Prior — RRP Ingestion Pipeline + ZooClasses Pass 1 & 2)
 
 **Terminology fix**: RRB → RRP (Reproducible Research Package) throughout all docs.
 
@@ -450,11 +510,11 @@ File entities           →  sections (embeddable content)
 ## Immediate Next Steps (choose one to start next session)
 
 ### ✅ Option E: COMPLETE — DS Tier 1/2 Expansion (43 new entries, 1562 vectors)
-All three chunks executed and pushed. DS is now the universal vector anchor layer.
-
 ### ✅ Gap Cleanup: COMPLETE — 573 links, 0 isolated reference_laws
-
-### ✅ ZooClasses RRP: COMPLETE — Pass 1 (426 entries, 246 enriched) + Pass 2 (1,135 bridges)
+### ✅ ZooClasses RRP: COMPLETE — Pass 1 (426 entries) + Pass 2 (1,135 bridges)
+### ✅ Periodic Table RRP: COMPLETE — 119 entries, 497 bridges
+### ✅ E. coli Core RRP: COMPLETE — 304 entries, 912 bridges
+### ✅ Fisher Diagnostic Suite A–F: COMPLETE — 403 tests, PFD Score 0.973 on ecoli_core
 
 ### Option Next-A: Periodic Table Parser
 Build `src/ingestion/parsers/periodic_table_parser.py` (flat_json format).
@@ -619,12 +679,14 @@ summarised, recent code stays in full. The MEMORY.md file persists across sessio
 
 **Last confirmed working state:**
 ```
-Git commit: 4744f50  (Option E Chunk 3: Add 15 CS reference_law entries)
+Git commit: e34e526  (Merge origin/main — Fisher Diagnostic Suite complete)
 Branch: main
 Remote: https://github.com/IanD25/ds-wiki-transformer.git
-Tests: 139/139 passing (pytest 9.0.2, Python 3.13.12, Apple M4)
-ChromaDB snapshot: snap_20260310_090912 (1,562 chunks)
-DS wiki entries: 199 total (139 reference_law + 60 DS-native)
-DS wiki links: 383 total (167 original + 174 tier-1.5 + 38 Tier 2 + 4 other)
-Option E scripts: insert_chunk1_bio_chem.py, insert_chunk2_math_info.py, insert_chunk3_cs.py
+Tests: 403/403 passing (Windows ShadowPC, RTX 2000, CUDA)
+ChromaDB snapshot: snap_20260310_205639 (1,483 chunks)
+DS wiki entries: 209 total (149 reference_law + 60 DS-native)
+DS wiki links: 573 total (29 tier-1 + 304 tier-1.5 + 73 tier-2 + 167 original)
+RRP bundles: zoo_classes (426 entries), periodic_table (119), ecoli_core (304)
+Fisher Suite: Phases A–F complete; FISHER_PIPELINE_REDESIGN.md is canonical spec
+PFD Score benchmark: ecoli_core = 0.973/1.000
 ```

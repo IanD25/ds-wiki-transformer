@@ -210,11 +210,20 @@ class CrossUniverseQuery:
         sim_threshold: float = SIM_LOW,
         max_bridges_per_entry: int = 3,
         ds_wiki_db: Optional[str | Path] = None,
+        quality_filter: bool = False,
+        eta_threshold: float = 0.65,
     ) -> dict:
         """
         Run Pass 2 for all entries in the bundle.
         Stores results in cross_universe_bridges table.
         Returns stats dict.
+
+        Args:
+            quality_filter: If True, apply FIM bridge quality filter after
+                            bridge detection.  Requires ds_wiki_db to be set.
+                            Noise-dominated bridges (eta >= eta_threshold) are
+                            annotated in the stats but NOT removed from the DB.
+            eta_threshold:  Disorder index cutoff for quality_filter (default 0.65).
         """
         bundle_conn = sqlite3.connect(self.bundle_db)
         bundle_conn.row_factory = sqlite3.Row
@@ -317,6 +326,38 @@ class CrossUniverseQuery:
                 bundle_conn.commit()
 
         bundle_conn.commit()
+
+        # ── Optional FIM quality filter ────────────────────────────────────────
+        if quality_filter and ds_wiki_db is not None:
+            try:
+                from analysis.fisher_bridge_filter import filter_bridges
+                from analysis.fisher_diagnostics import (
+                    build_wiki_graph, sweep_graph, KernelType,
+                )
+                G_wiki, _ = build_wiki_graph(Path(ds_wiki_db))
+                ds_sweep   = sweep_graph(G_wiki, "ds_wiki", KernelType.EXPONENTIAL)
+
+                # Load all stored bridges as dicts
+                stored_rows = bundle_conn.execute(
+                    "SELECT rrp_entry_id, ds_entry_id, similarity "
+                    "FROM cross_universe_bridges"
+                ).fetchall()
+                bridge_dicts = [
+                    {"rrp_entry_id": r[0], "ds_entry_id": r[1], "similarity": r[2]}
+                    for r in stored_rows
+                ]
+
+                trusted, noise = filter_bridges(bridge_dicts, ds_sweep, eta_threshold)
+                stats["fisher_trusted"]  = len(trusted)
+                stats["fisher_noise"]    = len(noise)
+                stats["fisher_eta_threshold"] = eta_threshold
+                print(
+                    f"  FIM filter: {len(trusted)} trusted, {len(noise)} noise-flagged "
+                    f"(eta_threshold={eta_threshold})"
+                )
+            except Exception as exc:
+                stats["fisher_filter_error"] = str(exc)
+                print(f"  [WARN] FIM quality filter failed: {exc}")
 
         # Record in rrp_meta
         bundle_conn.execute(

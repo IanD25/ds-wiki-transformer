@@ -1178,6 +1178,265 @@ def visualize_all(
     return _serialize_viz_result(result)
 
 
+# ── Fisher Information Matrix tools ──────────────────────────────────────────
+
+@mcp.tool()
+def fisher_analyze_node(
+    node_id:  str,
+    mode:     str = "internal",
+    rrp_db:   str | None = None,
+    alpha:    float = 1.0,
+) -> dict:
+    """
+    Run the Fisher Information Matrix pipeline on a single node and return its
+    information-geometric regime (radial, isotropic, or noise-dominated).
+
+    mode="internal":
+        Analyzes the node within the DS Wiki graph (or within an RRP universe's
+        own internal graph if rrp_db is provided).  Use this to diagnose whether
+        a specific entry is a focused hub (radial) or a cross-domain bridge
+        (isotropic) within its own knowledge base.
+
+    mode="bridge":
+        Analyzes the node within the full Option B bridge graph (RRP + DS Wiki
+        combined, connected by cross-universe bridges).  Requires rrp_db.  Use
+        this to see how a node integrates into the combined topology.
+
+    Args:
+        node_id: Entry ID to analyze.
+                 For mode="internal" without rrp_db: a DS Wiki ID (e.g., "B5").
+                 For mode="internal" with rrp_db: bare RRP ID (e.g., "rxn_PFK").
+                 For mode="bridge": prefixed ID ("rrp::rxn_PFK" or "wiki::B5"),
+                   or bare ID which will be tried with both prefixes.
+        mode:    "internal" (default) or "bridge".
+        rrp_db:  Absolute path to an RRP bundle .db file.
+                 Required for mode="bridge"; optional for mode="internal".
+        alpha:   Exponential kernel decay (default 1.0).
+
+    Returns:
+        {node_id, mode, regime, d_eff, pr, eta, center_degree,
+         sv_profile, skipped, skip_reason}
+    """
+    from analysis.fisher_diagnostics import (
+        build_wiki_graph, build_bridge_graph, analyze_node, KernelType,
+    )
+
+    kernel = KernelType.EXPONENTIAL
+
+    if mode == "internal":
+        db = Path(rrp_db) if rrp_db else SOURCE_DB
+        G, _ = build_wiki_graph(db)
+        result = analyze_node(G, node_id, kernel, alpha=alpha)
+
+    elif mode == "bridge":
+        if not rrp_db:
+            return {"error": "rrp_db is required for mode='bridge'"}
+        G, node_source = build_bridge_graph(Path(rrp_db), SOURCE_DB)
+        # Try prefixed forms if bare ID not found
+        nid = node_id
+        if nid not in G:
+            for prefix in ("rrp::", "wiki::"):
+                if f"{prefix}{node_id}" in G:
+                    nid = f"{prefix}{node_id}"
+                    break
+        result = analyze_node(G, nid, kernel, alpha=alpha)
+
+    else:
+        return {"error": f"Unknown mode '{mode}'. Use 'internal' or 'bridge'."}
+
+    return {
+        "node_id":       result.node_id,
+        "mode":          mode,
+        "regime":        result.regime.value,
+        "d_eff":         result.d_eff,
+        "pr":            round(result.pr, 4),
+        "eta":           round(result.eta, 4),
+        "center_degree": result.center_degree,
+        "sv_profile":    [round(v, 4) for v in result.sv_profile[:8]],
+        "skipped":       result.skipped,
+        "skip_reason":   result.skip_reason,
+    }
+
+
+@mcp.tool()
+def fisher_sweep_rrp(
+    rrp_db: str,
+    alpha:  float = 1.0,
+    top_n:  int   = 10,
+) -> dict:
+    """
+    Run the Tier-1 Fisher sweep on an RRP universe's internal graph.
+
+    Answers: is this knowledge base internally consistent?  Returns regime
+    distribution, top hubs by d_eff, and a TIER-1 VERDICT.
+
+    Interpretation guide:
+      - INTERNALLY CONSISTENT: ≥80% of analyzed nodes are non-noise
+      - MARGINAL: 60–80% non-noise — some structural gaps
+      - FRAGMENTED: <60% non-noise — graph is poorly connected or under-linked
+
+    Top hubs with high d_eff are entries that sit at the intersection of many
+    independent information pathways — metabolic crossroads, multi-constraint
+    reactions, etc.  Isotropic nodes are genuine cross-domain entries.
+
+    Args:
+        rrp_db: Absolute path to the RRP bundle .db file.
+        alpha:  Exponential kernel decay (default 1.0).
+        top_n:  Number of top hubs to return (default 10).
+
+    Returns:
+        {graph_source, n_nodes, n_edges, n_analyzed, n_skipped,
+         mean_d_eff, median_eta, regime_counts, top_hubs,
+         tier1_verdict, internal_coherence, cross_domain_fraction}
+    """
+    from analysis.fisher_diagnostics import (
+        build_wiki_graph, sweep_graph, KernelType,
+    )
+
+    rrp_path = Path(rrp_db)
+    G, _     = build_wiki_graph(rrp_path)
+    sweep    = sweep_graph(G, f"rrp_internal:{rrp_path.stem}", KernelType.EXPONENTIAL, alpha=alpha)
+
+    n = sweep.n_analyzed
+    noise_frac = sweep.regime_counts.get("noise_dominated", 0) / max(n, 1)
+    coherence  = 1.0 - noise_frac
+    iso_frac   = sweep.regime_counts.get("isotropic", 0) / max(n, 1)
+
+    if coherence >= 0.80:
+        verdict = "INTERNALLY CONSISTENT"
+    elif coherence >= 0.60:
+        verdict = "MARGINAL"
+    else:
+        verdict = "FRAGMENTED"
+
+    hubs = [
+        {
+            "node_id":       r.node_id,
+            "regime":        r.regime.value,
+            "d_eff":         r.d_eff,
+            "pr":            round(r.pr, 3),
+            "eta":           round(r.eta, 3),
+            "center_degree": r.center_degree,
+        }
+        for r in sweep.top_hubs(n=top_n)
+    ]
+
+    return {
+        "graph_source":         sweep.graph_source,
+        "n_nodes":              G.number_of_nodes(),
+        "n_edges":              G.number_of_edges(),
+        "n_analyzed":           sweep.n_analyzed,
+        "n_skipped":            sweep.n_skipped,
+        "mean_d_eff":           round(sweep.mean_d_eff, 3),
+        "median_eta":           round(sweep.median_eta, 3),
+        "regime_counts":        sweep.regime_counts,
+        "top_hubs":             hubs,
+        "tier1_verdict":        verdict,
+        "internal_coherence":   round(coherence, 3),
+        "cross_domain_fraction": round(iso_frac, 3),
+    }
+
+
+@mcp.tool()
+def fisher_sweep_bridge(
+    rrp_db:       str,
+    min_sim:      float = 0.75,
+    alpha:        float = 1.0,
+    top_n:        int   = 10,
+) -> dict:
+    """
+    Run the Tier-2 Fisher sweep on the full Option B bridge graph (RRP + DS Wiki).
+
+    Answers: how well does this RRP universe integrate into the DS Wiki formal
+    foundation?  Returns regime distribution for RRP nodes in the combined graph,
+    the most-connected DS Wiki anchors, and a TIER-2 VERDICT.
+
+    Interpretation guide:
+      - WELL-INTEGRATED: ≥70% of RRP nodes analyzable in bridge graph + <30% noise
+      - PARTIAL: ≥40% of RRP nodes bridged
+      - ISOLATED: <40% of RRP nodes reach DS Wiki above min_sim threshold
+
+    RRP nodes that are ISOTROPIC in the bridge graph instantiate multiple
+    independent DS Wiki principles simultaneously — these are the richest
+    cross-domain entries.  RADIAL nodes connect to DS Wiki at one focal point.
+
+    Args:
+        rrp_db:   Absolute path to the RRP bundle .db file.
+        min_sim:  Minimum bridge similarity to include (default 0.75).
+        alpha:    Exponential kernel decay (default 1.0).
+        top_n:    Number of top hubs to return from each side (default 10).
+
+    Returns:
+        {graph_source, n_nodes, n_rrp, n_wiki, n_bridge_edges,
+         rrp_regime_counts, rrp_mean_d_eff, top_rrp_hubs, top_wiki_anchors,
+         tier2_verdict, bridge_fraction, cross_domain_fraction}
+    """
+    from analysis.fisher_diagnostics import (
+        build_bridge_graph, sweep_graph, KernelType, RegimeType,
+    )
+
+    rrp_path = Path(rrp_db)
+    G, node_source = build_bridge_graph(rrp_path, SOURCE_DB, min_bridge_similarity=min_sim)
+    sweep = sweep_graph(G, f"bridge:{rrp_path.stem}", KernelType.EXPONENTIAL, alpha=alpha)
+
+    # Partition results by universe
+    rrp_results  = [r for nid, r in sweep.results.items()
+                    if node_source.get(nid) == "rrp" and not r.skipped]
+    wiki_results = [r for nid, r in sweep.results.items()
+                    if node_source.get(nid) == "wiki" and not r.skipped]
+
+    n_rrp_total = sum(1 for v in node_source.values() if v == "rrp")
+    n           = len(rrp_results)
+    bridge_frac = n / max(n_rrp_total, 1)
+    iso_count   = sum(1 for r in rrp_results if r.regime == RegimeType.ISOTROPIC)
+    noise_count = sum(1 for r in rrp_results if r.regime == RegimeType.NOISE_DOMINATED)
+    rrp_mean_deff = sum(r.d_eff for r in rrp_results) / max(n, 1)
+
+    if bridge_frac >= 0.70 and noise_count / max(n, 1) < 0.30:
+        verdict = "WELL-INTEGRATED"
+    elif bridge_frac >= 0.40:
+        verdict = "PARTIAL"
+    else:
+        verdict = "ISOLATED"
+
+    rrp_regime_counts: dict = {}
+    for r in rrp_results:
+        rrp_regime_counts[r.regime.value] = rrp_regime_counts.get(r.regime.value, 0) + 1
+
+    def _hub_dict(r):
+        return {
+            "node_id":       r.node_id,
+            "regime":        r.regime.value,
+            "d_eff":         r.d_eff,
+            "pr":            round(r.pr, 3),
+            "eta":           round(r.eta, 3),
+            "center_degree": r.center_degree,
+        }
+
+    top_rrp  = sorted(rrp_results,  key=lambda r: (r.d_eff, r.pr), reverse=True)[:top_n]
+    top_wiki = sorted(wiki_results, key=lambda r: (r.d_eff, r.pr), reverse=True)[:top_n]
+
+    n_bridge_edges = sum(
+        1 for _, _, d in G.edges(data=True) if d.get("type") == "bridge"
+    )
+
+    return {
+        "graph_source":          sweep.graph_source,
+        "n_nodes":               G.number_of_nodes(),
+        "n_rrp":                 n_rrp_total,
+        "n_wiki":                sum(1 for v in node_source.values() if v == "wiki"),
+        "n_bridge_edges":        n_bridge_edges,
+        "min_sim":               min_sim,
+        "rrp_regime_counts":     rrp_regime_counts,
+        "rrp_mean_d_eff":        round(rrp_mean_deff, 3),
+        "top_rrp_hubs":          [_hub_dict(r) for r in top_rrp],
+        "top_wiki_anchors":      [_hub_dict(r) for r in top_wiki],
+        "tier2_verdict":         verdict,
+        "bridge_fraction":       round(bridge_frac, 3),
+        "cross_domain_fraction": round(iso_count / max(n, 1), 3),
+    }
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":

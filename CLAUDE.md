@@ -31,7 +31,7 @@ source .venv/bin/activate
 python3 -m src.sync
 
 # 4. Verify
-python3 -m pytest tests/ -v --tb=short   # 268 tests should pass
+python3 -m pytest tests/ -v --tb=short   # 403 tests should pass
 
 # 5. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
@@ -63,7 +63,18 @@ DS Wiki (ds_wiki.db)          RRP Bundle (rrp_*.db)
    Exposes all tools to Claude
 ```
 
-**Six-layer validation pipeline (Phase 3+):**
+**Six-step PFD diagnostic pipeline (canonical — FISHER_PIPELINE_REDESIGN.md):**
+```
+Step 1: Ingest RRP → rrp_*.db (entries + links)
+Step 2: Build G_internal (within-RRP graph)
+Step 3: Internal Diagnostics → Tier-1 Report (coherence, d_eff, regime distribution)
+Step 4: Build G_bridge (full Option B: rrp:: nodes + wiki:: nodes + bridge edges)
+Step 5: Bridge Diagnostics → Tier-2 Report (DS Wiki integration quality)
+Step 6: Two-Tier Output → PFD Score (0.0–1.0)
+```
+DS Wiki is the **reference lake** — analyzed last, not first.
+
+**Six-layer paper validation pipeline (Phase 3+):**
 Layer 1: Claim Extraction (mandatory human gate) →
 Layer 2: Foundation Matching (ChromaDB cosine similarity) →
 Layer 3: Formal Logic Validation (probabilistic, not boolean) →
@@ -85,6 +96,11 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 | `src/ingestion/passes/entity_catalog_pass.py` | Pass 1.5: Pattern extraction for entity datasets |
 | `src/ingestion/detector.py` | Format detection + dataset type classification |
 | `scripts/run_entity_catalog_pass.py` | CLI: Pass 1.5 + Pass 2b on a bundle |
+| `src/analysis/fisher_diagnostics.py` | Fisher suite: FIM math, `analyze_node`, `sweep_graph`, `build_wiki_graph`, `build_bridge_graph` |
+| `src/analysis/fisher_bridge_filter.py` | Per-bridge quality scoring utility (Phase C) |
+| `src/analysis/fisher_report.py` | Two-tier PFD report generator (`generate_report`, `PFDReport`) |
+| `scripts/run_fisher_suite.py` | CLI entry point — all 6 Fisher modes |
+| `FISHER_PIPELINE_REDESIGN.md` | Canonical 6-step PFD pipeline spec (Option B bridge graph) |
 | `data/ds_wiki.db` | The knowledge graph (READ ONLY — never schema-alter) |
 | `MASTER_SUMMARY.md` | Full technical re-entry document (read for deep context) |
 | `PFD_PROJECT_FOUNDATIONAL_PLAN.md` | v1.1 foundational plan (vision + architecture + governance) |
@@ -117,26 +133,65 @@ PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 |-------|--------|-------|
 | Phase 0: Core pipeline | ✅ Complete | sync, embed, topology, MCP |
 | Phase 1: Diagnostic tools | ✅ Complete | 268 tests passing |
-| Phase 2: RRP Ingestion | ⏳ In Progress | Zoo + Periodic Table done; E. coli pending |
+| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli done; 403 tests passing |
+| Fisher Suite A–F | ✅ Complete | Full 6-step PFD pipeline; bridge graph; two-tier report; 3 MCP tools |
 | Phase 3: Paper Analysis | 📋 Planned | Claim extractor, logic validator, report gen |
 | Phase 4: Formal Logic Layer | 📋 Planned | Formal axioms, argument templates, fallacy catalog |
 | Phase 5: Community Governance | 📋 Planned | After Phase 3 vertical integration complete |
 
-### Phase 2 — What's Done vs. Next
+### Fisher Suite — What's Built (Phases A–F)
+
+| Phase | Deliverable | Status |
+|-------|-------------|--------|
+| A | `decompose_fim`, `build_fim`, `FIMResult`, `analyze_node` | ✅ |
+| B | `sweep_graph`, `FisherSweepResult`, `build_wiki_graph` | ✅ |
+| C | `fisher_bridge_filter.py`, `scripts/run_fisher_suite.py` (ds_wiki/node/bridges modes) | ✅ |
+| D | `build_bridge_graph(rrp_db, wiki_db)`, `--mode internal_rrp`, `--mode bridge` | ✅ |
+| E | MCP tools: `fisher_analyze_node`, `fisher_sweep_rrp`, `fisher_sweep_bridge` | ✅ |
+| F | `fisher_report.py`, `PFDReport`, `generate_report`, `--mode report` | ✅ |
+| G | CLAUDE.md + MASTER_SUMMARY.md documentation pass | ✅ |
+
+**E. coli smoke test (2026-03-11):** PFD Score 0.973/1.000 | INTERNALLY CONSISTENT + WELL-INTEGRATED
+- Top internal hub: `met_pyr_c` (pyruvate, d_eff=11) | Top DS Wiki anchor: CHEM5 (134 bridges)
+
+### Fisher Suite CLI Reference
+
+```bash
+# Step 3: Internal RRP diagnostics (Tier-1)
+python scripts/run_fisher_suite.py --mode internal_rrp \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
+
+# Step 5: Bridge diagnostics (Tier-2)
+python scripts/run_fisher_suite.py --mode bridge \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db --min-sim 0.75
+
+# Steps 3+5+6: Full two-tier PFD report
+python scripts/run_fisher_suite.py --mode report \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db
+
+# DS Wiki self-analysis (reference lake health check)
+python scripts/run_fisher_suite.py --mode ds_wiki \
+    --wiki-db data/ds_wiki.db
+
+# Single node analysis
+python scripts/run_fisher_suite.py --mode node \
+    --wiki-db data/ds_wiki.db --node-id CHEM5
+```
+
+### Phase 2 — What's Done
 
 **Done:**
 - `src/ingestion/parsers/zoo_classes_parser.py` — 426 entries, 437 links
 - `src/ingestion/parsers/periodic_table_parser.py` — 119 elements, 1671 properties
+- `src/ingestion/parsers/ecoli_core_parser.py` — 304 entries, 536 links, 912 bridges
 - `src/ingestion/passes/entity_catalog_pass.py` — Pass 1.5 (pattern extraction)
 - `scripts/run_entity_catalog_pass.py` — CLI orchestrator
 - Periodic table result (bge-large 1024-dim): 497 bridges, 35 tier-1.5, mean_sim 0.818
 - Zoo classes result  (bge-large 1024-dim): 1135 bridges, 70 tier-1.5, mean_sim 0.828
   - Top bridge: thm_Nondeterministic_time_hierarchy_theorem <-> CS15 @ 0.9187 (tier-1)
-
-**Next (Phase 2 remaining):**
-1. **Hyperedge architecture decision** (PREREQUISITE for E. coli parser) — document in `ARCHITECTURE_DECISIONS.md`: Reification (Option A) vs. Native Hyperedge Table (Option B)
-2. `src/ingestion/parsers/ecoli_core_parser.py` — COBRA JSON, 95 reactions, 72 metabolites, stoichiometry-as-links
-3. `INGESTION_GUIDE.md` + `SCHEMA_REFERENCE.md`
+- E. coli result (bge-large 1024-dim): 912 bridges, CHEM5 top anchor (134 bridges)
 
 ---
 
@@ -147,13 +202,22 @@ PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 python3 -m src.sync
 
 # Run all tests
-python3 -m pytest tests/ -v
+python3 -m pytest tests/ -v   # 403 tests
 
 # Run Pass 1.5 + Pass 2b on a bundle
 python3 scripts/run_entity_catalog_pass.py \
     data/rrp/periodic_table/rrp_periodic_table.db \
     data/chroma_db \
     data/ds_wiki.db
+
+# Full PFD two-tier diagnostic report for any RRP
+python scripts/run_fisher_suite.py --mode report \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db
+
+# Internal RRP diagnostics only (Tier-1, no DS Wiki needed)
+python scripts/run_fisher_suite.py --mode internal_rrp \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
 
 # Query cross-universe bridges directly
 python3 -c "
@@ -222,18 +286,26 @@ Install: `pip install torch --extra-index-url https://download.pytorch.org/whl/c
 ├── PFD_PROJECT_FOUNDATIONAL_PLAN.md  ← v1.1 foundational plan
 ├── setup.sh               ← One-command environment setup
 ├── requirements.txt       ← Python dependencies
+├── FISHER_PIPELINE_REDESIGN.md  ← Canonical 6-step PFD pipeline spec
 ├── src/                   ← Source code
 │   ├── config.py          ← All config constants
 │   ├── sync.py, embedder.py, extractor.py, topology.py, mcp_server.py
-│   ├── analysis/          ← Phase 1 diagnostic tools
+│   ├── analysis/          ← Diagnostic tools
+│   │   ├── fisher_diagnostics.py   ← FIM math + analyze_node + sweep_graph + build_bridge_graph
+│   │   ├── fisher_bridge_filter.py ← Per-bridge quality scoring
+│   │   ├── fisher_report.py        ← Two-tier PFD report generator
+│   │   ├── hypothesis_generator.py
+│   │   └── coverage_analyzer.py
 │   ├── ingestion/         ← Phase 2 RRP ingestion
-│   │   ├── parsers/       ← zoo_classes, periodic_table, (ecoli_core TBD)
+│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core
 │   │   ├── passes/        ← entity_catalog_pass.py
 │   │   ├── rrp_bundle.py, detector.py, cross_universe_query.py
 │   └── viz/               ← Visualization module
-├── scripts/               ← Operational scripts (run_entity_catalog_pass.py etc.)
+├── scripts/               ← Operational scripts
+│   ├── run_fisher_suite.py         ← Fisher CLI (6 modes: ds_wiki/node/bridges/internal_rrp/bridge/report)
+│   ├── run_entity_catalog_pass.py
 │   └── migrations/        ← One-time DB insert scripts (insert_chunk*.py etc.)
-├── tests/                 ← pytest suite (268 tests)
+├── tests/                 ← pytest suite (403 tests)
 ├── data/
 │   ├── ds_wiki.db         ← Source of truth (committed)
 │   └── rrp/               ← RRP bundles + raw data (committed)
