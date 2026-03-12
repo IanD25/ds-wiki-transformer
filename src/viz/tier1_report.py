@@ -178,10 +178,11 @@ class Tier1Report:
         output_dir = output_path.parent
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        # Generate visualizations
-        coherence_path = output_dir / "coherence_dashboard.png"
-        regime_path = output_dir / "regime_distribution.png"
-        network_path = output_dir / "network_topology.html"
+        # Generate dataset-specific visualization files
+        base_name = output_path.stem.replace('tier1_report_', '')
+        coherence_path = output_dir / f"coherence_{base_name}.png"
+        regime_path = output_dir / f"regime_{base_name}.png"
+        network_path = output_dir / f"network_{base_name}.html"
 
         self.dashboard.generate_coherence_png(coherence_path)
         self.dashboard.generate_regime_png(regime_path)
@@ -190,6 +191,11 @@ class Tier1Report:
         # Render HTML
         stats_html = self._render_stats()
         metrics_html = self._render_metrics_table()
+
+        # Use dataset-specific filenames in HTML
+        coherence_file = coherence_path.name
+        regime_file = regime_path.name
+        network_file = network_path.name
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -394,7 +400,7 @@ class Tier1Report:
             </p>
             <h3>1.1 Signal vs. Noise Composition</h3>
             <div class="visualization">
-                <img src="coherence_dashboard.png" alt="Coherence Dashboard">
+                <img src="{coherence_file}" alt="Coherence Dashboard">
                 <p><em>Left: Pie chart showing coherence breakdown. Right: D_eff gauge.</em></p>
             </div>
         </div>
@@ -413,13 +419,13 @@ class Tier1Report:
 
             <h3>2.1 Regime Distribution</h3>
             <div class="visualization">
-                <img src="regime_distribution.png" alt="Regime Distribution Chart">
+                <img src="{regime_file}" alt="Regime Distribution Chart">
                 <p><em>Bar chart showing count and percentage of nodes in each regime.</em></p>
             </div>
 
             <h3>2.2 Interactive Network Topology</h3>
             <div class="visualization-frame">
-                <iframe src="network_topology.html" style="width:100%; height:100%; border:none;"></iframe>
+                <iframe src="{network_file}" style="width:100%; height:100%; border:none;"></iframe>
             </div>
             <p style="text-align: center; color: #666; font-size: 12px;">
                 <em>Interactive graph: Drag nodes, hover for details, filter by regime, search by ID.</em>
