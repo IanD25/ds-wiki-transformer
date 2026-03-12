@@ -22,6 +22,9 @@ def __getattr__(name):
     if name == "Tier1Dashboard":
         from .tier1_dashboard import Tier1Dashboard
         return Tier1Dashboard
+    if name == "Tier1Report":
+        from .tier1_report import Tier1Report
+        return Tier1Report
     if name == "BridgeNetwork":
         from .bridge_network import BridgeNetwork
         return BridgeNetwork
@@ -36,4 +39,4 @@ def __getattr__(name):
         return run_all_viz
     raise AttributeError(f"module 'viz' has no attribute {name!r}")
 
-__all__ = ["Tier1Dashboard", "BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]
+__all__ = ["Tier1Dashboard", "Tier1Report", "BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]
