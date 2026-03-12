@@ -1111,3 +1111,77 @@ class TestBridgeGraphIntegration:
             if node_source.get(nid) == "rrp" and not r.skipped
         )
         assert rrp_analyzed > 0, "Expected some RRP nodes to be analyzable in bridge graph"
+
+
+# ───────────────────────────────────────────────────────────────────────────────
+# IEEE Power Grid Tests (Phase 2.3 ground truth validation)
+# ───────────────────────────────────────────────────────────────────────────────
+
+
+class TestIEEEPowerGrid:
+    """Test IEEE power grid RRP against Fisher Suite.
+
+    IEEE test cases (case14, case57, case118) are planar graphs with expected D_eff ≈ 2.
+    These serve as ground-truth validation that Fisher Suite works across domain boundaries.
+    """
+
+    @pytest.mark.skipif(
+        not (Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case14.db").exists()),
+        reason="IEEE case14 RRP not found",
+    )
+    def test_case14_exists_and_loads(self):
+        """Verify case14 RRP was successfully ingested."""
+        import sqlite3
+        db = Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case14.db")
+        conn = sqlite3.connect(db)
+        n_entries = conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0]
+        n_links = conn.execute("SELECT COUNT(*) FROM links").fetchone()[0]
+        conn.close()
+
+        assert n_entries == 18, f"Expected 18 entries (14 buses + 4 gens), got {n_entries}"
+        assert n_links == 34, f"Expected 34 links (2x15 lines + 4 gen-bus), got {n_links}"
+
+    @pytest.mark.skipif(
+        not (Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case14.db").exists()),
+        reason="IEEE case14 RRP not found",
+    )
+    def test_case14_internal_sweep(self):
+        """Run internal sweep on case14; verify reasonable D_eff values."""
+        db = Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case14.db")
+        G, node_source = build_wiki_graph(db)
+
+        # Planar graphs should have mean D_eff close to 2
+        sweep = sweep_graph(G, f"rrp:case14", KernelType.EXPONENTIAL)
+        assert sweep.mean_d_eff > 1.5, f"Expected D_eff > 1.5, got {sweep.mean_d_eff}"
+        assert sweep.mean_d_eff < 4.0, f"Expected D_eff < 4.0, got {sweep.mean_d_eff}"
+
+        # Some nodes should be analyzable
+        assert sweep.n_analyzed > 0, "Expected at least some analyzable nodes"
+
+    @pytest.mark.skipif(
+        not (Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case57.db").exists()),
+        reason="IEEE case57 RRP not found",
+    )
+    def test_case57_exists_and_larger(self):
+        """Verify case57 ingested with more entries than case14."""
+        import sqlite3
+        db = Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case57.db")
+        conn = sqlite3.connect(db)
+        n_entries = conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0]
+        conn.close()
+
+        assert n_entries > 50, f"Expected case57 >> case14, got {n_entries} entries"
+
+    @pytest.mark.skipif(
+        not (Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case118.db").exists()),
+        reason="IEEE case118 RRP not found",
+    )
+    def test_case118_exists_and_largest(self):
+        """Verify case118 (largest) ingested correctly."""
+        import sqlite3
+        db = Path("data/rrp/ieee_power_grid/rrp_ieee_power_grid_case118.db")
+        conn = sqlite3.connect(db)
+        n_entries = conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0]
+        conn.close()
+
+        assert n_entries > 160, f"Expected case118 > 160 entries, got {n_entries}"
