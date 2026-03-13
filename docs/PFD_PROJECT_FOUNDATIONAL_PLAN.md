@@ -532,6 +532,40 @@ Rationale: The cold-start problem (Stress Test 1, Vulnerability 6) means PFD mus
 - All 7 layers operating independently (can disable/override any layer)
 - Report generation <10s for typical paper (abstract + findings)
 
+---
+
+### 4.2a Phase 3 — SCF Grounding (added 2026-03-13)
+
+**Context:** The structural alignment scorer (`structural_alignment.py`, built 2026-03-13)
+demonstrated that PFD is implementing a form of **Semantic Channel Finding (SCF)** —
+the methodology used in multi-facility scientific infrastructure to map local naming
+conventions to a shared ontology backbone. Full design: `docs/SCF_PHASE3_DESIGN.md`.
+
+**The key insight:** DS Wiki = core ontology. RRP entries = local channels. Cross-universe
+bridges = channel address discovery. Structural alignment polarity = signed channel quality
+(does the entry *support* or *contest* the formal principle it maps to?). This is
+qualitatively more powerful than unsigned semantic similarity alone.
+
+**SCF-grounded Phase 3 options (see SCF_PHASE3_DESIGN.md for full spec):**
+
+| Option | Description | Dependency | Priority |
+|--------|-------------|------------|----------|
+| **3A** | Dynamic Channel Resolution — `claim_extractor.py` + enhanced `result_validator.py`. Free-text claims resolved to DS Wiki channels in real-time with provisional polarity hints. Mandatory human gate. | §3.1 above | **High — Phase 3 core** |
+| **3B** | Structural Alignment in Tier-2 Report — SA section added to `fisher_report.py` + signed bridge visualization in `tier2_report.py`. Unsigned PFD Score partially replaced with polarity-weighted score. | 3A + structural_alignment.py | **High — improves all existing RRPs** |
+| **3C** | Multi-RRP Ontology Queries — `cross_rrp_query.py` enables cross-facility SCF: "which entries across all RRPs contest QM5?" DS Wiki reputation scores (stored in wiki_history.db). | 3B + ≥3 paper-based RRPs | **Medium — full SCF vision** |
+| **3D** | Link-Type Weighted PFD Score — full formula revision using SA polarity + consensus factor. Replaces bridge-count Tier-2 metric. | 3C + calibration study | **Low — Phase 4 prep** |
+
+**Vertical integration constraint (unchanged):** Options 3A and 3B restricted to
+thermodynamics + Special Relativity verticals until >80% of DS Wiki entries have
+`formality_tier` set. OPERA paper (Special Relativity) is the approved initial test case.
+
+**What SCF does NOT replace (still required):**
+- Formal logic validation (Phase 4) — logical entailment, not just semantic channel proximity
+- Evidence sufficiency (§3.5 above) — how strongly a claim is supported
+- Domain boundary validation (§3.6 above) — applicability of laws outside their validity regimes
+
+**Recommended Phase 3 sequence:** 3A → 3B → §3.3–3.7 (logic + evidence layers) → 3C → 3D
+
 **Deliverable:** End-to-end paper analysis suite with transparent reasoning traces
 
 ---

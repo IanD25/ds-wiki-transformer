@@ -1,7 +1,7 @@
 # Principia Formal Diagnostics (PFD) — Claude Code Context
 
 > **This file is auto-loaded by Claude Code on every session start.**
-> Full project narrative: `MASTER_SUMMARY.md` | Foundational plan: `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | Pipeline spec: `docs/FISHER_PIPELINE_REDESIGN.md`
+> Full project narrative: `MASTER_SUMMARY.md` | Foundational plan: `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | Pipeline spec: `docs/FISHER_PIPELINE_REDESIGN.md` | Phase 3 SCF design: `docs/SCF_PHASE3_DESIGN.md`
 
 ---
 
@@ -99,6 +99,9 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 | `src/analysis/fisher_diagnostics.py` | Fisher suite: FIM math, `analyze_node`, `sweep_graph`, `build_wiki_graph`, `build_bridge_graph` |
 | `src/analysis/fisher_bridge_filter.py` | Per-bridge quality scoring utility (Phase C) |
 | `src/analysis/fisher_report.py` | Two-tier PFD report generator (`generate_report`, `PFDReport`) |
+| `src/analysis/structural_alignment.py` | Link-type weighted bridge scorer — signed polarity per entry (SCF replacement for SPT) |
+| `scripts/run_structural_alignment.py` | CLI: structural alignment on any RRP with populated bridges |
+| `docs/SCF_PHASE3_DESIGN.md` | Phase 3 SCF-grounded design — Options 3A–3D |
 | `scripts/run_fisher_suite.py` | CLI entry point — all 6 Fisher modes |
 | `docs/FISHER_PIPELINE_REDESIGN.md` | Canonical 6-step PFD pipeline spec (Option B bridge graph) |
 | `docs/ARCHITECTURE_DECISIONS.md` | ADR log — key design decisions and rationale |
@@ -140,7 +143,7 @@ PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 | Tier-1 Visualization | ✅ Complete | D3.js network graph, coherence/regime charts, HTML report per dataset |
 | Tier-2 Visualization | ✅ Complete | Bridge histogram, bipartite network, domain heatmap, HTML report |
 | Repo Cleanup | ✅ Complete | Docs reorganized; Subsystem B scoped; prototype files marked |
-| Phase 3: Paper Analysis | 📋 Planned | Claim extractor (result_validator.py is the integration target), logic validator, report gen |
+| Phase 3: Paper Analysis | 🔧 In Design | SCF-grounded (see SCF_PHASE3_DESIGN.md): Options 3A–3D. OPERA paper RRP is prototype test case. structural_alignment.py built. |
 | Phase 4: Formal Logic Layer | 📋 Planned | Formal annotations on RRP entries; link-type weighted bridge scoring |
 | Phase 5: Community Governance | 📋 Planned | After Phase 3 vertical integration complete |
 
