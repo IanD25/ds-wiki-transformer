@@ -470,7 +470,7 @@ class Tier1Dashboard:
             .force('link', d3.forceLink(links).id(d => d.id).distance(50))
             .force('charge', d3.forceManyBody().strength(-300))
             .force('center', d3.forceCenter(width / 2, height / 2))
-            .force('collision', d3.forceCollide().radius(30));
+            .force('collision', d3.forceCollide().radius(d => ((5 + Math.sqrt(d.degree) * 2) * 1.3) + 2));
 
         // Zoom
         const zoom = d3.zoom().on('zoom', (event) => {{
@@ -494,7 +494,7 @@ class Tier1Dashboard:
             .data(nodes)
             .enter()
             .append('circle')
-            .attr('r', d => 5 + Math.sqrt(d.degree) * 2)
+            .attr('r', d => (5 + Math.sqrt(d.degree) * 2) * 1.3)
             .attr('fill', d => regimeColors[d.regime])
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
@@ -578,6 +578,16 @@ class Tier1Dashboard:
                 if (searchInput.value && !d.id.includes(searchInput.value)) return 'none';
                 return null;
             }});
+
+            link.style('display', d => {{
+                const sourceVisible = regimesShown[d.source.regime] && (!searchInput.value || d.source.id.includes(searchInput.value));
+                const targetVisible = regimesShown[d.target.regime] && (!searchInput.value || d.target.id.includes(searchInput.value));
+                if (!sourceVisible || !targetVisible) return 'none';
+                return null;
+            }});
+
+            // Restart simulation with lower alpha for smooth transition
+            simulation.alpha(0.3).restart();
         }}
 
         showRadial.addEventListener('change', updateVisibility);

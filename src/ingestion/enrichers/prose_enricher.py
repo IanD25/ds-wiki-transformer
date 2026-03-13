@@ -1,6 +1,13 @@
 """
 prose_enricher.py — Supplemental prose enrichment for RRP bundle entries.
 
+STATUS: PARKED — not part of the active pipeline.
+        The prose enrichment approach was evaluated and found to risk introducing
+        semantic drift: LLM-generated prose injects vocabulary that moves bridge
+        scores independently of the underlying data content (SEO contamination).
+        Retained for reference; do not use in production ingestion runs without
+        careful validation of bridge score stability pre/post enrichment.
+
 STRICT INTERPRETATION ONLY:
   - Reads existing formal content (Mathematical Form / What It Claims)
   - Generates natural language prose translation as "What The Math Says"

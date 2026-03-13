@@ -2,6 +2,11 @@
 coverage_analyzer.py — Measure knowledge base completeness and produce a
 structured coverage report.
 
+SCOPE: Currently DS Wiki–specific (expects ds_wiki.db schema with domain, tier,
+       entry_type columns). Planned generalisation: make schema columns configurable
+       so coverage commentary can be added to any RRP Tier-1 or Tier-2 report.
+       Track in: Phase 3 / report enrichment milestone.
+
 Computes
 --------
 1. Entity type distribution (how many of each entry_type)

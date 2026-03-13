@@ -2,6 +2,12 @@
 hypothesis_generator.py — Find surprising high-similarity entity pairs and
 generate natural-language research prompts for each.
 
+SCOPE: Currently DS Wiki–specific (reads from wiki_history.db embedding snapshots).
+       Potential generalisation: run on any RRP's cross_universe_bridges to surface
+       surprising high-similarity pairs between RRP entries and DS Wiki anchors,
+       adding hypothesis commentary to Tier-2 reports.
+       Track in: Phase 3 / report enrichment milestone.
+
 Algorithm
 ---------
 1. Load embeddings from the latest snapshot in wiki_history.db.

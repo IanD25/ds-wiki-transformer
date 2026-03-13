@@ -1,6 +1,12 @@
 """
 result_validator.py — Validate a research claim against the knowledge base.
 
+SCOPE: Currently DS Wiki–specific (queries against the DS Wiki ChromaDB index).
+       This is the most pipeline-ready of the Subsystem B tools: with minor
+       refactoring it can validate any free-text claim against any ChromaDB collection,
+       making it a direct input to Phase 3 (Claim Extraction + Foundation Matching).
+       Priority integration target for Phase 3 milestone.
+
 Algorithm
 ---------
 1. Embed the claim text using the BGE model (same model as sync.py).

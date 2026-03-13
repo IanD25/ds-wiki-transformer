@@ -1,7 +1,7 @@
 # Principia Formal Diagnostics (PFD) — Claude Code Context
 
 > **This file is auto-loaded by Claude Code on every session start.**
-> Full project narrative: `MASTER_SUMMARY.md` | Full foundational plan: `PFD_PROJECT_FOUNDATIONAL_PLAN.md`
+> Full project narrative: `MASTER_SUMMARY.md` | Foundational plan: `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | Pipeline spec: `docs/FISHER_PIPELINE_REDESIGN.md`
 
 ---
 
@@ -100,11 +100,13 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 | `src/analysis/fisher_bridge_filter.py` | Per-bridge quality scoring utility (Phase C) |
 | `src/analysis/fisher_report.py` | Two-tier PFD report generator (`generate_report`, `PFDReport`) |
 | `scripts/run_fisher_suite.py` | CLI entry point — all 6 Fisher modes |
-| `FISHER_PIPELINE_REDESIGN.md` | Canonical 6-step PFD pipeline spec (Option B bridge graph) |
+| `docs/FISHER_PIPELINE_REDESIGN.md` | Canonical 6-step PFD pipeline spec (Option B bridge graph) |
+| `docs/ARCHITECTURE_DECISIONS.md` | ADR log — key design decisions and rationale |
 | `data/ds_wiki.db` | The knowledge graph (READ ONLY — never schema-alter) |
 | `MASTER_SUMMARY.md` | Full technical re-entry document (read for deep context) |
-| `PFD_PROJECT_FOUNDATIONAL_PLAN.md` | v1.1 foundational plan (vision + architecture + governance) |
+| `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | v1.1 foundational plan (vision + architecture + governance) |
 | `Outside Ref/` | External analysis documents (stress tests, references) |
+| `docs/archive/` | Completed specs and planning docs (read-only historical reference) |
 
 ---
 
@@ -133,10 +135,13 @@ PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 |-------|--------|-------|
 | Phase 0: Core pipeline | ✅ Complete | sync, embed, topology, MCP |
 | Phase 1: Diagnostic tools | ✅ Complete | 268 tests passing |
-| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli done; 403 tests passing |
-| Fisher Suite A–F | ✅ Complete | Full 6-step PFD pipeline; bridge graph; two-tier report; 3 MCP tools |
-| Phase 3: Paper Analysis | 📋 Planned | Claim extractor, logic validator, report gen |
-| Phase 4: Formal Logic Layer | 📋 Planned | Formal axioms, argument templates, fallacy catalog |
+| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli + IEEE Power Grid; 403 tests passing |
+| Fisher Suite A–G | ✅ Complete | Full 6-step PFD pipeline; bridge graph; two-tier report; 3 MCP tools |
+| Tier-1 Visualization | ✅ Complete | D3.js network graph, coherence/regime charts, HTML report per dataset |
+| Tier-2 Visualization | ✅ Complete | Bridge histogram, bipartite network, domain heatmap, HTML report |
+| Repo Cleanup | ✅ Complete | Docs reorganized; Subsystem B scoped; prototype files marked |
+| Phase 3: Paper Analysis | 📋 Planned | Claim extractor (result_validator.py is the integration target), logic validator, report gen |
+| Phase 4: Formal Logic Layer | 📋 Planned | Formal annotations on RRP entries; link-type weighted bridge scoring |
 | Phase 5: Community Governance | 📋 Planned | After Phase 3 vertical integration complete |
 
 ### Fisher Suite — What's Built (Phases A–F)
@@ -283,34 +288,53 @@ Install: `pip install torch --extra-index-url https://download.pytorch.org/whl/c
 ├── CLAUDE.md              ← YOU ARE HERE (auto-loaded by Claude Code)
 ├── README.md              ← GitHub/public facing
 ├── MASTER_SUMMARY.md      ← Full technical context for re-entry
-├── PFD_PROJECT_FOUNDATIONAL_PLAN.md  ← v1.1 foundational plan
+├── USER_GUIDE.md          ← End-user report interpretation guide
 ├── setup.sh               ← One-command environment setup
 ├── requirements.txt       ← Python dependencies
-├── FISHER_PIPELINE_REDESIGN.md  ← Canonical 6-step PFD pipeline spec
-├── src/                   ← Source code
-│   ├── config.py          ← All config constants
+├── docs/
+│   ├── FISHER_PIPELINE_REDESIGN.md  ← Canonical 6-step PFD pipeline spec
+│   ├── ARCHITECTURE_DECISIONS.md    ← ADR log
+│   ├── PFD_PROJECT_FOUNDATIONAL_PLAN.md  ← v1.1 vision + governance
+│   ├── TIER1_VALIDATION_REPORT.md   ← Cross-domain validation results
+│   ├── design_philosophy/
+│   └── archive/           ← Completed specs (read-only historical)
+├── src/
+│   ├── config.py          ← All paths, model, thresholds — edit here first
 │   ├── sync.py, embedder.py, extractor.py, topology.py, mcp_server.py
 │   ├── analysis/          ← Diagnostic tools
-│   │   ├── fisher_diagnostics.py   ← FIM math + analyze_node + sweep_graph + build_bridge_graph
+│   │   ├── fisher_diagnostics.py   ← FIM math, analyze_node, sweep_graph, build_bridge_graph
 │   │   ├── fisher_bridge_filter.py ← Per-bridge quality scoring
 │   │   ├── fisher_report.py        ← Two-tier PFD report generator
-│   │   ├── hypothesis_generator.py
-│   │   └── coverage_analyzer.py
-│   ├── ingestion/         ← Phase 2 RRP ingestion
-│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core
+│   │   ├── gap_analyzer.py         ← [DS Wiki scoped] Gap detection — Phase 3 integration target
+│   │   ├── coverage_analyzer.py    ← [DS Wiki scoped] Coverage metrics — Phase 3 integration target
+│   │   ├── hypothesis_generator.py ← [DS Wiki scoped] Surprising pair detection
+│   │   ├── result_validator.py     ← [DS Wiki scoped] Claim validator — PRIMARY Phase 3 target
+│   │   ├── link_classifier.py      ← [DS Wiki scoped] LLM link-type classifier
+│   │   └── semantic_position_test.py  ← [PROTOTYPE/PARKED] SPT — see file header
+│   ├── ingestion/
+│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core, ieee_power_grid, opera
 │   │   ├── passes/        ← entity_catalog_pass.py
+│   │   ├── enrichers/     ← prose_enricher.py [PARKED — see file header]
 │   │   ├── rrp_bundle.py, detector.py, cross_universe_query.py
 │   └── viz/               ← Visualization module
-├── scripts/               ← Operational scripts
-│   ├── run_fisher_suite.py         ← Fisher CLI (6 modes: ds_wiki/node/bridges/internal_rrp/bridge/report)
+│       ├── tier1_dashboard.py  ← Tier-1 PNG charts + D3.js network
+│       ├── tier1_report.py     ← Tier-1 HTML report generator
+│       ├── tier2_report.py     ← Tier-2 HTML report generator
+│       ├── bridge_network.py, domain_heatmap.py, similarity_hist.py
+│       └── viz_runner.py       ← CLI entry for all viz outputs
+├── scripts/
+│   ├── run_fisher_suite.py    ← Fisher CLI (6 modes)
 │   ├── run_entity_catalog_pass.py
-│   └── migrations/        ← One-time DB insert scripts (insert_chunk*.py etc.)
+│   ├── run_spt.py             ← [PROTOTYPE/PARKED] SPT CLI
+│   └── migrations/            ← One-time DB insert scripts
 ├── tests/                 ← pytest suite (403 tests)
 ├── data/
-│   ├── ds_wiki.db         ← Source of truth (committed)
-│   └── rrp/               ← RRP bundles + raw data (committed)
+│   ├── ds_wiki.db         ← Reference knowledge graph (READ ONLY)
+│   ├── reports/           ← Generated HTML reports (gitignored)
+│   └── rrp/               ← RRP bundles (committed)
 │       ├── zoo_classes/
 │       ├── periodic_table/
-│       └── ecoli_core/
+│       ├── ecoli_core/
+│       └── opera/
 └── Outside Ref/           ← External analysis documents
 ```

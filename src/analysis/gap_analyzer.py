@@ -1,6 +1,11 @@
 """
 gap_analyzer.py — Identify knowledge-base gaps and produce ranked enrichment priorities.
 
+SCOPE: Currently DS Wiki–specific (operates on ds_wiki.db schema: entry_type, tier,
+       domain columns). Planned generalisation: parameterise the schema so this runs
+       on any RRP SQLite db, contributing gap commentary to the Tier-1 report section.
+       Track in: Phase 3 / report enrichment milestone.
+
 Complements CoverageAnalyzer (which reports global counts and network metrics) by
 focusing on **actionable per-type gaps and ranked recommendations**.
 

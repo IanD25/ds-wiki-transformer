@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "name": "OPERA FTL Neutrino Experiment",
+    "source": "Adam et al. (2011) arXiv:1109.4897 + OPERA Collaboration correction (2012)",
+    "format": "opera_json",
+    "description": "RRP encoding the OPERA experiment's claimed superluminal neutrino measurement, its methodology chain, the systematic errors discovered, and the corrected result. Used for Semantic Position Test (SPT) validation baseline."
+  },
+  "entries": [
+    {
+      "id": "opera_detector",
+      "title": "OPERA Detector at Gran Sasso",
+      "entry_type": "instantiation",
+      "source_type": "apparatus",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "The OPERA (Oscillation Project with Emulsion-tRacking Apparatus) detector is a large underground particle detector located at the Laboratori Nazionali del Gran Sasso (LNGS) in Italy, 1400 metres below ground. It was designed to detect tau neutrino appearance in a muon neutrino beam.",
+        "Physical Description": "The detector consists of a target mass of 1.25 kilotons, made up of lead plates alternating with nuclear emulsion films. It is instrumented with electronic trackers and muon spectrometers. The underground location provides shielding from cosmic ray backgrounds.",
+        "Role in Measurement": "Detects arrival of muon neutrinos from CERN and timestamps their arrival using GPS-synchronized clocks. The timestamp precision is claimed to be at the nanosecond level.",
+        "Relevant Parameters": "Total target mass: 1250 tonnes. Depth: 3800 metres water equivalent. GPS timing precision: claimed ~1 ns. Detector coordinates precisely surveyed using GPS geodesy."
+      }
+    },
+    {
+      "id": "cern_cngs_beam",
+      "title": "CERN Neutrinos to Gran Sasso (CNGS) Beam",
+      "entry_type": "instantiation",
+      "source_type": "apparatus",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "The CNGS facility at CERN produces an intense beam of muon neutrinos directed toward the Gran Sasso laboratory 730 km away. Protons from the Super Proton Synchrotron (SPS) strike a graphite target, producing pions and kaons that decay into muon neutrinos.",
+        "Beam Properties": "Beam energy: 17 GeV mean neutrino energy. Proton energy: 400 GeV. Average neutrino flux at LNGS: approximately 2.4 × 10^13 neutrinos per year. The beam is pulsed with a known time structure used in time-of-flight analysis.",
+        "Role in Measurement": "Provides the neutrino source point (CERN) and departure timestamps for time-of-flight calculations. The precise proton extraction time from SPS is recorded and used to calculate expected neutrino travel time.",
+        "Relevant Parameters": "Baseline: 730.534 km. Proton pulse width: 10.5 microseconds. Number of events analyzed: 15,223 muon neutrino interactions."
+      }
+    },
+    {
+      "id": "baseline_distance",
+      "title": "CNGS Baseline Distance: 730.534 km",
+      "entry_type": "instantiation",
+      "source_type": "measurement",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "The geodesic distance between the CERN neutrino production point and the OPERA detector at Gran Sasso, measured using GPS satellite geodesy and conventional survey techniques.",
+        "Measurement Method": "Determined by GPS geodetic measurement combined with geological surveys of the underground detector position. Multiple independent measurement campaigns were conducted. The baseline is a crucial input to the time-of-flight velocity calculation.",
+        "Precision": "The distance is 730,534.61 metres with an uncertainty of 0.20 metres. This 0.03 parts-per-million precision was required because any error in baseline distance translates directly into a velocity error.",
+        "Relevant Parameters": "Baseline: 730.534 km ± 0.20 m. Measurement technique: GPS geodesy + underground survey. Independent verification: yes, by two separate teams."
+      }
+    },
+    {
+      "id": "gps_timing_system",
+      "title": "GPS Common-View Timing Synchronization System",
+      "entry_type": "instantiation",
+      "source_type": "apparatus",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "The GPS common-view technique was used to synchronize master clocks at CERN and Gran Sasso to nanosecond precision. Both sites simultaneously observe the same GPS satellites, cancelling common-mode errors such as satellite orbit errors and ionospheric delays.",
+        "Technical Description": "A GPS receiver at each site receives timing signals from common satellites. The difference in timing offsets gives a synchronization accurate to approximately 1 nanosecond. The synchronized clocks then timestamp neutrino departure and arrival events.",
+        "Known Vulnerability": "The timing chain from the master GPS clock to the experiment's data acquisition system introduces additional components—cables, connectors, and oscillators—each of which can introduce systematic offsets not captured by the GPS comparison alone.",
+        "Relevant Parameters": "GPS synchronization precision: ~1 ns. Total timing uncertainty budget claimed: ± 6.9 ns (statistical). The hardware timing chain includes a fiber optic connection and a frequency-distribution oscillator."
+      }
+    },
+    {
+      "id": "fiber_connector_defect",
+      "title": "Loose Fiber Optic Connector in GPS Timing Chain",
+      "entry_type": "mechanism",
+      "source_type": "systematic_error",
+      "domain": "experimental_physics",
+      "status": "identified_error",
+      "sections": {
+        "What It Captures": "A hardware defect discovered in February 2012: an improperly seated fiber optic connector in the cable connecting the GPS timing card to the OPERA master clock. This connector introduced a systematic timing delay of approximately +73 nanoseconds that was not accounted for in the uncertainty budget.",
+        "Discovery": "During a systematic hardware audit following skepticism about the FTL result, the connector was found to be not fully inserted. When properly seated and tested, the timing offset was measured directly.",
+        "Effect on Measurement": "The loose connector caused the GPS timing signal to arrive approximately 73 ns later than assumed. Since the GPS clock appeared to run slower than it actually was, the measured neutrino travel times were systematically shorter than the true values, creating a spurious apparent faster-than-light signal.",
+        "Magnitude": "Estimated systematic offset introduced: approximately +73 ns (makes neutrinos appear to arrive earlier than they did)."
+      }
+    },
+    {
+      "id": "oscillator_defect",
+      "title": "OPERA Clock Oscillator Frequency Error",
+      "entry_type": "mechanism",
+      "source_type": "systematic_error",
+      "domain": "experimental_physics",
+      "status": "identified_error",
+      "sections": {
+        "What It Captures": "A second systematic error: the oscillator used to distribute the GPS reference frequency to the OPERA data acquisition electronics was operating slightly above its nominal frequency. This caused timestamps to be assigned at a slightly faster rate than the true clock rate.",
+        "Effect on Measurement": "Because timestamps were being generated at a higher-than-true rate, the measured time intervals were slightly shorter than real. This introduced an offset of approximately -15 ns (makes neutrinos appear to arrive later than they did), partially compensating the fiber connector error.",
+        "Combined Effect": "The net systematic offset from both hardware errors is approximately +73 - 15 = +58 ns, which is within error bars of the originally reported +60.7 ns anomaly. This is strong evidence that these two errors account for essentially the entire claimed signal.",
+        "Magnitude": "Estimated systematic offset: approximately -15 ns (partially cancels fiber connector error)."
+      }
+    },
+    {
+      "id": "tof_measurement",
+      "title": "Neutrino Time-of-Flight Measurement: δt = +60.7 ns",
+      "entry_type": "instantiation",
+      "source_type": "measurement",
+      "domain": "experimental_physics",
+      "status": "superseded",
+      "sections": {
+        "What It Captures": "The central measurement of the OPERA experiment: the difference between the measured neutrino travel time and the expected travel time if neutrinos moved at exactly the speed of light. A positive δt means neutrinos arrived earlier than expected.",
+        "Raw Result": "δt = 60.7 ± 6.9 (statistical) +8.3/-8.0 (systematic) nanoseconds. Neutrinos appeared to arrive approximately 60.7 ns earlier than light would over the 730 km baseline.",
+        "Statistical Method": "The analysis used a maximum likelihood fit of the neutrino arrival time distribution to the time profile of the proton beam at CERN. 15,223 neutrino interactions were used. Statistical significance was calculated assuming Gaussian errors.",
+        "Status": "This measurement is now known to be contaminated by two systematic timing errors (fiber connector defect and oscillator defect) totalling approximately 58 ns. The corrected measurement is consistent with δt = 0."
+      }
+    },
+    {
+      "id": "statistical_significance",
+      "title": "Statistical Significance of FTL Claim: 6.0σ",
+      "entry_type": "instantiation",
+      "source_type": "measurement",
+      "domain": "experimental_physics",
+      "status": "superseded",
+      "sections": {
+        "What It Captures": "The OPERA collaboration reported their anomalous result at 6.0 standard deviations above the null hypothesis of v = c. This exceeds the conventional 5σ threshold used in particle physics to claim a discovery.",
+        "Calculation": "The 6.0σ significance is derived purely from the statistical uncertainty of ±6.9 ns on the δt measurement. The systematic uncertainty was reported separately and was not folded into the significance calculation in the original paper.",
+        "Limitation": "The reported significance addressed only statistical fluctuations; it did not account for unknown systematic errors. A 6σ result with uncharacterized systematics is not equivalent to a 6σ result with a fully validated uncertainty budget. The discovery threshold in particle physics implicitly assumes all systematic errors are known.",
+        "Status": "Superseded. The 60.7 ns anomaly is now attributed to systematic errors, reducing the true δt to within statistical noise of zero."
+      }
+    },
+    {
+      "id": "ftl_velocity_claim",
+      "title": "Claim: Muon Neutrinos Travel Faster Than Light, v/c = 1 + 2.37×10⁻⁵",
+      "entry_type": "open_question",
+      "source_type": "claim",
+      "domain": "experimental_physics",
+      "status": "refuted",
+      "sections": {
+        "What It Captures": "The core assertion of Adam et al. (2011): that muon neutrinos produced at CERN traveled the 730 km baseline to Gran Sasso at a velocity exceeding the speed of light by a fractional excess of (2.37 ± 0.32(stat.) +0.34/-0.24(sys.)) × 10⁻⁵.",
+        "Implications If True": "A confirmed superluminal neutrino velocity would require new physics beyond the Standard Model of particle physics. It would constitute a direct violation of Special Relativity's universal speed limit and break Lorentz invariance. It would imply the possibility of sending information backward in time in certain reference frames, violating causality.",
+        "Prior Constraints": "This claim contradicted existing bounds from the 1987A supernova: neutrinos from SN 1987A arrived within hours of the optical signal despite traveling 168,000 light-years, placing a constraint of |v/c - 1| < 2×10⁻⁹, four orders of magnitude tighter than the OPERA claim.",
+        "Status": "Refuted. The measured anomaly is fully explained by two systematic timing hardware errors discovered in early 2012."
+      }
+    },
+    {
+      "id": "lorentz_violation_implication",
+      "title": "Implied Lorentz Invariance Violation from FTL Claim",
+      "entry_type": "open_question",
+      "source_type": "implication",
+      "domain": "theoretical_physics",
+      "status": "refuted",
+      "sections": {
+        "What It Captures": "If the OPERA FTL result were correct, it would imply that Lorentz invariance—the symmetry underlying Special Relativity stating that the laws of physics are the same in all inertial frames—is violated at some energy scale for neutrinos.",
+        "Theoretical Significance": "Lorentz invariance is the most precisely tested symmetry in physics. Tests across electromagnetic, weak, and strong interactions have confirmed it to parts in 10^20 or better. A violation at the scale implied by OPERA (2.37×10^-5 in velocity) would be the largest Lorentz violation ever observed and would require complete reconstruction of the Standard Model.",
+        "Consistency with SN 1987A": "The SN 1987A neutrino bound (|v/c - 1| < 2×10^-9) directly contradicts the OPERA claim by four orders of magnitude, assuming no energy dependence of the Lorentz violation. Any model reconciling the two requires extreme and contrived energy dependence.",
+        "Status": "Refuted along with the parent FTL velocity claim."
+      }
+    },
+    {
+      "id": "causality_implication",
+      "title": "Implied Causality Violation: Superluminal Signaling Paradox",
+      "entry_type": "open_question",
+      "source_type": "implication",
+      "domain": "theoretical_physics",
+      "status": "refuted",
+      "sections": {
+        "What It Captures": "Special Relativity implies that any particle traveling faster than light in one reference frame travels backward in time in another reference frame. A confirmed FTL neutrino signal would therefore permit construction of a causal paradox: an event caused by its own future effect.",
+        "Logical Structure": "By the relativity of simultaneity, if a signal travels FTL in frame A, there exists a frame B in which the signal arrives before it is sent. Two such signals sent in different frames can create a closed causal loop, where event A causes event B which causes event A.",
+        "Relationship to SR": "This implication is not a new conjecture but a direct logical consequence of Special Relativity plus FTL propagation. The contradiction is categorical: FTL + SR = causality violation. The only resolutions are FTL is false, SR is false, or causality is not a fundamental constraint.",
+        "Status": "Refuted along with the parent FTL velocity claim."
+      }
+    },
+    {
+      "id": "sn1987a_constraint",
+      "title": "SN 1987A Neutrino Velocity Bound: |v/c - 1| < 2×10⁻⁹",
+      "entry_type": "reference_law",
+      "source_type": "prior_constraint",
+      "domain": "astrophysics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "Neutrinos from Supernova 1987A in the Large Magellanic Cloud, detected by Kamiokande-II, IMB, and Baksan detectors, arrived within approximately 3 hours of the optical signal despite traveling 168,000 light-years. This places a tight empirical bound on neutrino velocity.",
+        "Constraint Value": "The time delay between neutrino and photon arrival gives |v_neutrino/c - 1| < 2×10⁻⁹ at neutrino energies of ~10 MeV. This is four orders of magnitude tighter than the OPERA claimed deviation of 2.37×10⁻⁵.",
+        "Significance for OPERA": "The OPERA result directly contradicts the SN 1987A bound unless the Lorentz violation has an extreme energy dependence (suppressed at 10 MeV, enhanced at 17 GeV). Such energy dependence has no theoretical basis and was not proposed in the original OPERA paper.",
+        "Status": "Established observational constraint. Inconsistent with the OPERA FTL claim under standard assumptions."
+      }
+    },
+    {
+      "id": "special_relativity_speed_limit",
+      "title": "Special Relativity: Universal Speed Limit c for Massive Particles",
+      "entry_type": "reference_law",
+      "source_type": "formal_foundation",
+      "domain": "theoretical_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "Einstein's Special Theory of Relativity (1905) establishes that the speed of light in vacuum c is the universal maximum speed for the propagation of energy, matter, and information. No massive particle can reach or exceed c. As velocity approaches c, the energy required approaches infinity.",
+        "Formal Statement": "For a particle of rest mass m > 0: E = γmc² where γ = 1/√(1-v²/c²). As v → c, E → ∞. Therefore v = c requires infinite energy; v > c is kinematically forbidden for massive particles.",
+        "Empirical Status": "Confirmed to extraordinary precision across all particle physics experiments. The most precise direct tests use particle accelerators and confirm v < c for all observed massive particles. Neutrinos have nonzero mass (established by neutrino oscillation experiments), therefore they cannot reach c.",
+        "Relationship to Lorentz Invariance": "The speed limit is a consequence of Lorentz invariance: if the laws of physics are the same in all inertial frames, then the speed of light must be the same in all frames, and no massive particle can reach that speed. Violation of one entails violation of the other."
+      }
+    },
+    {
+      "id": "icarus_refutation",
+      "title": "ICARUS Measurement: Neutrino Velocity Consistent with c (2012)",
+      "entry_type": "instantiation",
+      "source_type": "independent_verification",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "The ICARUS experiment, also located at Gran Sasso and receiving the same CERN neutrino beam, independently measured neutrino time-of-flight and found results fully consistent with v = c, directly contradicting the OPERA claim.",
+        "Result": "ICARUS measured δt = 0.3 ± 4.9 (stat.) +9.0/-8.5 (sys.) ns, consistent with v = c at the 2.7 ns level. This is a factor of more than 20 smaller than the OPERA claimed signal of 60.7 ns.",
+        "Significance": "ICARUS used the same neutrino beam and similar timing infrastructure as OPERA, but independently developed. The consistency with v = c, using the corrected OPERA timing after the fiber connector fix, confirms that the OPERA anomaly was instrumental, not physical.",
+        "Status": "Established. Published in JHEP 2012. Considered the primary independent refutation of the OPERA FTL claim."
+      }
+    },
+    {
+      "id": "corrected_opera_result",
+      "title": "Corrected OPERA Result: δt = 0.3 ns, Consistent with v = c",
+      "entry_type": "instantiation",
+      "source_type": "measurement",
+      "domain": "experimental_physics",
+      "status": "established",
+      "sections": {
+        "What It Captures": "After identifying and correcting for the two systematic timing hardware errors (fiber connector defect: +73 ns, oscillator defect: -15 ns), the OPERA collaboration reanalyzed their data and found a corrected time-of-flight consistent with v = c.",
+        "Corrected Result": "δt = 0.3 ± 5.6 (stat.) +0.2/-0.8 (sys.) ns. This is fully consistent with v = c and statistically indistinguishable from zero. The corrected result eliminates the FTL signal entirely.",
+        "Implications": "The corrected result confirms that neutrinos travel at v = c (or indistinguishably close to it) as predicted by Special Relativity for particles with small but nonzero mass. No new physics is required.",
+        "Status": "Published by OPERA collaboration, 2012. Supersedes the original 2011 claim."
+      }
+    }
+  ],
+  "links": [
+    {"source": "cern_cngs_beam",           "target": "opera_detector",          "type": "sends_particles_to",          "description": "CERN beam delivers muon neutrinos to the OPERA detector 730km away"},
+    {"source": "baseline_distance",         "target": "tof_measurement",          "type": "constrains",                  "description": "Measured baseline distance is required input to velocity calculation"},
+    {"source": "gps_timing_system",         "target": "tof_measurement",          "type": "provides_timing_for",         "description": "GPS synchronization provides the departure and arrival timestamps"},
+    {"source": "opera_detector",            "target": "tof_measurement",          "type": "performs",                    "description": "OPERA detector measures neutrino arrival time"},
+    {"source": "fiber_connector_defect",    "target": "gps_timing_system",        "type": "introduces_error_in",         "description": "Loose fiber connector caused ~+73 ns systematic offset in timing chain"},
+    {"source": "oscillator_defect",         "target": "gps_timing_system",        "type": "introduces_error_in",         "description": "Faulty oscillator caused ~-15 ns systematic offset in timing chain"},
+    {"source": "tof_measurement",           "target": "ftl_velocity_claim",       "type": "produces",                    "description": "The δt = 60.7 ns measurement is the direct basis for the FTL velocity claim"},
+    {"source": "statistical_significance",  "target": "ftl_velocity_claim",       "type": "supports",                    "description": "6.0σ significance is cited as evidence for the reality of the FTL signal"},
+    {"source": "ftl_velocity_claim",        "target": "lorentz_violation_implication", "type": "implies",               "description": "FTL travel by a massive particle directly implies Lorentz invariance violation"},
+    {"source": "ftl_velocity_claim",        "target": "causality_implication",    "type": "implies",                    "description": "FTL signaling in SR framework implies the possibility of causal paradoxes"},
+    {"source": "sn1987a_constraint",        "target": "ftl_velocity_claim",       "type": "contradicts",                 "description": "SN 1987A neutrino bound is four orders of magnitude tighter than the OPERA claimed deviation"},
+    {"source": "special_relativity_speed_limit", "target": "ftl_velocity_claim",  "type": "contradicts",                "description": "SR forbids v > c for massive particles; neutrinos are massive (nonzero mass from oscillations)"},
+    {"source": "lorentz_violation_implication", "target": "special_relativity_speed_limit", "type": "contradicts",     "description": "Confirmed Lorentz violation would require abandonment of Special Relativity"},
+    {"source": "icarus_refutation",         "target": "ftl_velocity_claim",       "type": "refutes",                    "description": "Independent ICARUS measurement found v = c, not FTL"},
+    {"source": "fiber_connector_defect",    "target": "corrected_opera_result",   "type": "correction_leads_to",         "description": "Fixing the fiber connector removed ~73 ns of systematic offset"},
+    {"source": "oscillator_defect",         "target": "corrected_opera_result",   "type": "correction_leads_to",         "description": "Correcting the oscillator removed ~-15 ns of systematic offset"},
+    {"source": "corrected_opera_result",    "target": "special_relativity_speed_limit", "type": "consistent_with",     "description": "Corrected measurement shows v/c indistinguishable from 1, consistent with SR"},
+    {"source": "icarus_refutation",         "target": "corrected_opera_result",   "type": "corroborates",               "description": "ICARUS independent result agrees with corrected OPERA result"}
+  ]
+}

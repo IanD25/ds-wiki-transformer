@@ -1,123 +1,77 @@
 # Principia Formal Diagnostics (PFD)
 ## Graph Coherence Engine for Research Datasets
 
-**Automatically analyze research datasets for structural coherence, dimensionality, and cross-domain analogies.**
+**Automatically analyze research datasets for structural coherence, dimensionality, and formal grounding.**
 
-Upload your data (metabolic networks, taxonomies, power grids, chemical databases, knowledge graphs), and PFD checks:
-- ✅ **Is this internally consistent?** (Tier-1: Internal Coherence)
-- ✅ **How does it relate to other datasets?** (Tier-2: Cross-Dataset Analogies)
-- ✅ **What's the final quality score?** (PFD Score: 0.0–1.0)
+Give PFD a structured dataset — metabolic networks, taxonomies, power grids, chemical databases, knowledge graphs — and it produces:
 
-**No hosting. No LLM backend. No cost beyond your existing Claude subscription.**
+- **Tier-1 Report** — Internal structural coherence, Fisher effective dimension (D_eff), regime classification, interactive network visualization
+- **Tier-2 Report** — Cross-dataset bridge analysis: how well this dataset anchors to a formal reference knowledge graph
+- **PFD Score** — Combined 0.0–1.0 quality score with full reasoning (no black-box verdicts)
 
----
-
-## Workflow Overview
-
-[![PFD Workflow Diagram](PFD_WORKFLOW_DIAGRAM.png)](PFD_WORKFLOW_DIAGRAM.png)
-
-**[→ Read the full USER_GUIDE for detailed walkthroughs](USER_GUIDE.md)**
+> **Status: Active research tool. Not yet public-release ready. Architecture stable; Phase 3 (paper analysis) in design.**
 
 ---
 
-## Quick Start (5 Minutes)
+## Pipeline Overview
 
-### 1. Install
+```
+Your Dataset (CSV / JSON / MATPOWER / custom)
+    │
+[Step 1] INGEST         → entries + links → rrp_*.db (SQLite)
+[Step 2] BUILD GRAPH    → NetworkX internal graph
+[Step 3] TIER-1         → D_eff, coherence score, regime distribution
+    │                      → Tier-1 HTML report + D3.js network viz
+    │
+[Step 4] BUILD BRIDGE   → RRP nodes ↔ DS Wiki nodes (semantic similarity)
+[Step 5] TIER-2         → Bridge quality, anchor distribution, domain coverage
+    │                      → Tier-2 HTML report
+    │
+[Step 6] PFD SCORE      → 0.0–1.0 combined verdict
+```
+
+---
+
+## Validated Datasets (as of 2026-03-13)
+
+| Dataset | Entries | Links | PFD Score | Verdict |
+|---------|---------|-------|-----------|---------|
+| E. coli core metabolic network | 304 | 536 | 0.973 | CONSISTENT + WELL-INTEGRATED |
+| Zoo animal taxonomy | 426 | 437 | — | CONSISTENT |
+| Periodic Table | 119 elements | 1,671 properties | — | CONSISTENT |
+| IEEE Power Grid (case14/57/118) | 14–118 buses | varies | — | MARGINAL (domain-correct for sparse grids) |
+
+---
+
+## Quick Start
+
 ```bash
+# 1. Clone + setup
 git clone https://github.com/IanD25/ds-wiki-transformer.git
 cd ds-wiki-transformer
 bash setup.sh
-```
 
-### 2. Prepare Your Data
-Create two CSV files: `entries.csv` and `links.csv`
+# 2. Activate environment
+source .venv/bin/activate        # Mac/Linux
+.venv\Scripts\activate           # Windows
 
-**entries.csv:**
-```csv
-entry_id,title,description,entry_type,domain
-E001,Pyruvate,Central metabolite,instantiation,biochemistry
-E002,Acetyl-CoA,Activated group carrier,instantiation,biochemistry
-```
+# 3. Rebuild semantic index
+python -m src.sync
 
-**links.csv:**
-```csv
-source_id,target_id,link_type,description
-E001,E002,produces,Pyruvate → Acetyl-CoA in TCA cycle
-```
-
-### 3. Run Analysis
-```bash
-# Ingest your data
-python3 scripts/ingest_your_dataset.py \
-    --entries entries.csv \
-    --links links.csv \
-    --name my_dataset \
-    --output data/rrp/my_dataset/
-
-# Run internal diagnostics (Tier-1)
+# 4. Run Tier-1 diagnostics on an included dataset
 python scripts/run_fisher_suite.py --mode internal_rrp \
-    --rrp-db data/rrp/my_dataset/rrp_my_dataset.db
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
 
-# Optional: Compare to another dataset (Tier-2)
+# 5. Full two-tier report
 python scripts/run_fisher_suite.py --mode report \
-    --rrp-db data/rrp/my_dataset/rrp_my_dataset.db \
-    --rrp-compare data/rrp/another_dataset/rrp_another_dataset.db
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db
+
+# 6. Verify (403 tests)
+python -m pytest tests/ -v --tb=short
 ```
 
-### 4. View Results
-- `rrp_my_dataset_report.json` — Full diagnostics
-- `rrp_my_dataset_visualization.html` — Interactive graph
-- `rrp_my_dataset_summary.txt` — Human-readable verdict
-
-**For detailed workflows and examples, see [USER_GUIDE.md](USER_GUIDE.md).**
-
----
-
-## Architecture
-
-PFD operates in a **6-step diagnostic pipeline**:
-
-```
-Your Research Dataset (RRP)
-    ↓
-[Step 1] INGEST       → Parse entries + links into RRP schema
-[Step 2] BUILD GRAPH  → Model dataset structure
-[Step 3] DIAGNOSE     → Compute Tier-1 (internal coherence)
-    ↓
-[Tier-1 Output]       → Coherence verdict + metrics
-    ↓
-[Step 4] BUILD BRIDGE → (Optional) Compare to other RRPs
-[Step 5] BRIDGE TEST  → Compute Tier-2 (cross-RRP analogies)
-    ↓
-[Tier-2 Output]       → Analogy verdict + bridge list
-    ↓
-[Step 6] REPORT       → Final PFD Score (0.0–1.0)
-```
-
-**Key Components:**
-- **Fisher Suite** (`src/analysis/fisher_diagnostics.py`): Topology-based coherence metrics (D_eff, noise fraction, regime classification)
-- **Pass 2** (`src/ingestion/cross_universe_query.py`): Cross-RRP similarity detection using semantic embeddings
-- **RRP Schema** (`data/rrp/*/`): Standardized SQLite format for any research dataset
-- **Reports** (`src/analysis/fisher_report.py`): Two-tier verdict generation + JSON/HTML output
-
----
-
-## Supported Datasets
-
-PFD works on any structured dataset with entries (nodes) and links (edges):
-
-- **Biochemistry**: Metabolic networks, gene regulatory networks, protein interaction networks
-- **Electrical Engineering**: Power grids, circuit topologies, network infrastructures
-- **Taxonomy**: Species classification, biological hierarchies, knowledge graphs
-- **Chemistry**: Periodic table properties, reaction networks, molecular interactions
-- **Computer Science**: Complexity hierarchies, algorithm dependencies, knowledge structures
-- **General**: Any domain with entities and relationships
-
-**Included Examples:**
-- E. coli core metabolic network (304 entries, 536 links)
-- Zoo animal taxonomy (426 entries, 437 links)
-- Periodic Table (119 elements, 1,671 properties)
-- IEEE Power Grids (case14, case57, case118; 14–118 buses)
+**Windows (ShadowPC):** Prefix Python commands with `PYTHONUTF8=1` to handle Unicode math symbols in DS Wiki entries.
 
 ---
 
@@ -125,83 +79,89 @@ PFD works on any structured dataset with entries (nodes) and links (edges):
 
 | Document | Purpose |
 |----------|---------|
-| **[USER_GUIDE.md](USER_GUIDE.md)** | **Start here** — Step-by-step workflows, report interpretation, examples |
-| [MASTER_SUMMARY.md](MASTER_SUMMARY.md) | Full technical deep-dive for engineers and contributors |
-| [FISHER_PIPELINE_REDESIGN.md](FISHER_PIPELINE_REDESIGN.md) | Specification for the 6-step PFD pipeline |
-| [CLAUDE.md](CLAUDE.md) | Project context for LLM assistants (auto-loaded) |
-| [docs/design_philosophy/STRUCTURAL_REVELATION.md](docs/design_philosophy/STRUCTURAL_REVELATION.md) | Design manifesto for visual materials |
+| **[USER_GUIDE.md](USER_GUIDE.md)** | Report interpretation, metric definitions, worked examples |
+| [MASTER_SUMMARY.md](MASTER_SUMMARY.md) | Full technical reference for contributors |
+| [docs/FISHER_PIPELINE_REDESIGN.md](docs/FISHER_PIPELINE_REDESIGN.md) | Canonical 6-step pipeline specification |
+| [docs/ARCHITECTURE_DECISIONS.md](docs/ARCHITECTURE_DECISIONS.md) | Key design decisions and rationale |
+| [CLAUDE.md](CLAUDE.md) | Project context for LLM assistants (auto-loaded by Claude Code) |
 
 ---
 
-## Running PFD
+## Key Commands
 
 ```bash
-# Test (407 tests)
-python -m pytest tests/ -v
-
-# Run Fisher Suite diagnostics
+# Tier-1 only (no DS Wiki needed)
 python scripts/run_fisher_suite.py --mode internal_rrp \
     --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
 
-# Full analysis with bridge comparison
+# Tier-2 bridge diagnostics
+python scripts/run_fisher_suite.py --mode bridge \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db --min-sim 0.75
+
+# Full report (both tiers + PFD score)
 python scripts/run_fisher_suite.py --mode report \
-    --rrp-db data/rrp/dataset1/rrp_dataset1.db \
-    --rrp-compare data/rrp/dataset2/rrp_dataset2.db
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db
+
+# DS Wiki self-analysis (reference graph health check)
+python scripts/run_fisher_suite.py --mode ds_wiki \
+    --wiki-db data/ds_wiki.db
+
+# Single node deep-dive
+python scripts/run_fisher_suite.py --mode node \
+    --wiki-db data/ds_wiki.db --node-id CHEM5
 ```
 
 ---
 
 ## Requirements
 
-- **Python 3.13**
-- ~500MB disk (for ChromaDB + RRP databases)
-- CPU, CUDA (RTX 2000+), or Apple Silicon supported
+- Python 3.13
+- ~500MB disk (ChromaDB index + RRP databases)
+- CPU, CUDA (RTX 2000+), or Apple Silicon — auto-detected
 
 ```
-requirements.txt includes:
-- sentence-transformers (BGE embeddings)
-- chromadb (semantic indexing)
-- pandapower (IEEE power grid parsing)
-- sqlite3 (built-in)
-- fastmcp (optional MCP server)
+sentence-transformers  # BGE embeddings (auto-downloaded from HuggingFace)
+chromadb               # semantic indexing
+pandapower             # IEEE power grid parsing
+fastmcp                # optional MCP server for Claude tool access
 ```
 
 ---
 
-## Key Files
+## Project Structure
 
 ```
 ds-wiki-transformer/
-├── USER_GUIDE.md                        ← Start here for users
-├── PFD_WORKFLOW_DIAGRAM.png             ← Visual pipeline overview
-├── MASTER_SUMMARY.md                    ← Full technical reference
-├── FISHER_PIPELINE_REDESIGN.md          ← 6-step canonical pipeline spec
-├── CLAUDE.md                            ← Project context for LLMs
-│
+├── CLAUDE.md                      ← LLM context (auto-loaded)
+├── README.md                      ← This file
+├── MASTER_SUMMARY.md              ← Full technical reference
+├── USER_GUIDE.md                  ← User-facing interpretation guide
+├── docs/
+│   ├── FISHER_PIPELINE_REDESIGN.md
+│   ├── ARCHITECTURE_DECISIONS.md
+│   ├── PFD_PROJECT_FOUNDATIONAL_PLAN.md
+│   ├── TIER1_VALIDATION_REPORT.md
+│   └── archive/                   ← Completed specs (historical)
 ├── src/
-│   ├── config.py                        — Device detection, embed model, paths
 │   ├── analysis/
-│   │   ├── fisher_diagnostics.py        — FIM math, topology metrics (D_eff, noise)
-│   │   ├── fisher_bridge_filter.py      — Cross-RRP bridge quality scoring
-│   │   └── fisher_report.py             — Two-tier PFD report generator
+│   │   ├── fisher_diagnostics.py  ← Core FIM math + graph metrics
+│   │   ├── fisher_report.py       ← Report generator
+│   │   └── fisher_bridge_filter.py
 │   ├── ingestion/
-│   │   ├── passes/entity_catalog_pass.py — Pass 1.5: Pattern extraction
-│   │   ├── cross_universe_query.py      — Pass 2: Cross-RRP bridging
-│   │   └── parsers/                     — RRP ingestion (ecoli, zoo, ieee, periodic_table)
-│   └── mcp_server.py                    — FastMCP server (optional)
-│
+│   │   ├── parsers/               ← ecoli, zoo, periodic_table, ieee, opera
+│   │   ├── passes/                ← entity_catalog_pass.py
+│   │   └── cross_universe_query.py
+│   └── viz/
+│       ├── tier1_dashboard.py     ← Coherence/regime charts + D3.js network
+│       ├── tier1_report.py        ← Tier-1 HTML report
+│       └── tier2_report.py        ← Tier-2 HTML report
 ├── scripts/
-│   ├── run_fisher_suite.py              — CLI entry point (6 analysis modes)
-│   └── run_entity_catalog_pass.py       — Pass 1.5 + Pass 2b orchestrator
-│
+│   ├── run_fisher_suite.py        ← Main CLI (6 modes)
+│   └── run_entity_catalog_pass.py
 ├── data/
-│   ├── chroma_db/                       — Semantic index (rebuilt by sync.py)
-│   ├── ds_wiki.db                       — DS Wiki reference (optional, Phase 3+)
-│   └── rrp/                             — RRP bundles (your research data)
-│       ├── ecoli_core/
-│       ├── zoo_classes/
-│       ├── periodic_table/
-│       └── ieee_power_grid/
-│
-└── tests/                               — 407 unit + integration tests
+│   ├── ds_wiki.db                 ← Reference knowledge graph (committed)
+│   └── rrp/                       ← Dataset bundles (committed)
+└── tests/                         ← 403 tests
 ```

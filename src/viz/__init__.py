@@ -11,10 +11,11 @@ Tier-1 Internal Analysis:
     dashboard.generate_network_html(output_path)
 
 Cross-universe Bridges (Tier-2):
-    from viz import BridgeNetwork, SimilarityHist, DomainHeatmap
+    from viz import BridgeNetwork, SimilarityHist, DomainHeatmap, Tier2Report
     BridgeNetwork(bundle_db, ds_wiki_db).generate(output_dir)
     SimilarityHist(bundle_db).generate(output_dir)
     DomainHeatmap(bundle_db, ds_wiki_db).generate(output_dir)
+    Tier2Report(bundle_db, ds_wiki_db).generate(output_path)
 """
 
 def __getattr__(name):
@@ -25,6 +26,9 @@ def __getattr__(name):
     if name == "Tier1Report":
         from .tier1_report import Tier1Report
         return Tier1Report
+    if name == "Tier2Report":
+        from .tier2_report import Tier2Report
+        return Tier2Report
     if name == "BridgeNetwork":
         from .bridge_network import BridgeNetwork
         return BridgeNetwork
@@ -39,4 +43,4 @@ def __getattr__(name):
         return run_all_viz
     raise AttributeError(f"module 'viz' has no attribute {name!r}")
 
-__all__ = ["Tier1Dashboard", "Tier1Report", "BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]
+__all__ = ["Tier1Dashboard", "Tier1Report", "Tier2Report", "BridgeNetwork", "SimilarityHist", "DomainHeatmap", "run_all_viz"]

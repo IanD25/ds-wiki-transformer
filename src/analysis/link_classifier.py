@@ -1,6 +1,12 @@
 """
 link_classifier.py — LLM-powered link type classifier for the DS Wiki knowledge graph.
 
+SCOPE: Currently DS Wiki–specific (reads WIC/MF fields from ds_wiki.db schema, writes
+       back to the links table). Generalisation path: accept any SQLite graph db with
+       entries + links tables and a configurable text field, so it can improve link
+       quality in RRP bundles during intake (Pass 1 post-processing).
+       Track in: Phase 3 / intake enrichment milestone.
+
 Pipeline
 --------
   BGE cosine filter  →  content extraction  →  LLM classification  →  DB insertion
