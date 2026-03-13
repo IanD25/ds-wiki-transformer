@@ -1,0 +1,219 @@
+{
+  "metadata": {
+    "title": "Measurement of the neutrino velocity with the OPERA detector in the CNGS beam",
+    "authors": "T. Adam et al. (OPERA Collaboration)",
+    "arxiv_id": "1109.4897",
+    "journal": "JHEP",
+    "version": "v4 (corrected result, post systematic-error identification)",
+    "note": "v1 (2011) claimed FTL at 6sigma. v4 (2012) reports corrected result consistent with c after identification of two systematic errors: optical fibre connector delay and oscillator frequency offset."
+  },
+  "entries": [
+    {
+      "id": "opera_exp_setup",
+      "title": "OPERA Detector at Gran Sasso Laboratory (LNGS)",
+      "entry_type": "method",
+      "section": "2 — The OPERA detector and the CNGS neutrino beam",
+      "description": "The OPERA neutrino detector at LNGS is composed of two identical Super Modules, each consisting of an instrumented target section with a mass of about 625 tons followed by a magnetic muon spectrometer. Each section is a succession of walls filled with emulsion film/lead units interleaved with pairs of 6.7x6.7 m2 planes of 256 horizontal and vertical scintillator strips composing the Target Tracker (TT). The TT allows the location of neutrino interactions in the target and is used to measure the arrival time of neutrinos. The scintillating strips are read out through wavelength-shifter fibres coupled to 64-channel photomultipliers. The detector is located underground in the Gran Sasso National Laboratory at 1400 m depth, shielded from cosmic rays."
+    },
+    {
+      "id": "cngs_beam",
+      "title": "CERN Neutrino to Gran Sasso (CNGS) Beam",
+      "entry_type": "method",
+      "section": "2 — The OPERA detector and the CNGS neutrino beam",
+      "description": "The CNGS beam is produced by accelerating protons to 400 GeV/c with the CERN Super Proton Synchrotron (SPS). Protons are ejected towards a 2 m long graphite target in two extractions, each lasting 10.5 microseconds and separated by 50 ms. Secondary charged mesons (pions and kaons) decay in flight in a 1000 m long evacuated tunnel, producing an almost pure muon neutrino beam with average energy 17 GeV, optimised for tau neutrino appearance studies. The CNGS beam is aimed at the OPERA detector 730 km away. The kicker magnet trigger-signal for proton extraction is UTC time-stamped with a Symmetricom Xli GPS receiver. Beam intensity is accurately measured by a fast Beam Current Transformer (BCT) at 743 m upstream of the target."
+    },
+    {
+      "id": "baseline_measurement",
+      "title": "Neutrino Baseline Geodesy: 731278.0 +/- 0.2 m",
+      "entry_type": "measurement",
+      "section": "4 — Measurement of the neutrino baseline",
+      "description": "The baseline between the CERN BCT detector and the OPERA reference frame at LNGS was precisely measured in a dedicated geodesy campaign in 2010. GPS benchmarks were established at both sides of the 10 km Gran Sasso highway tunnel and their positions transported underground via terrestrial traverse to the OPERA detector. The 3D coordinates in the ETRF2000 reference frame yielded a CNGS target focal point to OPERA detector distance of (730534.61 +/- 0.20) m. Adding the BCT-to-target distance of (743.391 +/- 0.002) m gives a total baseline of (731278.0 +/- 0.2) m. The 20 cm uncertainty is dominated by the 8.3 km underground link. Crustal movements (continental drift < 1 cm/year, tidal effects < 1 cm, 2009 L'Aquila earthquake 7 cm) were all within the geodesy accuracy. The ETRF2000 reference frame has a scale error at the 10^-9 level."
+    },
+    {
+      "id": "bct_proton_timing",
+      "title": "Beam Current Transformer (BCT) Proton Waveform Measurement",
+      "entry_type": "method",
+      "section": "2 — The OPERA detector and the CNGS neutrino beam",
+      "description": "The proton beam time structure is measured by a fast Beam Current Transformer (BCT) detector (BFCTI400344) located 743.391 m upstream of the graphite target, readout by a 1 GS/s Waveform Digitizer (WFD) Acqiris DP110 with 250 MHz bandwidth. The BCT consists of toroidal transformers coaxial to the proton beam providing a signal proportional to beam current, with 400 MHz bandwidth and linearity better than 1%. The start of the digitization window is triggered by the kicker magnet signal. Waveforms are UTC time-stamped and stored in the CNGS database. The proton beam features a five-step structure from the five-turn Continuous Transfer extraction from the PS, with the 200 MHz SPS radiofrequency superimposed and resolved by the BCT. The delay from proton transit to WFD was calibrated using fast beam pick-up detectors and LHC injection bunches of ~1 ns width: Delta_t_BCT = (580 +/- 5) ns."
+    },
+    {
+      "id": "gps_common_view_timing",
+      "title": "GPS Common-View Time Transfer System",
+      "entry_type": "method",
+      "section": "3 — Principle of the neutrino time of flight measurement",
+      "description": "To achieve nanosecond-level synchronisation between CERN and LNGS (730 km apart), two identical systems were installed in 2008: a GPS receiver Septentrio PolaRx2e operating in common-view mode (only GPS satellites simultaneously visible at both sites are used) and a Cs atomic clock Symmetricom Cs4000. The PolaRx2e time-tags its One Pulse Per Second (1PPS) output with respect to individual GPS satellite observations, processed offline in CGGTTS format. This technology is used by national metrology laboratories for international UTC comparisons. The systems were calibrated in 2008 by the Swiss Federal Metrology Institute (METAS), establishing a permanent time link at the 2 ns level. In 2011, an independent calibration by the German PTB institute measured the time base difference between CERN and OPERA PolaRx2e receivers as (2.3 +/- 0.9) ns, which was applied as a correction."
+    },
+    {
+      "id": "cern_timing_chain",
+      "title": "CERN Timing Chain Delay Calibration",
+      "entry_type": "measurement",
+      "section": "6 — Neutrino event timing",
+      "description": "Three delays characterise the CERN timing chain from the UTC time base to the BCT waveform digitiser: (1) GMT chain propagation delay Delta_t_UTC = (10085 +/- 2) ns, measured by portable Cs4000 oscillator in three independent measurements over two years, agreeing within 2 ns; also confirmed by two-way optical fibre measurement. (2) Kicker signal to WFD trigger delay Delta_t_trigger = (30 +/- 1) ns. (3) BCT signal to WFD delay Delta_t_BCT = (580 +/- 5) ns, calibrated using fast beam pick-up detectors BPK400099 and BPK400207 during LHC injection with 1 ns-wide proton bunches. The BCT systematic error of 5 ns is the dominant contribution to the total systematic uncertainty on delta_t."
+    },
+    {
+      "id": "lngs_timing_chain",
+      "title": "LNGS Timing Chain: 8.3 km Optical Fibre and OPERA Master Clock",
+      "entry_type": "measurement",
+      "section": "6 — Neutrino event timing",
+      "description": "The LNGS timing chain transmits UTC from the surface GPS (ESAT 2000) to the underground OPERA Master Clock via an 8.3 km optical fibre. The fibre delay was measured in 2006 as (40995.5 +/- 0.3) ns. The OPERA Master Clock uses a Vectron OC-050 oscillator (Allan deviation 2x10^-12 at 1 s) disciplined by a GPS PPmS pulse. The clock delay Delta_t_clock from Master Clock to TT FPGA was measured by two-way fibre and Cs clock transport as (4262 +/- 1) ns. The Target Tracker detector response (scintillator, WLS fibres, PMT, ROC frontend chip, FPGA) was calibrated with a UV picosecond laser; the total TT delay averages 59.6 ns with RMS 7.3 ns, adding a 3 ns systematic contribution. The FPGA latency is (24.5 +/- 1.0) ns."
+    },
+    {
+      "id": "tof_measurement_principle",
+      "title": "Time of Flight Measurement Principle: PDF Comparison",
+      "entry_type": "method",
+      "section": "3 — Principle of the neutrino time of flight measurement",
+      "description": "The neutrino time of flight cannot be measured at the single interaction level because any proton in the 10.5 microsecond extraction may produce the detected neutrino. Instead, the method compares two time distributions: (1) the proton waveform PDF, built by normalising and summing individual BCT waveforms for each extraction in which a neutrino interaction is observed; (2) the OPERA neutrino event time distribution. The deviation delta_t = TOF_c - TOF_nu is extracted by maximum likelihood analysis of the OPERA event time tags against the PDF as a function of delta_t. This approach does not rely on a start-stop signal, avoiding systematic effects from time variations of the beam. Individual waveform handling accounts for variable beam conditions per event."
+    },
+    {
+      "id": "data_selection",
+      "title": "Data Selection: 15,223 Neutrino Events (2009-2011)",
+      "entry_type": "measurement",
+      "section": "5 — Data selection",
+      "description": "The total dataset comprises 15,223 neutrino interactions detected by OPERA in CNGS runs 2009-2011, corresponding to approximately 10^20 protons on target. Events are preselected within a 20 microsecond window around the expected neutrino arrival time assuming the speed of light; cosmic ray contamination is 10^-4 and negligible. The dataset includes 7,235 internal events (charged and neutral current interactions fully contained) and 7,988 external events (charged current with identified muon). About 5% of preselected events were discarded due to isolated early hits inconsistent with the bulk of event hits, which could bias towards early arrival. Data/simulation agreement on earliest-hit timing was verified for retained events."
+    },
+    {
+      "id": "maximum_likelihood_analysis",
+      "title": "Maximum Likelihood Analysis for delta_t",
+      "entry_type": "method",
+      "section": "7 — Data analysis",
+      "description": "For each neutrino interaction the corresponding proton extraction waveform is used. Waveforms are individually normalised and summed to build a PDF, filtering a coherent electromagnetic noise from Hall HCA442. Separate maximum likelihood procedures are carried out for the two SPS proton extractions. The likelihood function maximises the correspondence between the shifted OPERA event time tags and the extraction PDF. The scan is performed in 1 ns steps with a parabolic fit to the log-likelihood for the maximum and statistical uncertainty. The method was validated by Monte Carlo: 100 simulated datasets reproduce the applied time shift at the 0.3 ns level. An alternative method associating each event with its individual waveform yields delta_t = (3.5 +/- 5.6 stat.) ns. Statistical cross-checks (day/night, seasonal, intensity splits) showed no systematic dependence at the 15-17 ns level."
+    },
+    {
+      "id": "systematic_error_budget",
+      "title": "Systematic Error Budget: Total -8.0/+8.3 ns",
+      "entry_type": "measurement",
+      "section": "7 — Data analysis / Table 2",
+      "description": "The overall systematic uncertainty on delta_t is -8.0/+8.3 ns (TT-based analysis), computed numerically from 18 identified sources with Gaussian or flat probability distributions. Dominant contributions: BCT calibration 5.0 ns (Gaussian), TT timing simulation of neutrino interactions 3.0 ns, LNGS 8.3 km fibre delay 3.7 ns, CNGS-OPERA GPS synchronisation 1.7 ns, baseline measurement 0.67 ns (20 cm at 730 km), interaction point of external events 2.0 ns (flat, one side), GMT chain propagation 2.0 ns. The RPC-based analysis has slightly larger systematic uncertainty of -9.6/+9.9 ns due to additional RPC signal formation (5.0 ns) and plane non-uniformity (3.9 ns) terms. The final asymmetric systematic error arises from the flat distribution of external event interaction positions."
+    },
+    {
+      "id": "sagnac_earth_rotation",
+      "title": "Sagnac Correction for Earth Rotation: +2.2 ns",
+      "entry_type": "measurement",
+      "section": "6 — Neutrino event timing",
+      "description": "The rotation of the Earth around its axis introduces a Sagnac effect on the neutrino time of flight. For the CERN-LNGS baseline, this yields an increase of TOF_c by 2.2 ns with negligible error. Other relativistic and gravitational effects are negligible: Earth revolution around the Sun and solar system motion through the galaxy have no measurable effect; gravitational red-shift due to different CERN and LNGS altitudes produces a relative effect of 10^-13 between common-view synchronisations; the Earth's gravitational field Schwarzschild geodesic correction amounts to 10^-8 on the time of flight. Frame-dragging effects are also negligible. The Sagnac correction is applied as a 2.2 ns increase to the expected TOF_c."
+    },
+    {
+      "id": "proton_beam_systematics",
+      "title": "Proton Beam Systematic Checks: Target, Horn, BCT",
+      "entry_type": "measurement",
+      "section": "7 — Data analysis",
+      "description": "Three potential beam-related systematic effects were investigated and found negligible: (1) Proton transport to graphite target: aiming accuracy within 50/90 microns RMS horizontal/vertical, no acceptance effect on neutrino yield or timing. (2) Target density variation: FLUKA+finite-element simulation shows temperature increase of 297 K in 10.5 microsecond extraction produces 0.3% density reduction, yielding a timing displacement smaller than 0.02 ns. (3) Horn and reflector magnet timing: pulse duration 6.8-10 ms vs extraction 10.5 microseconds; artificial shifts of up to 100 microseconds reduced muon flux by less than 1%, confirming timing stability. The meson decay point uncertainty (unknown position in 1000 m tunnel) introduces a negligible 0.02 ns effect due to the ultra-relativistic mesons (gamma~190)."
+    },
+    {
+      "id": "optical_fibre_systematic_error",
+      "title": "Systematic Error 1: Improperly Connected Optical Fibre (+73.2 ns)",
+      "entry_type": "mechanism",
+      "section": "6.1 — Measurements during 2011 CNGS winter shutdown",
+      "description": "During the December 2011 CNGS winter shutdown, re-measurement of the 8.3 km LNGS optical fibre delay showed a value 73.2 ns larger than the 2006/2007 calibration, with larger jitter (RMS 6.0 ns vs 3.2 ns). Investigation revealed an optical cable not properly connected at the OPERA Master Clock input, reducing light received by the optical/electrical converter. The reduced light intensity caused the slow amplifier electronics and time-walk of the comparator to introduce an extra delay of approximately 74 ns. After proper reconnection, the delay returned to the 2006 value: before reconnection 41068.6 ns, after reconnection 40994.1 ns. OPERA-LVD cosmic muon timing analysis (measuring horizontal muons traversing both detectors, ~160 m apart) independently dated the anomalous timing configuration onset to around August 2008, remaining stable through December 2011. The extracted LVD-OPERA delay shift of (73.2 +/- 9) ns is compatible with the fibre recalibration."
+    },
+    {
+      "id": "oscillator_frequency_systematic_error",
+      "title": "Systematic Error 2: OPERA Master Clock Oscillator Frequency Offset (+0.124 ppm)",
+      "entry_type": "mechanism",
+      "section": "6.1 — Measurements during 2011 CNGS winter shutdown",
+      "description": "During the 2011 CNGS winter shutdown, an additional test injected a calibrated signal at the PMT connector level via a 2.3 pF capacitor and analysed the resulting time stamps. The time delay between consecutive events separated by 1 ms was 0.124 ns larger than expected, indicating the OPERA Master Clock Vectron OC-050 oscillator frequency was slightly larger than specified by 0.124 ppm. This frequency offset caused event timestamps to be overestimated by an amount depending on position within the DAQ cycle (0.6 s period), up to a maximum of 74 ns. The effect was confirmed by comparing the oscillator to a Cs Frequency Standard (10 MHz). This systematic error partially cancels the fibre connector delay: fibre connector added +73.2 ns (too slow), oscillator removed approximately -15 ns (too fast), net effect approximately +58 ns. Both errors acted throughout the 2008-2011 data-taking period."
+    },
+    {
+      "id": "bunched_beam_test",
+      "title": "Short-Bunch Beam Verification Test (October-November 2011)",
+      "entry_type": "method",
+      "section": "9 — Test with a short-bunch wide-spacing beam",
+      "description": "A dedicated CNGS beam test was performed from October 22 to November 6, 2011 to exclude systematic effects related to proton waveform PDF statistical treatment. The modified SPS super-cycle produced four proton bunches approximately 3 ns FWHM separated by 524 ns, yielding 1.1x10^12 protons per cycle, about 60 times less intense than normal CNGS operation. Total integrated intensity: 4x10^16 protons on target; 35 beam-related neutrino events collected by OPERA, of which 20 passed TT selection (6 internal, 14 external) and 15 passed RPC selection. Because bunch length (3 ns) is much less than bunch spacing (524 ns), each neutrino event can be unambiguously associated with its parent proton bunch, enabling direct single-event time of flight measurement without PDF construction."
+    },
+    {
+      "id": "bunched_beam_result",
+      "title": "Bunched Beam Result: delta_t = -1.9 +/- 3.7 ns (TT), -2.9 +/- 3.3 ns (RPC)",
+      "entry_type": "measurement",
+      "section": "9.1 and 9.2 — Results with TT and RPC data",
+      "description": "The short-bunch beam test yielded delta_t = (-1.9 +/- 3.7) ns from Target Tracker data (20 events, RMS 16.5 ns), and (-2.9 +/- 3.3) ns from RPC data (15 events). Both results are consistent with zero (speed of light) and with the corrected main analysis result of (6.5 +/- 7.4) ns. The RMS of 16.5 ns is explained by TT response (7.3 ns), DAQ time granularity (10 ns), and GPS PPmS jitter (+/-25 ns from Master Clock, giving RMS 14.4 ns). The bunched beam result excludes systematic biases from: the statistical analysis of the proton PDF, cumulative effects of long proton pulses on the target and horn system, and waveform filtering noise removal procedures. The result is also in agreement with the ICARUS experiment's independent measurement at the same baseline."
+    },
+    {
+      "id": "corrected_result_2012",
+      "title": "Corrected Result: delta_t = 6.5 +/- 7.4 (stat.) +8.3/-8.0 (sys.) ns; v consistent with c",
+      "entry_type": "measurement",
+      "section": "8 — Results",
+      "description": "After correcting for the two systematic errors identified in the 2011 winter shutdown (optical fibre connector delay and oscillator frequency offset), the final result for the neutrino arrival time advance is: delta_t = TOF_c - TOF_nu = (6.5 +/- 7.4 (stat.) +8.3/-8.0 (sys.)) ns. The relative difference of the muon neutrino velocity with respect to the speed of light is: (v-c)/c = (2.7 +/- 3.1 (stat.) +3.4/-3.3 (sys.)) x 10^-6. This result is consistent with the speed of light within the combined statistical and systematic uncertainties. The dominant systematic uncertainty is the BCT calibration (5.0 ns). Total statistics: 15,223 events from 2009-2011 CNGS runs, approximately 10^20 protons on target. The result was confirmed by the short-bunch beam test and is consistent with the ICARUS experiment."
+    },
+    {
+      "id": "original_ftl_claim_2011",
+      "title": "Original 2011 Claim: delta_t = 60.7 +/- 6.9 ns FTL (Reference [8], Superseded)",
+      "entry_type": "claim",
+      "section": "1 — Introduction (reference to original paper)",
+      "description": "The original OPERA neutrino velocity measurement, reported in September 2011 (arXiv:1109.4897v1, reference [8] in the corrected paper), claimed an anomalous early arrival of muon neutrinos: delta_t = (60.7 +/- 6.9 (stat.) +8.3/-8.0 (sys.)) ns ahead of the expected speed-of-light arrival time, corresponding to (v-c)/c = (6.0 +/- 0.4 (stat.) +/-3.0 (sys.)) x 10^-5. The statistical significance was approximately 6 sigma. This result was inconsistent with Special Relativity's universal speed limit and would have implied Lorentz invariance violation. The claim was superseded after the identification of two instrumental systematic errors: an improperly connected optical fibre (causing +73.2 ns delay) and an oscillator frequency offset (causing -15 ns correction), with a net uncorrected offset of approximately +58 ns matching the claimed anomaly."
+    },
+    {
+      "id": "neutrino_mass_constraint",
+      "title": "Neutrino Mass Upper Bound and Theoretical Velocity Prediction",
+      "entry_type": "reference_law",
+      "section": "1 — Introduction",
+      "description": "For CNGS muon neutrinos at average energy 17 GeV, the relativistic velocity deviation from c due to finite rest mass is expected to be smaller than 10^-19, even assuming the heaviest neutrino mass eigenstate is as large as the current upper bound of 2 eV/c^2 from beta decay experiments. This prediction follows from the relativistic energy-momentum relation: (v-c)/c approximately equal to (m_nu * c^2)^2 / (2 * E_nu^2). Any measured deviation significantly larger than 10^-19 at these energies would point to Lorentz invariance violation in the neutrino sector, not simply to neutrino mass effects."
+    },
+    {
+      "id": "prior_neutrino_velocity_measurements",
+      "title": "Prior Neutrino Velocity Measurements: MINOS, SN1987A, High-Energy Tests",
+      "entry_type": "reference_law",
+      "section": "1 — Introduction",
+      "description": "Prior measurements constrained neutrino velocity: (1) High-energy test (E > 30 GeV, short baseline): (v-c)/c < 4 x 10^-5. (2) MINOS experiment (analogous baseline to OPERA, E peaking at 3 GeV): (v-c)/c = (5.1 +/- 2.9) x 10^-5. (3) SN1987A supernova antineutrinos (E approximately 10 MeV, 160,000 light-year baseline): |v-c|/c < 2 x 10^-9, the most stringent astrophysical constraint. The OPERA corrected result of (2.7 +/- 3.1) x 10^-6 is consistent with all prior measurements and provides the most precise direct laboratory measurement of neutrino velocity at this energy scale."
+    },
+    {
+      "id": "lorentz_invariance_context",
+      "title": "Lorentz Invariance and Special Relativity Speed Limit in Neutrino Sector",
+      "entry_type": "reference_law",
+      "section": "1 — Introduction",
+      "description": "Special Relativity requires that all massive particles travel slower than c. For neutrinos, any deviation of v from c larger than the mass-induced 10^-19 effect would point to Lorentz invariance violation (LIV) in the neutrino sector. Lorentz invariance is a foundational symmetry of both Special Relativity and the Standard Model of particle physics. Superluminal propagation would violate causality: tachyonic particles travelling faster than light allow construction of closed timelike curves and would arrive before they are emitted in appropriately boosted reference frames. The OPERA corrected measurement is consistent with c and with Lorentz invariance."
+    },
+    {
+      "id": "icarus_independent_verification",
+      "title": "ICARUS Independent Measurement at Gran Sasso: Consistent with c",
+      "entry_type": "measurement",
+      "section": "9 — Test results (reference [47])",
+      "description": "The ICARUS liquid argon time projection chamber detector, also located at Gran Sasso and also receiving the CNGS neutrino beam, performed an independent measurement of the neutrino velocity. The ICARUS result (reference [47] in the OPERA paper) found neutrino velocity consistent with the speed of light, providing independent confirmation that the original OPERA FTL claim was an instrumental artefact. The bunched beam result of OPERA (-1.9 +/- 3.7 ns for TT, -2.9 +/- 3.3 ns for RPC) is in agreement with the ICARUS measurement."
+    },
+    {
+      "id": "opera_lngs_cosmic_muon_cross_check",
+      "title": "OPERA-LVD Cosmic Muon Cross-Check: Timing Anomaly Onset Dating",
+      "entry_type": "measurement",
+      "section": "6.1 — Measurements during 2011 CNGS winter shutdown",
+      "description": "An independent analysis tool developed to study cosmic muon events in delayed coincidence between the OPERA and LVD detectors was used to date the onset of the fibre timing anomaly. Single horizontal muons from the Teramo Valley direction (zenith angle > 80 degrees, ~2200 m rock) traverse OPERA first and then LVD approximately 160 m away. Any change in timing chain of either detector appears as a shift in the time difference delta_t_mu = t_LVD - t_OPERA. Analysis from mid 2007 to March 2012 showed two abrupt changes: one around August 2008 (onset of anomalous fibre configuration) and one in December 2011 (restoration after reconnection). Between 2008 and 2011, delta_t_mu remained constant. The extracted timing anomaly (73.2 +/- 9) ns is compatible with the fibre recalibration and confirms the stable anomalous configuration throughout the 2009-2011 neutrino data taking period."
+    },
+    {
+      "id": "conclusions",
+      "title": "Conclusions: Neutrino Velocity Consistent with Speed of Light",
+      "entry_type": "claim",
+      "section": "10 — Conclusions",
+      "description": "The OPERA collaboration reports a measurement of the muon neutrino velocity in the CNGS beam over a 730 km baseline. After correcting for two instrumental systematic errors identified in December 2011 (improperly connected optical fibre causing +73.2 ns delay, and oscillator frequency offset causing -15 ns effect), the final result is: delta_t = (6.5 +/- 7.4 (stat.) +8.3/-8.0 (sys.)) ns, and (v-c)/c = (2.7 +/- 3.1 (stat.) +3.4/-3.3 (sys.)) x 10^-6. This is consistent with the speed of light within the measurement uncertainties. The result is confirmed by a dedicated short-bunch beam test and is consistent with the ICARUS experiment. The original anomalous result of (v-c)/c = 6 x 10^-5 reported in 2011 is explained by the combination of the two systematic errors, with a total net offset of approximately +58 ns closely matching the original claimed delta_t of 60.7 ns."
+    }
+  ],
+  "links": [
+    {"source": "cngs_beam", "target": "opera_exp_setup", "type": "sends_neutrinos_to"},
+    {"source": "cngs_beam", "target": "bct_proton_timing", "type": "measured_by"},
+    {"source": "baseline_measurement", "target": "tof_measurement_principle", "type": "provides_distance_for"},
+    {"source": "bct_proton_timing", "target": "tof_measurement_principle", "type": "provides_proton_pdf_for"},
+    {"source": "opera_exp_setup", "target": "tof_measurement_principle", "type": "provides_neutrino_timing_for"},
+    {"source": "gps_common_view_timing", "target": "cern_timing_chain", "type": "provides_utc_reference_for"},
+    {"source": "gps_common_view_timing", "target": "lngs_timing_chain", "type": "provides_utc_reference_for"},
+    {"source": "cern_timing_chain", "target": "tof_measurement_principle", "type": "corrects_cern_timestamps_in"},
+    {"source": "lngs_timing_chain", "target": "tof_measurement_principle", "type": "corrects_lngs_timestamps_in"},
+    {"source": "sagnac_earth_rotation", "target": "tof_measurement_principle", "type": "applies_correction_to"},
+    {"source": "tof_measurement_principle", "target": "maximum_likelihood_analysis", "type": "produces_input_for"},
+    {"source": "data_selection", "target": "maximum_likelihood_analysis", "type": "provides_events_for"},
+    {"source": "maximum_likelihood_analysis", "target": "corrected_result_2012", "type": "produces"},
+    {"source": "systematic_error_budget", "target": "corrected_result_2012", "type": "bounds_uncertainty_of"},
+    {"source": "proton_beam_systematics", "target": "systematic_error_budget", "type": "contributes_negligible_term_to"},
+    {"source": "optical_fibre_systematic_error", "target": "lngs_timing_chain", "type": "introduced_undetected_error_in"},
+    {"source": "oscillator_frequency_systematic_error", "target": "lngs_timing_chain", "type": "introduced_undetected_error_in"},
+    {"source": "optical_fibre_systematic_error", "target": "original_ftl_claim_2011", "type": "explains_anomaly_in"},
+    {"source": "oscillator_frequency_systematic_error", "target": "original_ftl_claim_2011", "type": "explains_anomaly_in"},
+    {"source": "opera_lngs_cosmic_muon_cross_check", "target": "optical_fibre_systematic_error", "type": "independently_dates_onset_of"},
+    {"source": "bunched_beam_test", "target": "bunched_beam_result", "type": "produces"},
+    {"source": "bunched_beam_result", "target": "corrected_result_2012", "type": "independently_validates"},
+    {"source": "icarus_independent_verification", "target": "corrected_result_2012", "type": "independently_validates"},
+    {"source": "corrected_result_2012", "target": "original_ftl_claim_2011", "type": "supersedes"},
+    {"source": "corrected_result_2012", "target": "conclusions", "type": "supports"},
+    {"source": "neutrino_mass_constraint", "target": "lorentz_invariance_context", "type": "provides_theoretical_prediction_for"},
+    {"source": "prior_neutrino_velocity_measurements", "target": "corrected_result_2012", "type": "is_consistent_with"},
+    {"source": "corrected_result_2012", "target": "lorentz_invariance_context", "type": "is_consistent_with"},
+    {"source": "original_ftl_claim_2011", "target": "lorentz_invariance_context", "type": "would_have_violated"},
+    {"source": "original_ftl_claim_2011", "target": "neutrino_mass_constraint", "type": "contradicted"}
+  ]
+}

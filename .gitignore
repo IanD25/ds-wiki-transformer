@@ -34,3 +34,7 @@ wiki_topology.png
 # data/rrp/              — raw datasets + built RRP bundles
 # Outside Ref/           — external analysis and reference documents
 # ────────────────────────────────────────────────────────────────────────────
+
+# Generated report outputs (rebuilt by viz pipeline)
+data/reports/
+data/viz_outputs/
