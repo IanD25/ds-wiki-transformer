@@ -95,16 +95,15 @@ else
     echo "  ✗ data/rrp/ not found"
 fi
 
-# ── 8. Build generated artifacts ─────────────────────────────────────────────
+# ── 8. Check generated artifacts ─────────────────────────────────────────────
 echo ""
-read -r -p "→ Rebuild chroma_db + wiki_history.db now? (~30s) [Y/n]: " REBUILD
-REBUILD="${REBUILD:-Y}"
-if [[ "$REBUILD" =~ ^[Yy]$ ]]; then
-    echo "→ Running sync..."
+if [ -d "data/chroma_db" ] && [ -f "data/wiki_history.db" ]; then
+    echo "✓ chroma_db + wiki_history.db present (committed to repo)"
+    echo "  Only rebuild if ds_wiki.db changes: python3 -m src.sync"
+else
+    echo "→ chroma_db or wiki_history.db missing — rebuilding..."
     python3 -m src.sync
     echo "✓ Artifacts rebuilt"
-else
-    echo "  Skipped — run 'python3 -m src.sync' manually when ready"
 fi
 
 # ── 9. Run tests ─────────────────────────────────────────────────────────────

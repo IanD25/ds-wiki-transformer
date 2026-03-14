@@ -32,7 +32,7 @@ Your Dataset (CSV / JSON / MATPOWER / custom)
 
 ---
 
-## Validated Datasets (as of 2026-03-13)
+## Validated Datasets (as of 2026-03-14)
 
 | Dataset | Entries | Links | PFD Score | Verdict |
 |---------|---------|-------|-----------|---------|
@@ -40,6 +40,8 @@ Your Dataset (CSV / JSON / MATPOWER / custom)
 | Zoo animal taxonomy | 426 | 437 | — | CONSISTENT |
 | Periodic Table | 119 elements | 1,671 properties | — | CONSISTENT |
 | IEEE Power Grid (case14/57/118) | 14–118 buses | varies | — | MARGINAL (domain-correct for sparse grids) |
+| OPERA paper (Phase 3 prototype) | 15 | 19 | — | Paper-based RRP test case |
+| CCBH cluster (3 papers) | multi-paper | multi-paper | — | Cosmological coupling cluster |
 
 ---
 
@@ -55,19 +57,16 @@ bash setup.sh
 source .venv/bin/activate        # Mac/Linux
 .venv\Scripts\activate           # Windows
 
-# 3. Rebuild semantic index
-python -m src.sync
-
-# 4. Run Tier-1 diagnostics on an included dataset
+# 3. Run Tier-1 diagnostics on an included dataset
 python scripts/run_fisher_suite.py --mode internal_rrp \
     --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
 
-# 5. Full two-tier report
+# 4. Full two-tier report
 python scripts/run_fisher_suite.py --mode report \
     --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
     --wiki-db data/ds_wiki.db
 
-# 6. Verify (403 tests)
+# 5. Verify (403 tests)
 python -m pytest tests/ -v --tb=short
 ```
 
@@ -83,6 +82,7 @@ python -m pytest tests/ -v --tb=short
 | [MASTER_SUMMARY.md](MASTER_SUMMARY.md) | Full technical reference for contributors |
 | [docs/FISHER_PIPELINE_REDESIGN.md](docs/FISHER_PIPELINE_REDESIGN.md) | Canonical 6-step pipeline specification |
 | [docs/ARCHITECTURE_DECISIONS.md](docs/ARCHITECTURE_DECISIONS.md) | Key design decisions and rationale |
+| [docs/SCF_PHASE3_DESIGN.md](docs/SCF_PHASE3_DESIGN.md) | Phase 3 SCF-grounded design |
 | [CLAUDE.md](CLAUDE.md) | Project context for LLM assistants (auto-loaded by Claude Code) |
 
 ---
@@ -118,7 +118,7 @@ python scripts/run_fisher_suite.py --mode node \
 ## Requirements
 
 - Python 3.13
-- ~500MB disk (ChromaDB index + RRP databases)
+- ~500MB disk (all data committed — no rebuild needed after clone)
 - CPU, CUDA (RTX 2000+), or Apple Silicon — auto-detected
 
 ```
@@ -150,7 +150,7 @@ ds-wiki-transformer/
 │   │   ├── fisher_report.py       ← Report generator
 │   │   └── fisher_bridge_filter.py
 │   ├── ingestion/
-│   │   ├── parsers/               ← ecoli, zoo, periodic_table, ieee, opera
+│   │   ├── parsers/               ← ecoli, zoo, periodic_table, ieee, opera, ccbh
 │   │   ├── passes/                ← entity_catalog_pass.py
 │   │   └── cross_universe_query.py
 │   └── viz/
@@ -161,7 +161,11 @@ ds-wiki-transformer/
 │   ├── run_fisher_suite.py        ← Main CLI (6 modes)
 │   └── run_entity_catalog_pass.py
 ├── data/
-│   ├── ds_wiki.db                 ← Reference knowledge graph (committed)
-│   └── rrp/                       ← Dataset bundles (committed)
+│   ├── ds_wiki.db                 ← Reference knowledge graph
+│   ├── chroma_db/                 ← ChromaDB vector index (bge-large 1024-dim)
+│   ├── wiki_history.db            ← Embedding history snapshots
+│   ├── reports/                   ← Fisher Suite HTML reports
+│   ├── viz/                       ← Visualization outputs
+│   └── rrp/                       ← Dataset bundles
 └── tests/                         ← 403 tests
 ```

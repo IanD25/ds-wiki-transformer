@@ -26,24 +26,23 @@ cd ds-wiki-transformer
 # 2. One-command environment setup
 bash setup.sh
 
-# 3. Rebuild generated artifacts (chroma_db + wiki_history.db from ds_wiki.db)
+# 3. Verify
 source .venv/bin/activate
-python3 -m src.sync
-
-# 4. Verify
 python3 -m pytest tests/ -v --tb=short   # 403 tests should pass
 
-# 5. Optional: start MCP server (for Claude tool access)
+# 4. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
 ```
 
-**Data files committed to repo (no download needed):**
+**All data committed to repo (no download or rebuild needed):**
 - `data/ds_wiki.db` — DS Wiki source of truth (1.5MB, 209 entries, 573 links)
-- `data/rrp/` — RRP test bundles (zoo_classes, ecoli_core, periodic_table)
+- `data/rrp/` — RRP bundles (zoo_classes, ecoli_core, periodic_table, opera, ccbh)
+- `data/chroma_db/` — ChromaDB semantic index (bge-large 1024-dim)
+- `data/wiki_history.db` — embedding history snapshots
+- `data/reports/` — Fisher Suite HTML reports + structural alignment JSON
+- `data/viz/` — Tier-2 visualization outputs
 
-**Generated artifacts (gitignored, rebuilt by sync.py):**
-- `data/chroma_db/` — ChromaDB semantic index (~30s to rebuild)
-- `data/wiki_history.db` — embedding history snapshots (~10s to rebuild)
+**Rebuild only if ds_wiki.db changes:** `python3 -m src.sync`
 
 ---
 
@@ -194,6 +193,8 @@ python scripts/run_fisher_suite.py --mode node \
 - `src/ingestion/parsers/zoo_classes_parser.py` — 426 entries, 437 links
 - `src/ingestion/parsers/periodic_table_parser.py` — 119 elements, 1671 properties
 - `src/ingestion/parsers/ecoli_core_parser.py` — 304 entries, 536 links, 912 bridges
+- `src/ingestion/parsers/opera_paper_parser.py` — OPERA paper RRP (Phase 3 prototype)
+- `src/ingestion/parsers/ccbh_cluster_parser.py` — 3-paper CCBH cluster RRP
 - `src/ingestion/passes/entity_catalog_pass.py` — Pass 1.5 (pattern extraction)
 - `scripts/run_entity_catalog_pass.py` — CLI orchestrator
 - Periodic table result (bge-large 1024-dim): 497 bridges, 35 tier-1.5, mean_sim 0.818
@@ -275,12 +276,12 @@ Actionable gap: P7 — INFO4 (DPI) not linked to Ax2; one link closes the chain
 
 ## GPU Notes (ShadowPC — RTX 2000)
 
-With CUDA available, upgrade priorities:
-1. Change `EMBED_MODEL` in `config.py` to `"BAAI/bge-large-en-v1.5"` (1024-dim, better bridges)
-2. Add `cross-encoder/ms-marco-MiniLM-L-12-v2` for reranking
-3. Local LLM for Phase 3 claim extraction: `phi-3-mini-4k-instruct` (4-bit, ~2.5GB VRAM)
-4. Fine-tune bge-small on DS Wiki link pairs (contrastive learning, ~2-4 hours)
-Install: `pip install torch --extra-index-url https://download.pytorch.org/whl/cu118`
+Both machines (Mac M4 MPS + ShadowPC CUDA) auto-detect and run bge-large 1024-dim.
+
+Future upgrade priorities:
+1. Add `cross-encoder/ms-marco-MiniLM-L-12-v2` for bridge reranking
+2. Local LLM for Phase 3 claim extraction: `phi-3-mini-4k-instruct` (4-bit, ~2.5GB VRAM)
+3. Fine-tune bge-small on DS Wiki link pairs (contrastive learning, ~2-4 hours)
 
 ---
 
@@ -315,7 +316,7 @@ Install: `pip install torch --extra-index-url https://download.pytorch.org/whl/c
 │   │   ├── link_classifier.py      ← [DS Wiki scoped] LLM link-type classifier
 │   │   └── semantic_position_test.py  ← [PROTOTYPE/PARKED] SPT — see file header
 │   ├── ingestion/
-│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core, ieee_power_grid, opera
+│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core, ieee_power_grid, opera, ccbh_cluster
 │   │   ├── passes/        ← entity_catalog_pass.py
 │   │   ├── enrichers/     ← prose_enricher.py [PARKED — see file header]
 │   │   ├── rrp_bundle.py, detector.py, cross_universe_query.py
@@ -333,11 +334,16 @@ Install: `pip install torch --extra-index-url https://download.pytorch.org/whl/c
 ├── tests/                 ← pytest suite (403 tests)
 ├── data/
 │   ├── ds_wiki.db         ← Reference knowledge graph (READ ONLY)
-│   ├── reports/           ← Generated HTML reports (gitignored)
-│   └── rrp/               ← RRP bundles (committed)
+│   ├── chroma_db/         ← ChromaDB vector index (bge-large 1024-dim)
+│   ├── wiki_history.db    ← Embedding history snapshots
+│   ├── reports/           ← Fisher Suite HTML reports + SA results
+│   ├── viz/               ← Tier-2 visualization outputs
+│   ├── viz_outputs/       ← Tier-1 visualization outputs
+│   └── rrp/               ← RRP bundles
 │       ├── zoo_classes/
 │       ├── periodic_table/
 │       ├── ecoli_core/
-│       └── opera/
+│       ├── opera/
+│       └── ccbh/          ← 3-paper CCBH cluster + Layer 1 analysis
 └── Outside Ref/           ← External analysis documents
 ```
