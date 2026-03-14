@@ -12,29 +12,24 @@ __pycache__/
 # ── Claude Code local settings (machine-specific permissions) ─────────────────
 .claude/settings.local.json
 
-# ── Generated data artifacts (rebuild with sync.py / scripts) ────────────────
-data/chroma_db/
-data/chroma/
-data/wiki_history.db
-data/viz/
-data/vector_topology.png
-
-# ── Generated visualizations ──────────────────────────────────────────────────
+# ── Generated visualizations (legacy, not in data/) ──────────────────────────
 backups/
 wiki_graph.html
 wiki_topology.png
+data/vector_topology.png
 
 # ── SQLite journal files ──────────────────────────────────────────────────────
 *.db-shm
 *.db-wal
 
 # ────────────────────────────────────────────────────────────────────────────
-# Intentionally TRACKED (not gitignored):
-# data/ds_wiki.db        — source of truth (1.5MB, committed)
-# data/rrp/              — raw datasets + built RRP bundles
+# Intentionally TRACKED:
+# data/ds_wiki.db        — source of truth
+# data/rrp/              — RRP bundles
+# data/chroma_db/        — ChromaDB vector index (both machines run bge-large 1024-dim)
+# data/wiki_history.db   — embedding history snapshots
+# data/viz/              — visualization outputs
+# data/viz_outputs/      — viz runner outputs
+# data/reports/          — Fisher Suite HTML reports
 # Outside Ref/           — external analysis and reference documents
 # ────────────────────────────────────────────────────────────────────────────
-
-# Generated report outputs (rebuilt by viz pipeline)
-data/reports/
-data/viz_outputs/

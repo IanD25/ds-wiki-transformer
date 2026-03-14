@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Topology</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
+        #container { display: flex; height: 100vh; }
+        #controls {
+            width: 250px; padding: 20px; background: white; border-right: 1px solid #ddd;
+            overflow-y: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #canvas { flex: 1; background: white; }
+        .control-group { margin-bottom: 20px; }
+        .control-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 12px; color: #333; }
+        .control-group input[type="checkbox"] { margin-right: 8px; cursor: pointer; }
+        .control-item { display: flex; align-items: center; margin: 6px 0; font-size: 12px; }
+        input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+        input[type="range"] { width: 100%; }
+        .stat-box { background: #f9f9f9; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px; border-left: 3px solid #3B82F6; }
+        .stat-label { font-weight: bold; color: #333; }
+        .stat-value { color: #666; margin-top: 4px; }
+        .legend { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; }
+        .legend-item { display: flex; align-items: center; margin: 6px 0; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="controls">
+            <h3 style="margin-bottom: 16px; font-size: 14px;">Interactive Explorer</h3>
+
+            <div class="stat-box">
+                <div class="stat-label">Total Nodes</div>
+                <div class="stat-value" id="nodeCount">0</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-label">Total Links</div>
+                <div class="stat-value" id="linkCount">0</div>
+            </div>
+
+            <div class="control-group">
+                <label>Search Entry:</label>
+                <input type="text" id="searchInput" placeholder="Enter node ID...">
+            </div>
+
+            <div class="control-group">
+                <label>Show Regime Types:</label>
+                <div class="control-item">
+                    <input type="checkbox" id="showRadial" checked>
+                    <label for="showRadial" style="margin: 0;">Radial</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showIsotropic" checked>
+                    <label for="showIsotropic" style="margin: 0;">Isotropic</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showNoise" checked>
+                    <label for="showNoise" style="margin: 0;">Noise</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showDegenerate" checked>
+                    <label for="showDegenerate" style="margin: 0;">Degenerate</label>
+                </div>
+            </div>
+
+            <div class="legend">
+                <strong>Regimes:</strong>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3B82F6;"></div>
+                    <span>Radial (hubs)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #06B6D4;"></div>
+                    <span>Isotropic (balanced)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F59E0B;"></div>
+                    <span>Noise (random)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #EF4444;"></div>
+                    <span>Degenerate (isolated)</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 11px; color: #888; line-height: 1.6;">
+                <strong>Controls:</strong><br>
+                • Drag nodes to move<br>
+                • Scroll to zoom<br>
+                • Hover for details<br>
+                • Search to highlight
+            </div>
+        </div>
+        <svg id="canvas"></svg>
+    </div>
+
+    <script>
+        const nodes = [{"id": "elem_H", "title": "Hydrogen", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_He", "title": "Helium", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Li", "title": "Lithium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Be", "title": "Beryllium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_B", "title": "Boron", "regime": "radial", "degree": 9, "d_eff": 1}, {"id": "elem_C", "title": "Carbon", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_N", "title": "Nitrogen", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_O", "title": "Oxygen", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_F", "title": "Fluorine", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Ne", "title": "Neon", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Na", "title": "Sodium", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Mg", "title": "Magnesium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Al", "title": "Aluminium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Si", "title": "Silicon", "regime": "radial", "degree": 9, "d_eff": 1}, {"id": "elem_P", "title": "Phosphorus", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_S", "title": "Sulfur", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Cl", "title": "Chlorine", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_Ar", "title": "Argon", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_K", "title": "Potassium", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Ca", "title": "Calcium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Sc", "title": "Scandium", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Ti", "title": "Titanium", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_V", "title": "Vanadium", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Cr", "title": "Chromium", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Mn", "title": "Manganese", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Fe", "title": "Iron", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Co", "title": "Cobalt", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Ni", "title": "Nickel", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Cu", "title": "Copper", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Zn", "title": "Zinc", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Ga", "title": "Gallium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Ge", "title": "Germanium", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_As", "title": "Arsenic", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_Se", "title": "Selenium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Br", "title": "Bromine", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_Kr", "title": "Krypton", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Rb", "title": "Rubidium", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Sr", "title": "Strontium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Y", "title": "Yttrium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Zr", "title": "Zirconium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Nb", "title": "Niobium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Mo", "title": "Molybdenum", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Tc", "title": "Technetium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Ru", "title": "Ruthenium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Rh", "title": "Rhodium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Pd", "title": "Palladium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Ag", "title": "Silver", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Cd", "title": "Cadmium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_In", "title": "Indium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Sn", "title": "Tin", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Sb", "title": "Antimony", "regime": "radial", "degree": 8, "d_eff": 1}, {"id": "elem_Te", "title": "Tellurium", "regime": "radial", "degree": 9, "d_eff": 1}, {"id": "elem_I", "title": "Iodine", "regime": "radial", "degree": 9, "d_eff": 1}, {"id": "elem_Xe", "title": "Xenon", "regime": "unknown", "degree": 6, "d_eff": 0}, {"id": "elem_Cs", "title": "Cesium", "regime": "radial", "degree": 6, "d_eff": 1}, {"id": "elem_Ba", "title": "Barium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_La", "title": "Lanthanum", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Ce", "title": "Cerium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Pr", "title": "Praseodymium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Nd", "title": "Neodymium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Pm", "title": "Promethium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Sm", "title": "Samarium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Eu", "title": "Europium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Gd", "title": "Gadolinium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Tb", "title": "Terbium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Dy", "title": "Dysprosium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Ho", "title": "Holmium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Er", "title": "Erbium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Tm", "title": "Thulium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Yb", "title": "Ytterbium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Lu", "title": "Lutetium", "regime": "radial", "degree": 3, "d_eff": 1}, {"id": "elem_Hf", "title": "Hafnium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Ta", "title": "Tantalum", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_W", "title": "Tungsten", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Re", "title": "Rhenium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Os", "title": "Osmium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Ir", "title": "Iridium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Pt", "title": "Platinum", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Au", "title": "Gold", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Hg", "title": "Mercury", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Tl", "title": "Thallium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Pb", "title": "Lead", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Bi", "title": "Bismuth", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_Po", "title": "Polonium", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "elem_At", "title": "Astatine", "regime": "radial", "degree": 10, "d_eff": 1}, {"id": "elem_Rn", "title": "Radon", "regime": "unknown", "degree": 7, "d_eff": 0}, {"id": "elem_Fr", "title": "Francium", "regime": "radial", "degree": 7, "d_eff": 1}, {"id": "elem_Ra", "title": "Radium", "regime": "unknown", "degree": 7, "d_eff": 0}, {"id": "elem_Ac", "title": "Actinium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Th", "title": "Thorium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Pa", "title": "Protactinium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_U", "title": "Uranium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Np", "title": "Neptunium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Pu", "title": "Plutonium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Am", "title": "Americium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Cm", "title": "Curium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Bk", "title": "Berkelium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Cf", "title": "Californium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Es", "title": "Einsteinium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Fm", "title": "Fermium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Md", "title": "Mendelevium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_No", "title": "Nobelium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Lr", "title": "Lawrencium", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Rf", "title": "Rutherfordium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Db", "title": "Dubnium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Sg", "title": "Seaborgium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Bh", "title": "Bohrium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Hs", "title": "Hassium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Mt", "title": "Meitnerium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Ds", "title": "Darmstadtium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Rg", "title": "Roentgenium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Cn", "title": "Copernicium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Nh", "title": "Nihonium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Fl", "title": "Flerovium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Mc", "title": "Moscovium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Lv", "title": "Livermorium", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Ts", "title": "Tennessine", "regime": "unknown", "degree": 3, "d_eff": 0}, {"id": "elem_Og", "title": "Oganesson", "regime": "unknown", "degree": 2, "d_eff": 0}, {"id": "elem_Uue", "title": "Ununennium", "regime": "unknown", "degree": 1, "d_eff": 0}, {"id": "pat_group_1_trend", "title": "Group 1 Element Trends (8 elements, Periods 1\u20138)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_2_trend", "title": "Group 2 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_3_trend", "title": "Group 3 Element Trends (32 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_4_trend", "title": "Group 4 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_5_trend", "title": "Group 5 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_6_trend", "title": "Group 6 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_7_trend", "title": "Group 7 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_8_trend", "title": "Group 8 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_9_trend", "title": "Group 9 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_10_trend", "title": "Group 10 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_11_trend", "title": "Group 11 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_12_trend", "title": "Group 12 Element Trends (4 elements, Periods 4\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_13_trend", "title": "Group 13 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_14_trend", "title": "Group 14 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_15_trend", "title": "Group 15 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_16_trend", "title": "Group 16 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_17_trend", "title": "Group 17 Element Trends (6 elements, Periods 2\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_group_18_trend", "title": "Group 18 Element Trends (7 elements, Periods 1\u20137)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_1_trend", "title": "Periodic Trends Across Period 1 (2 elements, Hydrogen\u2192Helium)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_2_trend", "title": "Periodic Trends Across Period 2 (8 elements, Lithium\u2192Neon)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_3_trend", "title": "Periodic Trends Across Period 3 (8 elements, Sodium\u2192Argon)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_4_trend", "title": "Periodic Trends Across Period 4 (18 elements, Potassium\u2192Krypton)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_5_trend", "title": "Periodic Trends Across Period 5 (18 elements, Rubidium\u2192Xenon)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_6_trend", "title": "Periodic Trends Across Period 6 (32 elements, Cesium\u2192Radon)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_period_7_trend", "title": "Periodic Trends Across Period 7 (32 elements, Francium\u2192Oganesson)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_block_d_characterization", "title": "D-Block Elements: Orbital Character and Chemical Behaviour (40 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_block_f_characterization", "title": "F-Block Elements: Orbital Character and Chemical Behaviour (28 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_block_p_characterization", "title": "P-Block Elements: Orbital Character and Chemical Behaviour (36 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_block_s_characterization", "title": "S-Block Elements: Orbital Character and Chemical Behaviour (15 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_actinide_characterization", "title": "Actinide Family: Properties and Periodic Behaviour (15 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_alkali_metal_characterization", "title": "Alkali Metal Family: Properties and Periodic Behaviour (6 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_alkaline_earth_metal_characterization", "title": "Alkaline Earth Metal Family: Properties and Periodic Behaviour (6 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_diatomic_nonmetal_characterization", "title": "Diatomic Nonmetal Family: Properties and Periodic Behaviour (7 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_lanthanide_characterization", "title": "Lanthanide Family: Properties and Periodic Behaviour (15 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_metalloid_characterization", "title": "Metalloid Family: Properties and Periodic Behaviour (7 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_noble_gas_characterization", "title": "Noble Gas Family: Properties and Periodic Behaviour (6 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_polyatomic_nonmetal_characterization", "title": "Polyatomic Nonmetal Family: Properties and Periodic Behaviour (4 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_post_transition_metal_characterization", "title": "Post-Transition Metal Family: Properties and Periodic Behaviour (9 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_category_transition_metal_characterization", "title": "Transition Metal Family: Properties and Periodic Behaviour (35 elements)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_Am_statistical", "title": "Americium (Am): Statistical Outlier in Group 3 (1 properties)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_Lr_statistical", "title": "Lawrencium (Lr): Statistical Outlier in Group 3 (1 properties)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_No_statistical", "title": "Nobelium (No): Statistical Outlier in Group 3 (1 properties)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_Pa_statistical", "title": "Protactinium (Pa): Statistical Outlier in Group 3 (1 properties)", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_Au_relativistic", "title": "Gold: Relativistic Contraction and Anomalous Properties", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_Hg_liquid_metal", "title": "Mercury: Relativistic Stabilisation and Anomalous Liquid State", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_He_quantum_liquid", "title": "Helium: Zero-Point Energy and Anomalously Low Boiling Point", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_C_tetravalence", "title": "Carbon: Anomalous Tetravalence and Organic Chemistry Foundation", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "pat_anomaly_H_dual_nature", "title": "Hydrogen: Dual Group Membership and Unique Chemical Duality", "regime": "unknown", "degree": 0, "d_eff": 0}];
+        const links = [{"source": "elem_H", "target": "elem_Li"}, {"source": "elem_H", "target": "elem_He"}, {"source": "elem_H", "target": "elem_N"}, {"source": "elem_H", "target": "elem_O"}, {"source": "elem_H", "target": "elem_F"}, {"source": "elem_H", "target": "elem_Cl"}, {"source": "elem_H", "target": "elem_Br"}, {"source": "elem_H", "target": "elem_I"}, {"source": "elem_He", "target": "elem_Ne"}, {"source": "elem_He", "target": "elem_Ar"}, {"source": "elem_He", "target": "elem_Kr"}, {"source": "elem_He", "target": "elem_Xe"}, {"source": "elem_He", "target": "elem_Rn"}, {"source": "elem_Li", "target": "elem_Na"}, {"source": "elem_Li", "target": "elem_Be"}, {"source": "elem_Li", "target": "elem_K"}, {"source": "elem_Li", "target": "elem_Rb"}, {"source": "elem_Li", "target": "elem_Cs"}, {"source": "elem_Li", "target": "elem_Fr"}, {"source": "elem_Be", "target": "elem_Mg"}, {"source": "elem_Be", "target": "elem_B"}, {"source": "elem_Be", "target": "elem_Ca"}, {"source": "elem_Be", "target": "elem_Sr"}, {"source": "elem_Be", "target": "elem_Ba"}, {"source": "elem_Be", "target": "elem_Ra"}, {"source": "elem_B", "target": "elem_Al"}, {"source": "elem_B", "target": "elem_C"}, {"source": "elem_B", "target": "elem_Si"}, {"source": "elem_B", "target": "elem_Ge"}, {"source": "elem_B", "target": "elem_As"}, {"source": "elem_B", "target": "elem_Sb"}, {"source": "elem_B", "target": "elem_Te"}, {"source": "elem_B", "target": "elem_At"}, {"source": "elem_C", "target": "elem_Si"}, {"source": "elem_C", "target": "elem_N"}, {"source": "elem_N", "target": "elem_P"}, {"source": "elem_N", "target": "elem_O"}, {"source": "elem_N", "target": "elem_F"}, {"source": "elem_N", "target": "elem_Cl"}, {"source": "elem_N", "target": "elem_Br"}, {"source": "elem_N", "target": "elem_I"}, {"source": "elem_O", "target": "elem_S"}, {"source": "elem_O", "target": "elem_F"}, {"source": "elem_O", "target": "elem_Cl"}, {"source": "elem_O", "target": "elem_Br"}, {"source": "elem_O", "target": "elem_I"}, {"source": "elem_F", "target": "elem_Cl"}, {"source": "elem_F", "target": "elem_Ne"}, {"source": "elem_F", "target": "elem_Br"}, {"source": "elem_F", "target": "elem_I"}, {"source": "elem_Ne", "target": "elem_Ar"}, {"source": "elem_Ne", "target": "elem_Kr"}, {"source": "elem_Ne", "target": "elem_Xe"}, {"source": "elem_Ne", "target": "elem_Rn"}, {"source": "elem_Na", "target": "elem_K"}, {"source": "elem_Na", "target": "elem_Mg"}, {"source": "elem_Na", "target": "elem_Rb"}, {"source": "elem_Na", "target": "elem_Cs"}, {"source": "elem_Na", "target": "elem_Fr"}, {"source": "elem_Mg", "target": "elem_Ca"}, {"source": "elem_Mg", "target": "elem_Al"}, {"source": "elem_Mg", "target": "elem_Sr"}, {"source": "elem_Mg", "target": "elem_Ba"}, {"source": "elem_Mg", "target": "elem_Ra"}, {"source": "elem_Al", "target": "elem_Ga"}, {"source": "elem_Al", "target": "elem_Si"}, {"source": "elem_Si", "target": "elem_Ge"}, {"source": "elem_Si", "target": "elem_P"}, {"source": "elem_Si", "target": "elem_As"}, {"source": "elem_Si", "target": "elem_Sb"}, {"source": "elem_Si", "target": "elem_Te"}, {"source": "elem_Si", "target": "elem_At"}, {"source": "elem_P", "target": "elem_As"}, {"source": "elem_P", "target": "elem_S"}, {"source": "elem_S", "target": "elem_Se"}, {"source": "elem_S", "target": "elem_Cl"}, {"source": "elem_Cl", "target": "elem_Br"}, {"source": "elem_Cl", "target": "elem_Ar"}, {"source": "elem_Cl", "target": "elem_I"}, {"source": "elem_Ar", "target": "elem_Kr"}, {"source": "elem_Ar", "target": "elem_Xe"}, {"source": "elem_Ar", "target": "elem_Rn"}, {"source": "elem_K", "target": "elem_Rb"}, {"source": "elem_K", "target": "elem_Ca"}, {"source": "elem_K", "target": "elem_Cs"}, {"source": "elem_K", "target": "elem_Fr"}, {"source": "elem_Ca", "target": "elem_Sr"}, {"source": "elem_Ca", "target": "elem_Sc"}, {"source": "elem_Ca", "target": "elem_Ba"}, {"source": "elem_Ca", "target": "elem_Ra"}, {"source": "elem_Sc", "target": "elem_Y"}, {"source": "elem_Sc", "target": "elem_Ti"}, {"source": "elem_Ti", "target": "elem_Zr"}, {"source": "elem_Ti", "target": "elem_V"}, {"source": "elem_V", "target": "elem_Nb"}, {"source": "elem_V", "target": "elem_Cr"}, {"source": "elem_Cr", "target": "elem_Mo"}, {"source": "elem_Cr", "target": "elem_Mn"}, {"source": "elem_Mn", "target": "elem_Tc"}, {"source": "elem_Mn", "target": "elem_Fe"}, {"source": "elem_Fe", "target": "elem_Ru"}, {"source": "elem_Fe", "target": "elem_Co"}, {"source": "elem_Co", "target": "elem_Rh"}, {"source": "elem_Co", "target": "elem_Ni"}, {"source": "elem_Ni", "target": "elem_Pd"}, {"source": "elem_Ni", "target": "elem_Cu"}, {"source": "elem_Cu", "target": "elem_Ag"}, {"source": "elem_Cu", "target": "elem_Zn"}, {"source": "elem_Zn", "target": "elem_Cd"}, {"source": "elem_Zn", "target": "elem_Ga"}, {"source": "elem_Ga", "target": "elem_In"}, {"source": "elem_Ga", "target": "elem_Ge"}, {"source": "elem_Ge", "target": "elem_Sn"}, {"source": "elem_Ge", "target": "elem_As"}, {"source": "elem_Ge", "target": "elem_Sb"}, {"source": "elem_Ge", "target": "elem_Te"}, {"source": "elem_Ge", "target": "elem_At"}, {"source": "elem_As", "target": "elem_Sb"}, {"source": "elem_As", "target": "elem_Se"}, {"source": "elem_As", "target": "elem_Te"}, {"source": "elem_As", "target": "elem_At"}, {"source": "elem_Se", "target": "elem_Te"}, {"source": "elem_Se", "target": "elem_Br"}, {"source": "elem_Br", "target": "elem_I"}, {"source": "elem_Br", "target": "elem_Kr"}, {"source": "elem_Kr", "target": "elem_Xe"}, {"source": "elem_Kr", "target": "elem_Rn"}, {"source": "elem_Rb", "target": "elem_Cs"}, {"source": "elem_Rb", "target": "elem_Sr"}, {"source": "elem_Rb", "target": "elem_Fr"}, {"source": "elem_Sr", "target": "elem_Ba"}, {"source": "elem_Sr", "target": "elem_Y"}, {"source": "elem_Sr", "target": "elem_Ra"}, {"source": "elem_Y", "target": "elem_La"}, {"source": "elem_Y", "target": "elem_Zr"}, {"source": "elem_Zr", "target": "elem_Hf"}, {"source": "elem_Zr", "target": "elem_Nb"}, {"source": "elem_Nb", "target": "elem_Ta"}, {"source": "elem_Nb", "target": "elem_Mo"}, {"source": "elem_Mo", "target": "elem_W"}, {"source": "elem_Mo", "target": "elem_Tc"}, {"source": "elem_Tc", "target": "elem_Re"}, {"source": "elem_Tc", "target": "elem_Ru"}, {"source": "elem_Ru", "target": "elem_Os"}, {"source": "elem_Ru", "target": "elem_Rh"}, {"source": "elem_Rh", "target": "elem_Ir"}, {"source": "elem_Rh", "target": "elem_Pd"}, {"source": "elem_Pd", "target": "elem_Pt"}, {"source": "elem_Pd", "target": "elem_Ag"}, {"source": "elem_Ag", "target": "elem_Au"}, {"source": "elem_Ag", "target": "elem_Cd"}, {"source": "elem_Cd", "target": "elem_Hg"}, {"source": "elem_Cd", "target": "elem_In"}, {"source": "elem_In", "target": "elem_Tl"}, {"source": "elem_In", "target": "elem_Sn"}, {"source": "elem_Sn", "target": "elem_Pb"}, {"source": "elem_Sn", "target": "elem_Sb"}, {"source": "elem_Sb", "target": "elem_Bi"}, {"source": "elem_Sb", "target": "elem_Te"}, {"source": "elem_Sb", "target": "elem_At"}, {"source": "elem_Te", "target": "elem_Po"}, {"source": "elem_Te", "target": "elem_I"}, {"source": "elem_Te", "target": "elem_At"}, {"source": "elem_I", "target": "elem_At"}, {"source": "elem_I", "target": "elem_Xe"}, {"source": "elem_Xe", "target": "elem_Rn"}, {"source": "elem_Cs", "target": "elem_Fr"}, {"source": "elem_Cs", "target": "elem_Ba"}, {"source": "elem_Ba", "target": "elem_Ra"}, {"source": "elem_Ba", "target": "elem_La"}, {"source": "elem_La", "target": "elem_Ce"}, {"source": "elem_Ce", "target": "elem_Pr"}, {"source": "elem_Pr", "target": "elem_Nd"}, {"source": "elem_Nd", "target": "elem_Pm"}, {"source": "elem_Pm", "target": "elem_Sm"}, {"source": "elem_Sm", "target": "elem_Eu"}, {"source": "elem_Eu", "target": "elem_Gd"}, {"source": "elem_Gd", "target": "elem_Tb"}, {"source": "elem_Tb", "target": "elem_Dy"}, {"source": "elem_Dy", "target": "elem_Ho"}, {"source": "elem_Ho", "target": "elem_Er"}, {"source": "elem_Er", "target": "elem_Tm"}, {"source": "elem_Tm", "target": "elem_Yb"}, {"source": "elem_Yb", "target": "elem_Lu"}, {"source": "elem_Lu", "target": "elem_Ac"}, {"source": "elem_Lu", "target": "elem_Hf"}, {"source": "elem_Hf", "target": "elem_Rf"}, {"source": "elem_Hf", "target": "elem_Ta"}, {"source": "elem_Ta", "target": "elem_Db"}, {"source": "elem_Ta", "target": "elem_W"}, {"source": "elem_W", "target": "elem_Sg"}, {"source": "elem_W", "target": "elem_Re"}, {"source": "elem_Re", "target": "elem_Bh"}, {"source": "elem_Re", "target": "elem_Os"}, {"source": "elem_Os", "target": "elem_Hs"}, {"source": "elem_Os", "target": "elem_Ir"}, {"source": "elem_Ir", "target": "elem_Mt"}, {"source": "elem_Ir", "target": "elem_Pt"}, {"source": "elem_Pt", "target": "elem_Ds"}, {"source": "elem_Pt", "target": "elem_Au"}, {"source": "elem_Au", "target": "elem_Rg"}, {"source": "elem_Au", "target": "elem_Hg"}, {"source": "elem_Hg", "target": "elem_Cn"}, {"source": "elem_Hg", "target": "elem_Tl"}, {"source": "elem_Tl", "target": "elem_Nh"}, {"source": "elem_Tl", "target": "elem_Pb"}, {"source": "elem_Pb", "target": "elem_Fl"}, {"source": "elem_Pb", "target": "elem_Bi"}, {"source": "elem_Bi", "target": "elem_Mc"}, {"source": "elem_Bi", "target": "elem_Po"}, {"source": "elem_Po", "target": "elem_Lv"}, {"source": "elem_Po", "target": "elem_At"}, {"source": "elem_At", "target": "elem_Ts"}, {"source": "elem_At", "target": "elem_Rn"}, {"source": "elem_Rn", "target": "elem_Og"}, {"source": "elem_Fr", "target": "elem_Uue"}, {"source": "elem_Fr", "target": "elem_Ra"}, {"source": "elem_Ra", "target": "elem_Ac"}, {"source": "elem_Ac", "target": "elem_Th"}, {"source": "elem_Th", "target": "elem_Pa"}, {"source": "elem_Pa", "target": "elem_U"}, {"source": "elem_U", "target": "elem_Np"}, {"source": "elem_Np", "target": "elem_Pu"}, {"source": "elem_Pu", "target": "elem_Am"}, {"source": "elem_Am", "target": "elem_Cm"}, {"source": "elem_Cm", "target": "elem_Bk"}, {"source": "elem_Bk", "target": "elem_Cf"}, {"source": "elem_Cf", "target": "elem_Es"}, {"source": "elem_Es", "target": "elem_Fm"}, {"source": "elem_Fm", "target": "elem_Md"}, {"source": "elem_Md", "target": "elem_No"}, {"source": "elem_No", "target": "elem_Lr"}, {"source": "elem_Lr", "target": "elem_Rf"}, {"source": "elem_Rf", "target": "elem_Db"}, {"source": "elem_Db", "target": "elem_Sg"}, {"source": "elem_Sg", "target": "elem_Bh"}, {"source": "elem_Bh", "target": "elem_Hs"}, {"source": "elem_Hs", "target": "elem_Mt"}, {"source": "elem_Mt", "target": "elem_Ds"}, {"source": "elem_Ds", "target": "elem_Rg"}, {"source": "elem_Rg", "target": "elem_Cn"}, {"source": "elem_Cn", "target": "elem_Nh"}, {"source": "elem_Nh", "target": "elem_Fl"}, {"source": "elem_Fl", "target": "elem_Mc"}, {"source": "elem_Mc", "target": "elem_Lv"}, {"source": "elem_Lv", "target": "elem_Ts"}, {"source": "elem_Ts", "target": "elem_Og"}];
+
+        const regimeColors = {
+            'radial': '#3B82F6',
+            'isotropic': '#06B6D4',
+            'noise': '#F59E0B',
+            'degenerate': '#EF4444',
+            'unknown': '#999999'
+        };
+
+        const width = document.getElementById('canvas').parentElement.clientWidth;
+        const height = document.getElementById('canvas').parentElement.clientHeight;
+
+        const svg = d3.select('#canvas')
+            .attr('width', width)
+            .attr('height', height);
+
+        // Simulation
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(50))
+            .force('charge', d3.forceManyBody().strength(-300))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(30));
+
+        // Zoom
+        const zoom = d3.zoom().on('zoom', (event) => {
+            g.attr('transform', event.transform);
+        });
+        svg.call(zoom);
+
+        const g = svg.append('g');
+
+        // Links
+        const link = g.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('stroke', '#999')
+            .attr('stroke-opacity', 0.6)
+            .attr('stroke-width', 1);
+
+        // Nodes
+        const node = g.selectAll('circle')
+            .data(nodes)
+            .enter()
+            .append('circle')
+            .attr('r', d => 5 + Math.sqrt(d.degree) * 2)
+            .attr('fill', d => regimeColors[d.regime])
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .call(d3.drag()
+                .on('start', dragStart)
+                .on('drag', dragged)
+                .on('end', dragEnd))
+            .on('mouseover', function(event, d) {
+                d3.select(this).attr('stroke-width', 3).attr('stroke', '#000');
+                tooltip.text(`${d.title || d.id} (ID: ${d.id}, degree: ${d.degree})`)
+                    .style('opacity', 1)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY + 10) + 'px');
+            })
+            .on('mouseout', function() {
+                d3.select(this).attr('stroke-width', 2).attr('stroke', '#fff');
+                tooltip.style('opacity', 0);
+            });
+
+        // Tooltip
+        const tooltip = d3.select('body').append('div')
+            .style('position', 'absolute')
+            .style('padding', '6px 12px')
+            .style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', '#fff')
+            .style('border-radius', '4px')
+            .style('font-size', '12px')
+            .style('pointer-events', 'none')
+            .style('opacity', 0);
+
+        function dragStart(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragEnd(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => nodes[d.source.index].x)
+                .attr('y1', d => nodes[d.source.index].y)
+                .attr('x2', d => nodes[d.target.index].x)
+                .attr('y2', d => nodes[d.target.index].y);
+
+            node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+        });
+
+        // Update stats
+        document.getElementById('nodeCount').textContent = nodes.length;
+        document.getElementById('linkCount').textContent = links.length;
+
+        // Filter controls
+        const showRadial = document.getElementById('showRadial');
+        const showIsotropic = document.getElementById('showIsotropic');
+        const showNoise = document.getElementById('showNoise');
+        const showDegenerate = document.getElementById('showDegenerate');
+        const searchInput = document.getElementById('searchInput');
+
+        function updateVisibility() {
+            const regimesShown = {
+                'radial': showRadial.checked,
+                'isotropic': showIsotropic.checked,
+                'noise': showNoise.checked,
+                'degenerate': showDegenerate.checked,
+            };
+
+            node.style('display', d => {
+                if (!regimesShown[d.regime]) return 'none';
+                if (searchInput.value && !d.id.includes(searchInput.value)) return 'none';
+                return null;
+            });
+        }
+
+        showRadial.addEventListener('change', updateVisibility);
+        showIsotropic.addEventListener('change', updateVisibility);
+        showNoise.addEventListener('change', updateVisibility);
+        showDegenerate.addEventListener('change', updateVisibility);
+        searchInput.addEventListener('input', updateVisibility);
+    </script>
+</body>
+</html>

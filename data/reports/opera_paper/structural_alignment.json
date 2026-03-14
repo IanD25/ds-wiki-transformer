@@ -1,0 +1,702 @@
+{
+  "rrp_db": "data\\rrp\\opera\\rrp_opera_paper.db",
+  "mean_polarity": 0.21666666666666667,
+  "n_contested": 3,
+  "n_aligned": 4,
+  "ds_wiki_summary": {
+    "GV4": 0.023773170510927828,
+    "C1": -0.31143658608198166,
+    "T4": -0.3106791526079178,
+    "QM5": 0.19598002930482228,
+    "RD3": 0.0,
+    "B3": 0.1516893070191145,
+    "G1": -0.0006267130374908447,
+    "gate_G6": -0.3621926710009575,
+    "gate_G4": -0.3584147125482559,
+    "H3": -0.3579070508480072,
+    "T9": -0.12780733704566957,
+    "gate_G7": 0.016330027580261253,
+    "Q3": -0.3134830594062805,
+    "conj_P4": -0.3622961640357971,
+    "F5": -0.3597400590777397,
+    "T10": 0.611601995031039,
+    "T8": 0.2405672013759613,
+    "T3": 0.603382254044215,
+    "B1": 0.571821790933609,
+    "T7": 0.6514740824699402,
+    "conj_P3": 0.6373098850250245
+  },
+  "entries": [
+    {
+      "entry_id": "original_ftl_claim_2011",
+      "entry_type": "claim",
+      "net_polarity": -1.0,
+      "bridges": [
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8381750881671906,
+          "polarity": -1.0,
+          "signed_score": -0.8381750881671906,
+          "alignment": "CONTESTS",
+          "path": "direct [would_have_violated(-1.0) + contradicted(-1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "C1",
+          "raw_sim": 0.8304975628852844,
+          "polarity": -1.0,
+          "signed_score": -0.8304975628852844,
+          "alignment": "CONTESTS",
+          "path": "direct [would_have_violated(-1.0) + contradicted(-1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T4",
+          "raw_sim": 0.8284777402877808,
+          "polarity": -1.0,
+          "signed_score": -0.8284777402877808,
+          "alignment": "CONTESTS",
+          "path": "direct [would_have_violated(-1.0) + contradicted(-1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "QM5",
+          "raw_sim": 0.8598507046699524,
+          "polarity": -1.0,
+          "signed_score": -0.8598507046699524,
+          "alignment": "CONTESTS",
+          "path": "via lorentz_invariance_context [would_have_violated(-1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "RD3",
+          "raw_sim": 0.8199816346168518,
+          "polarity": -1.0,
+          "signed_score": -0.8199816346168518,
+          "alignment": "CONTESTS",
+          "path": "via lorentz_invariance_context [would_have_violated(-1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8187204897403717,
+          "polarity": -1.0,
+          "signed_score": -0.8187204897403717,
+          "alignment": "CONTESTS",
+          "path": "via lorentz_invariance_context [would_have_violated(-1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8247219920158386,
+          "polarity": -1.0,
+          "signed_score": -0.8247219920158386,
+          "alignment": "CONTESTS",
+          "path": "via neutrino_mass_constraint [contradicted(-1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "G1",
+          "raw_sim": 0.8228970170021057,
+          "polarity": -1.0,
+          "signed_score": -0.8228970170021057,
+          "alignment": "CONTESTS",
+          "path": "via neutrino_mass_constraint [contradicted(-1.0)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "optical_fibre_systematic_error",
+      "entry_type": "mechanism",
+      "net_polarity": -0.44999999999999996,
+      "bridges": [
+        {
+          "ds_entry_id": "gate_G6",
+          "raw_sim": 0.80487260222435,
+          "polarity": -0.45,
+          "signed_score": -0.3621926710009575,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "gate_G4",
+          "raw_sim": 0.7964771389961243,
+          "polarity": -0.45,
+          "signed_score": -0.3584147125482559,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "H3",
+          "raw_sim": 0.7953490018844604,
+          "polarity": -0.45,
+          "signed_score": -0.3579070508480072,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T9",
+          "raw_sim": 0.7854666709899902,
+          "polarity": -0.4,
+          "signed_score": -0.3141866683959961,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "gate_G7",
+          "raw_sim": 0.7843683958053589,
+          "polarity": -0.4,
+          "signed_score": -0.31374735832214357,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "Q3",
+          "raw_sim": 0.7837076485157013,
+          "polarity": -0.4,
+          "signed_score": -0.3134830594062805,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8381750881671906,
+          "polarity": -0.5,
+          "signed_score": -0.4190875440835953,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "C1",
+          "raw_sim": 0.8304975628852844,
+          "polarity": -0.5,
+          "signed_score": -0.4152487814426422,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T4",
+          "raw_sim": 0.8284777402877808,
+          "polarity": -0.5,
+          "signed_score": -0.4142388701438904,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "oscillator_frequency_systematic_error",
+      "entry_type": "mechanism",
+      "net_polarity": -0.44999999999999996,
+      "bridges": [
+        {
+          "ds_entry_id": "conj_P4",
+          "raw_sim": 0.8051025867462158,
+          "polarity": -0.45,
+          "signed_score": -0.3622961640357971,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "F5",
+          "raw_sim": 0.7994223535060883,
+          "polarity": -0.45,
+          "signed_score": -0.3597400590777397,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.7986354827880859,
+          "polarity": -0.45,
+          "signed_score": -0.35938596725463867,
+          "alignment": "CONTESTS",
+          "path": "direct [introduced_undetected_error_in(-0.4) + explains_anomaly_in(-0.5)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T9",
+          "raw_sim": 0.7854666709899902,
+          "polarity": -0.4,
+          "signed_score": -0.3141866683959961,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "gate_G7",
+          "raw_sim": 0.7843683958053589,
+          "polarity": -0.4,
+          "signed_score": -0.31374735832214357,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "Q3",
+          "raw_sim": 0.7837076485157013,
+          "polarity": -0.4,
+          "signed_score": -0.3134830594062805,
+          "alignment": "CONTESTS",
+          "path": "via lngs_timing_chain [introduced_undetected_error_in(-0.4)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8381750881671906,
+          "polarity": -0.5,
+          "signed_score": -0.4190875440835953,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "C1",
+          "raw_sim": 0.8304975628852844,
+          "polarity": -0.5,
+          "signed_score": -0.4152487814426422,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T4",
+          "raw_sim": 0.8284777402877808,
+          "polarity": -0.5,
+          "signed_score": -0.4142388701438904,
+          "alignment": "CONTESTS",
+          "path": "via original_ftl_claim_2011 [explains_anomaly_in(-0.5)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "opera_exp_setup",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "cngs_beam",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "baseline_measurement",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "bct_proton_timing",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "gps_common_view_timing",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "cern_timing_chain",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "lngs_timing_chain",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "tof_measurement_principle",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "data_selection",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "maximum_likelihood_analysis",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "sagnac_earth_rotation",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "proton_beam_systematics",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "bunched_beam_test",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "neutrino_mass_constraint",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "lorentz_invariance_context",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "opera_lngs_cosmic_muon_cross_check",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "conclusions",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "systematic_error_budget",
+      "entry_type": "measurement",
+      "net_polarity": 0.3,
+      "bridges": [
+        {
+          "ds_entry_id": "T9",
+          "raw_sim": 0.8165044188499451,
+          "polarity": 0.3,
+          "signed_score": 0.2449513256549835,
+          "alignment": "NEUTRAL",
+          "path": "direct [bounds_uncertainty_of(+0.3)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8073609173297882,
+          "polarity": 0.3,
+          "signed_score": 0.24220827519893645,
+          "alignment": "NEUTRAL",
+          "path": "direct [bounds_uncertainty_of(+0.3)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T8",
+          "raw_sim": 0.8018906712532043,
+          "polarity": 0.3,
+          "signed_score": 0.2405672013759613,
+          "alignment": "NEUTRAL",
+          "path": "direct [bounds_uncertainty_of(+0.3)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T3",
+          "raw_sim": 0.8408353924751282,
+          "polarity": 0.3,
+          "signed_score": 0.25225061774253843,
+          "alignment": "NEUTRAL",
+          "path": "via corrected_result_2012 [bounds_uncertainty_of(+0.3)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8270641267299652,
+          "polarity": 0.3,
+          "signed_score": 0.24811923801898955,
+          "alignment": "NEUTRAL",
+          "path": "via corrected_result_2012 [bounds_uncertainty_of(+0.3)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "corrected_result_2012",
+      "entry_type": "measurement",
+      "net_polarity": 0.7333333333333333,
+      "bridges": [
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8447405099868774,
+          "polarity": 0.7333333333333334,
+          "signed_score": 0.6194763739903768,
+          "alignment": "ALIGNS",
+          "path": "direct [supersedes(+0.5) + supports(+0.7) + is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T3",
+          "raw_sim": 0.8408353924751282,
+          "polarity": 0.7333333333333334,
+          "signed_score": 0.6166126211484274,
+          "alignment": "ALIGNS",
+          "path": "direct [supersedes(+0.5) + supports(+0.7) + is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8270641267299652,
+          "polarity": 1.0,
+          "signed_score": 0.8270641267299652,
+          "alignment": "ALIGNS",
+          "path": "via lorentz_invariance_context [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8381750881671906,
+          "polarity": 0.5,
+          "signed_score": 0.4190875440835953,
+          "alignment": "ALIGNS",
+          "path": "via original_ftl_claim_2011 [supersedes(+0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "C1",
+          "raw_sim": 0.8304975628852844,
+          "polarity": 0.5,
+          "signed_score": 0.4152487814426422,
+          "alignment": "ALIGNS",
+          "path": "via original_ftl_claim_2011 [supersedes(+0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T4",
+          "raw_sim": 0.8284777402877808,
+          "polarity": 0.5,
+          "signed_score": 0.4142388701438904,
+          "alignment": "ALIGNS",
+          "path": "via original_ftl_claim_2011 [supersedes(+0.5)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "QM5",
+          "raw_sim": 0.8399144113063812,
+          "polarity": 0.7,
+          "signed_score": 0.5879400879144668,
+          "alignment": "ALIGNS",
+          "path": "via conclusions [supports(+0.7)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.820745438337326,
+          "polarity": 0.7,
+          "signed_score": 0.5745218068361282,
+          "alignment": "ALIGNS",
+          "path": "via conclusions [supports(+0.7)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "B1",
+          "raw_sim": 0.8168882727622986,
+          "polarity": 0.7,
+          "signed_score": 0.571821790933609,
+          "alignment": "ALIGNS",
+          "path": "via conclusions [supports(+0.7)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "QM5",
+          "raw_sim": 0.8598507046699524,
+          "polarity": 1.0,
+          "signed_score": 0.8598507046699524,
+          "alignment": "ALIGNS",
+          "path": "via lorentz_invariance_context [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "RD3",
+          "raw_sim": 0.8199816346168518,
+          "polarity": 1.0,
+          "signed_score": 0.8199816346168518,
+          "alignment": "ALIGNS",
+          "path": "via lorentz_invariance_context [is_consistent_with(+1.0)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "bunched_beam_result",
+      "entry_type": "measurement",
+      "net_polarity": 0.8,
+      "bridges": [
+        {
+          "ds_entry_id": "gate_G7",
+          "raw_sim": 0.8456059992313385,
+          "polarity": 0.8,
+          "signed_score": 0.6764847993850709,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T7",
+          "raw_sim": 0.84263014793396,
+          "polarity": 0.8,
+          "signed_score": 0.674104118347168,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8232764005661011,
+          "polarity": 0.8,
+          "signed_score": 0.6586211204528809,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8447405099868774,
+          "polarity": 0.8,
+          "signed_score": 0.675792407989502,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [independently_validates(+0.8)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T3",
+          "raw_sim": 0.8408353924751282,
+          "polarity": 0.8,
+          "signed_score": 0.6726683139801026,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [independently_validates(+0.8)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "icarus_independent_verification",
+      "entry_type": "measurement",
+      "net_polarity": 0.8,
+      "bridges": [
+        {
+          "ds_entry_id": "conj_P3",
+          "raw_sim": 0.7966373562812805,
+          "polarity": 0.8,
+          "signed_score": 0.6373098850250245,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T3",
+          "raw_sim": 0.7931804060935974,
+          "polarity": 0.8,
+          "signed_score": 0.634544324874878,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T7",
+          "raw_sim": 0.7860550582408905,
+          "polarity": 0.8,
+          "signed_score": 0.6288440465927124,
+          "alignment": "ALIGNS",
+          "path": "direct [independently_validates(+0.8)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8447405099868774,
+          "polarity": 0.8,
+          "signed_score": 0.675792407989502,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [independently_validates(+0.8)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8270641267299652,
+          "polarity": 0.8,
+          "signed_score": 0.6616513013839722,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [independently_validates(+0.8)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "prior_neutrino_velocity_measurements",
+      "entry_type": "reference_law",
+      "net_polarity": 1.0,
+      "bridges": [
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8253798484802246,
+          "polarity": 1.0,
+          "signed_score": 0.8253798484802246,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "G1",
+          "raw_sim": 0.821643590927124,
+          "polarity": 1.0,
+          "signed_score": 0.821643590927124,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8208871185779572,
+          "polarity": 1.0,
+          "signed_score": 0.8208871185779572,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8447405099868774,
+          "polarity": 1.0,
+          "signed_score": 0.8447405099868774,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T3",
+          "raw_sim": 0.8408353924751282,
+          "polarity": 1.0,
+          "signed_score": 0.8408353924751282,
+          "alignment": "ALIGNS",
+          "path": "via corrected_result_2012 [is_consistent_with(+1.0)]",
+          "hop": 2
+        }
+      ]
+    }
+  ]
+}

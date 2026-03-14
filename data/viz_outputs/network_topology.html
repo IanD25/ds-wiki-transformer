@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Topology</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; }
+        #container { display: flex; height: 100vh; }
+        #controls {
+            width: 250px; padding: 20px; background: white; border-right: 1px solid #ddd;
+            overflow-y: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #canvas { flex: 1; background: white; }
+        .control-group { margin-bottom: 20px; }
+        .control-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 12px; color: #333; }
+        .control-group input[type="checkbox"] { margin-right: 8px; cursor: pointer; }
+        .control-item { display: flex; align-items: center; margin: 6px 0; font-size: 12px; }
+        input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+        input[type="range"] { width: 100%; }
+        .stat-box { background: #f9f9f9; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 12px; border-left: 3px solid #3B82F6; }
+        .stat-label { font-weight: bold; color: #333; }
+        .stat-value { color: #666; margin-top: 4px; }
+        .legend { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; }
+        .legend-item { display: flex; align-items: center; margin: 6px 0; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="controls">
+            <h3 style="margin-bottom: 16px; font-size: 14px;">Interactive Explorer</h3>
+
+            <div class="stat-box">
+                <div class="stat-label">Total Nodes</div>
+                <div class="stat-value" id="nodeCount">0</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-label">Total Links</div>
+                <div class="stat-value" id="linkCount">0</div>
+            </div>
+
+            <div class="control-group">
+                <label>Search Entry:</label>
+                <input type="text" id="searchInput" placeholder="Enter node ID...">
+            </div>
+
+            <div class="control-group">
+                <label>Show Regime Types:</label>
+                <div class="control-item">
+                    <input type="checkbox" id="showRadial" checked>
+                    <label for="showRadial" style="margin: 0;">Radial</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showIsotropic" checked>
+                    <label for="showIsotropic" style="margin: 0;">Isotropic</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showNoise" checked>
+                    <label for="showNoise" style="margin: 0;">Noise</label>
+                </div>
+                <div class="control-item">
+                    <input type="checkbox" id="showDegenerate" checked>
+                    <label for="showDegenerate" style="margin: 0;">Degenerate</label>
+                </div>
+            </div>
+
+            <div class="legend">
+                <strong>Regimes:</strong>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3B82F6;"></div>
+                    <span>Radial (hubs)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #06B6D4;"></div>
+                    <span>Isotropic (balanced)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F59E0B;"></div>
+                    <span>Noise (random)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #EF4444;"></div>
+                    <span>Degenerate (isolated)</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 11px; color: #888; line-height: 1.6;">
+                <strong>Controls:</strong><br>
+                • Drag nodes to move<br>
+                • Scroll to zoom<br>
+                • Hover for details<br>
+                • Search to highlight
+            </div>
+        </div>
+        <svg id="canvas"></svg>
+    </div>
+
+    <script>
+        const nodes = [{"id": "CASE14_B0", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "CASE14_B1", "regime": "radial", "degree": 9, "d_eff": 3}, {"id": "CASE14_B2", "regime": "radial", "degree": 5, "d_eff": 1}, {"id": "CASE14_B3", "regime": "radial", "degree": 6, "d_eff": 2}, {"id": "CASE14_B4", "regime": "radial", "degree": 6, "d_eff": 2}, {"id": "CASE14_B5", "regime": "radial", "degree": 7, "d_eff": 2}, {"id": "CASE14_B6", "regime": "unknown", "degree": 0, "d_eff": 0}, {"id": "CASE14_B7", "regime": "unknown", "degree": 1, "d_eff": 0}, {"id": "CASE14_B8", "regime": "noise", "degree": 4, "d_eff": 1}, {"id": "CASE14_B9", "regime": "noise", "degree": 4, "d_eff": 1}, {"id": "CASE14_B10", "regime": "noise", "degree": 4, "d_eff": 1}, {"id": "CASE14_B11", "regime": "radial", "degree": 4, "d_eff": 1}, {"id": "CASE14_B12", "regime": "radial", "degree": 6, "d_eff": 2}, {"id": "CASE14_B13", "regime": "noise", "degree": 4, "d_eff": 1}, {"id": "CASE14_G0", "regime": "unknown", "degree": 1, "d_eff": 0}, {"id": "CASE14_G1", "regime": "unknown", "degree": 1, "d_eff": 0}, {"id": "CASE14_G2", "regime": "unknown", "degree": 1, "d_eff": 0}, {"id": "CASE14_G3", "regime": "unknown", "degree": 1, "d_eff": 0}];
+        const links = [{"source": "CASE14_B0", "target": "CASE14_B1"}, {"source": "CASE14_B0", "target": "CASE14_B4"}, {"source": "CASE14_B1", "target": "CASE14_B0"}, {"source": "CASE14_B1", "target": "CASE14_B2"}, {"source": "CASE14_B1", "target": "CASE14_B3"}, {"source": "CASE14_B1", "target": "CASE14_B4"}, {"source": "CASE14_B2", "target": "CASE14_B1"}, {"source": "CASE14_B2", "target": "CASE14_B3"}, {"source": "CASE14_B3", "target": "CASE14_B1"}, {"source": "CASE14_B3", "target": "CASE14_B2"}, {"source": "CASE14_B3", "target": "CASE14_B4"}, {"source": "CASE14_B4", "target": "CASE14_B0"}, {"source": "CASE14_B4", "target": "CASE14_B1"}, {"source": "CASE14_B4", "target": "CASE14_B3"}, {"source": "CASE14_B5", "target": "CASE14_B10"}, {"source": "CASE14_B5", "target": "CASE14_B11"}, {"source": "CASE14_B5", "target": "CASE14_B12"}, {"source": "CASE14_B8", "target": "CASE14_B9"}, {"source": "CASE14_B8", "target": "CASE14_B13"}, {"source": "CASE14_B9", "target": "CASE14_B8"}, {"source": "CASE14_B9", "target": "CASE14_B10"}, {"source": "CASE14_B10", "target": "CASE14_B5"}, {"source": "CASE14_B10", "target": "CASE14_B9"}, {"source": "CASE14_B11", "target": "CASE14_B5"}, {"source": "CASE14_B11", "target": "CASE14_B12"}, {"source": "CASE14_B12", "target": "CASE14_B5"}, {"source": "CASE14_B12", "target": "CASE14_B11"}, {"source": "CASE14_B12", "target": "CASE14_B13"}, {"source": "CASE14_B13", "target": "CASE14_B8"}, {"source": "CASE14_B13", "target": "CASE14_B12"}, {"source": "CASE14_G0", "target": "CASE14_B1"}, {"source": "CASE14_G1", "target": "CASE14_B2"}, {"source": "CASE14_G2", "target": "CASE14_B5"}, {"source": "CASE14_G3", "target": "CASE14_B7"}];
+
+        const regimeColors = {
+            'radial': '#3B82F6',
+            'isotropic': '#06B6D4',
+            'noise': '#F59E0B',
+            'degenerate': '#EF4444',
+            'unknown': '#999999'
+        };
+
+        const width = document.getElementById('canvas').parentElement.clientWidth;
+        const height = document.getElementById('canvas').parentElement.clientHeight;
+
+        const svg = d3.select('#canvas')
+            .attr('width', width)
+            .attr('height', height);
+
+        // Simulation
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(50))
+            .force('charge', d3.forceManyBody().strength(-300))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(30));
+
+        // Zoom
+        const zoom = d3.zoom().on('zoom', (event) => {
+            g.attr('transform', event.transform);
+        });
+        svg.call(zoom);
+
+        const g = svg.append('g');
+
+        // Links
+        const link = g.selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('stroke', '#999')
+            .attr('stroke-opacity', 0.6)
+            .attr('stroke-width', 1);
+
+        // Nodes
+        const node = g.selectAll('circle')
+            .data(nodes)
+            .enter()
+            .append('circle')
+            .attr('r', d => 5 + Math.sqrt(d.degree) * 2)
+            .attr('fill', d => regimeColors[d.regime])
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .call(d3.drag()
+                .on('start', dragStart)
+                .on('drag', dragged)
+                .on('end', dragEnd))
+            .on('mouseover', function(event, d) {
+                d3.select(this).attr('stroke-width', 3).attr('stroke', '#000');
+                tooltip.text(`${d.id} (degree: ${d.degree}, regime: ${d.regime})`)
+                    .style('opacity', 1)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY + 10) + 'px');
+            })
+            .on('mouseout', function() {
+                d3.select(this).attr('stroke-width', 2).attr('stroke', '#fff');
+                tooltip.style('opacity', 0);
+            });
+
+        // Tooltip
+        const tooltip = d3.select('body').append('div')
+            .style('position', 'absolute')
+            .style('padding', '6px 12px')
+            .style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', '#fff')
+            .style('border-radius', '4px')
+            .style('font-size', '12px')
+            .style('pointer-events', 'none')
+            .style('opacity', 0);
+
+        function dragStart(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragEnd(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => nodes[d.source.index].x)
+                .attr('y1', d => nodes[d.source.index].y)
+                .attr('x2', d => nodes[d.target.index].x)
+                .attr('y2', d => nodes[d.target.index].y);
+
+            node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+        });
+
+        // Update stats
+        document.getElementById('nodeCount').textContent = nodes.length;
+        document.getElementById('linkCount').textContent = links.length;
+
+        // Filter controls
+        const showRadial = document.getElementById('showRadial');
+        const showIsotropic = document.getElementById('showIsotropic');
+        const showNoise = document.getElementById('showNoise');
+        const showDegenerate = document.getElementById('showDegenerate');
+        const searchInput = document.getElementById('searchInput');
+
+        function updateVisibility() {
+            const regimesShown = {
+                'radial': showRadial.checked,
+                'isotropic': showIsotropic.checked,
+                'noise': showNoise.checked,
+                'degenerate': showDegenerate.checked,
+            };
+
+            node.style('display', d => {
+                if (!regimesShown[d.regime]) return 'none';
+                if (searchInput.value && !d.id.includes(searchInput.value)) return 'none';
+                return null;
+            });
+        }
+
+        showRadial.addEventListener('change', updateVisibility);
+        showIsotropic.addEventListener('change', updateVisibility);
+        showNoise.addEventListener('change', updateVisibility);
+        showDegenerate.addEventListener('change', updateVisibility);
+        searchInput.addEventListener('input', updateVisibility);
+    </script>
+</body>
+</html>
