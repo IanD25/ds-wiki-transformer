@@ -297,7 +297,7 @@ def mode_bridges(args: argparse.Namespace) -> int:
     # Load unique DS Wiki entry IDs from bridge table
     conn = sqlite3.connect(rrp_path)
     rows = conn.execute(
-        "SELECT DISTINCT ds_entry_id, similarity, tier "
+        "SELECT DISTINCT ds_entry_id, similarity, confidence_tier "
         "FROM cross_universe_bridges ORDER BY similarity DESC"
     ).fetchall()
     conn.close()
