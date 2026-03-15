@@ -470,7 +470,11 @@ class Tier1Dashboard:
             .force('link', d3.forceLink(links).id(d => d.id).distance(50))
             .force('charge', d3.forceManyBody().strength(-300))
             .force('center', d3.forceCenter(width / 2, height / 2))
-            .force('collision', d3.forceCollide().radius(d => ((5 + Math.sqrt(d.degree) * 2) * 1.3) + 2));
+            .force('collision', d3.forceCollide().radius(d => nodeRadius(d) + 2));
+
+        function nodeRadius(d) {{
+            return (5 + Math.sqrt(d.degree) * 2) * 1.7;
+        }}
 
         // Zoom
         const zoom = d3.zoom().on('zoom', (event) => {{
@@ -494,7 +498,7 @@ class Tier1Dashboard:
             .data(nodes)
             .enter()
             .append('circle')
-            .attr('r', d => (5 + Math.sqrt(d.degree) * 2) * 1.3)
+            .attr('r', d => nodeRadius(d))
             .attr('fill', d => regimeColors[d.regime])
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
@@ -565,6 +569,12 @@ class Tier1Dashboard:
         const showDegenerate = document.getElementById('showDegenerate');
         const searchInput = document.getElementById('searchInput');
 
+        function isNodeVisible(d, regimesShown, query) {{
+            if (!regimesShown[d.regime]) return false;
+            if (query && !d.id.toLowerCase().includes(query.toLowerCase())) return false;
+            return true;
+        }}
+
         function updateVisibility() {{
             const regimesShown = {{
                 'radial': showRadial.checked,
@@ -572,18 +582,36 @@ class Tier1Dashboard:
                 'noise': showNoise.checked,
                 'degenerate': showDegenerate.checked,
             }};
+            const query = searchInput.value;
 
-            node.style('display', d => {{
-                if (!regimesShown[d.regime]) return 'none';
-                if (searchInput.value && !d.id.includes(searchInput.value)) return 'none';
-                return null;
+            // Pin hidden nodes at current position; unpin re-shown nodes
+            nodes.forEach(d => {{
+                const visible = isNodeVisible(d, regimesShown, query);
+                if (!visible) {{
+                    // Save current position and pin in place so simulation ignores them
+                    if (d._savedFx === undefined) {{
+                        d._savedFx = d.fx;
+                        d._savedFy = d.fy;
+                    }}
+                    d.fx = d.x;
+                    d.fy = d.y;
+                    d._hidden = true;
+                }} else if (d._hidden) {{
+                    // Restore previous pin state (or unpin)
+                    d.fx = d._savedFx || null;
+                    d.fy = d._savedFy || null;
+                    delete d._savedFx;
+                    delete d._savedFy;
+                    delete d._hidden;
+                }}
             }});
 
+            node.style('display', d => isNodeVisible(d, regimesShown, query) ? null : 'none');
+
             link.style('display', d => {{
-                const sourceVisible = regimesShown[d.source.regime] && (!searchInput.value || d.source.id.includes(searchInput.value));
-                const targetVisible = regimesShown[d.target.regime] && (!searchInput.value || d.target.id.includes(searchInput.value));
-                if (!sourceVisible || !targetVisible) return 'none';
-                return null;
+                const sourceVisible = isNodeVisible(d.source, regimesShown, query);
+                const targetVisible = isNodeVisible(d.target, regimesShown, query);
+                return (sourceVisible && targetVisible) ? null : 'none';
             }});
 
             // Restart simulation with lower alpha for smooth transition
