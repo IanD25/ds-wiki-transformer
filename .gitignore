@@ -22,6 +22,14 @@ data/vector_topology.png
 *.db-shm
 *.db-wal
 
+# ── Python packaging ─────────────────────────────────────────────────────────
+*.egg-info/
+dist/
+build/
+
+# ── Stale ChromaDB segments (only chroma.sqlite3 matters) ────────────────────
+data/chroma/
+
 # ────────────────────────────────────────────────────────────────────────────
 # Intentionally TRACKED:
 # data/ds_wiki.db        — source of truth

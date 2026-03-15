@@ -55,10 +55,10 @@ source .venv/bin/activate
 echo "→ Upgrading pip..."
 pip install --upgrade pip -q
 
-# ── 5. Install dependencies ───────────────────────────────────────────────────
-echo "→ Installing dependencies from requirements.txt..."
-pip install -r requirements.txt -q
-echo "✓ Dependencies installed"
+# ── 5. Install package (editable) + dependencies ────────────────────────────
+echo "→ Installing PFD in editable mode (pip install -e .)..."
+pip install -e ".[dev]" -q
+echo "✓ PFD installed (editable) with all dependencies"
 
 # ── 6. Optional: CUDA detection for GPU install ───────────────────────────────
 echo ""
@@ -72,8 +72,8 @@ if command -v nvidia-smi &>/dev/null; then
     echo "  │   pip install torch --extra-index-url \                           │"
     echo "  │         https://download.pytorch.org/whl/cu118                   │"
     echo "  │                                                                   │"
-    echo "  │ Then edit src/config.py:                                          │"
-    echo "  │   EMBED_MODEL = \"BAAI/bge-large-en-v1.5\"  # 1024-dim             │"
+    echo "  │ bge-large-en-v1.5 (1024-dim) auto-selected when GPU is detected.  │"
+    echo "  │ No manual config needed — src/config.py handles it.              │"
     echo "  └───────────────────────────────────────────────────────────────────┘"
 else
     echo "  No NVIDIA GPU detected — CPU mode (M-series or no CUDA)"
@@ -123,8 +123,10 @@ echo "════════════════════════�
 echo "  Setup complete!"
 echo ""
 echo "  Next steps:"
-echo "    source .venv/bin/activate   (each new terminal)"
-echo "    python3 src/mcp_server.py   (optional: start MCP server)"
+echo "    source .venv/bin/activate     (each new terminal)"
+echo "    pfd report --rrp data/rrp/ecoli_core/rrp_ecoli_core.db   (run analysis)"
+echo "    pfd --help                    (see all commands)"
+echo "    python3 src/mcp_server.py     (optional: MCP server for Claude)"
 echo ""
-echo "  Key commands — see CLAUDE.md for full reference"
+echo "  Full reference: CLAUDE.md | User guide: USER_GUIDE.md"
 echo "═══════════════════════════════════════════════════════"

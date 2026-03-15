@@ -1,0 +1,371 @@
+{
+  "rrp_db": "data/rrp/ccbh/rrp_ccbh_cluster.db",
+  "mean_polarity": 0.9249999999999999,
+  "n_contested": 0,
+  "n_aligned": 4,
+  "ds_wiki_summary": {
+    "KC7": 0.6897631049156189,
+    "A2": 0.6888471007347107,
+    "T10": 0.6863547638058662,
+    "B5": 0.5894541203975677,
+    "H4": 0.5883021205663681,
+    "Q2": 0.5850997567176819,
+    "H3": 0.8119795620441437,
+    "H5": 0.8077565133571625,
+    "conj_P15": 0.8047818541526794,
+    "T7": 0.8249447047710419,
+    "conj_P13": 0.8082596063613892,
+    "X0_FIM_Regimes": 0.8087667226791382,
+    "GV2": 0.8044581711292267,
+    "B1": 0.8006249964237213,
+    "GV4": 0.8162114024162292,
+    "conj_P1": 0.8097260296344757,
+    "G1": 0.8116777688264847,
+    "B3": 0.8129206597805023
+  },
+  "entries": [
+    {
+      "entry_id": "kerr_incompatibility",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "cosmological_coupling_parameterization",
+      "entry_type": "mechanism",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "k_measurement_method",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "vacuum_energy_interior",
+      "entry_type": "mechanism",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "bh_dark_energy_source",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "anisotropic_stress_distribution",
+      "entry_type": "mechanism",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "ce_general_solution",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "misner_sharp_mass",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "regular_horizon_solution",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "ce_schwarzschild",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "energy_conditions",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "de_density_equation",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "desi_bao_data",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "hubble_tension_reduction",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "expansion_history_recovery",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "phantom_crossing_explanation",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "missing_baryons",
+      "entry_type": "claim",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "bbn_consistency",
+      "entry_type": "measurement",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "k_equals_3_measurement",
+      "entry_type": "measurement",
+      "net_polarity": 0.6999999999999998,
+      "bridges": [
+        {
+          "ds_entry_id": "KC7",
+          "raw_sim": 0.811486005783081,
+          "polarity": 0.7,
+          "signed_score": 0.5680402040481567,
+          "alignment": "ALIGNS",
+          "path": "direct [supports(+0.7)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "A2",
+          "raw_sim": 0.810408353805542,
+          "polarity": 0.7,
+          "signed_score": 0.5672858476638794,
+          "alignment": "ALIGNS",
+          "path": "direct [supports(+0.7)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8074761927127838,
+          "polarity": 0.7,
+          "signed_score": 0.5652333348989487,
+          "alignment": "ALIGNS",
+          "path": "direct [supports(+0.7)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B5",
+          "raw_sim": 0.8420773148536682,
+          "polarity": 0.7,
+          "signed_score": 0.5894541203975677,
+          "alignment": "ALIGNS",
+          "path": "via vacuum_energy_interior [supports(+0.7)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "H4",
+          "raw_sim": 0.8404316008090973,
+          "polarity": 0.7,
+          "signed_score": 0.5883021205663681,
+          "alignment": "ALIGNS",
+          "path": "via vacuum_energy_interior [supports(+0.7)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "Q2",
+          "raw_sim": 0.8358567953109741,
+          "polarity": 0.7,
+          "signed_score": 0.5850997567176819,
+          "alignment": "ALIGNS",
+          "path": "via vacuum_energy_interior [supports(+0.7)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "ccbh_desi_model",
+      "entry_type": "mechanism",
+      "net_polarity": 1.0,
+      "bridges": [
+        {
+          "ds_entry_id": "H3",
+          "raw_sim": 0.8119795620441437,
+          "polarity": 1.0,
+          "signed_score": 0.8119795620441437,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "H5",
+          "raw_sim": 0.8077565133571625,
+          "polarity": 1.0,
+          "signed_score": 0.8077565133571625,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "conj_P15",
+          "raw_sim": 0.8047818541526794,
+          "polarity": 1.0,
+          "signed_score": 0.8047818541526794,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "T7",
+          "raw_sim": 0.8249447047710419,
+          "polarity": 1.0,
+          "signed_score": 0.8249447047710419,
+          "alignment": "ALIGNS",
+          "path": "via bbn_consistency [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "conj_P13",
+          "raw_sim": 0.8082596063613892,
+          "polarity": 1.0,
+          "signed_score": 0.8082596063613892,
+          "alignment": "ALIGNS",
+          "path": "via bbn_consistency [is_consistent_with(+1.0)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "positive_neutrino_mass",
+      "entry_type": "measurement",
+      "net_polarity": 1.0,
+      "bridges": [
+        {
+          "ds_entry_id": "X0_FIM_Regimes",
+          "raw_sim": 0.8045552968978882,
+          "polarity": 1.0,
+          "signed_score": 0.8045552968978882,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "GV2",
+          "raw_sim": 0.8044581711292267,
+          "polarity": 1.0,
+          "signed_score": 0.8044581711292267,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B1",
+          "raw_sim": 0.8006249964237213,
+          "polarity": 1.0,
+          "signed_score": 0.8006249964237213,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "GV4",
+          "raw_sim": 0.8162114024162292,
+          "polarity": 1.0,
+          "signed_score": 0.8162114024162292,
+          "alignment": "ALIGNS",
+          "path": "via expansion_history_recovery [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "conj_P1",
+          "raw_sim": 0.8097260296344757,
+          "polarity": 1.0,
+          "signed_score": 0.8097260296344757,
+          "alignment": "ALIGNS",
+          "path": "via expansion_history_recovery [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "G1",
+          "raw_sim": 0.8072693049907684,
+          "polarity": 1.0,
+          "signed_score": 0.8072693049907684,
+          "alignment": "ALIGNS",
+          "path": "via expansion_history_recovery [is_consistent_with(+1.0)]",
+          "hop": 2
+        }
+      ]
+    },
+    {
+      "entry_id": "k_float_result",
+      "entry_type": "measurement",
+      "net_polarity": 1.0,
+      "bridges": [
+        {
+          "ds_entry_id": "G1",
+          "raw_sim": 0.8160862326622009,
+          "polarity": 1.0,
+          "signed_score": 0.8160862326622009,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "X0_FIM_Regimes",
+          "raw_sim": 0.8129781484603882,
+          "polarity": 1.0,
+          "signed_score": 0.8129781484603882,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "B3",
+          "raw_sim": 0.8129206597805023,
+          "polarity": 1.0,
+          "signed_score": 0.8129206597805023,
+          "alignment": "ALIGNS",
+          "path": "direct [is_consistent_with(+1.0)]",
+          "hop": 1
+        },
+        {
+          "ds_entry_id": "KC7",
+          "raw_sim": 0.811486005783081,
+          "polarity": 1.0,
+          "signed_score": 0.811486005783081,
+          "alignment": "ALIGNS",
+          "path": "via k_equals_3_measurement [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "A2",
+          "raw_sim": 0.810408353805542,
+          "polarity": 1.0,
+          "signed_score": 0.810408353805542,
+          "alignment": "ALIGNS",
+          "path": "via k_equals_3_measurement [is_consistent_with(+1.0)]",
+          "hop": 2
+        },
+        {
+          "ds_entry_id": "T10",
+          "raw_sim": 0.8074761927127838,
+          "polarity": 1.0,
+          "signed_score": 0.8074761927127838,
+          "alignment": "ALIGNS",
+          "path": "via k_equals_3_measurement [is_consistent_with(+1.0)]",
+          "hop": 2
+        }
+      ]
+    }
+  ]
+}
