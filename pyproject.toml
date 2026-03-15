@@ -38,10 +38,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+pdf = ["pymupdf>=1.24.0"]
 mcp = ["fastmcp>=2.0.0"]
 power = ["pandapower>=2.14.0"]
 dev = [
     "pytest>=9.0.0",
+    "pymupdf>=1.24.0",
     "fastmcp>=2.0.0",
     "pandapower>=2.14.0",
 ]
