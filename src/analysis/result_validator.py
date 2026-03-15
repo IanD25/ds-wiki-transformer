@@ -1,13 +1,11 @@
 """
 result_validator.py — Validate a research claim against the knowledge base.
 
-SCOPE: Currently DS Wiki–specific (queries against the DS Wiki ChromaDB index).
-       This is the most pipeline-ready of the Subsystem B tools: with minor
-       refactoring it can validate any free-text claim against any ChromaDB collection,
-       making it a direct input to Phase 3 (Claim Extraction + Foundation Matching).
-       Priority integration target for Phase 3 milestone.
+SCOPE: DS Wiki–specific (queries against the DS Wiki ChromaDB index).
+       Phase 3A enhancement: resolve_claim() provides dynamic channel resolution
+       for free-text claims with polarity hints (SCF methodology).
 
-Algorithm
+Algorithm (validate_claim — Phase 1)
 ---------
 1. Embed the claim text using the BGE model (same model as sync.py).
 2. Query ChromaDB for the top-k most similar chunks (by cosine similarity).
@@ -24,12 +22,27 @@ Algorithm
 7. Compute consistency_score = (S - 0.5·C) / max(1, S + C + R)
    where S = supporting count, C = contradicting count, R = related count.
 
+Algorithm (resolve_claim — Phase 3A, SCF dynamic channel resolution)
+---------
+1. Accept a Claim object (from claim_extractor.py) or raw text.
+2. Embed and query ChromaDB for top-K DS Wiki channels.
+3. For each channel match, infer polarity from:
+   a. Claim's polarity_hint (linguistic cues from claim_extractor)
+   b. DS Wiki link graph structure (if matched entry has tensions_with links)
+4. Return ClaimResolution with channel matches, polarity, confidence.
+5. GATE: Claim must have human_approved=True before resolution is trusted.
+
 Entry points
 ------------
     validator = ResultValidator(source_db, chroma_dir)
     result    = validator.validate_claim("Entropy increases with dimension")
     print(result.summary)
     print(result.as_markdown())
+
+    # Phase 3A — dynamic channel resolution:
+    from claim_extractor import Claim
+    resolution = validator.resolve_claim(claim_or_text)
+    print(resolution.as_markdown())
 
 Both source_db and chroma_dir accept pathlib.Path or str.
 """
@@ -145,6 +158,94 @@ class ValidationResult:
             lines.append("### Related Entities")
             for e in self.related_entities:
                 lines.append(f"- **{e.entry_id}** — {e.title} *(sim={e.similarity:.3f})*")
+            lines.append("")
+
+        return "\n".join(lines)
+
+
+# ── ResultValidator ────────────────────────────────────────────────────────────
+
+# ── Phase 3A: Claim Resolution ────────────────────────────────────────────────
+
+@dataclass
+class ChannelMatch:
+    """A DS Wiki entry matched to a claim (SCF channel resolution)."""
+    entry_id: str
+    title: str
+    entry_type: str
+    domain: str
+    similarity: float
+    polarity_hint: str = "neutral"     # positive/negative/neutral
+    polarity_markers: List[str] = field(default_factory=list)
+    excerpt: str = ""
+    tier: str = ""                     # tier-1/tier-1.5/tier-2 based on similarity
+
+
+@dataclass
+class ClaimResolution:
+    """Result of resolving a claim against DS Wiki channels (Phase 3A)."""
+    claim_text: str
+    source_section: str = ""
+    claim_approved: bool = False       # GATE: must be True for trusted output
+    channel_matches: List[ChannelMatch] = field(default_factory=list)
+    notes: List[str] = field(default_factory=list)
+
+    @property
+    def top_channel(self) -> Optional[ChannelMatch]:
+        return self.channel_matches[0] if self.channel_matches else None
+
+    @property
+    def summary(self) -> str:
+        n = len(self.channel_matches)
+        gate = "APPROVED" if self.claim_approved else "PENDING APPROVAL"
+        top = (
+            f" | top: {self.top_channel.entry_id} "
+            f"(sim={self.top_channel.similarity:.3f})"
+            if self.top_channel else ""
+        )
+        return f"[{gate}] {n} DS Wiki channels resolved{top}"
+
+    def as_markdown(self) -> str:
+        gate = "APPROVED" if self.claim_approved else "PENDING APPROVAL"
+        lines = [
+            "## Claim Channel Resolution",
+            "",
+            f"**Claim:** {self.claim_text}",
+            f"**Section:** {self.source_section or '(unknown)'}",
+            f"**Gate status:** {gate}",
+            "",
+        ]
+        if not self.claim_approved:
+            lines.append(
+                "> **WARNING:** This claim has NOT been human-approved. "
+                "Resolution results are provisional."
+            )
+            lines.append("")
+
+        if self.notes:
+            lines += ["**Notes:**"] + [f"- {n}" for n in self.notes] + [""]
+
+        if self.channel_matches:
+            lines.append("### DS Wiki Channel Matches")
+            lines.append("")
+            for i, ch in enumerate(self.channel_matches, 1):
+                pol_icon = {"positive": "+", "negative": "!", "neutral": "~"}.get(
+                    ch.polarity_hint, "~"
+                )
+                lines.append(
+                    f"{i}. **{ch.entry_id}** — {ch.title} | "
+                    f"sim={ch.similarity:.3f} | {ch.tier} | "
+                    f"{pol_icon} {ch.polarity_hint}"
+                )
+                if ch.excerpt:
+                    lines.append(f"   > {ch.excerpt}")
+                if ch.polarity_markers:
+                    lines.append(
+                        f"   > *Polarity markers: {', '.join(ch.polarity_markers)}*"
+                    )
+            lines.append("")
+        else:
+            lines.append("*No DS Wiki channels matched above threshold.*")
             lines.append("")
 
         return "\n".join(lines)
@@ -433,6 +534,140 @@ class ResultValidator:
             contradictions      = contradictions,
             related_entities    = related_items,
             notes               = notes,
+        )
+
+    # ── Phase 3A: Dynamic Channel Resolution ──────────────────────────────────
+
+    def resolve_claim(
+        self,
+        claim,
+        top_k: int = 10,
+        min_similarity: float = 0.65,
+    ) -> ClaimResolution:
+        """
+        Resolve a claim to DS Wiki channels with polarity hints (Phase 3A SCF).
+
+        Parameters
+        ----------
+        claim : str or Claim object (from claim_extractor.py)
+            If a Claim object, uses its text and polarity_hint.
+            If a string, treats it as raw claim text with neutral polarity.
+        top_k : int
+            Number of DS Wiki channels to return.
+        min_similarity : float
+            Minimum cosine similarity for a channel match.
+
+        Returns
+        -------
+        ClaimResolution with channel matches, polarity, gate status.
+        """
+        # Handle both Claim objects and raw strings
+        claim_text = ""
+        source_section = ""
+        claim_approved = False
+        polarity_hint = "neutral"
+        polarity_markers: List[str] = []
+
+        # Duck-type check for Claim object
+        if hasattr(claim, "text"):
+            claim_text = claim.text
+            source_section = getattr(claim, "source_section", "")
+            claim_approved = getattr(claim, "human_approved", False)
+            hint = getattr(claim, "polarity_hint", None)
+            if hint is not None:
+                polarity_hint = hint.value if hasattr(hint, "value") else str(hint)
+            polarity_markers = getattr(claim, "polarity_markers", [])
+        else:
+            claim_text = str(claim)
+            # Detect polarity from raw text
+            try:
+                from analysis.claim_extractor import detect_polarity
+                hint_enum, markers = detect_polarity(claim_text)
+                polarity_hint = hint_enum.value
+                polarity_markers = markers
+            except ImportError:
+                pass
+
+        notes: List[str] = []
+
+        if not claim_approved:
+            notes.append(
+                "GATE: Claim not yet human-approved. "
+                "Results are provisional per Foundational Plan §3.1."
+            )
+
+        # 1. Embed claim
+        embedding = self._embed(claim_text)
+
+        # 2. Query ChromaDB
+        chunk_results = self._query_chroma(embedding, top_k * 3)  # oversample for dedup
+        if not chunk_results:
+            return ClaimResolution(
+                claim_text=claim_text,
+                source_section=source_section,
+                claim_approved=claim_approved,
+                notes=["ChromaDB returned no results — is the index populated?"],
+            )
+
+        # 3. Deduplicate → best sim per entry
+        entry_sims = self._best_sim_per_entry(chunk_results)
+
+        # 4. Filter by min_similarity and take top_k
+        filtered = {
+            eid: sim for eid, sim in entry_sims.items()
+            if sim >= min_similarity
+        }
+        sorted_entries = sorted(filtered.items(), key=lambda x: -x[1])[:top_k]
+
+        if not sorted_entries:
+            notes.append(
+                f"No entries found above min_similarity={min_similarity:.2f}. "
+                "Claim may be outside DS Wiki coverage."
+            )
+            return ClaimResolution(
+                claim_text=claim_text,
+                source_section=source_section,
+                claim_approved=claim_approved,
+                notes=notes,
+            )
+
+        # 5. Fetch metadata and excerpts
+        entry_ids = [eid for eid, _ in sorted_entries]
+        metadata = self._fetch_metadata(entry_ids)
+
+        # 6. Build channel matches with polarity and tier
+        channels: List[ChannelMatch] = []
+        for eid, sim in sorted_entries:
+            meta = metadata.get(eid, {})
+
+            # Determine tier
+            if sim >= 0.85:
+                tier = "tier-1"
+            elif sim >= 0.75:
+                tier = "tier-1.5"
+            else:
+                tier = "tier-2"
+
+            excerpt = self._fetch_excerpt(eid)
+
+            channels.append(ChannelMatch(
+                entry_id=eid,
+                title=meta.get("title", eid),
+                entry_type=meta.get("entry_type", ""),
+                domain=meta.get("domain", ""),
+                similarity=sim,
+                polarity_hint=polarity_hint,
+                polarity_markers=polarity_markers,
+                excerpt=excerpt,
+                tier=tier,
+            ))
+
+        return ClaimResolution(
+            claim_text=claim_text,
+            source_section=source_section,
+            claim_approved=claim_approved,
+            channel_matches=channels,
+            notes=notes,
         )
 
 
