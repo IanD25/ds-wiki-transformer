@@ -438,44 +438,68 @@ class ClaimExtractor:
             all_claims.extend(claims)
         return all_claims
 
-    def format_for_human_gate(self, claims: list[Claim]) -> str:
+    def format_for_human_gate(
+        self,
+        claims: list[Claim],
+        math_flags: Optional[list] = None,
+    ) -> str:
         """
-        Format extracted claims for human review (mandatory gate).
+        Format extracted claims AND math flags for human review (mandatory gate).
 
         Returns a markdown string listing all claims with polarity hints
-        and extraction confidence, ready for user approval/rejection.
+        and extraction confidence, plus any math formula regions that need
+        "what the math says" annotations.
+
+        Parameters
+        ----------
+        claims     : Extracted Claim objects.
+        math_flags : Optional list of MathFlag objects from detect_math_regions().
+                     If provided, appends a math annotation section to the review.
         """
-        if not claims:
-            return "No claims extracted.\n"
+        if not claims and not math_flags:
+            return "No claims or formulas extracted.\n"
 
         lines = [
             "# Extracted Claims — Human Review Required",
             "",
-            f"**{len(claims)} claims extracted.** Review each and mark approved/rejected.",
-            "",
         ]
 
-        for i, claim in enumerate(claims, 1):
-            status = "APPROVED" if claim.human_approved else "PENDING"
-            pol_icon = {
-                PolarityHint.POSITIVE: "+",
-                PolarityHint.NEGATIVE: "!",
-                PolarityHint.NEUTRAL: "~",
-            }[claim.polarity_hint]
-
-            lines.append(f"## Claim {i} [{status}] [{pol_icon} {claim.polarity_hint.value}]")
-            lines.append(f"**Section:** {claim.source_section or '(unknown)'}")
-            lines.append(f"**Confidence:** {claim.confidence.value}")
-            lines.append(f"**Text:** {claim.text}")
-            lines.append(f"**Subject:** {claim.subject}")
-            lines.append(f"**Relationship:** {claim.relationship}")
-            lines.append(f"**Object:** {claim.object}")
-            if claim.polarity_markers:
-                lines.append(f"**Polarity markers:** {', '.join(claim.polarity_markers)}")
+        if claims:
+            lines.append(f"**{len(claims)} claims extracted.** Review each and mark approved/rejected.")
             lines.append("")
+
+            for i, claim in enumerate(claims, 1):
+                status = "APPROVED" if claim.human_approved else "PENDING"
+                pol_icon = {
+                    PolarityHint.POSITIVE: "+",
+                    PolarityHint.NEGATIVE: "!",
+                    PolarityHint.NEUTRAL: "~",
+                }[claim.polarity_hint]
+
+                lines.append(f"## Claim {i} [{status}] [{pol_icon} {claim.polarity_hint.value}]")
+                lines.append(f"**Section:** {claim.source_section or '(unknown)'}")
+                lines.append(f"**Confidence:** {claim.confidence.value}")
+                lines.append(f"**Text:** {claim.text}")
+                lines.append(f"**Subject:** {claim.subject}")
+                lines.append(f"**Relationship:** {claim.relationship}")
+                lines.append(f"**Object:** {claim.object}")
+                if claim.polarity_markers:
+                    lines.append(f"**Polarity markers:** {', '.join(claim.polarity_markers)}")
+                lines.append("")
+        else:
+            lines.append("No claims extracted.")
+            lines.append("")
+
+        # Math formula annotation section
+        if math_flags:
+            from ingestion.parsers.pdf_parser import format_math_flags_for_review
+            lines.append("")
+            lines.append(format_math_flags_for_review(math_flags))
 
         lines.append("---")
         lines.append("*Claims must be approved before downstream processing (PFD Foundational Plan §3.1).*")
+        if math_flags:
+            lines.append("*Math annotations feed into RRP `math_interpretations` table for bridge detection.*")
         return "\n".join(lines)
 
 

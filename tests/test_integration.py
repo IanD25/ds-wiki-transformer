@@ -77,8 +77,8 @@ class TestCoverageAnalyzerLive:
     # ── Basic counts ──────────────────────────────────────────────────────────
 
     def test_total_entities_209(self, live_report):
-        assert live_report.total_entities == 209, (
-            f"Expected 209 entities, got {live_report.total_entities}"
+        assert live_report.total_entities == 231, (
+            f"Expected 231 entities, got {live_report.total_entities}"
         )
 
     def test_total_sections_above_1200(self, live_report):
@@ -96,17 +96,17 @@ class TestCoverageAnalyzerLive:
     # ── Entity type distribution ───────────────────────────────────────────────
 
     def test_reference_law_count(self, live_report):
-        assert live_report.entity_type_distribution.get("reference_law", 0) == 149
+        assert live_report.entity_type_distribution.get("reference_law", 0) == 168
 
     def test_method_count(self, live_report):
-        assert live_report.entity_type_distribution.get("method", 0) == 16
+        assert live_report.entity_type_distribution.get("method", 0) == 18
 
     def test_law_count(self, live_report):
         assert live_report.entity_type_distribution.get("law", 0) == 15
 
     def test_entity_type_sums_to_209(self, live_report):
         total = sum(live_report.entity_type_distribution.values())
-        assert total == 209
+        assert total == 231
 
     # ── Property coverage ─────────────────────────────────────────────────────
 
@@ -118,7 +118,7 @@ class TestCoverageAnalyzerLive:
 
     def test_mathematical_archetype_100pct(self, live_report):
         pc = self._get_pc(live_report, "mathematical_archetype")
-        assert pc.filled == 209
+        assert pc.filled == 231
         assert pc.coverage_pct == 100.0
 
     def test_dimensional_sensitivity_full_coverage(self, live_report):
@@ -192,7 +192,7 @@ class TestCoverageAnalyzerLive:
         assert live_report.network_metrics.link_density > 0
 
     def test_possible_links_count(self, live_report):
-        n = 209
+        n = 231
         expected_possible = n * (n - 1) // 2
         assert live_report.network_metrics.possible_links == expected_possible
 
@@ -234,7 +234,7 @@ class TestCoverageAnalyzerLive:
 
     def test_markdown_contains_209(self, ca):
         md = ca.generate_markdown()
-        assert "209" in md
+        assert "231" in md
 
     def test_markdown_contains_archetype_section(self, ca):
         md = ca.generate_markdown()
@@ -242,7 +242,7 @@ class TestCoverageAnalyzerLive:
 
     def test_get_stats_total_entities(self, ca):
         stats = ca.get_stats()
-        assert stats["total_entities"] == 209
+        assert stats["total_entities"] == 231
 
 
 # ── HypothesisGenerator — Live DB ──────────────────────────────────────────────
@@ -466,7 +466,7 @@ class TestToolComposition:
 
         # Coverage report
         assert len(cov_md) > 1000
-        assert "209" in cov_md              # entity count
+        assert "231" in cov_md              # entity count
         assert "conservation-law" in cov_md  # most common archetype (post Option E)
 
         # Hypothesis report

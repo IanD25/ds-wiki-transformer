@@ -1437,6 +1437,196 @@ def fisher_sweep_bridge(
     }
 
 
+# ── PDF / LLM-assisted segmentation tools ─────────────────────────────────────
+
+@mcp.tool()
+def pdf_extract_text(pdf_path: str) -> dict:
+    """
+    Extract raw text from a PDF file.
+
+    Args:
+        pdf_path: Absolute path to the PDF file.
+
+    Returns:
+        {text, char_count, page_count}
+    """
+    from ingestion.parsers.pdf_parser import extract_pages
+
+    pages = extract_pages(pdf_path)
+    full_text = "\n\n".join(p.text for p in pages)
+    return {
+        "text": full_text,
+        "char_count": len(full_text),
+        "page_count": len(pages),
+    }
+
+
+@mcp.tool()
+def pdf_segment_for_review(
+    pdf_path: str,
+    preview_chars: int = 300,
+) -> dict:
+    """
+    Prepare a PDF's paragraphs for LLM-assisted idea grouping.
+
+    Step 1 of 2: extracts text, splits into numbered paragraphs, and
+    returns previews. Claude reads the previews and returns a JSON array
+    of idea groups, which feeds into pdf_assemble_sections.
+
+    Args:
+        pdf_path:      Absolute path to the PDF file.
+        preview_chars: Max characters per paragraph preview (default 300).
+
+    Returns:
+        {prompt, total_paragraphs, total_chars, paragraphs}
+        paragraphs is the full text list (for step 2).
+    """
+    from ingestion.parsers.pdf_parser import prepare_for_llm_segmentation
+
+    req = prepare_for_llm_segmentation(pdf_path, preview_chars=preview_chars)
+    return {
+        "prompt": req.prompt,
+        "total_paragraphs": req.total_paragraphs,
+        "total_chars": req.total_chars,
+        "paragraphs": req.paragraphs,
+    }
+
+
+@mcp.tool()
+def pdf_assemble_sections(
+    paragraphs_json: str,
+    groupings_json: str,
+) -> dict:
+    """
+    Reassemble verbatim sections from LLM-provided idea groupings.
+
+    Step 2 of 2: takes the original paragraphs (from pdf_segment_for_review)
+    and Claude's JSON grouping response. Returns the assembled sections.
+
+    Args:
+        paragraphs_json: JSON array of paragraph strings (from step 1).
+        groupings_json:  JSON array of {label, paragraphs} objects (from Claude).
+
+    Returns:
+        {sections: {label: text, ...}, section_count, total_chars}
+    """
+    from ingestion.parsers.pdf_parser import assemble_llm_sections
+
+    paragraphs = json.loads(paragraphs_json)
+    sections = assemble_llm_sections(paragraphs, groupings_json)
+    return {
+        "sections": sections,
+        "section_count": len(sections),
+        "total_chars": sum(len(v) for v in sections.values()),
+    }
+
+
+# ── Math interpretation tools ──────────────────────────────────────────────────
+
+@mcp.tool()
+def pdf_detect_math(pdf_path: str) -> dict:
+    """
+    Scan a PDF for formula regions that need "what the math says" annotations.
+
+    Detects two types:
+    - "ghost": formula was present in the paper but PDF extraction lost it
+      (orphaned connectives like "where", "Eq. 3", sentence ending in "is")
+    - "survivor": math symbols survived but may be garbled or context-free
+
+    Args:
+        pdf_path: Absolute path to the PDF file.
+
+    Returns:
+        {flags: [{line_number, context, detection_type, pattern_matched}, ...],
+         review_text: markdown for human review,
+         ghost_count, survivor_count}
+    """
+    from ingestion.parsers.pdf_parser import (
+        extract_text, detect_math_regions, format_math_flags_for_review,
+    )
+
+    text = extract_text(pdf_path)
+    flags = detect_math_regions(text)
+
+    return {
+        "flags": [
+            {
+                "line_number": f.line_number,
+                "context": f.context,
+                "detection_type": f.detection_type,
+                "pattern_matched": f.pattern_matched,
+            }
+            for f in flags
+        ],
+        "review_text": format_math_flags_for_review(flags),
+        "ghost_count": sum(1 for f in flags if f.detection_type == "ghost"),
+        "survivor_count": sum(1 for f in flags if f.detection_type == "survivor"),
+    }
+
+
+@mcp.tool()
+def submit_math_interpretations(
+    rrp_db_path: str,
+    interpretations_json: str,
+) -> dict:
+    """
+    Store "what the math says" annotations in an RRP bundle.
+
+    Each interpretation captures the plain-English meaning of a formula
+    that was detected as missing or garbled during PDF extraction. These
+    annotations are embedded for bridge detection against the DS Wiki.
+
+    Args:
+        rrp_db_path:          Path to the RRP bundle database.
+        interpretations_json: JSON array of objects:
+            [{
+                "entry_id": "...",
+                "formula": "J_d = ∂D/∂t",
+                "plain_english": "The displacement current equals...",
+                "what_it_constrains": "Switching speed in piezotronic gates",
+                "ds_wiki_anchor": "EM3",
+                "source_section": "Energy Architecture",
+                "claim_index": null
+            }, ...]
+
+    Returns:
+        {inserted: count, skipped: count}
+    """
+    from ingestion.rrp_bundle import open_rrp_bundle
+
+    interpretations = json.loads(interpretations_json)
+    conn = open_rrp_bundle(rrp_db_path)
+    inserted = 0
+    skipped = 0
+
+    try:
+        for interp in interpretations:
+            if not interp.get("plain_english"):
+                skipped += 1
+                continue
+            conn.execute(
+                """INSERT INTO math_interpretations
+                   (entry_id, claim_index, formula, plain_english,
+                    what_it_constrains, ds_wiki_anchor, source_section, human_verified)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, 1)""",
+                (
+                    interp.get("entry_id", "unknown"),
+                    interp.get("claim_index"),
+                    interp.get("formula"),
+                    interp["plain_english"],
+                    interp.get("what_it_constrains"),
+                    interp.get("ds_wiki_anchor"),
+                    interp.get("source_section"),
+                ),
+            )
+            inserted += 1
+        conn.commit()
+    finally:
+        conn.close()
+
+    return {"inserted": inserted, "skipped": skipped}
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":

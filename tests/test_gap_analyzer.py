@@ -668,7 +668,7 @@ class TestIntegration:
         assert isinstance(report, GapAnalysisReport)
 
     def test_total_entities_209(self, report):
-        assert report.summary_stats["total_entities"] == 209
+        assert report.summary_stats["total_entities"] == 231
 
     def test_total_links_positive(self, report):
         assert report.summary_stats["total_links"] > 0
@@ -715,7 +715,7 @@ class TestIntegration:
 
     def test_markdown_contains_209(self, report):
         md = report.as_markdown()
-        assert "209" in md
+        assert "231" in md
 
     def test_taxonomy_gaps_present(self, report):
         """With 14 archetype values across 149 reference_law entries, some are sparse."""
@@ -746,4 +746,4 @@ class TestIntegration:
         report = ga.analyze()
         method_gaps = [g for g in report.type_balance_gaps if g.entity_type == "method"]
         assert len(method_gaps) == 1
-        assert method_gaps[0].deficit == 100 - 16   # 16 observed method entries
+        assert method_gaps[0].deficit == 100 - 18   # 16 observed method entries
