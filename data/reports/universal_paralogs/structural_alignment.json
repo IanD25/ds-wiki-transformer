@@ -1,0 +1,123 @@
+{
+  "rrp_db": "data/rrp/universal_paralogs/rrp_universal_paralogs.db",
+  "mean_polarity": 0.0,
+  "n_contested": 0,
+  "n_aligned": 0,
+  "ds_wiki_summary": {},
+  "entries": [
+    {
+      "entry_id": "luca_complexity",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "luca_genome_structure",
+      "entry_type": "open_question",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "luca_energy_metabolism",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "universal_paralog_definition",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "gene_duplication_mechanism",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "amino_acid_metabolism_paralogs",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "translation_paralogs",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "membrane_paralogs",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "tree_rooting_by_paralogs",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "long_branch_attraction",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "genetic_code_evolution",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "if2_eftu_reconstruction",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "signal_recognition_particle",
+      "entry_type": "instantiation",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "ancestral_sequence_reconstruction",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "structure_based_homology",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "gene_tree_reconciliation",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "gene_loss_obscures_paralogs",
+      "entry_type": "reference_law",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "pre_luca_bioengineering",
+      "entry_type": "open_question",
+      "net_polarity": 0.0,
+      "bridges": []
+    },
+    {
+      "entry_id": "ai_protein_prediction",
+      "entry_type": "method",
+      "net_polarity": 0.0,
+      "bridges": []
+    }
+  ]
+}

@@ -70,9 +70,14 @@ DEVICE, EMBED_MODEL, EMBED_DIM = _detect_device()
 # ── Embedding ─────────────────────────────────────────────────────────────────
 CHROMA_COLLECTION = "ds_wiki"
 
+# ── Cross-encoder reranking (Phase 3B) ────────────────────────────────────────
+CROSS_ENCODER_MODEL   = "cross-encoder/ms-marco-MiniLM-L-12-v2"
+CROSS_ENCODER_ENABLED = True    # gate: set False to skip reranking (CPU fallback)
+RERANK_TOP_K          = 20      # retrieve more candidates when reranking is on
+
 # ── Search defaults ───────────────────────────────────────────────────────────
 TOP_K_NEIGHBORS  = 5    # stored in history per chunk
-DEFAULT_SEARCH_K = 5    # default n_results for MCP search tools
+DEFAULT_SEARCH_K = 5    # default n_results for search queries
 DRIFT_THRESHOLD  = 0.05 # cosine distance — flag as "changed" if above this
 
 # ── Link confidence tiers (derived from cosine similarity, not subjective) ────
