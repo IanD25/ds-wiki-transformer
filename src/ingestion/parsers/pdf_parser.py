@@ -109,6 +109,10 @@ def extract_pages(pdf_path: str | Path) -> list[PDFPage]:
     """
     Extract text from each page of a PDF.
 
+    Uses sort=True for proper multi-column reading order — PyMuPDF
+    reorders text blocks by position (top-to-bottom, left-to-right)
+    so two-column layouts read correctly instead of interleaving.
+
     Parameters
     ----------
     pdf_path : Path to the PDF file.
@@ -129,7 +133,7 @@ def extract_pages(pdf_path: str | Path) -> list[PDFPage]:
     doc = fitz.open(str(pdf_path))
     try:
         for i, page in enumerate(doc):
-            text = page.get_text("text")
+            text = page.get_text("text", sort=True)
             pages.append(PDFPage(
                 page_number=i + 1,
                 text=text,
@@ -141,9 +145,52 @@ def extract_pages(pdf_path: str | Path) -> list[PDFPage]:
     return pages
 
 
+def _detect_headers_footers(pages: list[PDFPage], threshold: int = 3) -> set[str]:
+    """
+    Detect repeated header/footer lines across pages.
+
+    A line appearing on >= `threshold` pages (normalized, stripped) is
+    likely a running header or footer. Returns the set of such lines
+    for removal.
+
+    Skips very short lines (<5 chars) and very long lines (>120 chars)
+    since those are unlikely to be headers/footers.
+    """
+    from collections import Counter
+    line_counts: Counter[str] = Counter()
+
+    for page in pages:
+        # Only check first 3 and last 3 lines per page
+        lines = page.text.split("\n")
+        check_lines = lines[:3] + lines[-3:] if len(lines) > 6 else lines
+        seen_on_page: set[str] = set()
+        for line in check_lines:
+            normalized = line.strip()
+            if 5 <= len(normalized) <= 120 and normalized not in seen_on_page:
+                seen_on_page.add(normalized)
+                line_counts[normalized] += 1
+
+    # Lines appearing on >= threshold pages are headers/footers
+    n_pages = len(pages)
+    min_occurrences = min(threshold, max(2, n_pages // 3))
+    return {line for line, count in line_counts.items() if count >= min_occurrences}
+
+
+def _strip_headers_footers(text: str, hf_lines: set[str]) -> str:
+    """Remove detected header/footer lines from text."""
+    if not hf_lines:
+        return text
+    lines = text.split("\n")
+    cleaned = [line for line in lines if line.strip() not in hf_lines]
+    return "\n".join(cleaned)
+
+
 def extract_text(pdf_path: str | Path) -> str:
     """
     Extract all text from a PDF, concatenated with page breaks.
+
+    Applies multi-column reading order (sort=True) and strips
+    detected running headers/footers.
 
     Parameters
     ----------
@@ -154,7 +201,9 @@ def extract_text(pdf_path: str | Path) -> str:
     Full text content of the PDF.
     """
     pages = extract_pages(pdf_path)
-    return "\n\n".join(p.text for p in pages)
+    hf_lines = _detect_headers_footers(pages)
+    cleaned_pages = [_strip_headers_footers(p.text, hf_lines) for p in pages]
+    return "\n\n".join(cleaned_pages)
 
 
 def extract_sections(pdf_path: str | Path) -> dict[str, str]:

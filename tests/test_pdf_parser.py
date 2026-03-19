@@ -19,6 +19,9 @@ from ingestion.parsers.pdf_parser import (
     MathFlag,
     _split_paragraphs,
     assemble_llm_sections,
+    _detect_headers_footers,
+    _strip_headers_footers,
+    PDFPage,
 )
 
 
@@ -609,3 +612,76 @@ class TestMathInterpretationSchema:
         ).fetchall()}
         assert "math_interpretations" in tables
         conn.close()
+
+
+# ── Header/footer detection tests ────────────────────────────────────────────
+
+
+class TestHeaderFooterDetection:
+    """Test running header/footer detection and stripping."""
+
+    def _make_pages(self, texts: list[str]) -> list[PDFPage]:
+        return [PDFPage(page_number=i + 1, text=t, char_count=len(t)) for i, t in enumerate(texts)]
+
+    def test_detects_repeated_header(self):
+        pages = self._make_pages([
+            "Journal of Science Vol 1\nActual content page 1\nPage 1",
+            "Journal of Science Vol 1\nActual content page 2\nPage 2",
+            "Journal of Science Vol 1\nActual content page 3\nPage 3",
+        ])
+        hf = _detect_headers_footers(pages, threshold=3)
+        assert "Journal of Science Vol 1" in hf
+
+    def test_does_not_flag_unique_lines(self):
+        pages = self._make_pages([
+            "Journal of Science Vol 1\nUnique line A\nPage 1",
+            "Journal of Science Vol 1\nUnique line B\nPage 2",
+            "Journal of Science Vol 1\nUnique line C\nPage 3",
+        ])
+        hf = _detect_headers_footers(pages, threshold=3)
+        assert "Unique line A" not in hf
+        assert "Unique line B" not in hf
+
+    def test_skips_short_lines(self):
+        pages = self._make_pages([
+            "Hi\nDifferent content on page one\nBye",
+            "Hi\nSomething else on page two here\nBye",
+            "Hi\nYet another thing on page three\nBye",
+        ])
+        hf = _detect_headers_footers(pages, threshold=3)
+        # "Hi" and "Bye" are < 5 chars, should be skipped
+        assert "Hi" not in hf
+        assert "Bye" not in hf
+
+    def test_strips_detected_lines(self):
+        text = "Running Header Here\nActual paragraph content\nRunning Header Here"
+        result = _strip_headers_footers(text, {"Running Header Here"})
+        assert "Running Header Here" not in result
+        assert "Actual paragraph content" in result
+
+    def test_strip_empty_set_passthrough(self):
+        text = "Some text\nMore text"
+        result = _strip_headers_footers(text, set())
+        assert result == text
+
+    def test_alternating_headers(self):
+        """Detect alternating odd/even page headers."""
+        pages = self._make_pages([
+            "OPEN ACCESS Perspective\nPage 1 content\nFooter",
+            "Perspective OPEN ACCESS\nPage 2 content\nFooter",
+            "OPEN ACCESS Perspective\nPage 3 content\nFooter",
+            "Perspective OPEN ACCESS\nPage 4 content\nFooter",
+        ])
+        hf = _detect_headers_footers(pages, threshold=2)
+        assert "OPEN ACCESS Perspective" in hf
+        assert "Perspective OPEN ACCESS" in hf
+
+    def test_footer_detected(self):
+        """Lines at the end of pages are also checked."""
+        pages = self._make_pages([
+            "Content\nCopyright 2026 Elsevier",
+            "Content\nCopyright 2026 Elsevier",
+            "Content\nCopyright 2026 Elsevier",
+        ])
+        hf = _detect_headers_footers(pages, threshold=3)
+        assert "Copyright 2026 Elsevier" in hf
