@@ -247,7 +247,7 @@ python3 -m src.viz.viz_runner \
 ## DS Wiki Scale (live — as of 2026-04-04)
 
 - **278 entries**: 213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism
-- **811 links**: 35 tier-1, 521 tier-1.5, 86 tier-2, 169 original(null-tier)
+- **815 links**: 35 tier-1, 525 tier-1.5, 86 tier-2, 169 original(null-tier)
 - **1,913 ChromaDB chunks** | **1,126 property rows**
 - **0 isolated reference_law entries** (Q2 only remaining isolated entry)
 - Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP (full pillar set)
