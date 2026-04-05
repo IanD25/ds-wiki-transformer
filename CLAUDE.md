@@ -28,7 +28,7 @@ bash setup.sh
 
 # 3. Verify
 source .venv/bin/activate
-python3 -m pytest tests/ -v --tb=short   # 407 tests should pass
+python3 -m pytest tests/ -v --tb=short   # 571 tests should pass
 
 # 4. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
@@ -137,7 +137,7 @@ PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 |-------|--------|-------|
 | Phase 0: Core pipeline | ✅ Complete | sync, embed, topology, MCP |
 | Phase 1: Diagnostic tools | ✅ Complete | 268 tests passing |
-| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli + IEEE Power Grid; 407 tests passing |
+| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli + IEEE Power Grid; 571 tests passing |
 | Fisher Suite A–G | ✅ Complete | Full 6-step PFD pipeline; bridge graph; two-tier report; 3 MCP tools |
 | Tier-1 Visualization | ✅ Complete | D3.js network graph, coherence/regime charts, HTML report per dataset |
 | Tier-2 Visualization | ✅ Complete | Bridge histogram, bipartite network, domain heatmap, HTML report |
@@ -211,7 +211,7 @@ python scripts/run_fisher_suite.py --mode node \
 python3 -m src.sync
 
 # Run all tests
-python3 -m pytest tests/ -v   # 407 tests
+python3 -m pytest tests/ -v   # 571 tests
 
 # Run Pass 1.5 + Pass 2b on a bundle
 python3 scripts/run_entity_catalog_pass.py \
@@ -244,13 +244,13 @@ python3 -m src.viz.viz_runner \
 
 ---
 
-## DS Wiki Scale (live — as of 2026-03-11)
+## DS Wiki Scale (live — as of 2026-04-04)
 
-- **209 entries**: 149 reference_law, 16 method, 15 law, 8 instantiation, 7 open_question, 5 constraint, 3 axiom, 3 parameter, 2 theorem, 1 mechanism
-- **573 links**: 29 tier-1, 304 tier-1.5, 73 tier-2, 167 original(null-tier)
-- **1,486 ChromaDB chunks** | **786 property rows**
-- **0 isolated reference_law entries** (all 12 formerly isolated entries linked)
-- Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS (Option E)
+- **278 entries**: 213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism
+- **811 links**: 35 tier-1, 521 tier-1.5, 86 tier-2, 169 original(null-tier)
+- **1,913 ChromaDB chunks** | **1,126 property rows**
+- **0 isolated reference_law entries** (Q2 only remaining isolated entry)
+- Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP (full pillar set)
 
 ---
 
@@ -266,11 +266,12 @@ python3 -m src.viz.viz_runner \
 
 ---
 
-## DS Wiki Conjectures Summary (17 total — last assessed 2026-03-14)
+## DS Wiki Conjectures Summary (23 total — last assessed 2026-04-04)
 
 Strongest (most supported): P4, P15 (information-thermodynamics chain complete via B5↔INFO1↔INFO5)
 Strengthened: P2, P8, P11, P12, P13 (Option E CS/BIO entries added support)
-New: P17 (d_eff = k = −3w_phys, cosmological coupling; CCBH cluster 6/6 recall, Farrah k = 3.11 ± 1.19)
+Updated: P17 (cosmological coupling — 2024-2025 research tensions added: GW 5σ rejection, Gaia BH, Cadoni k=1; DESI DR2 support)
+New: P23 (Horizon formation as Bekenstein-saturation phase transition; State 1, inherits contested GT11)
 Actionable gap: P7 — INFO4 (DPI) not linked to Ax2; one link closes the chain
 
 ---
@@ -332,7 +333,7 @@ Future upgrade priorities:
 │   ├── run_entity_catalog_pass.py
 │   ├── run_spt.py             ← [PROTOTYPE/PARKED] SPT CLI
 │   └── migrations/            ← One-time DB insert scripts
-├── tests/                 ← pytest suite (407 tests)
+├── tests/                 ← pytest suite (571 tests)
 ├── data/
 │   ├── ds_wiki.db         ← Reference knowledge graph (READ ONLY)
 │   ├── chroma_db/         ← ChromaDB vector index (bge-large 1024-dim)

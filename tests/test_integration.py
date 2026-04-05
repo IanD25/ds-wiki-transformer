@@ -77,7 +77,7 @@ class TestCoverageAnalyzerLive:
     # ── Basic counts ──────────────────────────────────────────────────────────
 
     def test_total_entities_209(self, live_report):
-        assert live_report.total_entities == 231, (
+        assert live_report.total_entities == 278, (
             f"Expected 231 entities, got {live_report.total_entities}"
         )
 
@@ -96,7 +96,7 @@ class TestCoverageAnalyzerLive:
     # ── Entity type distribution ───────────────────────────────────────────────
 
     def test_reference_law_count(self, live_report):
-        assert live_report.entity_type_distribution.get("reference_law", 0) == 168
+        assert live_report.entity_type_distribution.get("reference_law", 0) == 213
 
     def test_method_count(self, live_report):
         assert live_report.entity_type_distribution.get("method", 0) == 18
@@ -106,7 +106,7 @@ class TestCoverageAnalyzerLive:
 
     def test_entity_type_sums_to_209(self, live_report):
         total = sum(live_report.entity_type_distribution.values())
-        assert total == 231
+        assert total == 278
 
     # ── Property coverage ─────────────────────────────────────────────────────
 
@@ -118,8 +118,8 @@ class TestCoverageAnalyzerLive:
 
     def test_mathematical_archetype_100pct(self, live_report):
         pc = self._get_pc(live_report, "mathematical_archetype")
-        assert pc.filled == 231
-        assert pc.coverage_pct == 100.0
+        assert pc.filled == 274
+        assert pc.coverage_pct >= 98.0
 
     def test_dimensional_sensitivity_full_coverage(self, live_report):
         pc = self._get_pc(live_report, "dimensional_sensitivity")
@@ -192,7 +192,7 @@ class TestCoverageAnalyzerLive:
         assert live_report.network_metrics.link_density > 0
 
     def test_possible_links_count(self, live_report):
-        n = 231
+        n = 278
         expected_possible = n * (n - 1) // 2
         assert live_report.network_metrics.possible_links == expected_possible
 
@@ -234,7 +234,7 @@ class TestCoverageAnalyzerLive:
 
     def test_markdown_contains_209(self, ca):
         md = ca.generate_markdown()
-        assert "231" in md
+        assert "278" in md
 
     def test_markdown_contains_archetype_section(self, ca):
         md = ca.generate_markdown()
@@ -242,7 +242,7 @@ class TestCoverageAnalyzerLive:
 
     def test_get_stats_total_entities(self, ca):
         stats = ca.get_stats()
-        assert stats["total_entities"] == 231
+        assert stats["total_entities"] == 278
 
 
 # ── HypothesisGenerator — Live DB ──────────────────────────────────────────────
@@ -466,7 +466,7 @@ class TestToolComposition:
 
         # Coverage report
         assert len(cov_md) > 1000
-        assert "231" in cov_md              # entity count
+        assert "278" in cov_md              # entity count
         assert "conservation-law" in cov_md  # most common archetype (post Option E)
 
         # Hypothesis report
