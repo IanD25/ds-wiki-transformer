@@ -96,7 +96,11 @@ A system undergoing a first-order phase transition does **not** cross a CCA mani
 
 **Equivalently:** CCA-crossing is the information-geometric signature of continuous criticality. First-order transitions bypass the CCA manifold.
 
-**Status:** Partially confirmed (2D Ising, continuous, L=16). First-order test (Potts q=10) pending.
+**Status: FALSIFIED** (2026-04-05). Potts q=10 (first-order) shows the same CCA signature (d_eff=3, η=0.43, PR=3.67) as Potts q=2 (continuous) with abs weights. The FIM cannot distinguish first-order from continuous transitions using the (d_eff > 1, η > 0.35) criterion alone.
+
+**However:** With neglog weights, the first-order transition shows a **sharp discontinuous jump** in η across T_c (0.167 → 0.341 in ΔT/T_c = 0.02), while the continuous transition shows gradual change. This suggests a revised conjecture based on the *rate of change* of FIM diagnostics, not their absolute values. See Section 4.5.
+
+**Revised candidate (CCA-1b):** Continuous transitions approach CCA isotropy gradually (η changes smoothly); first-order transitions jump to/from isotropy discontinuously (η changes abruptly). The distinction is in the derivative dη/dT, not in η itself.
 
 ---
 
@@ -227,6 +231,81 @@ The abs mode preserves the physical correlation structure most faithfully and gi
 
 ---
 
+## 4.5 Empirical Evidence: Phase C — Potts q=10 First-Order Test (CCA-1 Falsification)
+
+### Setup
+
+Potts model H = -J Σ δ(s_i, s_j) on 16×16 torus, q=10 (first-order) vs q=2 (continuous, = Ising). T_c(q) = 1/ln(1 + √q): T_c(10) = 0.7012, T_c(2) = 1.1346. MC: 10000 equil + 20000 measurement sweeps. Both abs and neglog weight modes.
+
+### Results (abs weights)
+
+**Table 3: Potts q=10 (first-order) near transition**
+
+| T/T_c | η | d_eff | PR | \|corr\| |
+|-------|---|-------|-----|---------|
+| 0.950 | 0.429 | 3.0 | 3.67 | 0.919 |
+| 0.990 | 0.418 | 3.0 | 3.66 | 0.868 |
+| **1.000** | **0.425** | **3.0** | **3.66** | **0.848** |
+| 1.010 | 0.516 | 3.0 | 3.45 | 0.655 |
+| 1.050 | 0.310 | 2.0 | 2.93 | 0.387 |
+
+**Table 4: Potts q=2 (continuous) near transition**
+
+| T/T_c | η | d_eff | PR | \|corr\| |
+|-------|---|-------|-----|---------|
+| 0.950 | 0.419 | 3.0 | 3.67 | 0.900 |
+| 0.990 | 0.417 | 3.0 | 3.66 | 0.864 |
+| **1.000** | **0.419** | **3.0** | **3.66** | **0.864** |
+| 1.010 | 0.421 | 3.0 | 3.66 | 0.855 |
+| 1.050 | 0.442 | 3.0 | 3.64 | 0.818 |
+
+### CCA-1 Falsification
+
+With abs weights, both transitions show **identical** CCA signatures at T_c: d_eff=3, η≈0.42, PR≈3.66. The (d_eff > 1, η > 0.35) criterion cannot distinguish them.
+
+**CCA-1 as stated is falsified.** First-order transitions are NOT excluded by the FIM isotropy diagnostic.
+
+### What the Neglog Weights Reveal
+
+With neglog weights, a qualitative difference emerges — not in the absolute values, but in the **rate of change**:
+
+**Potts q=10 (first-order), neglog:**
+| T/T_c | η | Δη from previous |
+|-------|---|-------------------|
+| 0.990 | 0.167 | — |
+| 1.000 | 0.187 | +0.020 |
+| 1.010 | 0.341 | **+0.154** |
+
+**Potts q=2 (continuous), neglog:**
+| T/T_c | η | Δη from previous |
+|-------|---|-------------------|
+| 0.990 | 0.168 | — |
+| 1.000 | 0.167 | -0.001 |
+| 1.010 | 0.167 | +0.000 |
+
+The q=10 first-order transition produces a **sharp jump** in η (Δη = 0.154 across 2% of T_c). The q=2 continuous transition produces **no detectable change** (Δη < 0.001 across 2% of T_c).
+
+The correlation also shows a sharp jump for q=10: |corr| drops from 0.868 to 0.655 across T_c (Δ = 0.213), while q=2 drops from 0.864 to 0.855 (Δ = 0.009). This is the latent heat signature: first-order transitions have discontinuous order parameters.
+
+### Revised Candidate: CCA-1b
+
+**CCA-1b (revised conjecture):** The FIM detects *both* continuous and first-order transitions, but the *mode of detection* differs:
+
+- **Continuous transitions:** η changes gradually through the critical region. The RADIAL→ISOTROPIC transition is smooth. The correlation length diverges continuously.
+- **First-order transitions:** η jumps discontinuously at T_c. The RADIAL→ISOTROPIC transition is abrupt. The order parameter (correlation) drops sharply.
+
+The CCA distinction is not "does the isotropy signature appear?" but **"does it appear continuously or discontinuously?"** Continuous approach to isotropy = CCA crossing. Discontinuous jump = phase coexistence bypass.
+
+**Quantitative diagnostic (candidate):**
+
+$$\text{CCA-crossing} \iff \left|\frac{d\eta}{d(T/T_c)}\right|_{T_c} < \Delta\eta_{\text{threshold}}$$
+
+where Δη_threshold distinguishes smooth from discontinuous. From the data: q=2 gives |dη/d(T/T_c)| ≈ 0.05; q=10 gives |dη/d(T/T_c)| ≈ 7.7. Two orders of magnitude difference.
+
+**Status of CCA-1b:** Proposed, supported by one comparison (q=2 vs q=10), not yet tested on other transitions (q=3, q=4 at the continuous/first-order boundary, or 3D Ising).
+
+---
+
 ## 5. Formal Consequences
 
 ### Theorem-like Statement (Pending Proof)
@@ -335,13 +414,16 @@ Does non-locality of C guarantee that A is critical (scale-invariant)? The heuri
 
 ## 8. Falsifiability Summary
 
-| Prediction | Test | Would falsify if |
-|------------|------|-----------------|
-| Continuous transitions are CCA crossings | 2D Ising FIM sweep | d_eff stays 1 through T_c (**NOT falsified** — d_eff = 2–3 in transition region) |
-| First-order transitions are NOT CCA crossings | Potts q=10 FIM sweep | Potts shows (d_eff > 1, η > 0.35) at transition |
-| d_eff = d_lattice + 1 | Test on 3D Ising, Sierpinski | d_eff ≠ d + 1 for regular lattices |
-| FIM peak sharpens with L | L=32, 64 Ising sweep | Peak does not move toward T_c with increasing L |
-| Abs weight is scale-preserving | Compare weight modes at criticality | Neglog or inv gives systematically better results |
+| Prediction | Test | Result |
+|------------|------|--------|
+| Continuous transitions show CCA signature | 2D Ising FIM sweep | **CONFIRMED** — d_eff = 2–3, η increases through transition |
+| First-order transitions do NOT show CCA signature (CCA-1) | Potts q=10 FIM sweep | **FALSIFIED** — q=10 shows same (d_eff=3, η=0.42) as q=2 with abs weights |
+| CCA-1b: continuous vs first-order differ in dη/dT | Potts neglog comparison | **SUPPORTED** — q=10 shows Δη=0.154 jump; q=2 shows Δη<0.001 |
+| d_eff = d_lattice + 1 | Topology sweep | **CONFIRMED** for 2D (d_eff=3) and 3D (d_eff=4) tori |
+| FIM peak sharpens with L | L=32, 64 Ising sweep | **UNTESTED** |
+| Abs weight is scale-preserving | Compare weight modes | **COMPLICATED** — abs gives strongest signal but masks first-order/continuous distinction |
+
+**Key lesson:** The CCA framework was tested, falsified in its original form (CCA-1), and a revised version (CCA-1b) was proposed in the same session. The framework survived because the falsification was informative — it pointed to the *rate of change* rather than the absolute value as the discriminating feature.
 
 ---
 
