@@ -684,15 +684,12 @@ class TestIntegration:
         assert len(mech) == 1
         assert mech[0].observed == 1
 
-    def test_isolated_entries_detected(self, report):
-        """All formerly isolated reference_law entries have been linked; only Q2 remains."""
+    def test_no_isolated_entries(self, report):
+        """All entries now have at least one link — zero isolated entries.
+        Q2 was the last isolated entry, linked to H4 in 2026-04-05 session."""
         isolated = [g for g in report.link_gaps if g.gap_type == "isolated"]
-        assert len(isolated) >= 1   # Q2 is the last remaining isolated entry
-
-    def test_known_isolated_entry_present(self, report):
-        """Q2 is the last known isolated entry (all 12 formerly isolated entries now linked)."""
-        isolated_ids = {g.entry_id for g in report.link_gaps if g.gap_type == "isolated"}
-        assert "Q2" in isolated_ids
+        assert len(isolated) == 0, \
+            f"Expected 0 isolated entries, found: {[g.entry_id for g in isolated]}"
 
     def test_archetype_coverage_complete(self, report):
         """All 209 entries have mathematical_archetype — no property gap for archetype."""
