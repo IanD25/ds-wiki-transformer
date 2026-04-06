@@ -107,6 +107,8 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 | `data/ds_wiki.db` | The knowledge graph (READ ONLY — never schema-alter) |
 | `MASTER_SUMMARY.md` | Full technical re-entry document (read for deep context) |
 | `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | v1.1 foundational plan (vision + architecture + governance) |
+| `docs/CCA_GRAVITY_FINDINGS.md` | CCA-gravity connection: Fisher chain, GT10 as CCA, literature map |
+| `docs/SESSION_HANDOVER_2026-04-05.md` | Session handover: 5 entries, P23, 31 links, Fisher-gravity discovery |
 | `Outside Ref/` | External analysis documents (stress tests, references) |
 | `docs/archive/` | Completed specs and planning docs (read-only historical reference) |
 
@@ -247,7 +249,7 @@ python3 -m src.viz.viz_runner \
 ## DS Wiki Scale (live — as of 2026-04-04)
 
 - **278 entries**: 213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism
-- **818 links**: 35 tier-1, 528 tier-1.5, 86 tier-2, 169 original(null-tier)
+- **819 links**: 35 tier-1, 528 tier-1.5, 87 tier-2, 169 original(null-tier)
 - **1,913 ChromaDB chunks** | **1,126 property rows**
 - **0 isolated reference_law entries** (Q2 only remaining isolated entry)
 - Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP (full pillar set)
