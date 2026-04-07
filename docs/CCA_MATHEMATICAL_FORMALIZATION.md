@@ -306,6 +306,96 @@ where Δη_threshold distinguishes smooth from discontinuous. From the data: q=2
 
 ---
 
+## 4.6 Empirical Evidence: Phase D — CCA-1b Finite-Size Scaling Test
+
+### Setup
+
+Numba JIT-compiled Potts MC at L = 16, 32, 48 with q ∈ {2, 10}, neglog weights, 21-point fine temperature grid spanning T/T_c ∈ [0.92, 1.12]. MC effort scaled with L² (L=16: 3000 equil + 8000 measure; L=48: 27000 + 72000). Total runtime: ~5 minutes with JIT vs estimated 6+ hours pure Python.
+
+### Results
+
+**Table 5: S_max = max|dη/d(T/T_c)| across lattice sizes**
+
+| L | q=2 (continuous) | q=10 (first-order) | Ratio |
+|---|------------------|--------------------|----|
+| 16 | 0.880 | 15.66 | **17.8×** |
+| 32 | 0.805 | 20.45 | **25.4×** |
+| 48 | 0.884 | 17.31 | **19.6×** |
+
+**Power-law fits:**
+- q=2 (continuous): S_max ~ L^(-0.010) — essentially constant
+- q=10 (first-order): S_max ~ L^(0.123) — weak growth
+
+### Finding 7: The Expected Scaling Did NOT Materialize
+
+The handback document predicted S_max(L) ~ L^d for first-order transitions. **This did not occur.** The first-order S_max grows weakly (L^0.12) and the continuous S_max is essentially flat (L^-0.01). Both exponents are far below the expected L^d ~ L^2.
+
+**Why:** The maximum derivative measurable on a discrete temperature grid is bounded by Δη_max / ΔT_grid, regardless of the underlying physics. The first-order transition saturates this resolution bound at L=16 already — the η jump from ~0.11 to ~0.43 happens within one temperature step. There is no "room" for the slope to grow with L because it is grid-resolution-limited, not physics-limited.
+
+To see L^d scaling, one would need either (a) much finer temperature grids near T_c, or (b) interpolation of η(T) through the discontinuity.
+
+### Finding 8: The Absolute Separation Is Real and Robust
+
+Despite the failure of the scaling test, the **absolute** separation between continuous and first-order is striking:
+
+- q=2 S_max ≈ 0.85 (consistent across L=16,32,48)
+- q=10 S_max ≈ 18 (consistent across L=16,32,48)
+
+A 20× separation, stable across three independent lattice sizes with different MC parameters, is not noise. CCA-1b's core observation is real.
+
+### Finding 9: The Real Discriminator Is Curve Shape
+
+Looking at η(T) curves directly reveals categorically different shapes:
+
+**q=2 (continuous), L=48:** η goes 0.057 → 0.062 → 0.066 → 0.072 → 0.078 → 0.083 → 0.090 → 0.100 → 0.107 → 0.117 → 0.125 → ... → 0.155 (smooth monotonic, all ranges within ±0.01 step-to-step)
+
+**q=10 (first-order), L=48:** η goes 0.052 → 0.054 → 0.055 → 0.060 → 0.061 → 0.065 → 0.075 → 0.085 → 0.111 → **0.431** → 0.426 → 0.417 → 0.421 → 0.434 → ... (flat-then-jump-then-plateau, single 0.32-magnitude jump)
+
+The qualitative shapes are different:
+- Continuous: smooth sigmoid
+- First-order: step function with plateaus
+
+### Reformulation: CCA-1c
+
+**CCA-1b (revised → CCA-1c):** Continuous and first-order transitions can be discriminated by the shape of η(T), specifically:
+
+1. **Magnitude of S_max** (absolute, not scaling): Continuous gives S_max ~ O(1); first-order gives S_max ~ O(10–100). Robust factor of >10× separation.
+
+2. **η(T) curve shape:** Continuous shows monotonic smooth increase. First-order shows flat-then-jump-then-plateau structure.
+
+3. **Pre/post jump plateau structure** (first-order signature): For first-order, there exist temperature windows on each side of T_c where dη/dT is small AND η values are well-separated. For continuous, no such plateau structure exists — η changes everywhere.
+
+**The L^d scaling prediction from CCA-1b is dropped.** It does not survive the experiment because dη/dT is grid-limited, not physics-limited.
+
+### What Survived, What Died
+
+**SURVIVED:**
+- CCA-1b core observation: dη/dT separates orders by ~20× in absolute magnitude
+- Curve-shape discrimination: continuous = smooth, first-order = step-with-plateaus
+- The empirical separation is robust across L (3 lattice sizes, consistent results)
+- CCA as a descriptive class with the (d_eff > 1, η > η₀) joint diagnostic (necessary but not sufficient for criticality)
+
+**DIED:**
+- CCA-1 (absolute isotropy as continuous-only signature) — falsified Phase C
+- CCA-1b's L^d scaling claim — not observed in Phase D
+- The hope that CCA gives a single quantitative invariant that grows with L
+
+### Implications for the Framework
+
+CCA has now been tested twice with both attempts revealing real structure:
+
+1. The absolute FIM diagnostic (d_eff, η) does NOT discriminate transition orders (CCA-1 falsified)
+2. The dη/dT *magnitude* DOES discriminate (CCA-1b core observation, factor ~20 separation)
+3. The dη/dT *scaling with L* does NOT match expectations (CCA-1b scaling claim falsified — grid-limited)
+4. The η(T) *shape* qualitatively differs (smooth vs step-with-plateaus — visually obvious in the data)
+
+The framework is wounded but yielding real information at each step. The path forward is curve-shape analysis (CCA-1c), not scaling-exponent analysis (CCA-1b).
+
+Data: `data/reports/ising_fim_test/cca1b_scaling/cca1b_scaling_fast.json`
+Plot: `data/reports/ising_fim_test/cca1b_scaling/cca1b_scaling_full.png`
+
+---
+
 ## 5. Formal Consequences
 
 ### Theorem-like Statement (Pending Proof)
@@ -418,10 +508,11 @@ Does non-locality of C guarantee that A is critical (scale-invariant)? The heuri
 |------------|------|--------|
 | Continuous transitions show CCA signature | 2D Ising FIM sweep | **CONFIRMED** — d_eff = 2–3, η increases through transition |
 | First-order transitions do NOT show CCA signature (CCA-1) | Potts q=10 FIM sweep | **FALSIFIED** — q=10 shows same (d_eff=3, η=0.42) as q=2 with abs weights |
-| CCA-1b: continuous vs first-order differ in dη/dT | Potts neglog comparison | **SUPPORTED** — q=10 shows Δη=0.154 jump; q=2 shows Δη<0.001 |
+| CCA-1b: continuous vs first-order differ in dη/dT magnitude | Potts neglog comparison | **CONFIRMED** — 20× separation, robust across L=16,32,48 |
+| CCA-1b: S_max scales as L^d for first-order | Finite-size scaling | **FALSIFIED** — first-order S_max ~ L^0.12, not L^2. Grid-resolution-limited |
+| CCA-1c: η(T) curve shape differs (smooth vs step-with-plateaus) | Phase D fine grid | **CONFIRMED** — q=2 monotonic smooth; q=10 flat-jump-plateau |
 | d_eff = d_lattice + 1 | Topology sweep | **CONFIRMED** for 2D (d_eff=3) and 3D (d_eff=4) tori |
-| FIM peak sharpens with L | L=32, 64 Ising sweep | **UNTESTED** |
-| Abs weight is scale-preserving | Compare weight modes | **COMPLICATED** — abs gives strongest signal but masks first-order/continuous distinction |
+| Continuous Ising L-scaling sharpens peak toward T_c | L=16,32,48 q=2 sweep | **UNCLEAR** — q=2 S_max nearly flat (~0.85) across L |
 
 **Key lesson:** The CCA framework was tested, falsified in its original form (CCA-1), and a revised version (CCA-1b) was proposed in the same session. The framework survived because the falsification was informative — it pointed to the *rate of change* rather than the absolute value as the discriminating feature.
 
