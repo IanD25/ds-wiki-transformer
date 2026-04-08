@@ -1,3 +1,7 @@
+> **⚠️ M0 AUDIT (2026-04-08):** The Fisher-gravity chain described in this document (M6→IT05→IT03→GT10→GT01) was audited and **downgraded from "structural coherence result" to "conceptual analogy."** Jacobson 2016 derives linearized Einstein equations using **von Neumann entanglement entropy on a quantum subalgebra** via the first law of entanglement — **not** classical Fisher information or classical KL divergence on a parameter manifold. The chain conflates three distinct mathematical objects (classical Fisher metric, classical KL divergence, quantum entanglement entropy) that share the word "relative entropy." It is **stacking vocabulary, not composing theorems**. Additionally: Jacobson 2016 is linearized only; its generality beyond CFT/holographic contexts is an assumption, not a theorem. The claim "GT10 as a CCA instance" is a post-hoc fit to a 5-feature descriptive checklist and is not predictive support. See `docs/M0_MILESTONE_COMPILATION.md` for full calibration. Do not cite this document as presenting an info-theoretic derivation of gravity.
+
+---
+
 # CCA-Gravity Connection: Research Findings
 
 > **Status:** Working document

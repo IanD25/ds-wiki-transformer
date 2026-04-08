@@ -1,3 +1,9 @@
+> **⚠️ ARCHIVED 2026-04-08.** This document describes the "PFD as product" framing which has been retired.
+> The project is now a **personal research platform**. See `docs/RESEARCH_PLATFORM_CHARTER.md` for the active mission and epistemic contract.
+> Kept here for historical reference only. Do not treat any claims in this document as current state.
+
+---
+
 # Principia Formal Diagnostics (PFD) Project
 ## Foundational Plan & Scope Kickoff
 

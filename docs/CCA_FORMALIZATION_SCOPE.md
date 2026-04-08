@@ -1,3 +1,7 @@
+> **⚠️ M0 AUDIT (2026-04-08, revised):** See `docs/M0_MILESTONE_COMPILATION.md` Addendum. The initial M0 claim that CCA restates JJK 2004 / Prokopenko-Lizier 2011 was corrected: the actual prior art is narrower (Machta-Chachra-Transtrum-Sethna, *Science* 2013, arXiv:1303.6738, which computes FIM eigenvalue spectra on Ising at criticality but does not use per-site-field parameterization or define d_eff/η observables). CCA may retain narrow methodological novelty pending owner confirmation via primary-source reading. This scoping doc is superseded by the revised M0 calibration but kept for historical reference.
+
+---
+
 # CCA Formalization: Scoping Document
 
 > **Status:** Early scoping — identifies what formalization needs, candidate structures, testable predictions, and open problems.

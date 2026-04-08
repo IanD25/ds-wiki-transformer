@@ -1,6 +1,12 @@
-# Principia Formal Diagnostics (PFD) — User Guide
+> **⚠️ LEGACY 2026-04-08.** This guide describes the retired "PFD as diagnostic product" framing.
+> The project is now a personal research platform — see `docs/RESEARCH_PLATFORM_CHARTER.md`.
+> The tools described here still work; treat this as a reference for the tool CLIs, not as mission guidance.
 
-**Last updated:** 2026-03-11 | **Status:** Live (Phases 0–2.3 stable, Phase 3+ planned)
+---
+
+# Principia Formal Diagnostics (PFD) — User Guide (legacy)
+
+**Last updated:** 2026-03-11 | **Status:** Legacy — product framing retired 2026-04-08
 
 ---
 

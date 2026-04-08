@@ -1,22 +1,87 @@
-# Principia Formal Diagnostics (PFD) — Claude Code Context
+# DS Wiki Research Platform — Claude Code Context
 
 > **This file is auto-loaded by Claude Code on every session start.**
-> Full project narrative: `MASTER_SUMMARY.md` | Foundational plan: `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | Pipeline spec: `docs/FISHER_PIPELINE_REDESIGN.md` | Phase 3 SCF design: `docs/SCF_PHASE3_DESIGN.md`
+> **Read the charter first: `docs/RESEARCH_PLATFORM_CHARTER.md`** — it defines mission, epistemic rules, and working modes.
+> Session history: `MASTER_SUMMARY.md` (legacy technical narrative, partially superseded) and latest `docs/SESSION_HANDOVER_*.md`.
 
 ---
 
-## What This Project Is
+## What This Project Is (2026-04-08 Reset)
 
-**PFD** is a research validation system that checks scientific papers and reports for logical consistency against a formalized knowledge graph of scientific and logical foundations. It is a **diagnostic tool, not a judge** — every output shows full reasoning, no black-box verdicts.
+A **personal research platform** — a structured, grounded lab notebook for Ian Darling's physics and cross-domain research. It is a guardrail against speculation, a cross-domain mapper, a hypothesis generator, and a continuous research journal.
 
-- Prior name: DS_Wiki / DS Wiki Transformation
+It is **not** a product, not a paper validator, not seeking publication. See `docs/RESEARCH_PLATFORM_CHARTER.md` for the full mission statement and epistemic contract.
+
+**Prior framing (archived):** The project was previously scoped as "Principia Formal Diagnostics (PFD)" — a paper validation tool. That framing is no longer active. The product-arc documents (`PFD_PROJECT_FOUNDATIONAL_PLAN.md`, `SCF_PHASE3_DESIGN.md`, Phase 3/4/5 plans) are historical reference only.
+
 - GitHub: `https://github.com/IanD25/ds-wiki-transformer`
 - Python: 3.13, Apple M4 dev machine | also: Windows ShadowPC with RTX 2000 GPU
-- Owner: Ian Darling
+- Owner: Ian Darling (no academic affiliation, not chasing publication)
 
 ---
 
-## Quick Start (Fresh Machine / ShadowPC)
+## The Epistemic Contract (Critical — Read Charter For Full Version)
+
+Claude's standing instructions when working on this platform:
+
+1. **Novelty skepticism is the default.** When something looks new, literature-search for prior art before treating it as a discovery. Report searches before celebrating.
+2. **Triviality check.** Before promoting a finding, ask: *"Is this a 5-minute derivation from a known result?"* If yes, it's a re-derivation, not a discovery.
+3. **Framing check.** Ask: *"Is there a standard framing where this becomes obvious or vacuous?"*
+4. **Falsification first.** When the owner proposes a conjecture, try to break it before trying to support it.
+5. **Plain-language statement.** Every conjecture must be statable in one sentence a physicist without wiki context could understand.
+6. **Tripwire phrases.** Stop and audit if the session produces: "unification," "breakthrough," "paradigm," "fundamental insight," "solves [big problem]," "novel [X]" without a completed literature search.
+7. **Confidence calibration.** Every claim tagged **Established** / **Supported** / **Speculative**. No silent promotion.
+8. **AI-rabbit-hole tripwire.** Claude's job is to push back, not cheerlead. Stacking conjectures without testing them is drift. Feature-fitting to post-hoc definitions is drift. Flag it.
+
+**The worst failure mode:** accumulating speculative claims that feel grounded because they're inside a well-organized wiki. The wiki's structure is not evidence for the wiki's content.
+
+---
+
+## Current Status (2026-04-08, Post-M0 Audit)
+
+**Mission state:** Reset complete. **M0 audit complete.** The current honest snapshot of belief is `docs/M0_MILESTONE_COMPILATION.md` — read it before doing any new conjecture work. M0 downgrades a substantial fraction of previously-"supported" claims to Speculative based on a skeptical literature audit. Headline findings:
+
+- **DFIG is a re-parameterization of the sloppy-models program** (Sethna group, 2006–present). Not novel. P5 is Supported as application, not Established as discovery.
+- **CCA's general setting is Machta-Chachra-Transtrum-Sethna Science 2013** (arXiv:1303.6738) — confirmed via primary-source reading. FIM eigenvalue spectrum on 2D Ising at criticality with stiff/sloppy hierarchy. Uses global couplings, not per-site fields. Does not sweep temperature. No Potts, no first-order discrimination. The CCA-specific construction (per-site fields + d_eff/η observables + temperature sweep + first-order-vs-continuous discriminator via dη/dT magnitude and curve shape) has **no confirmed prior art across three targeted literature searches** — Sethna-group follow-ups (including Raju, Quinn et al. 2023), inverse-Ising/maxent community (Tkačik-Mora-Bialek 2015 closest, uses heat capacity not FIM spectrum; Nguyen-Zecchina-Berg 2017; arXiv:2507.02574 2025 verified not FIM spectroscopy), and the closest thematic adjacency (Brown-Bossomaier-Barnett 2022 *Sci. Rep.*, uses transfer entropy not FIM spectrum). **Quantum Fisher information literature** (scalar QFI vs global parameter across quantum critical points) is a genre-adjacent literature that must be cited. **Status: moderate-confidence no prior art for the specific construction.** Residual risks: Tkačik 2015 supplementary materials unchecked; non-English literature under-indexed; direct expert correspondence not attempted. CCA-1 and CCA-1b L^d scaling are FALSIFIED; CCA-1b magnitude and CCA-1c shape are qualitatively supported on a single test only (q=2 vs q=10 Potts), and charter rule prohibits promoting above Speculative without a second independent test.
+- **Fisher-gravity chain is downgraded from "structural coherence result" to conceptual analogy.** It stacks vocabulary ("relative entropy") across three distinct mathematical objects; Jacobson 2016 uses quantum entanglement entropy, not classical Fisher.
+- **P17 is Speculative, high risk.** Rests on contested Farrah-Croker empirics; critical citations (Amendola 2024, Cadoni 2023) are pending owner verification.
+
+Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 2015, Quinn et al. 2022, Janke-Johnston-Kenna 2004, Prokopenko-Lizier 2011 (prior-art reading list in M0).
+
+**Wiki scale (pre-audit, may shift after M0):**
+- **278 entries** (213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism)
+- **819 links** (35 tier-1, 528 tier-1.5, 87 tier-2, 169 original null-tier)
+- **1,913 ChromaDB chunks**, **1,126 property rows**
+- **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
+- **587 tests passing**
+- Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP
+
+**Research threads currently live:**
+- **CCA (Constrained Critical Attractor) framework** — wounded from 2026-04-07 falsification cascade. CCA-1 falsified, CCA-1b scaling falsified, CCA-1b magnitude and CCA-1c curve-shape qualitatively confirmed. **Needs literature audit before continuing.** Likely overlap with sloppy-models (Sethna) and Amari information geometry.
+- **Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01) — structural observation derived in-wiki. **Needs audit:** is this a genuine structural insight or stacked analogies? Depends on Jacobson 2016 generality claim which is itself contested.
+- **P17 cosmological coupling** — updated with 2024-2025 tensions (GW 5σ rejection of k=3, Gaia BH, Cadoni k=1, JWST AGN). Contested, honestly documented.
+
+**Pending M0 audit actions** (see charter § "Immediate Next Steps"):
+1. Conjecture audit P1–P23 against confidence calibration
+2. CCA literature check (sloppy models, Amari, Sethna)
+3. Fisher-gravity chain audit
+4. Archive product-arc documents
+5. Write M0 milestone compilation
+
+---
+
+## Working Modes
+
+Be explicit about which mode you're in at the start of any work session:
+
+- **Mode A — Curation / Grounding.** Adding established science, cleaning links, running diagnostics on the wiki itself, literature searches to ground entries. Success = wiki better reflects cited science.
+- **Mode B — Exploratory Research.** Testing owner's conjectures, running experiments, falsification attempts. Success = conjectures move through lifecycle with honest documentation.
+
+Mode B depends on Mode A. Don't run experiments on ungrounded foundations.
+
+---
+
+## Quick Start (Fresh Machine)
 
 ```bash
 # 1. Clone
@@ -28,58 +93,44 @@ bash setup.sh
 
 # 3. Verify
 source .venv/bin/activate
-python3 -m pytest tests/ -v --tb=short   # 571 tests should pass
+python3 -m pytest tests/ -v --tb=short   # 587 tests should pass
 
 # 4. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
 ```
 
 **All data committed to repo (no download or rebuild needed):**
-- `data/ds_wiki.db` — DS Wiki source of truth (1.5MB, 209 entries, 573 links)
-- `data/rrp/` — RRP bundles (zoo_classes, ecoli_core, periodic_table, opera, ccbh)
+- `data/ds_wiki.db` — the knowledge graph (READ ONLY)
+- `data/rrp/` — external dataset bundles (zoo_classes, ecoli_core, periodic_table, opera, ccbh, ieee_power_grid)
 - `data/chroma_db/` — ChromaDB semantic index (bge-large 1024-dim)
 - `data/wiki_history.db` — embedding history snapshots
-- `data/reports/` — Fisher Suite HTML reports + structural alignment JSON
-- `data/viz/` — Tier-2 visualization outputs
+- `data/reports/` — diagnostic reports + experiment outputs
 
 **Rebuild only if ds_wiki.db changes:** `python3 -m src.sync`
 
 ---
 
-## Architecture
+## Architecture (Unchanged — Tools Are Solid)
 
 ```
-DS Wiki (ds_wiki.db)          RRP Bundle (rrp_*.db)
-   SQLite source of truth          Per-dataset SQLite
-        │                               │
-        ▼                               ▼
-   ChromaDB (chroma_db/)        Pass 1: Parse → entries/links
-   Semantic index                Pass 1.5: EntityCatalogPass
-        │                        Pass 2: CrossUniverseQuery
-        │◄──────── bridges ───────────►│
+ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
+        │                                        │
+        ▼                                        ▼
+   chroma_db/ (semantic index)         Pass 1: Parse → entries/links
+        │                              Pass 1.5: EntityCatalogPass
+        │                              Pass 2: CrossUniverseQuery
+        │◄───────── bridges ──────────────────────│
         ▼
-   MCP Server (mcp_server.py)
-   Exposes all tools to Claude
+   MCP Server (mcp_server.py) — exposes tools to Claude
 ```
 
-**Six-step PFD diagnostic pipeline (canonical — FISHER_PIPELINE_REDESIGN.md):**
-```
-Step 1: Ingest RRP → rrp_*.db (entries + links)
-Step 2: Build G_internal (within-RRP graph)
-Step 3: Internal Diagnostics → Tier-1 Report (coherence, d_eff, regime distribution)
-Step 4: Build G_bridge (full Option B: rrp:: nodes + wiki:: nodes + bridge edges)
-Step 5: Bridge Diagnostics → Tier-2 Report (DS Wiki integration quality)
-Step 6: Two-Tier Output → PFD Score (0.0–1.0)
-```
-DS Wiki is the **reference lake** — analyzed last, not first.
-
-**Six-layer paper validation pipeline (Phase 3+):**
-Layer 1: Claim Extraction (mandatory human gate) →
-Layer 2: Foundation Matching (ChromaDB cosine similarity) →
-Layer 3: Formal Logic Validation (probabilistic, not boolean) →
-Layer 4: Rhetorical Quality (argument structure) →
-Layer 5: Evidence Sufficiency →
-Layer 6: Domain Boundary Validation → Diagnostic Report
+**Tools available:**
+- **Fisher Suite** — `scripts/run_fisher_suite.py` with 6 modes (node, ds_wiki, internal_rrp, bridge, report, bridges). Structural analysis via FIM eigenvalue decomposition.
+- **RRP ingestion** — parsers for 6 dataset types (zoo_classes_json, cobra_json, flat_json, ro_crate, frictionless, codemeta/citation_cff)
+- **Cross-universe bridge detection** — semantic similarity matching between RRP and wiki
+- **Gap analyzer** — finds isolated entries, sparse properties, link-type imbalances
+- **Hypothesis generator** — surprising-pair detection via cosine similarity + type baselines
+- **Visualizations** — tier-1 (D3.js network, regime charts) and tier-2 (bridge histogram, bipartite network, domain heatmap)
 
 ---
 
@@ -87,122 +138,52 @@ Layer 6: Domain Boundary Validation → Diagnostic Report
 
 | File | Purpose |
 |------|---------|
-| `src/config.py` | All paths, model name, tier thresholds — edit here first |
+| `docs/RESEARCH_PLATFORM_CHARTER.md` | **ANCHOR DOCUMENT** — mission, epistemic contract, lifecycle |
+| `docs/M0_MILESTONE_COMPILATION.md` | **CURRENT BELIEF SNAPSHOT (2026-04-08)** — post-audit conjecture calibration, headline downgrades, action items |
+| `src/config.py` | Paths, model, thresholds |
 | `src/sync.py` | Rebuild chroma_db + wiki_history.db from ds_wiki.db |
-| `src/mcp_server.py` | FastMCP server exposing all tools to Claude |
+| `src/mcp_server.py` | FastMCP server exposing tools to Claude |
 | `src/embedder.py` | BGE embedding, ChromaDB operations |
-| `src/ingestion/cross_universe_query.py` | Pass 2: RRP → DS Wiki bridge detection |
-| `src/ingestion/passes/entity_catalog_pass.py` | Pass 1.5: Pattern extraction for entity datasets |
-| `src/ingestion/detector.py` | Format detection + dataset type classification |
-| `scripts/run_entity_catalog_pass.py` | CLI: Pass 1.5 + Pass 2b on a bundle |
-| `src/analysis/fisher_diagnostics.py` | Fisher suite: FIM math, `analyze_node`, `sweep_graph`, `build_wiki_graph`, `build_bridge_graph` |
-| `src/analysis/fisher_bridge_filter.py` | Per-bridge quality scoring utility (Phase C) |
-| `src/analysis/fisher_report.py` | Two-tier PFD report generator (`generate_report`, `PFDReport`) |
-| `src/analysis/structural_alignment.py` | Link-type weighted bridge scorer — signed polarity per entry (SCF replacement for SPT) |
-| `scripts/run_structural_alignment.py` | CLI: structural alignment on any RRP with populated bridges |
-| `docs/SCF_PHASE3_DESIGN.md` | Phase 3 SCF-grounded design — Options 3A–3D |
-| `scripts/run_fisher_suite.py` | CLI entry point — all 6 Fisher modes |
-| `docs/FISHER_PIPELINE_REDESIGN.md` | Canonical 6-step PFD pipeline spec (Option B bridge graph) |
-| `docs/ARCHITECTURE_DECISIONS.md` | ADR log — key design decisions and rationale |
+| `src/analysis/fisher_diagnostics.py` | FIM math, `analyze_node`, `sweep_graph`, `build_bridge_graph` |
+| `src/analysis/fisher_bridge_filter.py` | Per-bridge quality scoring |
+| `src/analysis/fisher_report.py` | Two-tier diagnostic report (wiki health tool) |
+| `src/analysis/gap_analyzer.py` | Gap detection on the wiki |
+| `src/analysis/hypothesis_generator.py` | Surprising-pair detection |
+| `src/analysis/coverage_analyzer.py` | Coverage metrics |
+| `src/ingestion/rrp_bundle.py` | RRP SQLite schema |
+| `src/ingestion/cross_universe_query.py` | Pass 2: RRP → wiki bridge detection |
+| `src/ingestion/passes/entity_catalog_pass.py` | Pass 1.5: pattern extraction |
+| `scripts/run_fisher_suite.py` | Fisher CLI (6 modes) |
+| `scripts/run_entity_catalog_pass.py` | Pass 1.5 + 2b CLI |
 | `data/ds_wiki.db` | The knowledge graph (READ ONLY — never schema-alter) |
-| `MASTER_SUMMARY.md` | Full technical re-entry document (read for deep context) |
-| `docs/PFD_PROJECT_FOUNDATIONAL_PLAN.md` | v1.1 foundational plan (vision + architecture + governance) |
-| `docs/CCA_GRAVITY_FINDINGS.md` | CCA-gravity connection: Fisher chain, GT10 as CCA, literature map |
-| `docs/SESSION_HANDOVER_2026-04-05.md` | Session handover: 5 entries, P23, 31 links, Fisher-gravity discovery |
-| `Outside Ref/` | External analysis documents (stress tests, references) |
-| `docs/archive/` | Completed specs and planning docs (read-only historical reference) |
+| `MASTER_SUMMARY.md` | Legacy technical narrative (partially superseded by charter) |
+| `docs/SESSION_HANDOVER_2026-04-07.md` | Most recent session handover (CCA falsification cascade) |
+| `docs/CCA_MATHEMATICAL_FORMALIZATION.md` | CCA framework — pending literature audit |
+| `docs/CCA_GRAVITY_FINDINGS.md` | Fisher-gravity chain — pending audit |
+| `docs/archive/` | Product-arc docs (PFD foundational plan, Phase 3 designs) — historical only |
+
+**Deprecated / deprioritized (still exist, no longer primary):**
+- `src/analysis/result_validator.py` — paper claim validator. Useful as a quick-check utility. Not a featured capability.
+- `src/analysis/link_classifier.py` — LLM link-type classifier. Wiki curation only.
+- `src/analysis/structural_alignment.py` — SCF structural alignment. Not being built on.
+- `src/analysis/semantic_position_test.py` — parked prototype.
 
 ---
 
 ## Current Embedding Model
 
 ```python
-# src/config.py — auto-detected at import time (no manual edit needed)
+# src/config.py — auto-detected at import time
 # CUDA (ShadowPC RTX 2000): "BAAI/bge-large-en-v1.5"  # 1024-dim
 # MPS  (Mac Apple Silicon): "BAAI/bge-large-en-v1.5"  # 1024-dim
 # CPU  (fallback):          "BAAI/bge-base-en-v1.5"   # 768-dim
-DEVICE, EMBED_MODEL, EMBED_DIM = _detect_device()  # set automatically
+DEVICE, EMBED_MODEL, EMBED_DIM = _detect_device()
 ```
-
-Model downloads automatically from HuggingFace on first use (~100MB for base, ~430MB for large).
 
 **Windows note:** DS Wiki entry data contains Unicode math symbols. Always prefix Python commands with `PYTHONUTF8=1` on ShadowPC:
 ```powershell
 PYTHONUTF8=1 .venv\Scripts\python.exe scripts\run_entity_catalog_pass.py ...
 ```
-
----
-
-## Phase Status
-
-| Phase | Status | Notes |
-|-------|--------|-------|
-| Phase 0: Core pipeline | ✅ Complete | sync, embed, topology, MCP |
-| Phase 1: Diagnostic tools | ✅ Complete | 268 tests passing |
-| Phase 2: RRP Ingestion | ✅ Complete | Zoo + Periodic Table + E. coli + IEEE Power Grid; 571 tests passing |
-| Fisher Suite A–G | ✅ Complete | Full 6-step PFD pipeline; bridge graph; two-tier report; 3 MCP tools |
-| Tier-1 Visualization | ✅ Complete | D3.js network graph, coherence/regime charts, HTML report per dataset |
-| Tier-2 Visualization | ✅ Complete | Bridge histogram, bipartite network, domain heatmap, HTML report |
-| Repo Cleanup | ✅ Complete | Docs reorganized; Subsystem B scoped; prototype files marked |
-| Phase 3: Paper Analysis | 🔧 In Design | SCF-grounded (see SCF_PHASE3_DESIGN.md): Options 3A–3D. OPERA paper RRP is prototype test case. structural_alignment.py built. |
-| Phase 4: Formal Logic Layer | 📋 Planned | Formal annotations on RRP entries; link-type weighted bridge scoring |
-| Phase 5: Community Governance | 📋 Planned | After Phase 3 vertical integration complete |
-
-### Fisher Suite — What's Built (Phases A–F)
-
-| Phase | Deliverable | Status |
-|-------|-------------|--------|
-| A | `decompose_fim`, `build_fim`, `FIMResult`, `analyze_node` | ✅ |
-| B | `sweep_graph`, `FisherSweepResult`, `build_wiki_graph` | ✅ |
-| C | `fisher_bridge_filter.py`, `scripts/run_fisher_suite.py` (ds_wiki/node/bridges modes) | ✅ |
-| D | `build_bridge_graph(rrp_db, wiki_db)`, `--mode internal_rrp`, `--mode bridge` | ✅ |
-| E | MCP tools: `fisher_analyze_node`, `fisher_sweep_rrp`, `fisher_sweep_bridge` | ✅ |
-| F | `fisher_report.py`, `PFDReport`, `generate_report`, `--mode report` | ✅ |
-| G | CLAUDE.md + MASTER_SUMMARY.md documentation pass | ✅ |
-
-**E. coli smoke test (2026-03-11):** PFD Score 0.973/1.000 | INTERNALLY CONSISTENT + WELL-INTEGRATED
-- Top internal hub: `met_pyr_c` (pyruvate, d_eff=11) | Top DS Wiki anchor: CHEM5 (134 bridges)
-
-### Fisher Suite CLI Reference
-
-```bash
-# Step 3: Internal RRP diagnostics (Tier-1)
-python scripts/run_fisher_suite.py --mode internal_rrp \
-    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
-
-# Step 5: Bridge diagnostics (Tier-2)
-python scripts/run_fisher_suite.py --mode bridge \
-    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
-    --wiki-db data/ds_wiki.db --min-sim 0.75
-
-# Steps 3+5+6: Full two-tier PFD report
-python scripts/run_fisher_suite.py --mode report \
-    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
-    --wiki-db data/ds_wiki.db
-
-# DS Wiki self-analysis (reference lake health check)
-python scripts/run_fisher_suite.py --mode ds_wiki \
-    --wiki-db data/ds_wiki.db
-
-# Single node analysis
-python scripts/run_fisher_suite.py --mode node \
-    --wiki-db data/ds_wiki.db --node-id CHEM5
-```
-
-### Phase 2 — What's Done
-
-**Done:**
-- `src/ingestion/parsers/zoo_classes_parser.py` — 426 entries, 437 links
-- `src/ingestion/parsers/periodic_table_parser.py` — 119 elements, 1671 properties
-- `src/ingestion/parsers/ecoli_core_parser.py` — 304 entries, 536 links, 912 bridges
-- `src/ingestion/parsers/opera_paper_parser.py` — OPERA paper RRP (Phase 3 prototype)
-- `src/ingestion/parsers/ccbh_cluster_parser.py` — 3-paper CCBH cluster RRP
-- `src/ingestion/passes/entity_catalog_pass.py` — Pass 1.5 (pattern extraction)
-- `scripts/run_entity_catalog_pass.py` — CLI orchestrator
-- Periodic table result (bge-large 1024-dim): 497 bridges, 35 tier-1.5, mean_sim 0.818
-- Zoo classes result  (bge-large 1024-dim): 1135 bridges, 70 tier-1.5, mean_sim 0.828
-  - Top bridge: thm_Nondeterministic_time_hierarchy_theorem <-> CS15 @ 0.9187 (tier-1)
-- E. coli result (bge-large 1024-dim): 912 bridges, CHEM5 top anchor (134 bridges)
 
 ---
 
@@ -213,79 +194,61 @@ python scripts/run_fisher_suite.py --mode node \
 python3 -m src.sync
 
 # Run all tests
-python3 -m pytest tests/ -v   # 571 tests
+python3 -m pytest tests/ -v   # 587 tests
 
-# Run Pass 1.5 + Pass 2b on a bundle
+# Wiki self-analysis (check wiki health)
+python3 scripts/run_fisher_suite.py --mode ds_wiki --wiki-db data/ds_wiki.db
+
+# Single-node structural analysis
+python3 scripts/run_fisher_suite.py --mode node \
+    --wiki-db data/ds_wiki.db --node-id CHEM5
+
+# Internal RRP diagnostics (for imported datasets)
+python3 scripts/run_fisher_suite.py --mode internal_rrp \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
+
+# Cross-domain bridge detection (RRP vs wiki)
+python3 scripts/run_fisher_suite.py --mode bridge \
+    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
+    --wiki-db data/ds_wiki.db --min-sim 0.75
+
+# Run Pass 1.5 + Pass 2b on an RRP bundle
 python3 scripts/run_entity_catalog_pass.py \
     data/rrp/periodic_table/rrp_periodic_table.db \
     data/chroma_db \
     data/ds_wiki.db
-
-# Full PFD two-tier diagnostic report for any RRP
-python scripts/run_fisher_suite.py --mode report \
-    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db \
-    --wiki-db data/ds_wiki.db
-
-# Internal RRP diagnostics only (Tier-1, no DS Wiki needed)
-python scripts/run_fisher_suite.py --mode internal_rrp \
-    --rrp-db data/rrp/ecoli_core/rrp_ecoli_core.db
-
-# Query cross-universe bridges directly
-python3 -c "
-import sqlite3
-conn = sqlite3.connect('data/rrp/periodic_table/rrp_periodic_table.db')
-for row in conn.execute('SELECT source_entry_title, ds_entry_id, similarity, tier FROM cross_universe_bridges ORDER BY similarity DESC LIMIT 10'):
-    print(row)
-"
-
-# Run visualizations
-python3 -m src.viz.viz_runner \
-    data/rrp/periodic_table/rrp_periodic_table.db \
-    --ds data/ds_wiki.db
 ```
-
----
-
-## DS Wiki Scale (live — as of 2026-04-04)
-
-- **278 entries**: 213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism
-- **819 links**: 35 tier-1, 528 tier-1.5, 87 tier-2, 169 original(null-tier)
-- **1,913 ChromaDB chunks** | **1,126 property rows**
-- **0 isolated reference_law entries** (Q2 only remaining isolated entry)
-- Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP (full pillar set)
 
 ---
 
 ## Critical Architectural Constraints
 
 1. **Never schema-alter `ds_wiki.db`** — read-only source of truth; all new tables go in `wiki_history.db`
-2. **Probabilistic pipeline, not boolean** — never return VALID/INVALID; always return `path_probability` (0–1)
-3. **Mandatory human gate at Layer 1** — pipeline pauses for claim verification before Layer 2
-4. **formality_tier field** (Phase 4): Tier 1 = physics/math (max 0.95), Tier 2 = chemistry (max 0.85), Tier 3 = soft science (max 0.70)
-5. **Vertical integration first** — Phase 3 restricted to thermodynamics + CS complexity; no cross-domain until >80% entries have formality_tier
-6. **INSERT OR IGNORE throughout** — all scripts safe to re-run
-7. **numpy only** (no scipy) in ingestion passes — scipy not installed
+2. **INSERT OR IGNORE throughout** — all migration scripts safe to re-run
+3. **numpy only** (no scipy) in ingestion passes — scipy not installed
+4. **Confidence calibration required** — every new entry or conjecture tagged Established / Supported / Speculative; no silent promotion
+5. **Falsification before support** — no conjecture reaches "Supported" without at least one honest falsification attempt
+6. **Literature check before novelty claims** — charter § Epistemic Contract rule 1
 
 ---
 
-## DS Wiki Conjectures Summary (23 total — last assessed 2026-04-04)
+## Conjecture Summary (23 total — **pending M0 audit, numbers may shift**)
 
-Strongest (most supported): P4, P15 (information-thermodynamics chain complete via B5↔INFO1↔INFO5)
-Strengthened: P2, P8, P11, P12, P13 (Option E CS/BIO entries added support)
-Updated: P17 (cosmological coupling — 2024-2025 research tensions added: GW 5σ rejection, Gaia BH, Cadoni k=1; DESI DR2 support)
-New: P23 (Horizon formation as Bekenstein-saturation phase transition; State 1, inherits contested GT11)
-Actionable gap: P7 — INFO4 (DPI) not linked to Ax2; one link closes the chain
+**Honest status as of 2026-04-08 — all of these need recalibration in the M0 pass:**
 
----
+- Previously called "strongest": P4, P15 (information-thermodynamics chain via B5↔INFO1↔INFO5)
+- Previously "strengthened": P2, P8, P11, P12, P13
+- Contested: P17 (cosmological coupling — multiple 2024-2025 tensions documented)
+- New / speculative: P23 (horizon formation as Bekenstein-saturation phase transition) — inherits contested GT11
 
-## GPU Notes (ShadowPC — RTX 2000)
+**CCA-related conjectures (from 2026-04-07 session):**
+- CCA-1 (isotropy = criticality) — **FALSIFIED** Phase C
+- CCA-1b L^d scaling — **FALSIFIED** Phase D
+- CCA-1b magnitude separation (dη/dT ~20× for first-order) — qualitatively confirmed, single test, **not yet in DB as conjecture**
+- CCA-1c curve shape — qualitatively confirmed, single test, **not yet in DB as conjecture**
+- CCA-2 (d_eff = d_lattice + 1 for d ≥ 2) — confirmed for 2D and 3D tori, single topology family
 
-Both machines (Mac M4 MPS + ShadowPC CUDA) auto-detect and run bge-large 1024-dim.
-
-Future upgrade priorities:
-1. Add `cross-encoder/ms-marco-MiniLM-L-12-v2` for bridge reranking
-2. Local LLM for Phase 3 claim extraction: `phi-3-mini-4k-instruct` (4-bit, ~2.5GB VRAM)
-3. Fine-tune bge-small on DS Wiki link pairs (contrastive learning, ~2-4 hours)
+**Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): structural observation derived in-wiki from the 2026-04-07 session. Currently framed as a "discovery" — **needs audit** (is this a genuine structural insight or stacked analogies via Jacobson 2016 generality?).
 
 ---
 
@@ -293,61 +256,49 @@ Future upgrade priorities:
 
 ```
 /
-├── CLAUDE.md              ← YOU ARE HERE (auto-loaded by Claude Code)
-├── README.md              ← GitHub/public facing
-├── MASTER_SUMMARY.md      ← Full technical context for re-entry
-├── USER_GUIDE.md          ← End-user report interpretation guide
-├── setup.sh               ← One-command environment setup
-├── requirements.txt       ← Python dependencies
+├── CLAUDE.md                            ← YOU ARE HERE
 ├── docs/
-│   ├── FISHER_PIPELINE_REDESIGN.md  ← Canonical 6-step PFD pipeline spec
-│   ├── ARCHITECTURE_DECISIONS.md    ← ADR log
-│   ├── PFD_PROJECT_FOUNDATIONAL_PLAN.md  ← v1.1 vision + governance
-│   ├── TIER1_VALIDATION_REPORT.md   ← Cross-domain validation results
-│   ├── design_philosophy/
-│   └── archive/           ← Completed specs (read-only historical)
+│   ├── RESEARCH_PLATFORM_CHARTER.md     ← ANCHOR — read this first
+│   ├── SESSION_HANDOVER_2026-04-07.md   ← most recent session
+│   ├── CCA_MATHEMATICAL_FORMALIZATION.md ← pending audit
+│   ├── CCA_GRAVITY_FINDINGS.md          ← pending audit
+│   ├── FISHER_PIPELINE_REDESIGN.md      ← tool spec (still valid)
+│   ├── ARCHITECTURE_DECISIONS.md        ← ADR log
+│   └── archive/                         ← product-arc docs (historical only)
+│       ├── PFD_PROJECT_FOUNDATIONAL_PLAN.md
+│       ├── SCF_PHASE3_DESIGN.md
+│       └── (other deprecated specs)
+├── README.md
+├── MASTER_SUMMARY.md                    ← legacy narrative (partially superseded)
+├── USER_GUIDE.md                        ← legacy (product framing)
+├── setup.sh
+├── requirements.txt
 ├── src/
-│   ├── config.py          ← All paths, model, thresholds — edit here first
+│   ├── config.py
 │   ├── sync.py, embedder.py, extractor.py, topology.py, mcp_server.py
-│   ├── analysis/          ← Diagnostic tools
-│   │   ├── fisher_diagnostics.py   ← FIM math, analyze_node, sweep_graph, build_bridge_graph
-│   │   ├── fisher_bridge_filter.py ← Per-bridge quality scoring
-│   │   ├── fisher_report.py        ← Two-tier PFD report generator
-│   │   ├── gap_analyzer.py         ← [DS Wiki scoped] Gap detection — Phase 3 integration target
-│   │   ├── coverage_analyzer.py    ← [DS Wiki scoped] Coverage metrics — Phase 3 integration target
-│   │   ├── hypothesis_generator.py ← [DS Wiki scoped] Surprising pair detection
-│   │   ├── result_validator.py     ← [DS Wiki scoped] Claim validator — PRIMARY Phase 3 target
-│   │   ├── link_classifier.py      ← [DS Wiki scoped] LLM link-type classifier
-│   │   └── semantic_position_test.py  ← [PROTOTYPE/PARKED] SPT — see file header
-│   ├── ingestion/
-│   │   ├── parsers/       ← zoo_classes, periodic_table, ecoli_core, ieee_power_grid, opera, ccbh_cluster
-│   │   ├── passes/        ← entity_catalog_pass.py
-│   │   ├── enrichers/     ← prose_enricher.py [PARKED — see file header]
-│   │   ├── rrp_bundle.py, detector.py, cross_universe_query.py
-│   └── viz/               ← Visualization module
-│       ├── tier1_dashboard.py  ← Tier-1 PNG charts + D3.js network
-│       ├── tier1_report.py     ← Tier-1 HTML report generator
-│       ├── tier2_report.py     ← Tier-2 HTML report generator
-│       ├── bridge_network.py, domain_heatmap.py, similarity_hist.py
-│       └── viz_runner.py       ← CLI entry for all viz outputs
+│   ├── analysis/          ← Fisher Suite + diagnostic tools
+│   ├── ingestion/         ← RRP parsers and passes
+│   └── viz/               ← tier-1/tier-2 visualization
 ├── scripts/
-│   ├── run_fisher_suite.py    ← Fisher CLI (6 modes)
+│   ├── run_fisher_suite.py
 │   ├── run_entity_catalog_pass.py
-│   ├── run_spt.py             ← [PROTOTYPE/PARKED] SPT CLI
-│   └── migrations/            ← One-time DB insert scripts
-├── tests/                 ← pytest suite (571 tests)
+│   ├── ising_fim_*.py, potts_fim_test.py, cca1b_*.py   ← CCA experiments
+│   └── migrations/        ← one-time DB insert scripts
+├── tests/                 ← pytest suite (587 tests)
 ├── data/
-│   ├── ds_wiki.db         ← Reference knowledge graph (READ ONLY)
-│   ├── chroma_db/         ← ChromaDB vector index (bge-large 1024-dim)
-│   ├── wiki_history.db    ← Embedding history snapshots
-│   ├── reports/           ← Fisher Suite HTML reports + SA results
-│   ├── viz/               ← Tier-2 visualization outputs
-│   ├── viz_outputs/       ← Tier-1 visualization outputs
-│   └── rrp/               ← RRP bundles
-│       ├── zoo_classes/
-│       ├── periodic_table/
-│       ├── ecoli_core/
-│       ├── opera/
-│       └── ccbh/          ← 3-paper CCBH cluster + Layer 1 analysis
-└── Outside Ref/           ← External analysis documents
+│   ├── ds_wiki.db         ← READ ONLY
+│   ├── chroma_db/, wiki_history.db
+│   ├── reports/           ← diagnostic reports + experiment outputs
+│   └── rrp/               ← external dataset bundles
+└── Outside Ref/           ← external analysis documents
 ```
+
+---
+
+## If You're A Fresh Claude Session
+
+1. **Read `docs/RESEARCH_PLATFORM_CHARTER.md` first.** It defines the mission and the epistemic rules.
+2. **Read the latest `docs/SESSION_HANDOVER_*.md`** for recent state.
+3. **Check whether the M0 audit has been completed** — if not, that's the priority before any new work.
+4. **Operate as a skeptical research collaborator, not an assistant.** Your job is to push back. Stacking claims is drift. Feature-fitting is drift. Flag both.
+5. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion.

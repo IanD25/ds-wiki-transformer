@@ -1,0 +1,499 @@
+# Milestone M0 — The 2026-04-08 Reset
+
+> **First milestone compilation under the Research Platform Charter.**
+> A snapshot of what we actually believe, what the evidence is, what's still open, and what didn't work.
+> Honest accounting after a skeptical literature audit. Several claims previously treated as "supported" have been downgraded.
+
+---
+
+## Context
+
+On 2026-04-08 the project was reframed from "Principia Formal Diagnostics (PFD) — paper validation product" to a **personal research platform**. The Research Platform Charter (`docs/RESEARCH_PLATFORM_CHARTER.md`) established an epistemic contract requiring novelty skepticism, triviality checks, framing checks, falsification-first methodology, and explicit confidence calibration (Established / Supported / Speculative) on every claim.
+
+M0 is the first audit under these rules. It downgrades much of what was previously in the wiki.
+
+---
+
+## Headline Finding
+
+**The most important finding of the audit is that the DFIG framework (Dimensional Fisher Information Geometry), built around P5 "Fisher Information Rank = Effective Dimensionality," is a re-parameterization of the sloppy models program** (Sethna, Transtrum, Machta, Brown, Waterfall, Gutenkunst, et al., 2006–present) **in new vocabulary.** The core operational claim — that a system's effective dimensionality is captured by the rank (or participation ratio) of its Fisher Information Matrix eigenvalue spectrum — is the central result of that literature. It is not novel.
+
+This is not a bad thing. Rediscovering an established framework from a different starting point is valuable; it means the framework is natural enough to be re-derivable. But it must be labeled correctly. The wiki previously framed DFIG as a new contribution. It is not. It is an **application** of sloppy models to geometric and cross-domain systems, not a new theory of effective dimensionality.
+
+**Two other major downgrades followed:**
+
+1. **The CCA (Constrained Critical Attractor) framework** restates earlier work. Information-geometric analysis of phase transitions via Fisher/Ruppeiner metrics is ~20 years old (Janke, Johnston, Kenna 2004; Brody, Rivier 1995; Prokopenko, Lizier, Obst, Wang 2011). FIM-based discrimination of first-order vs continuous transitions is established in that literature. The specific η(T) participation-ratio isotropy construction from the 2026-04-07 experiments may retain narrow methodological novelty but the underlying claim is not new.
+
+2. **The Fisher-gravity chain (M6→IT05→IT03→GT10→GT01)** was previously treated as a "structural coherence result." The audit found it is **stacking vocabulary, not composing theorems**. Jacobson 2016 derives linearized Einstein equations using von Neumann entanglement entropy on a quantum subalgebra via the first law of entanglement ($\delta S = \delta \langle H \rangle/T$). It does **not** use classical Fisher information or classical KL divergence on a parameter manifold. The chain conflates three distinct mathematical objects that share the word "relative entropy." This must be downgraded from "discovery" to "conceptual analogy, not rigorous derivation."
+
+---
+
+## What We Actually Believe Now
+
+### Established (standard, cited, textbook)
+
+- **Fisher-Rao metric is the unique Riemannian structure on spaces of classical probability distributions** (Chentsov 1982, Amari & Nagaoka 2000). This is a theorem and belongs in the wiki as established.
+- **Sloppy models framework**: Fisher Information eigenvalue spectra of most physics/biology models are hierarchically dominated by a small number of "stiff" directions, with the remainder in a near-null subspace; this effective-dimensionality interpretation is the established result that P5 restates (Waterfall et al. 2006, Machta et al. 2013, Transtrum et al. 2015, Quinn et al. 2022).
+- **Information-geometric analysis of phase transitions**: Fisher/Ruppeiner scalar curvature diverges at critical points, with different signatures for first-order vs continuous (Janke-Johnston-Kenna 2004, Prokopenko-Lizier 2011). Classical prior art for anything CCA claims about phase transitions.
+- **Jacobson 1995** (Clausius relation on Rindler horizons → Einstein equations) is the original, respected info-thermodynamic derivation of gravity. This is established.
+- **Jacobson 2016** (entanglement equilibrium → linearized Einstein) is respected but **linearized only** and depends on modular-Hamiltonian assumptions whose generality is not proven outside CFT/holographic contexts.
+- **West-Brown-Enquist metabolic scaling** (1997): α = 3/4 from fractal branching network optimization. The D/(D+1) functional form in P2, P11, P14 is WBE or extensions of it — established in the domain, but the "tracks D_eff" relabeling is owner-constructed.
+- **Bekenstein bound, Hawking-Page transition, Bousso bound, standard black-hole thermodynamics**: all established textbook results underlying GT09, GT10, GT11, HB10.
+
+### Supported (consistent with literature, not contradicted, but single-domain or incomplete)
+
+- **P5 (Fisher Rank = D_eff) as a re-parameterization of sloppy models applied to geometric systems**: validated on tori, random graphs, random geometric graphs. The specific geometric-system application may be a useful extension. Supported as application, not as discovery.
+- **P18 (structural coherence floor in regulated systems)**: US equities 2003–2025, participation ratio never reached FRAGMENTED regime under normal crisis conditions. Supported as single-domain empirical observation. Not supported as a general structural claim.
+- **P19 (non-ergodicity of regime detection in Tier 3 domains)**: Supported as single-domain observation (US equities). The 4:1 recovery-to-crisis threshold is from one dataset. Not supported as cross-domain claim.
+- **P20 (subadditive error propagation in correlated signal stacks)**: Supported as empirical fit from 19-variant A/B testing on AlphaEntropy. Not supported as theoretical principle.
+- **P21 core claim (Fisher-Rao universality via Chentsov)**: Supported / Established for the classical case. The quantum extension (Bianconi GT04, Petz 1996 family) is acknowledged by the owner as a gap and should be marked Speculative.
+- **CCA-1b magnitude separation (dη/dT ~20× for first-order vs continuous Potts)**: Qualitatively supported by the 2026-04-07 Phase C+D experiments. Consistent with Janke-Johnston-Kenna-style FIM-distinguishes-transition-order results. Single comparison (q=2 vs q=10), needs second test (q=3 vs q=5) before generalizing.
+- **CCA-1c curve shape (continuous = smooth sigmoid; first-order = flat-jump-plateau)**: Qualitatively supported by Phase D. Single test.
+- **CCA-2 (d_eff = d_lattice + 1 for d ≥ 2)**: Confirmed for 2D and 3D tori only. Regular-lattice-topology only.
+
+### Speculative (owner conjecture, not independently verified, could be wrong)
+
+- **P1 (cosmological redshift as dimensional gradient)**: heterodox cosmology, no independent support
+- **P2 (metabolic exponent tracks vascular D_eff as DFIG-framed claim)**: relabeling of WBE; the specific D_eff identification is owner-constructed
+- **P3 (single Ω_D governs G, h, m)**: formal audit not performed; over/under-constrained status unresolved
+- **P4 (CcO 1.5 ms as thermodynamic refresh rate)**: no experimental discrimination from "speed limit" interpretation
+- **P6 (Fisher rank converges with Hausdorff dimension)**: **partially contradicted by owner's own Phase 1 results** — "gap-based rank returns mixed integers on fractals"; convergence only through participation ratio, which is a different claim
+- **P7 (D_eff decreases monotonically under coarse-graining)**: **partially falsified** — participation ratio does NOT satisfy monotonicity under any tested configuration (owner's own note). Only gap-based rank on lattices satisfies it, and only under block-spin.
+- **P8 (continuous critical exponent interpolation on fractional-D substrates)**: Gefen et al. 1980 precedes it; the smooth-interpolation hypothesis reframes prior work. Phase 2 results (SV degeneracy swap) are consistent with Janke-Johnston-Kenna / Prokopenko-Lizier — Supported as rediscovery, Speculative as novel claim.
+- **P9 (holographic dictionary LWE complexity)**: explicitly a "monitoring gate," not an active conjecture — should arguably be reclassified as an open question, not a P-numbered conjecture
+- **P10 (hadron charge radii imply running ℏ)**: one of several consistent interpretations; no unique predictions
+- **P11 (urban scaling = network spectral dimension)**: reframing of Bettencourt-West urban scaling literature
+- **P12 (β(λ) formula cross-domain)**: no published study has tested it; untestable without owner-generated data
+- **P13 (λ_min = (d_f-1)/(d_f+1))**: owner-acknowledged ansatz, not derived from first principles
+- **P14 (branching variance → exponent gap)**: requires data that does not exist
+- **P15 (metabolic cost ∝ (1-λ)² d_f)**: owner-acknowledged ansatz; financial-market "evidence" is an analogy, not a test
+- **P16 (RLCT = d_f at regime transitions)**: blocked by Q4; no test has been performed
+- **P17 (cosmological coupling = D_eff)**: **high-risk speculation on unstable foundation**. Rests on contested Farrah-Croker observational claim; critical citations (Amendola 2024, Cadoni 2023) were not verifiable by the audit agent and should be personally checked by the owner before any further building. The D_eff = k identification is owner-constructed and not standard in the cosmology literature.
+- **P22 (irreversible lockout trichotomy)**: recent stress test absorbed topological lockout; MBL status is open in condensed matter theory; trichotomy is unproven as exhaustive
+- **P23 (horizon formation as Bekenstein-saturation phase transition)**: inherits all GT11 tensions, no first-principles derivation, novel framing not independently supported
+- **CCA-1 (isotropy = criticality)**: **FALSIFIED** Phase C 2026-04-07. Kept for historical record only.
+- **CCA-1b L^d scaling**: **FALSIFIED** Phase D 2026-04-07. Kept for historical record.
+- **Fisher-gravity chain as a "structural coherence result"**: **downgraded to conceptual analogy**. The chain composes shared vocabulary ("relative entropy") across three distinct mathematical objects. It is not a theorem composition.
+
+---
+
+## What Changed Since the Previous "State of the Wiki"
+
+| Claim | Previous status | New status (post-M0) | Reason |
+|-------|----------------|----------------------|--------|
+| P5 (Fisher Rank = D_eff) | "All States" / strongest | Supported as sloppy-models re-parameterization | Sethna group has this result; 20 years of prior art |
+| P4, P15 ("information-thermodynamics chain complete") | Strongest | Speculative | Based on ansätze; no tests of the specific formulas |
+| P2, P8, P11, P12, P13 ("strengthened") | Strengthened | Speculative | Strengthening was internal wiki coherence, not external evidence |
+| P17 | Updated with tensions | **Speculative, high risk** | Contested empirics; owner-constructed D_eff=k bridge; unverified citations |
+| P23 | New, State 1 | Speculative | Inherits GT11 tensions; no derivation |
+| CCA framework | "Novel class" | Restatement of Janke-Johnston-Kenna / Prokopenko-Lizier | 15-20 years of prior art |
+| Fisher-gravity chain | "Key Discovery 1" | Conceptual analogy, not theorem composition | Audit found vocabulary-stacking |
+| GT10 as "CCA instance" | Supported | Post-hoc feature fit | Satisfying 5 descriptive features ≠ predictive support |
+
+---
+
+## What's Open (Honest List)
+
+1. **Is there genuine novelty in DFIG beyond sloppy-model re-parameterization?** Possible candidates: (a) the cross-domain application to geometric systems (tori, fractals, random graphs) with the specific gap-based-rank vs participation-ratio distinction; (b) the specific β(λ) formula if it turns out to be testable; (c) the financial-market empirical results (P18-P20) as a demonstration of sloppy-model behavior in a Tier 3 domain. None of these are established; all are specific applications that would need their own validation.
+
+2. **Does CCA have any discriminating structure that is not already in the phase-transition information geometry literature?** The specific η(T) participation-ratio isotropy indicator may be a narrow methodological contribution. Needs a focused literature check before being called novel.
+
+3. **Is the Fisher-gravity chain recoverable as anything more than analogy?** Open question. The audit says "not composing theorems." One path forward would be to explicitly map classical Fisher geometry to quantum modular Hamiltonian structure — that's a hard open problem, not a bridge we can casually build.
+
+4. **What is P17's actual status once the citations are verified?** The owner needs to personally read: Amendola 2024 (claimed 5σ GW rejection of k=3), Cadoni 2023 JCAP (claimed k=1 for nonsingular BHs), and the Farrah-Croker original papers. The audit agent declined to certify these without paper-in-hand access.
+
+5. **The "conjecture chain" structure (P5 foundational, P2/P11/P14 downstream via D/(D+1) form, etc.)** was previously treated as internal evidence that the framework was coherent. Internal coherence is not external support. The chain is now ~15 speculative claims propped up against each other with one re-parameterized established result (P5) at the base.
+
+6. **Does P6 (Fisher rank → Hausdorff) need retirement or reformulation?** The owner's own phase 1 notes say rank returns mixed integers on fractals. Either P6 is already wrong, or it needs restatement as a participation-ratio claim — in which case it's a different conjecture.
+
+7. **Does P7 (monotonicity under coarse-graining) need retirement?** Participation ratio fails it. Gap-based rank on lattices satisfies it only under block-spin. The claim as stated is too strong.
+
+---
+
+## What We Tried That Didn't Work (Mandatory Section)
+
+### In this session (M0)
+- **The literature audit.** This section itself is the work that didn't confirm what was expected. Four topics audited; all four returned "already established or speculative overreach." No topic returned a clean "genuinely novel" verdict.
+
+### From prior sessions
+- **CCA-1 (isotropy = criticality):** 2026-04-07 Phase C falsified it — Potts q=10 (first-order) and q=2 (continuous) show identical absolute isotropy signatures at T_c. Absorbed into CCA-1b.
+- **CCA-1b finite-size scaling (S_max ~ L^d for first-order):** 2026-04-07 Phase D falsified it — the predicted L^d scaling did not materialize because dη/dT is grid-resolution-limited, not physics-limited. Surviving fragment became CCA-1c.
+- **Multiple Phase 3 "paper analysis pipeline" design iterations:** architected repeatedly, never executed on a real paper. Retired with the 2026-04-08 reset.
+- **OPERA, Wagner, CCBH RRPs as validation benchmarks:** built but never run as intended. Retired with the reset. The CCBH RRP pipeline run (P17 phase1_results: "PFD score 0.882") tested wiki internal coherence, not any external truth.
+- **The `formality_tier` field, the six-layer claim extraction pipeline, the SCF-grounded Phase 3, and the community governance plan** are all retired.
+
+### Things the audit recommends we stop saying
+- "Novel" about DFIG without reading Transtrum-Machta-Sethna 2015 and Quinn et al. 2022 first
+- "Novel" about CCA without reading Janke-Johnston-Kenna 2004 and Prokopenko-Lizier 2011 first
+- "Structural coherence result" about the Fisher-gravity chain
+- "GT10 as a CCA instance" without a sharper discriminator than the five-feature checklist
+- "k=3 is 5σ rejected" without the owner personally verifying the Amendola citation
+- "Cadoni predicts k=1 generically" without verification
+
+---
+
+## Action Items From M0
+
+### Immediate (this or next session)
+1. **Add confidence calibration to the DB schema.** Every entry, conjecture, link needs an explicit Established / Supported / Speculative tag. Until then, M0 is the override reference for any conflict.
+2. **Update P5, P6, P7 claim texts** to reflect: P5 is a re-parameterization of sloppy models (cite Sethna group); P6 is partially contradicted by own Phase 1; P7 is partially falsified for PR.
+3. **Update P17 and P23 status fields** to reflect "Speculative, high risk" explicitly.
+4. **Mark all CCA docs** (`CCA_MATHEMATICAL_FORMALIZATION.md`, `CCA_GRAVITY_FINDINGS.md`, `CCA_FORMALIZATION_SCOPE.md`) with a header noting the M0 audit findings.
+5. **Owner personally verifies** the Amendola 2024 and Cadoni 2023 citations. Claude cannot do this without access to the papers.
+6. **Read 2-3 prior-art papers before any further CCA or DFIG work:**
+   - Transtrum, Machta, Brown, Daniels, Myers, Sethna, "Perspective: Sloppiness and emergent theories," J. Chem. Phys. 2015
+   - Quinn, Abbott, Transtrum, Machta, Sethna, "Information geometry for multiparameter models," Rep. Prog. Phys. 2022/2023
+   - Janke, Johnston, Kenna, "Information geometry and phase transitions," Physica A 2004
+   - Prokopenko, Lizier, Obst, Wang, "Relating Fisher information to order parameters," PRE 2011
+
+### Deferred (do not do until prior-art reading is complete)
+- q=3 vs q=5 Potts experiment
+- XY/BKT infinite-order test
+- Formalizing CCA-1c as P24
+- Any new wiki entries in GT/IT/BR/HB/STAT pillars
+- Any new "discovery" claims
+
+### Dropped
+- Wagner RRP, OPERA RRP as validation targets (retired with 2026-04-08 reset; reconfirmed)
+- Phase 3 paper analysis pipeline (retired)
+- PFD score as headline metric (retired)
+
+---
+
+## Tool Status (Unchanged — Tools Are Solid)
+
+The software infrastructure is in good shape and is not affected by the audit.
+
+- 587 tests passing
+- Fisher Suite (6 modes) working
+- RRP ingestion for 6 dataset types working
+- ChromaDB semantic index at bge-large 1024-dim, 1913 vectors
+- Visualizations (tier-1 D3.js, tier-2 bipartite/heatmap) working
+- MCP server exposing tools to Claude sessions
+
+These tools still do what they do. What's changing is what we use them **for** and what we **claim from** their outputs.
+
+---
+
+## Honest Summary
+
+The wiki contains a lot of content that felt grounded because it was internally consistent. Internal consistency is not external support. The audit found that:
+
+- **1 conjecture is Established** (P21 core claim, via Chentsov/Amari)
+- **~5 claims are Supported** (P5 as re-parameterization; P18/P19/P20 as single-domain empirical observations; CCA-1b magnitude + CCA-1c shape as qualitative single-test findings; CCA-2 as confirmed on regular lattices only)
+- **~17 conjectures are Speculative** (P1-P4, P6-P17, P22, P23 — including most of the "strongest" previously)
+- **2 CCA conjectures are FALSIFIED** (CCA-1, CCA-1b scaling)
+- **1 "key discovery" has been downgraded to analogy** (Fisher-gravity chain)
+
+This is a hard but healthy recalibration. The platform is now honestly positioned. The tools work. The wiki has real structure. And the work ahead — especially reading the sloppy-models and info-geometric-phase-transition literature before extending any of the CCA/DFIG claims — has a clear direction.
+
+**The goal of the research platform is not to accumulate speculative claims. It is to find the small number of things that actually survive.** After M0, the honest count of "things that actually survive" is much smaller than before. That's the point of the charter.
+
+---
+
+## For the Next Session
+
+If a fresh Claude session starts, the priority order is:
+
+1. Read `docs/RESEARCH_PLATFORM_CHARTER.md`
+2. Read `CLAUDE.md`
+3. Read this document (M0) — it is the current snapshot of belief
+4. Read the latest `docs/SESSION_HANDOVER_*.md` for tactical state
+
+Before doing any new experimental work, check whether the owner has personally verified the Amendola/Cadoni citations and completed the prior-art reading. If not, those are the gates.
+
+---
+
+**M0 compiled 2026-04-08.** Next milestone (M1) should be written after the prior-art reading is complete, the DB calibration tags are applied, and either (a) at least one of the speculative conjectures has been through a genuine falsification attempt, or (b) one of the speculative conjectures has been formally retired.
+
+---
+
+## Addendum: CCA Novelty Correction (2026-04-08, same-day)
+
+A targeted follow-up audit (requested by the owner under charter rule "push back on your own audit") found that **the initial M0 claim "CCA restates Janke-Johnston-Kenna 2004 and Prokopenko-Lizier 2011" was too harsh**. The first audit agent conflated "information geometry of phase transitions" (broad topic) with the owner's specific construction (high-dimensional per-site-field FIM → eigenvalue spectrum → d_eff participation ratio + η isotropy indicator → T-tracked discriminator for transition order). They are not the same object.
+
+### What the follow-up found
+
+**Janke-Johnston-Kenna 2004 (Physica A), Prokopenko-Lizier 2011 (PRE), Brody-Hook, Crooks 2007 PRL** all work with **2×2 (or similarly low-dimensional) Fisher-Rao / Ruppeiner metrics parameterized by thermodynamic couplings** (β, h, or similar). They distinguish phase transitions via **scalar curvature divergence** or via individual FIM element behavior, not via any eigenvalue-spectrum / participation-ratio / isotropy analysis on a per-site-field FIM. These are topically adjacent to CCA, not the same construction. **Not prior art for the owner's specific claim.**
+
+**The actual prior art is narrower**: **Machta, Chachra, Transtrum, Sethna, *Science* 2013, "Parameter Space Compression Underlies Emergent Theories and Predictive Models"** (arXiv:1303.6738). This paper **does** compute FIM eigenvalue spectra on the Ising model at criticality with an explicit stiff/sloppy hierarchy interpretation. The "parameter space compression → stiff subspace corresponds to RG-relevant operators" story is the real root of the owner's effective-dimensionality framing.
+
+**What Machta 2013 has:**
+- FIM eigenvalue spectra ✓
+- Ising model at criticality ✓
+- Hierarchy / effective-dimensionality interpretation ✓
+- The observation that stiff directions correspond to relevant operators under RG ✓
+
+**What Machta 2013 does NOT have:**
+- Per-site local fields as the FIM parameter vector (they use Hamiltonian couplings)
+- An explicit d_eff = (Σλ)² / Σλ² participation ratio scalar tracked across T
+- An η isotropy indicator derived from the eigenvalue distribution
+- First-order vs continuous transition contrast (no Potts q=10 anywhere in the sloppy-models lineage, as far as the audit found)
+- The ~20× dη/dT magnitude separation between q=2 and q=10
+- The "flat-jump-plateau" curve-shape signature for first-order transitions
+
+The **2026-04-07 Phase C+D Potts experiments** may therefore contain a **narrow but genuine methodological contribution within the Fisher-spectrum lineage**: the specific per-site-field parameterization, the d_eff/η scalar observables, and the first-order-vs-continuous discriminator via dη/dT magnitude and curve shape.
+
+### Important caveats
+
+The follow-up audit agent explicitly noted what it did *not* do:
+
+1. **It did not read the full Machta 2013 PDF** — it relied on abstracts and secondary descriptions
+2. **It did not examine the Raju / Chachra / Sethna follow-up papers on "parameter-space RG"** in detail
+3. It recommends the owner read Machta 2013 carefully + skim 2-3 follow-up papers from the Sethna group before making any novelty claim
+
+**Absence of evidence is not evidence of novelty.** The audit could not find prior work doing the owner's exact construction, but this may reflect search limitations (e.g., relevant work might be in arXiv preprints with non-obvious titles, or in Raju/Chachra/Sethna RG follow-ups, or in condensed-matter literature using different terminology). A claim of genuine narrow novelty requires the owner to do the final confirmation by reading the primary sources.
+
+### Revised CCA calibration
+
+**CCA framework (as of 2026-04-08, post-follow-up):**
+- **General "FIM spectrum reveals effective dimensionality of lattice models at criticality" claim**: **Established** prior art. Cite Machta 2013 prominently. Not a CCA contribution.
+- **Per-site-field parameterization of the FIM**: no confirmed prior art identified. **Pending owner confirmation via Machta 2013 + Sethna-group RG follow-up reading.** If confirmed no-prior-art, this is a specific methodological choice; whether it is "novel contribution" or "natural variant" depends on how the Sethna group parameterizes their Ising work in detail.
+- **d_eff participation ratio as tracked-across-T scalar observable**: no confirmed prior art. **Pending owner confirmation.** Same caveat.
+- **η isotropy indicator and its curve shape / dη/dT magnitude**: no confirmed prior art. **Pending owner confirmation.** If no prior art exists, this is the most defensible novel contribution from the 2026-04-07 work.
+- **CCA-1c (curve shape distinguishes transition order)**: qualitatively supported single-test, potentially narrow-novel within the Fisher-spectrum lineage. **Needs second test (q=3 vs q=5) + prior-art confirmation before any promotion above Speculative.**
+- **CCA-1 falsified, CCA-1b L^d scaling falsified**: unchanged.
+
+### Revised prior-art reading list
+
+**Replace** the reading list in the main M0 Action Items with this narrower, more targeted list:
+
+1. **Machta, Chachra, Transtrum, Sethna**, "Parameter Space Compression Underlies Emergent Theories and Predictive Models," *Science* 342, 604 (2013). arXiv:1303.6738. **Most important — read in full.**
+2. **Transtrum, Machta, Brown, Daniels, Myers, Sethna**, "Perspective: Sloppiness and Emergent Theories in Physics, Biology, and Beyond," *J. Chem. Phys.* 143, 010901 (2015). Framing paper for the whole program.
+3. **Quinn, Abbott, Transtrum, Machta, Sethna**, "Information geometry for multiparameter models: New perspectives on the origin of simplicity," *Rep. Prog. Phys.* 2022/2023. Modern synthesis.
+4. **Raju, Chachra, Sethna** (and related) follow-ups on renormalization group flow in sloppy-model parameter space. Check if any define a participation-ratio-like scalar or apply the framework to Potts.
+5. **Janke, Johnston, Kenna 2004** and **Prokopenko, Lizier 2011**: worth skimming for context, but the follow-up audit confirmed they are *not* doing the same thing as CCA. Lower priority than the Sethna group papers.
+
+### Why this correction matters
+
+The original M0 effectively said "CCA is not novel, the idea is 20 years old." The follow-up audit says "CCA's general setting (Fisher spectrum on Ising at criticality) is about 12 years old and belongs to Sethna-Machta, but the specific observables and discriminator may be genuinely new in a narrow way — pending the owner's own reading to confirm."
+
+This is exactly the kind of correction the charter was designed to produce. The initial audit erred on the side of harsh downgrading (as intended), the follow-up checked the specifics (as requested), and the honest answer is in between. **The CCA framework has been correctly positioned**: not a revolutionary contribution, not a pure rediscovery, but a concrete application of an established framework with specific observables whose novelty status depends on a careful reading of Machta 2013 and a few follow-ups.
+
+**No other M0 findings were affected by the follow-up audit.** DFIG-as-sloppy-models-reparameterization stands. Fisher-gravity chain as analogy stands. P17 as high-risk speculation stands. The only correction is to CCA specifically.
+
+---
+
+## Second Addendum: Machta 2013 Primary-Source Reading + Targeted Search (2026-04-08, same-day)
+
+Under charter rule "verify the actual object, not the agent's summary," the owner located and provided **Machta, Chachra, Transtrum, Sethna, Science 342, 604 (2013), arXiv:1303.6738** for primary-source reading, and authorized a targeted follow-up literature search to close the remaining prior-art vectors identified in the first addendum.
+
+### What Machta 2013 actually computes (from primary-source reading)
+
+The Hamiltonian is parameterized as $H_\theta(\vec x) = \theta^\mu F_\mu(\vec x)$ where:
+- $F_{\alpha\beta}(\vec x) = \sum_{i,j} s_{i,j} s_{i+\alpha, j+\beta}$ — coupling operators at neighbor displacements
+- $\theta^{\alpha\beta}$ — **global Hamiltonian couplings** (nearest, next-nearest, further neighbor). Small parameter vector (~5-10 parameters).
+- $\theta^0$ — external field coupling to total magnetization
+
+The FIM is computed on this ~10-dimensional coupling-parameter space.
+
+**Analysis is AT the critical point** ($T_c, h=0$). The x-axis of the main figure (Fig. 3) is **coarsening steps** (checkerboard decimation factor $2^n$), not temperature. The central finding: two stiff eigenvalues (corresponding to the RG-relevant operators $t$ and $h$) persist under coarsening while the irrelevant eigenvalues shrink as $\sqrt{2}^{-2-2y_i}$.
+
+**What Machta 2013 confirmed contains:**
+- FIM eigenvalue spectrum on the 2D Ising model ✓
+- Sloppy/stiff hierarchy interpretation with RG-relevant directions as the stiff subspace ✓
+- Applied to a statistical-mechanics lattice model at criticality ✓
+- Cites Amari & Nagaoka 2000 as the standard information-geometry reference ✓
+- Paper is the foundational reference for "sloppy models applied to physics lattice systems"
+
+**What Machta 2013 confirmed does NOT contain:**
+- Per-site local field parameterization (they use couplings $\theta^{\alpha\beta}$, ~10-dim)
+- Potts models of any $q$ (Ising only)
+- First-order vs continuous transition contrast
+- Temperature sweeps (coarsening-step sweeps only)
+- Scalar participation-ratio $d_{\text{eff}}$ observable
+- Scalar isotropy indicator $\eta$ observable
+- $d\eta/dT$ magnitude or curve-shape discriminators
+
+This confirms the direction of the first addendum and sharpens the claim: the CCA-specific construction genuinely is outside Machta 2013's scope.
+
+### Targeted search results
+
+A second literature search agent was tasked with closing five specific prior-art vectors. Findings:
+
+**Priority 1 — Sethna-group follow-ups:**
+
+- **Raju, Machta, Sethna — "Information geometry and the renormalization group"** — extends Machta 2013 by formalizing RG flow as flow of FIM in parameter space. Still **global coupling parameters, not per-site local fields**, and still no temperature sweeps or Potts or first-order discrimination.
+- **Quinn, Abbott, Transtrum, Machta, Sethna — "Information geometry for multiparameter models: New perspectives on the origin of simplicity,"** *Rep. Prog. Phys.* 86, 035901 (2023). Verified primary source. Does **not** cover Potts, does **not** distinguish first-order from continuous transitions, does **not** use per-site local fields, does **not** sweep temperature, does **not** define participation ratio or isotropy scalars. Ising appears only as a visualization example. **No coverage of the CCA-specific construction.**
+
+**Priority 2 — Information-theoretic analysis of first-order Potts:**
+
+- **Brown, Bossomaier, Barnett — "Information flow in first-order Potts model phase transition,"** *Scientific Reports* 12 (2022). arXiv:1810.09607. **Verified:** the paper uses **Global Transfer Entropy**, not Fisher Information Matrix. Transfer entropy and FIM eigenvalue spectrum are fundamentally different mathematical objects. The paper observes that global transfer entropy peaks on the disordered side of first-order Potts transitions (thematically similar to "some information-theoretic observable discriminates transition order") but it is **not the same construction as CCA** and does not contain FIM eigenvalue analysis, per-site fields, or the $d_{\text{eff}}$/$\eta$ observables. **Not prior art for the CCA construction, but is prior art for the broader research program of "information-theoretic early warning signals for first-order vs continuous phase transitions."** The owner should cite it as thematically adjacent.
+
+**Priority 3 — Per-site local field FIM parameterization:**
+
+- **Negative result on direct search.** No paper found that uses per-site local fields $h_i$ as the FIM parameter vector for thermal phase-transition analysis on Ising/Potts lattices.
+- **Known unchecked vector:** the **inverse-Ising / maximum-entropy-model literature** (Mora, Bialek, Tkačik on neural data; Cocco, Monasson on inverse Ising) routinely parameterizes by per-site local fields and computes the FIM in that parameterization — but for **inference quality / parameter estimation**, not for thermal phase-transition spectroscopy. The mathematical object (N-dim FIM over per-site $h_i$) exists in that literature. Whether anyone has taken that FIM, computed its eigenvalue spectrum, and tracked spectrum observables across a thermal phase transition to discriminate transition order remains unchecked. **This is the single remaining meaningful open vector for the CCA novelty claim.**
+
+**Priority 4 — Participation ratio as FIM observable:**
+
+- Standard in neural-network FIM analysis (Karakida, Akaho, Amari 2019, arXiv:1910.05992). No confirmed prior art for participation ratio of a statistical-mechanics lattice-model FIM at criticality. **Negative result on direct search.**
+
+**Priority 5 — "Sloppy gravity" / sloppy models and emergent spacetime:**
+
+- Nothing substantive found. No cross-over between sloppy-model vocabulary and gravity derivations in the literature the agent could access. The Fisher-gravity chain remains, per the main M0 body, a conceptual analogy — not supported by any prior art bridging sloppy models to gravity.
+
+### Final CCA calibration (post-primary-source + targeted search)
+
+**Established prior art for the general setting:**
+- **Machta, Chachra, Transtrum, Sethna 2013** — FIM eigenvalue spectrum on Ising at criticality, sloppy/stiff hierarchy with RG-relevant directions as stiff subspace. Foundational reference. **P5 and the DFIG "Fisher rank as effective dimensionality" framing must cite this as the originating application.**
+- **Raju-Machta-Sethna** — FIM flow under RG. Extends Machta 2013. Related but not covering CCA.
+- **Quinn et al. 2023** — modern synthesis of sloppy models / information geometry. Does not cover CCA.
+- **Brown-Bossomaier-Barnett 2022** — transfer-entropy analysis of first-order Potts. Thematically adjacent (information-theoretic discrimination of Potts transition order) but uses a different mathematical object. **The CCA docs should cite this paper explicitly as prior work in the broader theme.**
+
+**Not prior art (confirmed):**
+- Janke-Johnston-Kenna 2004 (scalar curvature of 2×2 metric — M0 first addendum correction stands)
+- Prokopenko-Lizier 2011 (FIM elements on thermodynamic-parameter FIM, not eigenvalue spectrum, not per-site fields)
+- Brody-Hook / Crooks thermodynamic length (scalar path integral, not spectrum)
+
+**Remaining unchecked open vector:**
+- **Inverse-Ising / maxent-neural literature** (Mora, Bialek, Tkačik, Cocco, Monasson). This community routinely computes FIM on per-site $h_i$ parameterization but typically for inference quality, not thermal phase-transition spectroscopy. A direct check of whether anyone in that lineage has tracked spectrum observables across a thermal transition remains outstanding. **This is the one place where prior art could still surface.** The owner should either do this search personally or request a third targeted agent pass focused specifically on this vector.
+
+### Honest novelty status of the CCA construction
+
+Given what is now known:
+
+1. **"FIM eigenvalue spectrum on Ising at criticality reveals a stiff/sloppy hierarchy"** — **Established prior art** (Machta 2013). Not a CCA contribution.
+
+2. **"Per-site local field parameterization of the FIM on a lattice spin model"** — **not found in the lattice-physics literature searched**, but **the inverse-Ising community routinely uses this parameterization for inference purposes.** Genuine novelty in the lattice-physics context depends on whether the inverse-Ising community has applied it to thermal phase transitions. Unchecked.
+
+3. **"Scalar $d_{\text{eff}}$ participation ratio and $\eta$ isotropy observables tracked across temperature"** — **no confirmed prior art found** in any of the searched literatures. Possible narrow methodological contribution, modulo the inverse-Ising gap.
+
+4. **"First-order vs continuous discrimination via the $d\eta/dT$ magnitude (~20×) and curve shape signature"** — **no confirmed prior art for this specific discriminator.** The Brown-Bossomaier-Barnett 2022 paper is the closest: same motivating question (information-theoretic discrimination of Potts transition order) but different mathematical object (transfer entropy, not FIM). **If novelty survives the inverse-Ising check, this specific discriminator is the most defensible candidate for genuine narrow contribution** — and even then it is one test (q=2 vs q=10), and per the charter a single test is not sufficient to promote beyond Speculative.
+
+### Revised CCA status
+
+- **CCA framework as a general approach**: **Supported as a concrete specialization** of the Sethna-Machta sloppy-models program to lattice phase transitions via (a) per-site field parameterization and (b) scalar spectrum observables. Not novel as a general idea; cites Machta 2013 as foundational.
+- **CCA-1c (curve shape distinguishes transition order)**: **Speculative**, qualitatively supported by one test. **Possibly-narrow-novel as a specific discriminator, pending (i) inverse-Ising literature check, and (ii) second test (q=3 vs q=5 Potts) before any promotion.**
+- **CCA-1 and CCA-1b L^d scaling**: **FALSIFIED** (unchanged).
+- **Prior art citations CCA docs must add**: Machta 2013 (foundational); Raju-Machta-Sethna (RG extension); Quinn et al. 2023 (modern synthesis); Brown-Bossomaier-Barnett 2022 (thematically adjacent first-order Potts information-theoretic analysis); Amari & Nagaoka 2000 (standard information geometry reference).
+
+### What this means for next experiments
+
+**Before running any new experiments** (q=3 vs q=5 Potts, XY/BKT, etc.), the minimum requirement is:
+
+1. **Close the inverse-Ising gap.** Either via a targeted search of Mora/Bialek/Tkačik and Cocco/Monasson work, or by the owner personally skimming a representative paper from that community to check whether per-site field FIM eigenvalue spectroscopy has been applied to thermal phase transitions. This is ~2-3 hours of focused work.
+2. **Read the Brown-Bossomaier-Barnett 2022 paper.** Direct thematic overlap; even if it's a different object, it will inform how to position CCA in the information-theoretic-phase-transition landscape.
+3. **Update the CCA docs** with the Machta 2013 citation and the confirmed non-coverage by Machta, Raju, Quinn, and the thematic-adjacency note for Brown-Bossomaier-Barnett.
+
+After those three steps, if no additional prior art is found covering per-site fields + temperature-sweep + spectrum observables + transition-order discrimination, then CCA-1c may be cautiously characterized as "a narrow methodological contribution within an established research program" — and then tested on q=3 vs q=5 as the next experimental step. If prior art is found, CCA-1c is absorbed into that prior work as a replication or extension.
+
+### Net effect on M0
+
+The harsh first-addendum posture ("CCA might restate JJK/Prokopenko-Lizier") was wrong in detail and has been corrected twice now. The primary-source verification and targeted search together produce this honest position:
+
+**CCA's general setting (sloppy models applied to lattice phase transitions) is Machta 2013. CCA's specific construction (per-site fields + d_eff/η + temperature sweep + transition-order discrimination) has no confirmed prior art in the searched literatures, with one remaining unchecked vector (inverse-Ising / maxent). It may be a genuine narrow methodological contribution, or it may replicate unchecked prior work. Novelty status is "pending final check, cautiously optimistic."**
+
+This is the third iteration of the CCA calibration in a single M0 session, and the progressive sharpening is exactly what the charter's "verify the object, not the summary" rule is designed to produce. The next iteration of this calibration should not happen until (a) the inverse-Ising gap is closed and (b) at least one additional experiment (q=3 vs q=5) is run.
+
+**No other M0 findings were affected by the primary-source reading or the targeted search.** DFIG-as-sloppy-models-reparameterization (Machta 2013 is now the confirmed primary reference) stands. Fisher-gravity chain as analogy stands (the targeted search found no sloppy-gravity bridge literature). P17 as high-risk speculation stands.
+
+---
+
+## Third Addendum: Inverse-Ising / Maxent Gap Closure (2026-04-08, same-day)
+
+Under the recommendation from the second addendum, a third targeted agent search was run focused specifically on the inverse-Ising / maximum-entropy-model / neural-criticality community — the one open prior-art vector remaining after the second addendum. This community routinely parameterizes Fisher information matrices by per-site local fields $h_i$ for inference purposes, so it was the most plausible remaining location for prior art covering CCA's specific construction.
+
+### Researchers searched
+
+Targeted publication-record search across: **Thierry Mora, William Bialek, Gašper Tkačik, Simona Cocco, Rémi Monasson, Martin Weigt, John Hertz, Erik Aurell, Elad Schneidman, Michael Berry II**, plus generic phrase-space search on inverse-Ising, direct coupling analysis, maxent neural models, Boltzmann machine learning, and thermodynamic-integration inference methods.
+
+### Findings
+
+**Closest adjacent hit (neural criticality lineage):**
+
+- **Tkačik, Marre, Mora, Amodei, Schneidman, Berry, Bialek** — *"Thermodynamics for a network of neurons: Signatures of criticality,"* **PNAS 112, 11508 (2015)**, arXiv:1407.5946. This is the canonical "retinal populations near criticality" paper. The construction: fit a pairwise maximum-entropy model to $N \leq 160$ retinal neurons, then do thermodynamic integration by rescaling inferred couplings with a fictitious inverse temperature $\beta$ and trace the heat capacity $C(\beta)$. Peak is found near $\beta=1$.
+- **What they do that is similar to CCA**: sweep a temperature-like parameter across a (putative) critical point; track an information-theoretic observable; observe a peak structure at criticality.
+- **What they do not do**: compute FIM eigenvalue spectrum, define participation ratio or isotropy observable, discriminate transition orders. Their observable is heat capacity / specific heat, not FIM spectrum.
+- **Verdict**: thematically adjacent, **not prior art** for CCA's specific construction. Must be cited in CCA docs as the closest work in the neural-criticality subliterature.
+
+**Inverse-Ising inference-quality lineage:**
+
+- **Nguyen, Zecchina, Berg** — *"Inverse statistical problems: from the inverse Ising problem to data science,"* **Advances in Physics 66, 197 (2017)**, arXiv:1702.01522. Uses susceptibility $\chi$ (= FIM on couplings and fields) and $\chi^{-1}$ to bound inference error. **Discusses FIM eigenvalue hierarchy as an identifiability / sloppiness diagnostic for inferred parameters**, not as a probe tracked across a transition.
+- **Verdict**: Uses FIM eigenvalue structure, but for inference quality — not for phase-transition spectroscopy. **Not prior art** for CCA's specific construction.
+
+**Most recent candidate checked directly:**
+
+- **arXiv:2507.02574 (2025)** — *"Learning and Testing Inverse Statistical Problems For Interacting Systems Undergoing Phase Transition."* This paper covers Ising, vector Potts, Blume-Capel across phase transitions using ML, pseudo-likelihood, and mean-field inference methods — a maximally plausible direct hit on title. **Verified via direct abstract fetch**: the paper is about **inference-method performance comparison** across transitions (which inference algorithm recovers parameters best in which regime), **not about FIM eigenvalue spectrum analysis**. Abstract makes no mention of participation ratio, isotropy indicator, spectrum tracking, or transition-order discrimination via FIM observables.
+- **Verdict**: Not prior art. Different research question. **Residual risk**: owner should spot-check the methods section personally if they want certainty, but the abstract framing makes it highly unlikely to contain the CCA construction.
+
+**Genre collision noted (not prior art but worth mentioning):**
+
+- **Quantum Fisher information (QFI) across quantum phase transitions** — there is a substantial literature (PRA 82, 022306; arXiv:1509.01739; arXiv:2211.00813 and others) computing QFI for the transverse-field Ising, Dicke, LMG, and related models as a function of a global parameter (temperature, field, or coupling) across a critical point. **These use QFI with respect to a single global parameter (scalar output) on quantum states**, not a per-site-field FIM matrix spectrum on classical lattice configurations. Different mathematical object, different parameterization. But "Fisher information across a phase transition" is an already-populated phrase in a related literature, and the owner should cite this as a prior-art adjacency when positioning CCA — a reviewer would bring it up.
+
+**Participation-ratio-on-FIM spectrum genre**:
+
+- Participation ratio as an FIM-spectrum observable is standard in the **deep-network FIM literature** (Karakida, Akaho, Amari 2019; Pennington-Worah follow-ups). The owner's $d_\text{eff} = (\sum\lambda)^2 / \sum\lambda^2$ is mathematically identical to observables from that literature transplanted to spin systems. If the owner ever positions $d_\text{eff}$ as a novel observable, this transplant history must be cited: the observable is not new, the *application* to lattice-spin FIMs possibly is.
+
+### Bottom line (third addendum)
+
+**Status: NO direct prior art found for CCA's specific construction, with moderate confidence.**
+
+After three iterations of the audit (harsh first pass → follow-up correction → primary-source reading → targeted Sethna-group search → targeted inverse-Ising/maxent search), the following is the honest status:
+
+- **Confirmed prior art for the general setting**: Machta-Chachra-Transtrum-Sethna 2013 (FIM eigenvalue spectrum on Ising at criticality; global couplings, no temperature sweep, no Potts, no transition-order discrimination)
+- **Confirmed adjacent work in three distinct literatures**:
+  1. Sloppy-models lineage (Sethna group, Raju, Quinn) — same FIM-spectrum-of-physical-model setting, different parameterization, no CCA coverage
+  2. Neural-criticality lineage (Tkačik-Mora-Bialek 2015) — thermodynamic integration across criticality via heat capacity, not FIM spectroscopy
+  3. Inverse-Ising inference lineage (Nguyen-Zecchina-Berg, Cocco-Monasson) — FIM eigenvalue hierarchy for inference quality, not phase-transition spectroscopy
+  4. Quantum Fisher information lineage (various) — scalar QFI vs global parameter, not per-site-field matrix spectrum
+  5. Deep-network FIM lineage (Karakida, Pennington) — participation ratio as observable, transplantable to spin systems but not done
+  6. Transfer-entropy first-order Potts (Brown-Bossomaier-Barnett 2022) — same motivating question, different mathematical object
+
+- **No confirmed prior art** for the specific combination: per-site local field parameterization + $d_\text{eff}$/$\eta$ scalar observables + temperature sweep + first-order-vs-continuous Potts discrimination
+
+### Residual risks (what "moderate confidence" means)
+
+Three specific gaps remain that the agent could not close:
+
+1. **Supplementary materials** of the Tkačik/Mora/Bialek 2012–2020 neural-criticality papers were not exhaustively checked. A supplementary figure computing FIM eigenvalue dispersion across $\beta$ in a retinal maxent model is technically possible and would collapse the novelty claim.
+2. **Non-English-language literature** (Chinese, Japanese, Russian, and pre-2005) is under-indexed in the searches performed.
+3. **Direct expert correspondence**: a direct email query to Mora, Tkačik, Nguyen, or another senior researcher in the community asking "has anyone done per-site-field FIM eigenvalue spectroscopy across thermal transitions?" would give a better answer than any amount of web searching. This is owner-action, not agent work.
+
+### Final CCA calibration (after three audit iterations)
+
+- **CCA general framework (FIM spectroscopy on lattice phase transitions)**: **Supported as a concrete specialization** of the Machta-Sethna sloppy-models program. Not novel as a general idea. Must cite Machta 2013 as foundational.
+
+- **CCA-specific construction** (per-site field parameterization + $d_\text{eff}$/$\eta$ tracked across $T$ + transition-order discriminator via $d\eta/dT$ magnitude and curve shape): **possibly narrow-novel** — no confirmed prior art across three targeted searches. **Status: "Cautiously speculative-positive"** — methodological novelty is plausible, but charter rule prohibits promoting above Speculative without (i) a second independent test (q=3 vs q=5 Potts) and (ii) ideally a direct expert verification.
+
+- **CCA-1c (curve shape discriminates transition order)**: **Speculative.** Single test (q=2 vs q=10). Consistent with no prior art the audit could find. **Candidate for genuine narrow contribution** but blocked on the charter's "single test is not support" rule.
+
+- **CCA-1 (isotropy = criticality)** and **CCA-1b L^d scaling**: **FALSIFIED.** Unchanged.
+
+- **Quantum Fisher information lineage** must be cited as prior-art adjacency when positioning CCA externally, even though it uses a different mathematical object. Reviewers will bring it up.
+
+### Required citations for CCA docs (final, after all three addenda)
+
+Any CCA document making a claim about FIM-based phase-transition analysis **must** cite:
+
+1. **Machta, Chachra, Transtrum, Sethna**, *Science* 342, 604 (2013); arXiv:1303.6738 — **foundational**, FIM spectrum on Ising at criticality
+2. **Raju, Machta, Sethna** — "Information geometry and the renormalization group" — **extension** of Machta 2013
+3. **Quinn, Abbott, Transtrum, Machta, Sethna**, *Rep. Prog. Phys.* 86, 035901 (2023) — **modern synthesis** of the program
+4. **Tkačik, Marre, Mora, Amodei, Schneidman, Berry, Bialek**, *PNAS* 112, 11508 (2015); arXiv:1407.5946 — **neural criticality via thermodynamic integration**, closest adjacent work in a different community
+5. **Nguyen, Zecchina, Berg**, *Adv. Phys.* 66, 197 (2017); arXiv:1702.01522 — **inverse Ising inference** using FIM eigenvalue hierarchy
+6. **Brown, Bossomaier, Barnett**, *Sci. Rep.* 12 (2022); arXiv:1810.09607 — **transfer-entropy first-order Potts**, thematically closest work to CCA-1c
+7. **Amari & Nagaoka**, *Methods of Information Geometry* (AMS 2000) — **standard info-geometry reference**
+8. **Karakida, Akaho, Amari**, "Universal Statistics of Fisher Information in Deep Neural Networks" (2019); arXiv:1910.05992 — **participation-ratio-on-FIM-spectrum precedent** in deep learning
+9. **Quantum Fisher information lineage** (at least 1-2 representative papers, e.g., arXiv:1509.01739) — **genre adjacency** for "Fisher information across a phase transition"
+
+### What this means for next CCA experimental work
+
+Per charter rule "Mode B depends on Mode A" (no experiments on ungrounded foundations), the minimum preconditions for running q=3 vs q=5 Potts or any other CCA experiment are:
+
+1. **Add the 9 citations above to CCA_MATHEMATICAL_FORMALIZATION.md main body** (not just the header note)
+2. **Read Brown-Bossomaier-Barnett 2022** — closest adjacent work; understanding it will sharpen how CCA-1c is positioned
+3. **Optional but recommended: read Tkačik 2015 supplementary materials** — closes the highest residual risk on the novelty claim
+4. **Optional but highest-value: a direct email query** to Mora, Tkačik, Nguyen, or a similar senior researcher asking about per-site-field FIM eigenvalue spectroscopy on thermal transitions. Owner action.
+
+If all four are done and no additional prior art surfaces, CCA-1c can be characterized in the next experimental writeup as "a narrow methodological contribution within the Machta-Sethna sloppy-models program, with no confirmed prior art across three targeted searches but with one residual expert-correspondence gap." This is the maximum honest novelty claim the audit supports.
+
+### Meta-note on the M0 audit process
+
+This audit iterated three times in a single session: harsh first pass → corrected follow-up → primary-source verification with two additional targeted searches. The CCA novelty calibration went: **"already done 20 years ago"** → **"partial prior art Machta 2013, pending owner confirmation"** → **"confirmed prior art for general setting, no confirmed prior art for specific construction with one open vector"** → **"no confirmed prior art across three targeted searches, moderate confidence, residual risks named explicitly."**
+
+Each iteration sharpened the claim by replacing agent-summarized verdicts with primary-source facts. The charter's "push back on your own work" and "verify the object, not the summary" rules directly produced this progression. A single-pass audit would have left the wiki in a substantially wrong state — either "this has all been done" (the first pass's posture) or "this is novel" (the default AI posture without an epistemic contract). The three-iteration result is neither — it is a specific, grounded, calibrated claim about what is known, what is adjacent, and what is genuinely open.
+
+**This is the M0 calibration. Further sharpening requires either owner action (primary-source reading, direct expert correspondence) or new experimental evidence (second independent test of CCA-1c).** No further audit iterations are productive without one of those inputs.
+
+
+

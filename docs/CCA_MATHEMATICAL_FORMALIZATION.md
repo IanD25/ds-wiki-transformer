@@ -1,3 +1,34 @@
+> **⚠️ M0 AUDIT — FINAL STATE (2026-04-08, after primary-source reading + targeted search):**
+>
+> **Confirmed prior art** (must be cited in this document):
+> - **Machta, Chachra, Transtrum, Sethna**, "Parameter Space Compression Underlies Emergent Theories and Predictive Models," *Science* **342**, 604 (2013); arXiv:1303.6738. **Foundational.** FIM eigenvalue spectrum on 2D Ising at criticality with stiff/sloppy hierarchy where stiff directions correspond to RG-relevant operators. Uses ~10-dim global coupling parameters ($\theta^{\alpha\beta}$), analyzed at $T_c$ under checkerboard coarsening — not per-site fields, not temperature sweep, not Potts, not transition-order discrimination.
+> - **Raju, Machta, Sethna**, "Information geometry and the renormalization group" — extends Machta 2013 with FIM flow under RG. Still global couplings; does not cover CCA's specific construction.
+> - **Quinn, Abbott, Transtrum, Machta, Sethna**, "Information geometry for multiparameter models," *Rep. Prog. Phys.* **86**, 035901 (2023). Modern synthesis. Verified does not cover Potts, first-order transitions, per-site fields, temperature sweeps, or participation-ratio/isotropy scalars.
+> - **Brown, Bossomaier, Barnett**, "Information flow in first-order Potts model phase transition," *Sci. Rep.* **12** (2022); arXiv:1810.09607. **Thematically adjacent:** same motivating question (information-theoretic discrimination of first-order Potts transitions) but uses **global transfer entropy**, not FIM eigenvalue spectrum. Different mathematical object. Must be cited as closest adjacent work.
+> - **Amari & Nagaoka**, *Methods of Information Geometry* (AMS 2000). Standard reference.
+>
+> **Confirmed NOT prior art** (M0 first addendum correction stands):
+> - Janke-Johnston-Kenna 2004 (scalar curvature of 2×2 Fisher-Rao metric — different object)
+> - Prokopenko-Lizier 2011 (FIM elements on thermodynamic parameterization — not spectrum, not per-site)
+> - Brody-Hook / Crooks thermodynamic length (scalar path integral — not spectrum)
+>
+> **Inverse-Ising / maxent gap closed (third addendum):**
+> - **Tkačik, Marre, Mora, Amodei, Schneidman, Berry, Bialek**, *PNAS* **112**, 11508 (2015); arXiv:1407.5946 — thermodynamic integration via fictitious $\beta$ in a retinal-neuron maxent model, traces heat capacity $C(\beta)$ and finds peak near $\beta=1$. **Closest adjacent work in the neural-criticality lineage.** Not FIM eigenvalue spectroscopy; must be cited as adjacent.
+> - **Nguyen, Zecchina, Berg**, *Adv. Phys.* **66**, 197 (2017); arXiv:1702.01522 — uses FIM eigenvalue hierarchy as inference-identifiability diagnostic, not as phase-transition probe. Not prior art.
+> - **arXiv:2507.02574** (2025) — inverse-inference performance comparison across Ising/Potts/Blume-Capel transitions, **verified not FIM spectroscopy** (abstract-level check).
+> - **Quantum Fisher information literature** — scalar QFI vs single global parameter across quantum critical points; different mathematical object, same genre phrase. Must cite as prior-art adjacency.
+> - **Negative result on per-site-field FIM spectroscopy across thermal transitions** in the inverse-Ising / maxent / neural-criticality community searched.
+>
+> **Residual risks remaining** (prevent moving from "moderate confidence" to "high confidence"): Tkačik 2015 supplementary materials not exhaustively checked; non-English literature under-indexed; direct expert correspondence (Mora / Tkačik / Nguyen) not attempted.
+>
+> **Final honest novelty status of the specific CCA construction** (per-site fields + $d_{\text{eff}}$/$\eta$ scalar observables + temperature sweep + first-order-vs-continuous discriminator): **NO confirmed prior art across three targeted searches with moderate confidence.** Possibly narrow-novel methodological contribution within the Machta-Sethna sloppy-models program. Charter rule prohibits promoting above Speculative without (i) a second independent test beyond q=2 vs q=10 and (ii) ideally direct expert verification.
+>
+> **CCA-1 and CCA-1b L^d scaling are FALSIFIED.** CCA-1b magnitude and CCA-1c curve shape are qualitatively supported on a single Potts q=2 vs q=10 comparison only; charter rule prohibits promotion above Speculative without additional independent tests.
+>
+> **Before any further CCA experimental or conjecture work:** (1) close the inverse-Ising gap, (2) read Brown-Bossomaier-Barnett 2022, (3) incorporate the confirmed prior-art citations into this document's main body. See `docs/M0_MILESTONE_COMPILATION.md` Second Addendum for the full reasoning.
+
+---
+
 # Constrained Critical Attractor: Mathematical Formalization
 
 > **Status:** Working formalization with empirical grounding

@@ -1,5 +1,11 @@
+> **⚠️ PARTIALLY SUPERSEDED 2026-04-08.** This document predates the research-platform reset.
+> The **active anchor** is `docs/RESEARCH_PLATFORM_CHARTER.md`, then `CLAUDE.md`, then the latest session handover.
+> This document remains useful for **technical history** (what was built, when, why) but any "mission," "product," "Phase 3+," or "PFD diagnostic" framing here is retired. Treat as legacy narrative.
+
+---
+
 # DS Wiki Transformation — Master Summary
-**The definitive re-entry document. Read this at the start of any new session.**
+**Legacy technical narrative. For current mission, read `docs/RESEARCH_PLATFORM_CHARTER.md`.**
 
 **Last Updated**: 2026-03-11 (Session 6)
 **Status**: Fisher Diagnostic Suite Phases A–F complete. **Full 6-step PFD pipeline operational.** E. coli ingestion complete. 403 tests passing. PFD Score smoke test: 0.973/1.000 on ecoli_core.

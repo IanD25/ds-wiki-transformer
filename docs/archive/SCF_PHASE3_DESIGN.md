@@ -1,3 +1,8 @@
+> **⚠️ ARCHIVED 2026-04-08.** Phase 3 (paper analysis pipeline) has been retired along with the PFD product framing.
+> See `docs/RESEARCH_PLATFORM_CHARTER.md` for the active mission. Historical reference only.
+
+---
+
 # Semantic Channel Finding (SCF) — PFD Phase 3 Design
 
 **Document Version:** 1.0
