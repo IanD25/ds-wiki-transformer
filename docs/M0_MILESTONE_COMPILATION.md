@@ -495,5 +495,133 @@ Each iteration sharpened the claim by replacing agent-summarized verdicts with p
 
 **This is the M0 calibration. Further sharpening requires either owner action (primary-source reading, direct expert correspondence) or new experimental evidence (second independent test of CCA-1c).** No further audit iterations are productive without one of those inputs.
 
+---
+
+## Fourth Addendum: Primary-Source Reading (2026-04-08, same day)
+
+The owner obtained and provided four primary-source PDFs from his `Research_Papers/` folder: Machta-Chachra-Transtrum-Sethna 2013 Science (already covered in the Second Addendum), Transtrum et al. 2015 J. Chem. Phys. perspective, Mattingly-Transtrum-Abbott-Machta 2018 PNAS (bonus), Brown-Bossomaier-Barnett 2022 Sci. Rep., and Quinn-Abbott-Transtrum-Machta-Sethna 2023 Rep. Prog. Phys. All four were read in full (or to the end of technical content for the 60-page Quinn 2023 review).
+
+This closes the audit's highest-residual-risk vectors via direct primary-source verification rather than agent summarization.
+
+### Summary table of primary-source findings
+
+| Paper | Uses FIM eigenvalue spectrum? | Per-site fields? | T-sweep primary axis? | Potts? | Transition-order discrimination? | Covers CCA construction? |
+|---|---|---|---|---|---|---|
+| Machta 2013 Science | ✓ | ✗ (global couplings) | ✗ (coarsening) | ✗ (Ising) | ✗ | ✗ |
+| Transtrum 2015 JCP | discussed via Machta | ✗ | ✗ | ✗ | ✗ | ✗ |
+| Mattingly 2018 PNAS | ✗ (uses optimal prior atoms) | ✗ (exp decay model) | ✗ | ✗ | ✗ | ✗ |
+| Brown-Bossomaier-Barnett 2022 Sci. Rep. | ✗ (uses transfer entropy) | ✗ (global states) | ✓ | ✓ (q=2,5,7,10) | ✓ | ✗ (different object) |
+| Quinn 2023 Rep. Prog. Phys. | ✓ | ✗ (global couplings) | ✗ | ✗ | ✗ | ✗ |
+
+**No paper in the four primary sources covers CCA's specific construction.** The construction (per-site fields + $d_\text{eff}$/η scalar observables + T-sweep + transition-order discrimination via $d\eta/dT$ magnitude and curve shape) remains cautiously-possibly-narrow-novel, confirmed now by direct reading rather than agent summary.
+
+### Important finding 1: Mattingly 2018 defines $d_\text{eff}$ with a different formula — mandatory citation
+
+**Mattingly, Transtrum, Abbott, Machta**, *"Maximizing the information learned from finite data selects a simple model,"* **PNAS 115, 1760 (2018)**, arXiv:1705.01166.
+
+This paper is in the Sethna lineage (Transtrum and Benjamin Machta are co-authors). Its topic is maximally informative priors on sloppy-model parameter manifolds. In Figure 4C and surrounding text, **the paper defines a scalar "effective dimensionality" observable**:
+
+$$d_\text{eff} = \sum_{r=1}^{D} r \cdot \Omega_r$$
+
+where $\Omega_r$ is the total weight of the optimal discrete prior $p_\star(\theta)$ on edges of dimension $r$ of the parameter manifold. As the measurement noise $\sigma$ decreases (more data), this $d_\text{eff}$ grows smoothly from 0 toward the full parameter-space dimension $D$, corresponding to weight migrating from lower-dimensional boundaries into the interior.
+
+**This is a different formula from CCA's $d_\text{eff}$**:
+
+| | Mattingly 2018 $d_\text{eff}$ | CCA $d_\text{eff}$ |
+|---|---|---|
+| **Formula** | $\sum_r r \cdot \Omega_r$ | $(\sum_i \lambda_i)^2 / \sum_i \lambda_i^2$ |
+| **Object** | Weights of optimal maximally informative discrete prior on manifold boundaries | Participation ratio of FIM eigenvalue spectrum |
+| **What grows** | Data quality (smaller σ) → weight migrates inward | Smaller λ₂/λ₁ ratio → more isotropic spectrum |
+| **Used on** | Sum-of-exponentials, Bernoulli coin, Gaussian measurement | 2D Ising / Potts lattice at various T |
+
+The two observables are computationally and conceptually different, but **both are called "$d_\text{eff}$" in the sloppy-models community, and both measure "how many effective dimensions are operational"**. Mattingly 2018 is five years earlier and comes from the authoritative lineage.
+
+**Mandatory action:** when CCA is written up (even just in `CCA_MATHEMATICAL_FORMALIZATION.md` main body), Mattingly 2018 **must** be cited, and the distinction between Mattingly's $d_\text{eff}$ and CCA's $d_\text{eff}$ must be drawn explicitly. Failing to do this will produce confused readers and a legitimate prior-art challenge. This is a **citation miss**, not a novelty challenge — the formulas are different — but citing the prior usage of the terminology is basic scholarly hygiene.
+
+### Important finding 2: Brown-Bossomaier-Barnett 2022 is more relevant than the audit assumed
+
+**Brown, Bossomaier, Barnett**, *"Information flow in first-order Potts model phase transition,"* **Sci. Rep. 12, 15145 (2022)**, arXiv:1810.09607.
+
+Read in full. Key facts:
+
+- **Uses Global Transfer Entropy (GTE)**, not FIM. Confirmed different mathematical object from CCA.
+- **Studies Potts q = 2, 5, 7, 10** — directly overlaps the CCA Phase C/D comparison (q=2 vs q=10). The q=5 and q=7 cases are exactly the "second test" CCA needs per the charter's "single test is not support" rule.
+- **Key empirical findings:**
+  - For **continuous** transitions (q=2 Ising): GTE peaks on the disordered side, peak location stays stable above T_c as L increases.
+  - For **first-order** transitions (q=5, 7, 10): GTE peaks on the disordered side, but peak location converges toward T_c as q and L increase, and the curve shows a sharp jump.
+  - **The curve-shape difference** (smooth stable peak vs converging peak with sharp jump) is qualitatively similar to what CCA-1c claims for η(T).
+- **Physical mechanism (Eqs. 5-6 in their paper):** $G \propto \sum_c p(c) L_c$ where $L_c$ is the average interfacial length of clusters of size $c$. Information flows at cluster boundaries. At high T, clusters are small and thermal noise dominates; at low T, one dominant cluster has shrinking internal holes so interfacial length falls; the peak sits in between on the disordered side. **Average interfacial length matches GTE behavior across all q and L tested (their Fig. 3).** This is a simple, testable physical mechanism.
+
+**Implications for CCA:**
+
+1. **The broader research program — "information-theoretic early warning / discrimination of first-order Potts transitions" — is not CCA's contribution.** Brown et al. published it in arXiv 2018, Sci. Rep. 2022. CCA's motivation is in their shadow.
+
+2. **CCA-1c's curve-shape claim is in the same family of observations** as Brown et al.'s GTE-shape-difference claim. CCA's specific observable (η derived from FIM spectrum) may be a methodological variant, but the **observation** "information-theoretic quantities distinguish Potts transition order via curve shape" is Brown et al.'s.
+
+3. **Brown et al. have a transparent physical mechanism (interfacial length) that CCA currently lacks.** This is a real gap. The owner should explicitly ask: *"Can CCA's $d_\text{eff}(T)$ and $\eta(T)$ behavior be explained via cluster interfacial geometry, or is it measuring something structurally different from transfer entropy and interfacial length?"* This is the single highest-leverage scientific question the audit has surfaced. If the answer is "yes, interfacial length explains both," then CCA is a Fisher-geometric restatement of Brown et al.'s result, and its contribution is methodological only (same observation, different calculation path). If the answer is "no, CCA measures something different," then CCA captures a genuinely different aspect of the transition, and its contribution is both methodological and phenomenological.
+
+4. **The q=3 vs q=5 test the charter prescribes can be sharpened.** Instead of just running q=3 vs q=5, the owner should replicate Brown et al.'s q=2, 5, 7, 10 comparison with FIM observables and **check whether the curve-shape/peak-location behavior tracks GTE or diverges from it.** If they track, this is strong evidence that both observables are proxies for the same underlying physics (interfacial length). If they diverge, CCA captures something different and the novelty claim strengthens.
+
+5. **Brown et al. must be cited prominently in any CCA writeup**, not just as "thematically adjacent." The honest framing is: *"The CCA construction extends the broader information-theoretic program for discriminating first-order Potts transitions initiated by Brown, Bossomaier, and Barnett (2018/2022) from transfer entropy to Fisher information matrix spectrum observables."*
+
+### Important finding 3: Quinn 2023 admits Ising is not sloppy
+
+In Quinn 2023 Section 8.2 ("Understanding emergent low-dimensional behaviors"), the authors explicitly write:
+
+> *"The Ising model is not sloppy, and has no beautiful emergent theory, unless one only cares about long length and time scales."*
+
+This is a tacit acknowledgment that at the microscopic level — 2 parameters (temperature-like and field-like) — Ising isn't even in the sloppy regime. Sloppiness in Ising only emerges under coarse-graining (Machta 2013's demonstration).
+
+**Implication for DFIG / P5:** The Sethna lineage's own view is that **Ising at its microscopic parameterization is NOT a sloppy model**. The P5 claim "Fisher Rank = D_eff" as applied to Ising is not well-positioned as "applying sloppy models to Ising" because Ising microscopically isn't sloppy. What Machta 2013 actually demonstrated is that **under coarse-graining, Ising becomes sloppy in the RG-relevant/irrelevant sense**. P5's geometric-systems applications (tori, random graphs, random geometric graphs) may be closer to "applying the sloppy-model framework to a different class of models entirely" than to "applying Machta 2013's specific Ising result."
+
+**Action:** P5's rationale in the calibration table should note this. The downgrade stays Supported-as-application, but the "application of what, to what" needs more careful phrasing than the previous audit rounds used.
+
+### Important finding 4: The Raju reference is now confirmed
+
+From Quinn 2023 reference 39: **Raju, Machta, Sethna**, *"Information loss under coarse graining: A geometric approach,"* **Physical Review E 98, 052101 (2018)**, arXiv:1710.05787.
+
+This is the exact citation I could not verify in earlier audits. Now confirmed via primary source. The paper extends Machta 2013 by deriving the RG-flow equation for the FIM (Eq. 15 in Quinn 2023). Still global couplings, still no per-site fields, still no temperature sweep. Not prior art for CCA's specific construction, but the correct citation to use when referring to "FIM flow under RG" in the Sethna lineage.
+
+### Updated required-citations list for CCA docs (final, after primary-source reading)
+
+Any CCA document making a claim about FIM-based phase-transition analysis **must** cite:
+
+1. **Machta, Chachra, Transtrum, Sethna**, *Science* **342**, 604 (2013); arXiv:1303.6738 — **foundational**, FIM spectrum on Ising at criticality
+2. **Raju, Machta, Sethna**, *Phys. Rev. E* **98**, 052101 (2018); arXiv:1710.05787 — **RG flow of FIM**, extension of Machta 2013
+3. **Transtrum, Machta, Brown, Daniels, Myers, Sethna**, *J. Chem. Phys.* **143**, 010901 (2015); arXiv:1501.07668 — **framing** of sloppy-models program
+4. **Mattingly, Transtrum, Abbott, Machta**, *PNAS* **115**, 1760 (2018); arXiv:1705.01166 — **PRIOR USE of "$d_\text{eff}$" terminology** with a different formula; mandatory citation for terminology hygiene
+5. **Quinn, Abbott, Transtrum, Machta, Sethna**, *Rep. Prog. Phys.* **86**, 035901 (2023) — **modern synthesis**
+6. **Brown, Bossomaier, Barnett**, *Sci. Rep.* **12**, 15145 (2022); arXiv:1810.09607 — **closest adjacent work**, prior art for the broader research program, must be cited prominently (not as a footnote)
+7. **Tkačik, Marre, Mora, Amodei, Schneidman, Berry, Bialek**, *PNAS* **112**, 11508 (2015); arXiv:1407.5946 — **neural criticality via thermodynamic integration**, adjacent lineage
+8. **Nguyen, Zecchina, Berg**, *Adv. Phys.* **66**, 197 (2017); arXiv:1702.01522 — **inverse Ising FIM hierarchy for inference**, adjacent lineage
+9. **Amari & Nagaoka**, *Methods of Information Geometry* (AMS 2000) — standard reference
+10. **Karakida, Akaho, Amari**, arXiv:1806.01316 — **participation-ratio observable precedent** in deep-network FIM
+11. **Hauke, Heyl, Tagliacozzo, Zoller**, *Nature Physics* **12**, 778 (2016); arXiv:1509.01739 — **quantum Fisher information across critical points**, genre adjacency
+
+### Final calibration after primary-source reading
+
+The calibrations from the Third Addendum **are not changed** by the primary-source reading. The findings confirm them:
+
+- **CCA's general setting** (FIM spectrum on Ising at criticality) is Machta 2013. **Confirmed via primary source.**
+- **CCA's specific construction** (per-site fields + $d_\text{eff}$/η + T-sweep + transition-order discrimination) has **no confirmed prior art across four primary sources read in full + three targeted agent searches**. Status: **NO prior art found, moderate-to-good confidence** (upgraded from "moderate" in the Third Addendum).
+- **Mattingly 2018 is a terminology precedent for "$d_\text{eff}$"**, not a construction precedent. Different formula. Must cite.
+- **Brown-Bossomaier-Barnett 2022 is the prior art for the broader research program** (information-theoretic discrimination of first-order Potts transitions). CCA's contribution is at most a specific methodological variant within that program, using a different mathematical object.
+- **CCA needs a physical mechanism** comparable to Brown et al.'s interfacial-length explanation before the η/d_eff observables can be interpreted as anything more than correlates.
+- **The q=3 vs q=5 test should be extended to q=2, 5, 7, 10** (replicating Brown et al.'s q-sweep) and **directly compared against GTE values** if computable. This turns the "second test" into a meaningful cross-observable comparison rather than just a replication.
+
+### Owner actions after primary-source reading
+
+The following are now blocked on owner action (cannot be done by Claude):
+
+1. **Read Brown-Bossomaier-Barnett 2022 carefully.** Their interfacial-length physical mechanism is the most important scientific comparison point for CCA. Understanding it informs how to position CCA-1c honestly.
+2. **Decide on the mechanism question:** does CCA's $d_\text{eff}(T)$ and $\eta(T)$ measure something reducible to cluster interfacial geometry, or something structurally different? If you cannot answer this without running an experiment, the experiment is **run q=2, 5, 7, 10 Potts with FIM observables alongside a transfer-entropy computation, and compare curve shapes directly.**
+3. **Update CCA_MATHEMATICAL_FORMALIZATION.md main body** with the eleven required citations above and explicit discussion of how CCA relates to Brown et al. 2022 and how CCA's $d_\text{eff}$ relates to Mattingly 2018's.
+4. **Verify the Amendola 2024 and Cadoni 2023 citations for P17.** Still pending from Main M0.
+
+No additional audit iterations are productive. The prior-art question is now as closed as reasonable web-searching + primary-source reading can make it. Remaining uncertainty (non-English literature, Tkačik 2015 supplementary materials, direct expert correspondence) are owner-action items that do not change the calibration significantly.
+
+**M0 is complete after four addenda.** Next milestone (M1) should be written after: (a) the three required citations are added to CCA doc main bodies, (b) the owner has read Brown-Bossomaier-Barnett 2022 and answered the mechanism question, and (c) at least one new experiment has been run with the expanded q-value sweep or (if that is not run) one of the Speculative conjectures has been formally retired.
+
+
 
 
