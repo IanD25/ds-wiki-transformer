@@ -622,6 +622,187 @@ No additional audit iterations are productive. The prior-art question is now as 
 
 **M0 is complete after four addenda.** Next milestone (M1) should be written after: (a) the three required citations are added to CCA doc main bodies, (b) the owner has read Brown-Bossomaier-Barnett 2022 and answered the mechanism question, and (c) at least one new experiment has been run with the expanded q-value sweep or (if that is not run) one of the Speculative conjectures has been formally retired.
 
+---
+
+## Fifth Addendum: Deep-Research Pass on Open Questions (2026-04-08, same day)
+
+The owner directed Claude to execute deep research on the open questions left by the Fourth Addendum: (a) the Brown-Bossomaier-Barnett 2022 mechanism question for CCA, and (b) the Amendola 2024 + Cadoni 2023 citation verifications for P17/P23. Three parallel agent passes plus direct primary-source verification produced findings that **substantially update** the M0 calibration, including a major new prior-art identification and a terminology collision that must be addressed.
+
+### Finding 1: Amendola 2024 — VERIFIED but the "5σ" figure was a forecast, not a current result
+
+**Paper located and verified:** **Amendola, Rodrigues, Kumar, Quartin**, *"Constraints on cosmologically coupled black holes from gravitational wave observations and minimal formation mass,"* **MNRAS 528, 2377 (2024)**, DOI:10.1093/mnras/stae143, **arXiv:2307.02474**. Code: github.com/davi-rodrigues/CCBH-Numerics.
+
+**What the paper actually says:**
+- Uses 72 confident binary-BH events from the **GWTC-3 catalog** (LIGO O1+O2+O3). **Does NOT use O4** — O4 was still in progress at submission.
+- **Current-data results**: 2σ upper limits on k:
+  - **k < 2.1** (PLPP method, log-uniform delay-time prior)
+  - **k < 2.5** (direct method, log-uniform delay-time prior)
+  - **k < 1.1** (PLPP, with Ghodla 2023 corrected delay-time)
+- **Tension with k=3 from current GWTC-3 data is roughly 2.6–3.7σ depending on methodology**, NOT 5σ.
+- Authors' own conclusion (verbatim): *"the CCBH as proposed by Farrah et al. (2023b) is in strong tension with what we know about stellar progenitor BHs, but there still is an open parameter space where it can survive the present test."*
+- **The "5σ" figure DOES appear in the paper but is a forecast**, verbatim: *"For the forecast and k = 3, the rejection level goes beyond 5σ."* The forecast is for a future LVK run with ~250 additional events.
+
+**Verification verdict**: PARTIALLY VERIFIED. The citation is real. The qualitative direction (GW data disfavors k=3) is correct. The quantitative "5σ" framing in the wiki is **incorrect** — it conflates the paper's forecast with its current-data result.
+
+**Required correction to P17/P23**: replace "Amendola 2024 5σ rejection of k=3" with *"Amendola, Rodrigues, Kumar & Quartin 2024 (MNRAS 528, 2377; arXiv:2307.02474) place 2σ upper limits k < 2.1 (PLPP method, GWTC-3) on cosmologically-coupled BHs, in strong tension (~3σ) with k=3 but not ruling it out from current data; their forecast for ~250 additional events reaches >5σ rejection of k=3."*
+
+### Finding 2: Cadoni 2023 — VERIFIED with one wording caveat
+
+**Paper located and verified:** **Cadoni, Sanna, Pitzalis, Banerjee, Murgia, Hazra, Branchesi**, *"Cosmological coupling of nonsingular black holes,"* **JCAP 11 (2023) 007**, DOI:10.1088/1475-7516/2023/11/007, **arXiv:2306.11588**.
+
+**What the paper actually says (verbatim from abstract):**
+> *"We find that the leading contribution to the resulting growth of the BH mass (M_BH) as a function of the scale factor a stems from the curvature term, yielding M_BH ∝ a^k, with k=1. We demonstrate that such a linear scaling is **universal for spherically-symmetric objects**, and it is the only contribution in the case of **regular BHs**. For nonsingular horizonless compact objects we instead obtain an additional **subleading model-dependent term**."*
+
+**Key nuances the wiki entry currently misses:**
+1. The paper uses "**universal**" rather than "generic." k=1 is "the only contribution" only for **regular BHs**; for horizonless compact objects there's an additional model-dependent term.
+2. **Multi-author** (7 authors), not solo Cadoni.
+3. **The paper's own KS-distance analysis on the Farrah elliptical-galaxy sample actually prefers k=3 over their theoretical k=1.** They take this as evidence that BHs may be non-GR objects, not as confirmation of their theoretical prediction.
+4. The paper's conclusion: GR nonsingular BHs / regular BHs (with k=1 cosmological coupling) are **"unlikely to be the source of dark energy."**
+
+**Verification verdict**: VERIFIED with wording caveat. The k=1 prediction is real.
+
+**Required correction to P17/P23**: replace "Cadoni 2023 generic k=1 for nonsingular BH interiors" with *"Cadoni, Sanna, Pitzalis, Banerjee, Murgia, Hazra & Branchesi 2023 (JCAP 11, 007; arXiv:2306.11588) prove that k=1 is the universal leading-order cosmological-coupling prediction for spherically-symmetric regular (nonsingular) BHs in GR; their own KS analysis on the Farrah-Croker elliptical-galaxy sample prefers k=3 over k=1, which they interpret as possible evidence that astrophysical BHs are non-GR objects rather than as support for the Farrah-Croker scenario."*
+
+### Finding 3: MAJOR — CCA's prior-art surface is BROADER than the Fourth Addendum identified
+
+The deep-research literature scan on "FIM eigenvalue spectrum vs cluster interfacial geometry" produced a **substantial prior-art finding that requires updating the CCA calibration**.
+
+**The mathematical foundation (textbook, not novel):** For a 2D classical spin lattice (Ising or Potts) parameterized by per-site local fields $h_i$, the Fisher Information Matrix at $h=0$ equals the connected 2-point correlation matrix:
+
+$$F_{ij} = \frac{\partial^2 (-\log Z[h])}{\partial h_i \partial h_j}\bigg|_{h=0} = \langle s_i s_j \rangle - \langle s_i \rangle \langle s_j \rangle = \chi_{ij}$$
+
+**This is textbook stat mech.** The "FIM in CCA" is the connected susceptibility matrix — a century-old object. CCA's novelty (if any) cannot be in the use of this matrix, only in the specific scalar observables derived from its spectrum.
+
+**Newly identified prior art for the broader CCA program:**
+
+1. **Vinayak, Prosen, Buča, Seligman**, *"Spectral analysis of finite-time correlation matrices near equilibrium phase transitions,"* **Europhys. Lett. 108, 20006 (2014)**, **arXiv:1403.7218**.
+   - Proves analytically that the **eigenvalue density of the spatial correlation matrix at a phase transition is a power law derivable from the spatial correlation function**.
+   - Validated numerically on **2D Ising with Metropolis** dynamics.
+   - Off-criticality: semicircle-like / gapped spectrum. At criticality: power-law bulk.
+   - Establishes that **the power-law exponent of the spectral density is fixed by the standard η critical exponent of the correlation function** ($C(r) \sim r^{-(d-2+\eta)}$, so for 2D Ising η=1/4).
+   - **Does NOT compute participation ratio as a scalar tracker. Does NOT define η isotropy. Does NOT do Potts q>2. Does NOT discriminate first-order vs continuous.**
+   - **Verdict**: prior art for the **general approach** "FIM-of-Ising-spectrum-as-phase-transition-probe." CCA's specific observables may still be narrow-novel within this framework, but the framework itself is established.
+
+2. **Saberi, Saber, Moessner**, *"Interaction-correlated random matrices,"* **Phys. Rev. B 110, L180102 (2024)**, **arXiv:2503.03472**.
+   - Constructs random-matrix ensemble from **2D Ising Boltzmann factors**.
+   - Reports **bell-shaped bulk with universal heavy tail at criticality** vs **semicircle off-critical**.
+   - **Rescaled maximum eigenvalues used as order parameter** for ferromagnetic Ising transition.
+   - Extreme eigenvalue statistics become **Fréchet** at criticality (not Tracy-Widom).
+   - **Studies only Ising. Does NOT do Potts q>2. Does NOT use participation ratio. Does NOT discriminate transition orders.**
+   - **Notably co-authored by Saberi**, who is also the SLE/cluster-perimeter expert cited by Brown-Bossomaier-Barnett 2022. The same researcher works in both the cluster-geometry literature and the random-matrix-of-correlation literature.
+   - **Verdict**: Active 2024 publication in the **same broader research program** (correlation-matrix spectrum on 2D Ising as transition probe). Closer to CCA than Vinayak 2014 in "spectrum-vs-temperature as transition discriminator" framing.
+
+3. **Borgs & Chayes**, *"The covariance matrix of the Potts model: A random cluster analysis,"* **J. Stat. Phys. 82, 1235 (1996)**, **arXiv:adap-org/9411001**.
+   - **Rigorously connects** the **Potts connected covariance matrix** (= the FIM in CCA) to **Fortuin-Kasteleyn cluster representations**.
+   - Proves: in the ordered phase, eigenvalues are 0, $G_1(x-y)$ [simple], $G_2(x-y)$ [(q-2)-fold degenerate]. Eigenvalues are expressible via cluster connectivities and cluster covariances.
+   - Proves: one of the correlation lengths extracted from an eigenvalue equals the inverse decay rate of the **diameter** of finite FK clusters.
+   - **The closest mathematical bridge between the FIM-like spectrum and cluster geometry in Potts.**
+   - **Geometric object is cluster diameter, not cluster perimeter / interfacial length.** These scale the same way at criticality (both fractal) but are different observables.
+   - **Verdict**: Direct prior art for the relationship between Potts connected correlation matrix and cluster geometry. CCA cannot claim novelty in "linking Potts FIM to cluster geometry" — Borgs-Chayes did this rigorously 30 years ago.
+
+### Finding 4: Resolution of the Brown-Bossomaier-Barnett 2022 mechanism question
+
+**The mechanism question:** Can CCA's $d_\text{eff}(T)$ and $\eta_\text{CCA}(T)$ be explained via cluster interfacial geometry (Brown et al.'s mechanism), or do they capture something structurally different from transfer entropy?
+
+**Mathematical analysis based on FIM = connected correlation matrix:**
+
+- **CCA's $d_\text{eff}$** (participation ratio of FIM spectrum) and **$\eta_\text{CCA}$** (isotropy indicator of FIM spectrum) are **scalar functionals of the connected 2-point correlation matrix**.
+- **Cluster interfacial length** is a **multi-point geometric observable** that depends on cluster connectivity, which involves joint distributions of arbitrary numbers of spins.
+- **At a continuous critical point in 2D** (Ising, Potts q≤4), scale invariance and conformal symmetry mean the 2-point function is "complete" in the sense that higher-point functions are constrained by it via OPEs. Both CCA observables and Brown's interfacial length are governed by the same underlying scaling exponents (η_critical, fractal dimension d_f). **They should track each other up to scaling factors at criticality**.
+- **At first-order transitions** (Potts q≥5 in 2D), scale invariance fails. The 2-point function has exponential decay with finite correlation length; cluster interfacial length is determined by the latent heat / discontinuity structure. **The 2-point and multi-point observables decouple** — CCA observables and Brown's interfacial length should diverge.
+
+**Concrete experimental check the owner can do**: At T=T_c for Potts q=2 (continuous in 2D, Ising universality class with η_critical = 1/4):
+- CCA's $d_\text{eff}(T_c)$ and $\eta_\text{CCA}(T_c)$ should be **derivable from η_critical = 1/4 via finite-size scaling theory** if they're reading out the standard critical exponent.
+- If the numerical values from Phase B/C agree with the analytical prediction from η_critical: CCA observables on continuous transitions are reading out a known critical exponent. **No novel content at continuous transitions.**
+- If they disagree: CCA observables capture something η_critical doesn't.
+
+**Tentative answer to the mechanism question**: At continuous transitions (q≤4 Potts), CCA observables are **likely reducible to the standard η_critical critical exponent of the correlation function**, which in turn governs both Brown's interfacial-length behavior and CCA's spectrum behavior. **At first-order transitions (q≥5), CCA observables and Brown's interfacial length should both still distinguish transition order, but via different mathematical mechanisms**: Brown's via interfacial geometry, CCA's via the breakdown of the power-law spectrum. **This is where CCA may have genuine narrow-novel content**: the first-order regime, where the FIM spectrum's behavior can no longer be derived from a critical exponent and reflects the latent heat / discontinuity structure directly.
+
+### Finding 5: TERMINOLOGY COLLISION — CCA's "η" conflicts with standard stat-mech "η"
+
+This is a basic scholarly hygiene issue that **must** be addressed:
+
+- **Standard stat-mech η** (anomalous dimension of two-point function): $C(r) \sim r^{-(d-2+\eta)}$. For 2D Ising universality class, η = 1/4.
+- **CCA's η** (isotropy indicator of FIM eigenvalue spectrum): some function of the eigenvalue distribution.
+
+These are **completely different objects** but **share the symbol η**. Worse, since the FIM IS the connected correlation matrix, and the standard η governs the spectrum of the FIM at criticality, **the two η's are mathematically related** — CCA's $\eta_\text{CCA}$ at criticality is a function of the standard $\eta_\text{critical}$. This compounds the confusion.
+
+**This is the second terminology collision in CCA** (the first was Mattingly 2018's $d_\text{eff}$ vs CCA's $d_\text{eff}$, both meaning "effective dimensionality" with different formulas). Both must be addressed when CCA is written up:
+1. **Rename CCA's $\eta$** to something unambiguous (e.g., "spectrum isotropy indicator" $\iota$, or $\eta_\text{spec}$ with an explicit subscript distinguishing it from the critical exponent).
+2. **Clearly distinguish CCA's $d_\text{eff}$** from Mattingly 2018's $d_\text{eff}$.
+
+### Finding 6: The 2024 PRB paper (Saberi-Saber-Moessner) deserves separate audit attention
+
+The Saberi-Saber-Moessner 2024 PRB paper is genuinely close to CCA's research program. It is **the most direct prior art among the new findings**. Specifically:
+- Same general framework (correlation-matrix spectrum on 2D Ising as transition probe)
+- Same 2D Ising target system
+- Same publication timing as CCA's work (active research community, 2024)
+- Different scalar observable (top eigenvalue vs PR/isotropy)
+- Different scope (Ising only vs Potts q=2,10)
+
+**Potential outcomes when the owner reads this paper:**
+- **If they use top eigenvalue as their order-parameter observable and CCA uses PR/isotropy**: complementary observables on the same construction. CCA and Saberi 2024 are sister-paper prior art for each other's general approach; the specific scalar observables differ.
+- **If they happen to discuss participation ratio or other isotropy observables in the body**: more direct prior art and CCA's novelty surface shrinks further.
+- **If they discuss Potts**: even more direct overlap.
+
+**The owner should read Saberi-Saber-Moessner 2024 PRB carefully** — this is now the **highest-priority single paper** for assessing CCA's novelty surface. Higher priority than Brown-Bossomaier-Barnett 2022, because it's more directly in CCA's specific mathematical framework.
+
+### Updated CCA novelty status (after Fifth Addendum)
+
+**Prior art for the CCA general approach** ("FIM = connected correlation matrix spectrum on 2D lattice as phase transition probe") is now established at multiple levels:
+
+1. **Mathematical foundation (textbook)**: FIM = connected correlation matrix is in any stat mech textbook.
+2. **Spectral analysis at criticality** (Vinayak-Prosen-Buča-Seligman 2014 EPL): power-law spectrum derivable from η_critical.
+3. **Cluster geometry connection** (Borgs-Chayes 1996 J. Stat. Phys.): rigorous bridge between Potts covariance matrix and FK cluster representation.
+4. **Modern transition discriminator via spectrum** (Saberi-Saber-Moessner 2024 PRB): top eigenvalue as order parameter on 2D Ising correlation-matrix RMT ensemble.
+
+**CCA's remaining specific contributions** (after this round):
+1. **Per-site local field parameterization** explicitly framed as the CCA construction. (Note: this is the natural parameterization for the FIM = χ identification, so it's not novel — anyone deriving the FIM as the connected correlation matrix would arrive here. The "per-site fields" framing is just notation.)
+2. **Participation ratio + η_isotropy as paired scalar observables tracked across T**. (Vinayak 2014 didn't do this; Saberi 2024 uses top eigenvalue not PR. Possibly narrow-novel pending Saberi 2024 full read.)
+3. **First-order vs continuous discrimination** specifically via PR/isotropy curve shape on Potts q=2 vs q=10. (Brown 2022 did the discrimination via transfer entropy; the FIM-spectrum version of the same discrimination may be CCA's specific contribution, but only if the q=10 first-order signature is genuinely outside the Vinayak/Saberi power-law-spectrum framework. This is uncertain pending the q=2 critical-exponent check above.)
+
+**Status update for CCA-1c**: **Speculative** (unchanged), but the rationale now includes:
+- **Prior art for general approach is established at 4 levels** (Borgs-Chayes 1996, Vinayak 2014, Saberi 2024 PRB, broader sloppy-models from Machta 2013)
+- **At continuous transitions, CCA observables are likely reducible to standard η_critical critical exponent**. This must be tested directly via Phase B Ising analytical comparison.
+- **The first-order regime is the remaining candidate territory** for genuine narrow novelty, but only if CCA's first-order observables are **not** derivable from the breakdown of the η_critical power-law structure (which would still be a known type of behavior).
+- **Saberi-Saber-Moessner 2024 PRB must be read** before any further novelty claim.
+
+### Required corrections to existing CCA documents
+
+Before any new CCA experimental work:
+
+1. **Rename CCA's η** to avoid collision with the standard stat-mech η critical exponent. Suggested: "$\iota_\text{CCA}$" (iota for isotropy) or "$\eta_\text{spec}$" (with subscript) or a non-Greek symbol entirely.
+2. **Rename or clearly distinguish CCA's d_eff** from Mattingly 2018's d_eff.
+3. **Add the new citations** to the required-citations list:
+   - Vinayak, Prosen, Buča, Seligman 2014 EPL 108, 20006 — arXiv:1403.7218 — power-law spectrum from η_critical
+   - Borgs & Chayes 1996 J. Stat. Phys. 82, 1235 — arXiv:adap-org/9411001 — Potts covariance matrix and FK clusters
+   - Saberi, Saber, Moessner 2024 PRB 110, L180102 — arXiv:2503.03472 — interaction-correlated RMT on 2D Ising
+4. **Add the analytical-comparison-at-T_c experimental check** to the next-experiments list: derive CCA observables from η_critical = 1/4 for 2D Ising and compare to Phase B numerical results.
+
+### Owner action priorities (updated after Fifth Addendum)
+
+In priority order:
+
+1. **Read Saberi-Saber-Moessner 2024 PRB (arXiv:2503.03472)**. Now the highest-priority single paper — most direct prior art in CCA's mathematical framework. Higher priority than Brown 2022.
+2. **Read Vinayak-Prosen-Buča-Seligman 2014 EPL (arXiv:1403.7218)**. Establishes the analytical framework relating correlation-matrix spectrum to η_critical on 2D Ising.
+3. **Read Borgs-Chayes 1996 J. Stat. Phys. (arXiv:adap-org/9411001)**. The rigorous cluster-geometry-vs-covariance-matrix bridge. Determines whether CCA observables can be expressed in terms of Borgs-Chayes' FK cluster decomposition.
+4. **Read Brown-Bossomaier-Barnett 2022 (arXiv:1810.09607)**. Still important for the GTE ↔ interfacial-length physical mechanism.
+5. **Update P17 and P23 wording** in the wiki to reflect verified Amendola/Cadoni citations with corrected statistical figures (Amendola is 2σ upper limit not 5σ; Cadoni is 7-author, "universal" not "generic," with elliptical-sample preferring k=3).
+6. **Address the η terminology collision** in CCA docs.
+7. **Run the analytical-comparison-at-T_c check** for q=2 against η_critical = 1/4 before any new experimental phase.
+
+**Note that priorities 1-3 supersede the Fourth Addendum's recommendation to read the Sethna-lineage papers (Quinn 2023, etc.) first.** The Sethna-lineage papers are framing documents; the new prior art (Vinayak, Borgs-Chayes, Saberi) is in a closer mathematical lineage and is more likely to constrain CCA's novelty claim.
+
+### Net effect on M0 calibration
+
+- **CCA's general setting prior art is now broader**: Vinayak 2014 + Borgs-Chayes 1996 + Saberi 2024 PRB join Machta 2013 + Brown 2022 in the prior-art map.
+- **CCA's specific construction may still be narrow-novel**, but the surface has shrunk: PR/isotropy as paired observables and Potts first-order discrimination remain the candidate territory.
+- **The mechanism question from Brown 2022 has a partial answer**: at continuous transitions both CCA and Brown observables likely reduce to η_critical; at first-order they may diverge, and that's where CCA may have content.
+- **P17 and P23 statuses do not change** (still Speculative, high-risk) — the citation verifications confirm the underlying tensions are real but the specific quantitative claims in the wiki need correction.
+- **Two terminology collisions** (CCA d_eff vs Mattingly d_eff; CCA η vs standard η_critical) are now mandatory hygiene items.
+
+This is the final M0 update. Further iterations require either owner primary-source reading of the new prior art (Saberi 2024, Vinayak 2014, Borgs-Chayes 1996) or new experimental data (analytical comparison at T_c, extended q-sweep).
+
 
 
 
