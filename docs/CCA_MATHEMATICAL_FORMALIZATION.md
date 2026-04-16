@@ -19,6 +19,16 @@
 >
 > See `docs/M0_MILESTONE_COMPILATION.md` Fifth Addendum for full reasoning. **Updated reading priority for owner: Saberi 2024 PRB > Vinayak 2014 EPL > Borgs-Chayes 1996 JSP > Brown 2022 Sci. Rep.**
 >
+> **⚠️ SIXTH ADDENDUM (2026-04-08, primary-source reading of Saberi 2024 + refined Brown 2022 analysis):** The Fifth Addendum's characterization of Saberi 2024 was WRONG. Reading the primary source: **Saberi's matrix M_ij = spin value at site (i,j), symmetrized — this is the spin configuration ITSELF arranged as an L×L matrix, NOT the connected correlation matrix.** Different mathematical object from CCA. Saberi 2024 is therefore NOT direct prior art for CCA's specific construction. They use rescaled max eigenvalue ⟨λ̃_max⟩ = L^(-1/2)⟨λ_max⟩ as order parameter, recovering Onsager magnetization with β/ν=1/8 exact 2D Ising exponent. They do NOT compute participation ratio. They do NOT do Potts q>2. They do NOT discriminate transition orders.
+>
+> **Net effect**: CCA's narrow-novelty surface is slightly broader than the Fifth Addendum claimed. The "use connected correlation matrix spectrum + PR + isotropy as transition-order discriminator on Potts" approach remains specific to CCA.
+>
+> **Brown 2022 mechanism analysis refined**: Brown's GTE ∝ Σ_c p(c)·L_c is a **hybrid 2-point + multi-point observable**, not purely multi-point. L_c (interfacial length) is 2-point; p(c) (cluster size distribution) is multi-point. CCA's d_eff and η are pure 2-point observables. **Sharpened mechanism question**: at first-order Potts, can a pure 2-point observable (CCA) reproduce the same transition-order discrimination that a hybrid 2-point + multi-point observable (Brown's GTE) achieves? Or does CCA capture only the partial 2-point signal while missing the cluster-statistics signal that Brown's GTE captures fully?
+>
+> **Saberi is the obvious external reviewer** if CCA is ever written up — he works on both cluster geometry of 2D Ising (cited by Brown 2022) AND eigenvalue spectra of 2D-Ising-derived matrices (Saberi 2024 PRB). Direct correspondence with Saberi would resolve the novelty question definitively.
+>
+> See `docs/M0_MILESTONE_COMPILATION.md` Sixth Addendum for full reasoning.
+>
 > **Confirmed prior art** (must be cited in this document):
 > - **Machta, Chachra, Transtrum, Sethna**, "Parameter Space Compression Underlies Emergent Theories and Predictive Models," *Science* **342**, 604 (2013); arXiv:1303.6738. **Foundational.** FIM eigenvalue spectrum on 2D Ising at criticality with stiff/sloppy hierarchy where stiff directions correspond to RG-relevant operators. Uses ~10-dim global coupling parameters ($\theta^{\alpha\beta}$), analyzed at $T_c$ under checkerboard coarsening — not per-site fields, not temperature sweep, not Potts, not transition-order discrimination.
 > - **Raju, Machta, Sethna**, "Information geometry and the renormalization group" — extends Machta 2013 with FIM flow under RG. Still global couplings; does not cover CCA's specific construction.

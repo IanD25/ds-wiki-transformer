@@ -803,6 +803,130 @@ In priority order:
 
 This is the final M0 update. Further iterations require either owner primary-source reading of the new prior art (Saberi 2024, Vinayak 2014, Borgs-Chayes 1996) or new experimental data (analytical comparison at T_c, extended q-sweep).
 
+---
+
+## Sixth Addendum: Primary-Source Reading of Saberi 2024 + Refined Brown 2022 Analysis (2026-04-08, same day)
+
+The owner provided the Saberi-Saber-Moessner 2024 PRB PDF for primary-source reading. **The Fifth Addendum's characterization of this paper was wrong in an important way** and requires correction. Re-reading Brown-Bossomaier-Barnett 2022 in light of the corrected Saberi understanding also refines the mechanism-question analysis.
+
+### Critical correction: Saberi 2024 uses a different matrix object than CCA
+
+The Fifth Addendum claimed Saberi 2024 was "the most direct prior art in CCA's mathematical framework" and described it as using the 2D Ising correlation matrix. **Both claims are wrong.** Reading the primary source (page 2, Model section, verbatim):
+
+> *"Each element M'_ij of the real random matrix M' takes on spin values s = ±1 at the lattice site (i,j), where 1 ≤ i,j ≤ L."*
+
+Then they symmetrize: M = (M' + M'^T)/2.
+
+**Saberi's matrix M is the spin configuration itself, arranged as an L×L matrix and symmetrized.** It is NOT the connected correlation matrix χ_ij = ⟨s_i s_j⟩_c. It is one matrix per spin configuration, with entries ∈ {-1, 0, +1} after symmetrization.
+
+| Aspect | Saberi 2024 | CCA |
+|---|---|---|
+| Matrix dimensions | L × L (one entry per site) | L² × L² (one entry per site-pair) |
+| Matrix entries | Spin values ±1 (or 0) | Connected correlations ⟨s_i s_j⟩_c |
+| Per realization | One matrix per spin config | One matrix from ensemble averaging |
+| Mathematical object | Random matrix from spin field | Connected correlation matrix = FIM |
+| Sample size meaning | Independent thermal samples | Single FIM, eigenvalue spectrum analyzed |
+
+These are structurally different mathematical objects derived from the same physical system. The Fifth Addendum conflated "matrix derived from 2D Ising" with "the connected correlation matrix." That was an error of categorization.
+
+### What Saberi 2024 actually establishes (still relevant for CCA context, just not direct prior art)
+
+Confirmed via primary-source reading:
+
+- **At T_c**: eigenvalue density follows a t-distribution with f=8/3 degrees of freedom, with power-law tails ∼|λ|^(-11/3). The variance σ² → 1/2 with finite-size correction (1/2 - σ²) ∼ L^(-θ), θ ≃ 0.25, "in perfect agreement with the exact correlation exponent η = 1/4 for the 2D Ising model" (page 3).
+- **Maximum eigenvalue** follows Fréchet extreme value distribution with shape parameter k = 1/f = 3/8 (not Tracy-Widom).
+- **Rescaled max eigenvalue ⟨λ̃_max⟩ = L^(-1/2)⟨λ_max⟩ acts as the magnetization order parameter**, scaling as ⟨λ̃_max⟩ ∼ L^(-β/ν) with the exact 2D Ising exponent β/ν = 1/8.
+- Their Figure 4 reproduces **Onsager's exact magnetization curve** from the rescaled max eigenvalue across all T.
+- Adding nonlocal links (mean-field limit) destroys the Fréchet behavior, restoring Wigner semicircle + Tracy-Widom GOE statistics.
+- They derive an explicit relationship: q = (T/⟨λ̃_max⟩) tanh⁻¹⟨λ̃_max⟩ recovering the average coordination number from the order parameter.
+
+**No Potts. No participation ratio. No isotropy indicator. No first-order vs continuous discrimination as their primary analysis axis** (they only study Ising = q=2 in Potts language, plus its mean-field limit via added nonlocal links).
+
+### Net effect on CCA novelty surface (corrected)
+
+The corrected reading **slightly strengthens** CCA's narrow-novelty surface, contrary to the Fifth Addendum's claim:
+
+- **Saberi 2024 does NOT preempt CCA's specific construction.** Their matrix is fundamentally different from the connected correlation matrix CCA uses.
+- The "use the connected correlation matrix's spectrum to discriminate transition order via participation ratio + isotropy" approach remains specific to CCA among the papers searched.
+- However, the **broader pattern** identified in the Fifth Addendum is now demonstrated by **three independent constructions**: Vinayak 2014 (correlation matrix → power-law spectrum from η), Saberi 2024 (spin matrix → Fréchet extremes from β/ν), Borgs-Chayes 1996 (covariance matrix → cluster connectivity from FK exponents). All produce eigenvalue observables at criticality that reduce to standard 2D Ising critical exponents.
+
+**Strengthened tentative answer to mechanism question**: continuous-transition observables (Potts q≤4) on any reasonable 2D-Ising-derived matrix construction reduce to standard critical exponents. The Saberi paper's analytical derivation of their order parameter from EVT + standard exponents is concrete demonstration that this reduction works in practice. **CCA's continuous-transition observables almost certainly reduce similarly** — the analytical-comparison-at-T_c experimental check from the Fifth Addendum is now even higher priority because the analytical reduction is more clearly possible.
+
+### Refined understanding of Brown 2022 mechanism
+
+Re-reading Brown 2022 carefully in light of the corrected Saberi reading, **the Fifth Addendum's characterization of Brown's GTE as "purely multi-point" was also imprecise**. Brown's actual construction (Eqs. 5-6, page 3):
+
+$$G \propto \sum_c p(c) \cdot L_c$$
+
+where $L_c$ is the average interfacial length of clusters of size c, computed via the "turn-right walk" procedure on cluster boundaries.
+
+**This is a hybrid 2-point + multi-point observable**, not purely multi-point:
+- **L_c** (interfacial length per cluster) is a sum of 2-point measurements (count of nearest-neighbor pairs with different spin states)
+- **p(c)** (cluster size distribution) is a multi-point quantity (cluster identity requires connectivity, involving joint distributions of arbitrarily many sites)
+
+CCA's d_eff and η_CCA are pure 2-point observables (functions of the connected correlation matrix only).
+
+**At continuous transitions (Potts q≤4)**:
+- Cluster size distribution P(s) ~ s^(-τ) with τ = 1 + d/d_f governed by FK cluster fractal dimension
+- Interfacial length per cluster scales with cluster fractal perimeter
+- All exponents (η, β/ν, d_f, τ) related by hyperscaling at criticality
+- Brown's GTE and CCA's d_eff/η are **both functions of the same critical exponent set** — they should track each other up to scaling factors at T_c
+
+**At first-order transitions (Potts q≥5)**:
+- Cluster size distribution becomes bimodal (one giant cluster + small clusters)
+- The multi-point information (giant cluster size statistics, latent heat) becomes critical
+- 2-point observables (CCA) capture exponential correlation decay with finite ξ
+- 3+ point observables (Brown's full cluster geometry) capture latent-heat structure that 2-point cannot
+- **CCA's d_eff/η at first-order may genuinely miss what Brown's full GTE captures**
+
+### Sharpened mechanism question
+
+Where the Fifth Addendum asked "Can CCA's d_eff/η be explained via cluster interfacial geometry?" the sharpened question after primary-source reading is:
+
+**At first-order Potts, can a purely 2-point observable (CCA) reproduce the same transition-order discrimination that a hybrid 2-point + multi-point observable (Brown's GTE) achieves? Or does CCA capture only the partial 2-point signal (correlation length collapse) while missing the multi-point latent-heat / cluster-statistics signal that Brown's GTE captures fully?**
+
+Two possible outcomes when the q=2,5,7,10 comparison is run:
+
+1. **CCA tracks Brown's GTE quantitatively at all q.** Then CCA observables, despite being purely 2-point, somehow capture multi-point cluster information — surprising and potentially informative about whether 2-point observables on these systems are richer than expected. Defensible narrow novelty.
+2. **CCA captures only the partial 2-point signal (correlation length / spectrum gap collapse) while Brown's GTE captures full cluster-geometry information.** Then CCA's first-order signal is a strict subset of what Brown captures, and CCA is a methodologically simpler but less informative version of the same discrimination. Less defensible as novel; more honest as "Fisher-spectrum analog of GTE that captures less."
+
+**Both outcomes are honest science.** The first would be the stronger CCA claim; the second would be the more likely outcome given the mathematical structure.
+
+### Saberi as the obvious external reviewer
+
+A key practical observation: **Abbas Ali Saberi works on both cluster geometry of 2D Ising (cited by Brown 2022, Saberi 2009 J. Stat. Mech.) AND eigenvalue spectra of matrices derived from 2D Ising (Saberi 2024 PRB)**. He is uniquely positioned to evaluate any CCA writeup. If CCA is ever written up externally, **Saberi is the obvious choice for direct correspondence or peer review**. He would either immediately recognize CCA as a known construction (and point to where) or confirm its novelty within his expertise area.
+
+The fact that Saberi has worked on both literatures relevant to CCA without (apparently) connecting them in the way CCA does is mild evidence that the connection has not been made. Mild only — there could be a Saberi-coauthored paper not in the audit's search range that does it.
+
+### Updated CCA calibration after Sixth Addendum
+
+- **CCA-1c**: still **Speculative**, but the narrow-novelty surface is slightly broader than the Fifth Addendum claimed (Saberi 2024 doesn't preempt the specific construction). Status unchanged; rationale refined.
+- **CCA general approach**: prior art for "matrix observables on 2D Ising at criticality reduce to standard critical exponents" is now established at THREE independent constructions (Vinayak 2014, Saberi 2024, Borgs-Chayes 1996). The pattern is robust.
+- **The mechanism question**: sharpened. CCA's potential novel territory is now specifically "first-order Potts, where 2-point observables may or may not capture what hybrid 2-point + multi-point observables capture."
+- **Brown 2022 as adjacent work**: still must be cited prominently. The hybrid 2-point/multi-point structure of GTE is an important characterization that the Fifth Addendum missed.
+
+### Refined owner action priorities (after Sixth Addendum)
+
+In priority order:
+
+1. **Run the analytical-comparison-at-T_c check** (Fifth Addendum recommendation, now elevated): For Potts q=2 at T_c, derive CCA's d_eff and η_CCA analytically from η_critical = 1/4 and β/ν = 1/8 via finite-size scaling. Compare to existing Phase B/C numerics. The Saberi 2024 derivation of the Onsager magnetization from EVT + critical exponents is a concrete model for how this reduction works.
+2. **Run extended Potts q=2,5,7,10 comparison with both CCA observables AND transfer-entropy / interfacial-length computation**. This directly tests the sharpened mechanism question.
+3. **Read Vinayak 2014 EPL** (arXiv:1403.7218) and Borgs-Chayes 1996 (arXiv:adap-org/9411001). These are the two unread primary sources in the new prior-art map.
+4. **Address terminology collisions** (CCA's d_eff vs Mattingly's; CCA's η vs standard η_critical) before any external writeup.
+5. **Update P17/P23 wording** to reflect verified Amendola/Cadoni citations with corrected statistical figures.
+6. **If CCA ever gets written up externally, contact Saberi directly** — he's the obvious authority and would either confirm or correct the novelty surface immediately.
+
+### Net effect on M0 calibration after Sixth Addendum
+
+- **Saberi 2024 is NOT direct prior art** for CCA's specific construction (Fifth Addendum was wrong about this).
+- **CCA's narrow novelty surface is slightly broader than Fifth Addendum claimed** (PR + isotropy on connected correlation matrix as transition-order discriminator on Potts).
+- **The mechanism question is sharpened**: the test is whether 2-point observables (CCA) can reproduce hybrid 2-point/multi-point discrimination (Brown's GTE) at first-order transitions.
+- **Continuous-transition CCA observables almost certainly reduce to standard critical exponents** (3 independent prior-art constructions demonstrate this pattern).
+- **Saberi is the obvious external reviewer** for any CCA writeup.
+- **P17/P23, all other conjectures, all terminology issues** unchanged from Fifth Addendum.
+
+This is the M0 audit's sixth and (hopefully) final iteration. Further sharpening requires the q=2,5,7,10 experiment with both observables, which is owner-action experimental work.
+
 
 
 
