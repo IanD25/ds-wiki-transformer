@@ -158,7 +158,9 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | `scripts/run_entity_catalog_pass.py` | Pass 1.5 + 2b CLI |
 | `data/ds_wiki.db` | The knowledge graph (READ ONLY — never schema-alter) |
 | `MASTER_SUMMARY.md` | Legacy technical narrative (partially superseded by charter) |
-| `docs/SESSION_HANDOVER_2026-04-07.md` | Most recent session handover (CCA falsification cascade) |
+| `docs/SESSION_HANDOVER_2026-04-16.md` | **Most recent session handover** — written 2026-04-16, documents M0 audit closeout (six addenda) performed 2026-04-08 |
+| `docs/SESSION_HANDOVER_2026-04-07.md` | Prior session handover — CCA falsification cascade (Phase A-D experiments) |
+| `docs/CCA_TERMINOLOGY_RENAME_PROPOSAL.md` | Pending: terminology fixes for CCA d_eff vs Mattingly d_eff and CCA η vs standard stat-mech η_critical |
 | `docs/CCA_MATHEMATICAL_FORMALIZATION.md` | CCA framework — pending literature audit |
 | `docs/CCA_GRAVITY_FINDINGS.md` | Fisher-gravity chain — pending audit |
 | `docs/archive/` | Product-arc docs (PFD foundational plan, Phase 3 designs) — historical only |
@@ -260,7 +262,8 @@ python3 scripts/run_entity_catalog_pass.py \
 ├── CLAUDE.md                            ← YOU ARE HERE
 ├── docs/
 │   ├── RESEARCH_PLATFORM_CHARTER.md     ← ANCHOR — read this first
-│   ├── SESSION_HANDOVER_2026-04-07.md   ← most recent session
+│   ├── SESSION_HANDOVER_2026-04-16.md   ← most recent (M0 closeout, written 2026-04-16)
+│   ├── SESSION_HANDOVER_2026-04-07.md   ← prior (CCA falsification cascade)
 │   ├── CCA_MATHEMATICAL_FORMALIZATION.md ← pending audit
 │   ├── CCA_GRAVITY_FINDINGS.md          ← pending audit
 │   ├── FISHER_PIPELINE_REDESIGN.md      ← tool spec (still valid)
@@ -299,7 +302,7 @@ python3 scripts/run_entity_catalog_pass.py \
 ## If You're A Fresh Claude Session
 
 1. **Read `docs/RESEARCH_PLATFORM_CHARTER.md` first.** It defines the mission and the epistemic rules.
-2. **Read the latest `docs/SESSION_HANDOVER_*.md`** for recent state.
+2. **Read `docs/SESSION_HANDOVER_2026-04-16.md`** — the M0 audit closeout handover. It documents the six-addendum audit, current calibration state, and prioritized next steps.
 3. **Check whether the M0 audit has been completed** — if not, that's the priority before any new work.
 4. **Operate as a skeptical research collaborator, not an assistant.** Your job is to push back. Stacking claims is drift. Feature-fitting is drift. Flag both.
 5. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion.

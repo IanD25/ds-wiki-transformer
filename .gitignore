@@ -29,12 +29,20 @@ build/
 
 # ── Stale ChromaDB segments (only chroma.sqlite3 matters) ────────────────────
 data/chroma/
+# Stale per-collection UUID segment dirs in data/chroma_db/ (only chroma.sqlite3 is the source of truth)
+data/chroma_db/*/
+
+# ── macOS / OS artifacts ─────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
 
 # ────────────────────────────────────────────────────────────────────────────
 # Intentionally TRACKED:
 # data/ds_wiki.db        — source of truth
 # data/rrp/              — RRP bundles
-# data/chroma_db/        — ChromaDB vector index (both machines run bge-large 1024-dim)
+# data/chroma_db/chroma.sqlite3 — ChromaDB index (both machines run bge-large 1024-dim;
+#                                 per-collection UUID subdirs are stale segments — gitignored above)
 # data/wiki_history.db   — embedding history snapshots
 # data/viz/              — visualization outputs
 # data/viz_outputs/      — viz runner outputs
