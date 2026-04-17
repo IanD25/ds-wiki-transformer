@@ -327,6 +327,159 @@ The FIM engine (PCI engine) is at:
 
 ---
 
+## V25 Architecture Upgrade (2026-03-19 — 2026-03-20)
+
+### What V25 Added Over V24/Eclipse
+
+V25 replaced the static VIX-only regime detection with a four-mode macro state machine driven
+by **effective dimensionality (D_eff)** — a Frobenius norm-based measure of the intrinsic
+dimensionality of a 14-instrument cross-asset correlation matrix.
+
+| Component | V24/Eclipse | V25 |
+|---|---|---|
+| Regime detection | VIX/VIX3M only | D_eff (14-instrument correlation matrix) |
+| Regime states | 2 (risk-on/risk-off) | 4 (NORMAL/STRESS/CRISIS/EARLY_CYCLE) |
+| Overlay | SHY (cash proxy) | DBMF (managed futures) |
+| V22 sizing | Equal weight within Q1 | Entry confirmation + Treynor cap |
+| Allocation | Fixed 60/40 | Mode-dependent (60/32/8 → 60/15/25) |
+
+### V25 A/B Testing (18 Variants, 5 Rounds)
+
+| Round | Variants Tested | Key Finding |
+|---|---|---|
+| R1 | baseline, no_overlay, no_opp_ratio | Isolation tests broken (no feature flags) |
+| R2 | entry_conf_only, tenure_only, grad_exit_only | Entry confirmation = +0.026 Calmar |
+| R3 | entry_tenure, 4x tenure (fast/slow) | 4x tenure negative; graduated exit negative |
+| R4 | velocity_cap | Velocity window overlap with entry conf fixed (63→126d) |
+| R5 | treynor_cap, peg_cap, temp_cap, temp_classifier | **Treynor cap wins (+0.016 Calmar)** |
+
+### V25 Production Results (2003-2025, 22 Years)
+
+| Metric | V25 Production | V24/Eclipse | Δ |
+|---|---|---|---|
+| CAGR | **12.13%** | 10.4% | +1.73% |
+| Max Drawdown | **29.4%** | 27.7% | +1.7% |
+| Sharpe | **0.578** | 0.358 | +0.220 (+61%) |
+| Calmar | **0.412** | 0.375 | +0.037 |
+| Alpha | 2.3% | ~1% | +1.3% |
+| Beta | 0.641 | ~0.75 | -0.109 |
+| Period | 2003-2025 | 2020-2025 | Extended 17 years |
+
+### V25 Signal Pipeline (Validated Architecture)
+
+```
+Universe → 300 stocks (Russell 1000, $500M-$5B)
+  ↓
+Entropy score (60% weight): margin CV + ROIC stability + revenue-vol decoupling
+  ↓
+LCOP score (40% weight): dep/capex lifecycle + FCF rescue for asset-light firms
+  ↓
+Quintile sort → Q1 (top 60 stocks)
+  ↓
+Entry confirmation: 63-day momentum gate on NEW entrants only
+  ↓
+Treynor cap: risk-adjusted return z-score → dynamic weight cap [1.0x, 2.0x]
+  ↓
+D_eff regime: 4-mode state machine → allocation shift (V22/ETF/DBMF)
+  ↓
+Monthly rebalance on 1st of month
+```
+
+### Key V25 Negative Findings (Rejected Signals)
+
+| Signal | Calmar Impact | Why It Failed |
+|---|---|---|
+| Graduated exit | -0.005 | Delays liquidation in crises |
+| Tenure weighting | +0.000 | Redundant with entry confirmation |
+| 4x tenure cap | -0.001 | Amplifying a weak signal |
+| PEG cap | +0.000 | Overlaps entropy (earnings growth ≈ revenue-cost decoupling) |
+| Crisis emergency rebalance | -0.011 | DBMF needs sustained trends; triggers too early |
+| Rolling rebalance | -0.040 | Misaligns with fundamental data calendar (earnings cycle) |
+| All sizing combined | -0.016 | Signal overlap degrades combined performance |
+
+---
+
+## V26 Research (2026-03-21)
+
+### V26 Addition: Intellectual Capital (IC) Rescue
+
+V26 adds a single new mechanism: **IC Rescue** — a Q2→Q1 promotion for stocks with high R&D
+investment intensity. Companies in Q2 (just below the quality cutoff) with R&D/Revenue > 8%
+get a composite score boost that can push them into Q1.
+
+**Thesis:** R&D-intensive companies are *building* future pricing power. The entropy signal
+measures current margins; IC rescue identifies companies that will become high-entropy in 2-3
+quarters, entering them earlier.
+
+### V26 Multi-Window Testing
+
+| Window | Baseline Calmar | IC Rescue Calmar | Δ | Interpretation |
+|---|---|---|---|---|
+| 2003-2025 (full) | 0.412 | **0.415** | +0.003 | Neutral — GFC dominates |
+| **2010-2025 (Tier 1)** | 0.450 | **0.488** | **+0.038** | **Significant improvement** |
+| 2015-2016 (oil shock) | 0.260 | **0.283** | +0.023 | Positive in commodity shock |
+| 2018-2019 (trade war) | 0.275 | **0.301** | +0.026 | Positive in policy-driven vol |
+| 2022-2023 (inflation bear) | 0.087 | 0.081 | -0.006 | Slightly negative in grinding bear |
+
+### V26 vs SPY Benchmark
+
+**Full cycle (2003-2025):**
+
+| Metric | V26 | SPY | V26 Advantage |
+|---|---|---|---|
+| CAGR | 12.6% | 8.7% | +3.9% |
+| Max Drawdown | 30.4% | 55.2% | 24.8% less risk |
+| Calmar | 0.415 | 0.157 | **2.6x more efficient** |
+| $25K → | $383,601 | $169,318 | +$214K excess wealth |
+| Beta | 0.651 | 1.000 | 35% less market exposure |
+| Alpha | 2.6%/yr | 0% | Pure excess return |
+
+**Post-GFC deployment window (2010-2025):**
+
+| Metric | V26 | SPY | V26 Advantage |
+|---|---|---|---|
+| CAGR | 11.4% | 11.0% | +0.4% (similar) |
+| Max Drawdown | 23.4% | 33.9% | **10.5% less risk** |
+| Calmar | 0.488 | 0.323 | **1.5x more efficient** |
+
+### V26 Production Configuration
+
+```
+File: strategies/combined_production/alpha_entropy_v25.py (V26 build)
+QC Project: 29236095
+Validated: Calmar 0.415 (2003-2025), 0.488 (2010-2025)
+
+Signals:
+  1. Entropy score (60% of composite) — structural pricing power
+  2. LCOP bell curve (40% of composite) — capital lifecycle phase
+  3. FCF rescue — asset-light firm correction (baked in)
+  4. IC rescue — R&D-intensive Q2→Q1 promotion (V26 addition)
+
+Gates:
+  - Entry confirmation: 63-day momentum > 0 on new Q1 entrants
+  - Treynor cap: risk-adjusted return z-score → [1.0x, 2.0x] weight cap
+
+Regime:
+  - D_eff four-mode state machine (NORMAL/STRESS/CRISIS/EARLY_CYCLE)
+  - DBMF overlay scaled by mode (8% → 25% in crisis)
+  - Fixed monthly rebalance on 1st (tested rolling — negative)
+```
+
+### V26 Research Backlog (Parked for Future)
+
+1. **Insider buying signal** — blocked on QC Quiver data subscription; architecturally needs
+   universe-level subscription, not per-symbol add_data
+2. **Short interest signal** — same data subscription blocker
+3. **Regime-conditional scoring** — tested D_eff-scaled IC; continuous scaling underperformed
+   simple on/off. Discrete regime profiles not yet tested.
+4. **Regime catalogue** — validate D_eff against pre-2003 macro regimes (1970s stagflation,
+   Volcker rates, dot-com). Historical stress test for the state machine.
+5. **Cross-regional validation** — test entropy/LCOP on non-US equities (UK, EU, Japan)
+6. **Options-implied information** — forward-looking IV skew as risk signal (thin coverage
+   on small caps)
+
+---
+
 ## Summary Table: Backtest Findings → PFD Framework
 
 | Backtest Finding | PFD Framework | Strength of Mapping |
