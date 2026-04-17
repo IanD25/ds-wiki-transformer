@@ -1,0 +1,36 @@
+id_a,title_a,prefix_a,id_b,title_b,prefix_b,similarity,level
+IT05,Fisher Information,IT,M6,M6: Fisher Information Rank,other,0.8939492878515735,CROSS
+IT05,Fisher Information,IT,IT08,Fisher-Rao Metric,IT,0.8867292862015048,SAME
+BR04,Thermodynamic Geometry (Ruppeiner Metric),BR,IT08,Fisher-Rao Metric,IT,0.8802820342489612,CROSS
+HB01,Bekenstein Bound,HB,HB02,Bekenstein-Hawking Entropy,HB,0.869506872328215,SAME
+HB04,Hawking Radiation,HB,RD1,Planck's Law of Black-Body Radiation,other,0.8672851694293076,CROSS
+NE02,Maximum Entropy Production Principle,NE,STAT1,Maximum Entropy Principle,IT_existing,0.8634979449685068,CROSS
+HB02,Bekenstein-Hawking Entropy,HB,HB06,Black Hole Area Theorem,HB,0.8633058974743617,SAME
+IT02,Von Neumann Entropy,IT,IT04,Quantum Relative Entropy,IT,0.8609441198645604,SAME
+G3,G3: Holographic Complexity Bound,other,HB03,Holographic Principle,HB,0.8606189661978301,CROSS
+GT02,Verlinde Entropic Gravity,GT,GT05,Carney Spin Entropic Gravity,GT,0.8566063089834582,SAME
+IT08,Fisher-Rao Metric,IT,RG06,Cotler-Rezchikov: RG as Optimal Transport with Fisher Metric,RG,0.8547454747367038,CROSS
+HB02,Bekenstein-Hawking Entropy,HB,HB04,Hawking Radiation,HB,0.8532325923031305,SAME
+GT04,Bianconi Gravity from Entropy,GT,IT08,Fisher-Rao Metric,IT,0.8530973462298712,CROSS
+IT03,Kullback-Leibler Divergence,IT,IT05,Fisher Information,IT,0.8522017699114162,SAME
+NE03,Jarzynski Equality,NE,NE04,Crooks Fluctuation Theorem,NE,0.8486011485834675,SAME
+BR01,ER = EPR Conjecture,BR,BR03,Van Raamsdonk: Entanglement Builds Spacetime,BR,0.8448033862738293,SAME
+RG01,Wilson's Renormalisation Group,RG,RG02,Beta Function,RG,0.8432589821279678,SAME
+NE01,Prigogine Dissipative Structures,NE,NE06,England Dissipation-Driven Adaptation,NE,0.8383528564483034,SAME
+IT03,Kullback-Leibler Divergence,IT,IT04,Quantum Relative Entropy,IT,0.8360780575691585,SAME
+RG04,Zamolodchikov c-Theorem,RG,RG05,a-Theorem (4D),RG,0.8358422092127946,SAME
+IT03,Kullback-Leibler Divergence,IT,IT08,Fisher-Rao Metric,IT,0.8272919202981031,SAME
+GT04,Bianconi Gravity from Entropy,GT,GT05,Carney Spin Entropic Gravity,GT,0.8165836521021205,SAME
+HB02,Bekenstein-Hawking Entropy,HB,HB03,Holographic Principle,HB,0.816100082746285,SAME
+HB04,Hawking Radiation,HB,HB05,Unruh Effect,HB,0.8141650353184742,SAME
+GT01,Jacobson's Thermodynamic Derivation of Einstein Equations,GT,GT03,Padmanabhan Holographic Equipartition,GT,0.8138086665254229,SAME
+NE01,Prigogine Dissipative Structures,NE,NE05,Fluctuation-Dissipation Theorem,NE,0.8118873710255534,SAME
+NE04,Crooks Fluctuation Theorem,NE,NE05,Fluctuation-Dissipation Theorem,NE,0.8117209148165065,SAME
+GT05,Carney Spin Entropic Gravity,GT,GT06,Sakharov Induced Gravity,GT,0.8103358119731425,SAME
+HB01,Bekenstein Bound,HB,HB08,Bousso Covariant Entropy Bound,HB,0.8089950816517363,SAME
+RG01,Wilson's Renormalisation Group,RG,RG03,Kadanoff Block Spin Transformation,RG,0.8071744731601507,SAME
+GT01,Jacobson's Thermodynamic Derivation of Einstein Equations,GT,GT06,Sakharov Induced Gravity,GT,0.8046638057771739,SAME
+HB03,Holographic Principle,HB,HB07,Ryu-Takayanagi Formula,HB,0.8035082206671516,SAME
+RG01,Wilson's Renormalisation Group,RG,RG04,Zamolodchikov c-Theorem,RG,0.8019447278598932,SAME
+GT01,Jacobson's Thermodynamic Derivation of Einstein Equations,GT,GT04,Bianconi Gravity from Entropy,GT,0.800957982114021,SAME
+GT04,Bianconi Gravity from Entropy,GT,GT06,Sakharov Induced Gravity,GT,0.8000122577871591,SAME

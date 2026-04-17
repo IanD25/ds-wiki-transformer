@@ -1,0 +1,76 @@
+{
+  "total_entries": 269,
+  "new_pillar_entries": 37,
+  "total_candidates": 35,
+  "cross_domain_candidates": 7,
+  "high_sim_candidates": 0,
+  "priority_flagged": 0,
+  "priority_missed": 8,
+  "structural_gaps": [
+    [
+      "BR",
+      "GT"
+    ],
+    [
+      "BR",
+      "HB"
+    ],
+    [
+      "BR",
+      "NE"
+    ],
+    [
+      "BR",
+      "RG"
+    ],
+    [
+      "GT",
+      "HB"
+    ],
+    [
+      "GT",
+      "NE"
+    ],
+    [
+      "GT",
+      "RG"
+    ],
+    [
+      "HB",
+      "IT"
+    ],
+    [
+      "HB",
+      "NE"
+    ],
+    [
+      "HB",
+      "RG"
+    ],
+    [
+      "IT",
+      "NE"
+    ],
+    [
+      "NE",
+      "RG"
+    ]
+  ],
+  "pillar_density": {
+    "BR-GT": 0,
+    "BR-HB": 0,
+    "BR-IT": 1,
+    "BR-NE": 0,
+    "BR-RG": 0,
+    "GT-HB": 0,
+    "GT-IT": 1,
+    "GT-NE": 0,
+    "GT-RG": 0,
+    "HB-IT": 0,
+    "HB-NE": 0,
+    "HB-RG": 0,
+    "IT-NE": 0,
+    "IT-RG": 1,
+    "NE-RG": 0
+  }
+}

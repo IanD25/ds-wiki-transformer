@@ -1,0 +1,82 @@
+[
+  {
+    "id_a": "INFO4",
+    "id_b": "RG04",
+    "title_a": "Mutual Information and Data Processing Inequality",
+    "title_b": "Zamolodchikov c-Theorem",
+    "expected_type": "analogous_to",
+    "reason": "Both: quantity decreases under coarse-graining",
+    "similarity": 0.7075711867025168,
+    "flagged": false
+  },
+  {
+    "id_a": "INFO4",
+    "id_b": "HB06",
+    "title_a": "Mutual Information and Data Processing Inequality",
+    "title_b": "Black Hole Area Theorem",
+    "expected_type": "analogous_to",
+    "reason": "Both: irreversibility/monotonicity of information loss",
+    "similarity": 0.6976207644398995,
+    "flagged": false
+  },
+  {
+    "id_a": "NE03",
+    "id_b": "HB06",
+    "title_a": "Jarzynski Equality",
+    "title_b": "Black Hole Area Theorem",
+    "expected_type": "analogous_to",
+    "reason": "Both: irreversibility statements connecting micro\u2194macro",
+    "similarity": 0.7382403625151246,
+    "flagged": false
+  },
+  {
+    "id_a": "RG06",
+    "id_b": "GT04",
+    "title_a": "Cotler-Rezchikov: RG as Optimal Transport with Fisher Metric",
+    "title_b": "Bianconi Gravity from Entropy",
+    "expected_type": "analogous_to",
+    "reason": "Both: information-geometric object \u2192 physics",
+    "similarity": 0.8091148270522527,
+    "flagged": false
+  },
+  {
+    "id_a": "GT03",
+    "id_b": "RG04",
+    "title_a": "Padmanabhan Holographic Equipartition",
+    "title_b": "Zamolodchikov c-Theorem",
+    "expected_type": "analogous_to",
+    "reason": "Both: DoF count decreases monotonically under a flow",
+    "similarity": 0.7264195948278556,
+    "flagged": false
+  },
+  {
+    "id_a": "IT05",
+    "id_b": "BR04",
+    "title_a": "Fisher Information",
+    "title_b": "Thermodynamic Geometry (Ruppeiner Metric)",
+    "expected_type": "derives_from",
+    "reason": "Ruppeiner metric IS Fisher-Rao on Gibbs distributions",
+    "similarity": 0.7930748351416954,
+    "flagged": false
+  },
+  {
+    "id_a": "IT03",
+    "id_b": "IT04",
+    "title_a": "Kullback-Leibler Divergence",
+    "title_b": "Quantum Relative Entropy",
+    "expected_type": "generalizes",
+    "reason": "QRE generalises KL to quantum",
+    "similarity": 0.8360780575691585,
+    "flagged": false
+  },
+  {
+    "id_a": "HB02",
+    "id_b": "IT02",
+    "title_a": "Bekenstein-Hawking Entropy",
+    "title_b": "Von Neumann Entropy",
+    "expected_type": "analogous_to",
+    "reason": "Both: entropy of quantum system; BH = entanglement entropy",
+    "similarity": 0.786934387099292,
+    "flagged": false
+  }
+]
