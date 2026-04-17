@@ -1,4 +1,4 @@
-# Session Handover — 2026-04-08 (M0 Audit Complete)
+# Session Handover — 2026-04-16 (M0 Audit Complete)
 
 > **Read order for fresh sessions:**
 > 1. `docs/RESEARCH_PLATFORM_CHARTER.md` — mission, epistemic contract, working modes
@@ -13,7 +13,7 @@
 
 ## What happened this session (one-line summary per phase)
 
-This was a single very long working session that went through several distinct phases, all on 2026-04-08:
+This was a single very long working session that went through several distinct phases, all on 2026-04-16:
 
 1. **General assessment** of project state → identified product-arc (PFD) vs research-arc divergence
 2. **Research platform reset** → owner chose to drop product framing, adopt personal-research-platform framing
@@ -127,7 +127,7 @@ The repo has ~30 untracked files from earlier sessions (alpha_entropy_v22.py, .D
 
 - **No new conjectures.** Wiki has 23 already; M0 found most are speculative. Adding more is drift.
 - **No new experimental phases on CCA without doing (1) and (2) above first.** Charter prohibits.
-- **No re-engagement with PFD product framing.** Retired by 2026-04-08 reset.
+- **No re-engagement with PFD product framing.** Retired by 2026-04-16 reset.
 - **No external writeup of CCA without addressing terminology collisions and reading Vinayak + Borgs-Chayes.**
 - **No further audit iterations** without new inputs (experimental data or additional primary sources). The audit has reached its useful depth.
 
@@ -149,12 +149,12 @@ The repo has ~30 untracked files from earlier sessions (alpha_entropy_v22.py, .D
 
 | Paper | Status | What it does |
 |---|---|---|
-| Machta-Chachra-Transtrum-Sethna 2013 Science (`EmergentTheories(2013).pdf`) | Read 2026-04-08 | Foundational sloppy models on Ising at criticality |
-| Transtrum 2015 J. Chem. Phys. perspective | Read 2026-04-08 | Sethna-group framing document |
-| Mattingly 2018 PNAS | Read 2026-04-08 | Bonus — d_eff terminology precedent (different formula) |
-| Brown-Bossomaier-Barnett 2022 Sci. Rep. | Read 2026-04-08 | Closest broader-program prior art (transfer entropy on Potts q=2,5,7,10) |
-| Quinn 2023 Rep. Prog. Phys. | Read 2026-04-08 (pages 1-40) | Modern synthesis |
-| Saberi-Saber-Moessner 2024 PRB | Read 2026-04-08 | NOT direct prior art for CCA (different matrix object) |
+| Machta-Chachra-Transtrum-Sethna 2013 Science (`EmergentTheories(2013).pdf`) | Read 2026-04-16 | Foundational sloppy models on Ising at criticality |
+| Transtrum 2015 J. Chem. Phys. perspective | Read 2026-04-16 | Sethna-group framing document |
+| Mattingly 2018 PNAS | Read 2026-04-16 | Bonus — d_eff terminology precedent (different formula) |
+| Brown-Bossomaier-Barnett 2022 Sci. Rep. | Read 2026-04-16 | Closest broader-program prior art (transfer entropy on Potts q=2,5,7,10) |
+| Quinn 2023 Rep. Prog. Phys. | Read 2026-04-16 (pages 1-40) | Modern synthesis |
+| Saberi-Saber-Moessner 2024 PRB | Read 2026-04-16 | NOT direct prior art for CCA (different matrix object) |
 
 ### CCA-relevant primary sources still to read (owner action)
 
