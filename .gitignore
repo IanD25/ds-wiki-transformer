@@ -49,3 +49,11 @@ Thumbs.db
 # data/reports/          — Fisher Suite HTML reports
 # Outside Ref/           — external analysis and reference documents
 # ────────────────────────────────────────────────────────────────────────────
+
+# ── Generated / rebuildable databases (too large for GitHub) ──────────────────
+# wiki_history.db is rebuildable from committed migration scripts:
+#   - m0_*.py (confidence_calibration records)
+#   - create_external_anchors_*.py, create_domain_taxonomy_*.py (schemas)
+#   - apply_domain_retag_*.py, insert_info1_anchors_*.py (content)
+#   - src/sync.py (embedding snapshots)
+data/wiki_history.db
