@@ -1,6 +1,9 @@
 """
 embedder.py — Embed chunks into ChromaDB and record a snapshot in wiki_history.db.
-Every call is additive. Nothing is ever deleted from wiki_history.db.
+Each call records a new snapshot, then enforces the snapshot-retention policy
+(see snapshot_retention.py). Wiki content is never deleted; embedding snapshots
+are derivative measurements and follow a hysteresis policy to keep the DB under
+GitHub's 100MB file limit.
 """
 import json
 import sqlite3
@@ -16,6 +19,7 @@ from config import (
     HISTORY_DB, TOP_K_NEIGHBORS, DRIFT_THRESHOLD,
 )
 from extractor import Chunk
+from snapshot_retention import prune_snapshots
 
 
 # ── History DB bootstrap ──────────────────────────────────────────────────────
@@ -286,6 +290,8 @@ def embed_and_store(
         )
 
     hconn.commit()
+
+    retention = prune_snapshots(hconn, verbose=True)
     hconn.close()
 
     print(f"\nSnapshot recorded: {snapshot_id}")
@@ -293,5 +299,8 @@ def embed_and_store(
     print(f"  changed chunks: {len(metrics['changed_chunks'])}")
     print(f"  mean drift    : {metrics['mean_drift']}")
     print(f"  isolated      : {metrics['isolated_chunks']}")
+    if retention["snapshots_deleted"]:
+        print(f"  retention     : kept {retention['snapshots_kept']}, "
+              f"pruned {retention['snapshots_deleted']} older snapshots")
 
     return snapshot_id

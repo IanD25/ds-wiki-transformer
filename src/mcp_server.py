@@ -1627,6 +1627,74 @@ def submit_math_interpretations(
     return {"inserted": inserted, "skipped": skipped}
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# GSW ANCHOR LOOKUP (canonical-source cross-referencing)
+# ══════════════════════════════════════════════════════════════════════════════
+
+@mcp.tool()
+def get_canonical_sources_for_topic(
+    query: str,
+    top_k_entries: int = 10,
+    chunks_per_query: int = 30,
+) -> dict:
+    """
+    Query the GSW (Greater Science World) anchor graph by topic.
+
+    Pipeline:
+      1. Semantic search on the topic via ChromaDB -> top-k wiki entries
+      2. JOIN to external_anchors -> canonical sources for those entries
+      3. Rank sources by co-citation count (sources anchoring multiple entries)
+      4. Detect cross-domain bridges (sources spanning 2+ primary domains)
+      5. Surface internal_construction entries and unanchored gaps
+
+    Use this when answering questions that should reach beyond the wiki text
+    into the canonical literature (DOIs, ISBNs, Wikipedia, Scholarpedia).
+
+    Args:
+        query: natural-language topic ("phase transitions", "Bayesian inference
+               in physics", "what does the wiki say about entropy")
+        top_k_entries: max distinct wiki entries to surface (default 10)
+        chunks_per_query: chunks to retrieve from ChromaDB (default 30)
+
+    Returns:
+        seed_entries: wiki entries semantically related, with their anchors
+        canonical_sources: ranked list of external sources
+        co_citation_hubs: sources that anchor 2+ topic entries
+        cross_domain_bridges: sources that span 2+ primary domains
+        internal_constructions: topic entries flagged as wiki-internal vocabulary
+        unanchored: topic entries with no anchors (gap targets)
+    """
+    from analysis.anchor_query import find_anchors_for_topic
+    return find_anchors_for_topic(
+        query, top_k_entries=top_k_entries, chunks_per_query=chunks_per_query,
+    )
+
+
+@mcp.tool()
+def expand_via_anchor_co_citation(
+    source: str,
+    identifier: str,
+    exclude_entries: list[str] | None = None,
+) -> list[dict]:
+    """
+    Given a canonical source, find ALL wiki entries that anchor to it.
+
+    Useful for cross-referencing: "who else cites this?" surfaces the full
+    cluster around a canonical reference. E.g., MTW *Gravitation* anchors
+    16 entries; this returns the list with their roles and relationships.
+
+    Args:
+        source: anchor source type ('isbn', 'doi', 'wikipedia', 'arxiv', etc.)
+        identifier: exact identifier value matching external_anchors.identifier
+        exclude_entries: list of entry IDs to skip (e.g., the seed entries)
+
+    Returns:
+        list of {entry_id, title, entry_type, canonical_role, relationship}
+    """
+    from analysis.anchor_query import expand_via_co_citation
+    return expand_via_co_citation(source, identifier, exclude_entries)
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":

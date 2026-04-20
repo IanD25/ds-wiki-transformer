@@ -57,3 +57,15 @@ Thumbs.db
 #   - apply_domain_retag_*.py, insert_info1_anchors_*.py (content)
 #   - src/sync.py (embedding snapshots)
 data/wiki_history.db
+
+# ── DB backups (local only; regenerable from migrations or src/sync.py) ──────
+data/*.db.bak
+data/*.db.pre-*.bak
+data/wiki_history.db.*
+
+# ── AlphaEntropy side-project (X8) — separate repo / local only ──────────────
+# Flagged 2026-04-18 session handover: relocate to separate repo or keep local.
+# Per charter: DFIG wiki is the canonical science layer; AlphaEntropy is applied-finance
+# side-work and does not belong in the wiki repo's commit history.
+alpha_entropy_v*.py
+
