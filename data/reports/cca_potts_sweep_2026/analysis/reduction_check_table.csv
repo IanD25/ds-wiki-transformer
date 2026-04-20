@@ -1,0 +1,13 @@
+q,L,eta_CCA_mean,eta_CCA_sem,zeta_theory,deviation_sigma,outcome,rationale
+2,16,0.7307674748756818,0.0027051747480797,0.875,53.31726729546892,R2,|η_CCA − ζ_theory| = 0.144 > 3σ (0.008); CCA captures beyond η_std.
+2,24,0.7458684345006166,0.0049239090190293,0.875,26.225416635508925,R2,|η_CCA − ζ_theory| = 0.129 > 3σ (0.015); CCA captures beyond η_std.
+2,32,0.8088750043014299,0.00474604803096,0.875,13.932643594674024,R2,|η_CCA − ζ_theory| = 0.066 > 3σ (0.014); CCA captures beyond η_std.
+5,16,0.623502068562024,0.0087302843671962,,,N/A_first_order,q=5 is first-order in 2D; Vinayak framework not applicable.
+5,24,0.6547355274453155,0.0168389449181007,,,N/A_first_order,q=5 is first-order in 2D; Vinayak framework not applicable.
+5,32,0.6728771103397475,0.0155048774372796,,,N/A_first_order,q=5 is first-order in 2D; Vinayak framework not applicable.
+7,16,0.5574339060079775,0.0140194308072468,,,N/A_first_order,q=7 is first-order in 2D; Vinayak framework not applicable.
+7,24,0.6262031571842736,0.0286924116604805,,,N/A_first_order,q=7 is first-order in 2D; Vinayak framework not applicable.
+7,32,0.6333127470540888,0.0245843302352058,,,N/A_first_order,q=7 is first-order in 2D; Vinayak framework not applicable.
+10,16,0.5271199537796724,0.0201431230614119,,,N/A_first_order,q=10 is first-order in 2D; Vinayak framework not applicable.
+10,24,0.6060290084161711,0.0288391420926804,,,N/A_first_order,q=10 is first-order in 2D; Vinayak framework not applicable.
+10,32,0.5513659090145799,0.0047153820167686,,,N/A_first_order,q=10 is first-order in 2D; Vinayak framework not applicable.
