@@ -50,13 +50,17 @@ Thumbs.db
 # Outside Ref/           — external analysis and reference documents
 # ────────────────────────────────────────────────────────────────────────────
 
-# ── Generated / rebuildable databases (too large for GitHub) ──────────────────
-# wiki_history.db is rebuildable from committed migration scripts:
-#   - m0_*.py (confidence_calibration records)
-#   - create_external_anchors_*.py, create_domain_taxonomy_*.py (schemas)
-#   - apply_domain_retag_*.py, insert_info1_anchors_*.py (content)
-#   - src/sync.py (embedding snapshots)
-data/wiki_history.db
+# ── Notes on wiki_history.db ──────────────────────────────────────────────────
+# wiki_history.db IS committed (intentionally tracked, see above) — holds the
+# full GSW anchor graph, domain taxonomy, calibration, and embedding snapshots.
+# Hysteresis policy in src/snapshot_retention.py keeps it under GitHub's 100MB
+# file limit (N=3 snapshots retained; current size ~26MB).
+#
+# If you clone this repo, the full graph is available immediately via:
+#   python3 scripts/gsw_lookup.py "your topic"
+#
+# The graph is also reproducible from migration scripts in scripts/migrations/
+# if the committed DB is ever unavailable.
 
 # ── DB backups (local only; regenerable from migrations or src/sync.py) ──────
 data/*.db.bak
