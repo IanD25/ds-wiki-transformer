@@ -1,14 +1,40 @@
 # Scaling Research Queue — 2026-05-04
 
-> **Purpose.** After a session that reframed H5, retired two derived quantities, and falsified P12's cross-domain claim, the scaling cluster needs an explicit statement of what is actually runnable and in what order. This is that statement.
+> **REVISED late 2026-05-04**, after a three-agent research pass on Kolokotrones et al. 2010 obtained the full text. The earlier version of this document listed "settle the endpoints" as a decision blocking λ's definition. **Both items are now resolved differently than anticipated** — see §Resolved. The revision is recorded rather than silently overwritten; the superseded framing is summarised at the end.
 >
-> **Audit refs:** `gsw-scaling-corrections-2026-05-04`, `gsw-scaling-reformulation-2026-05-04`, `gsw-scaling-queue-2026-05-04`
+> **Audit refs:** `gsw-scaling-corrections`, `gsw-scaling-reformulation`, `gsw-scaling-queue`, `gsw-endpoint-decision`, `gsw-kolokotrones-research` — all `-2026-05-04`
 
 ---
 
 ## The one-line state
 
-The β(λ) framework has a **documented endpoint failure** and its central cross-domain conjecture is **falsified**. One conjecture in the cluster is testable today with no upstream dependencies. Everything else is blocked, and the blockers are of three distinct kinds that should not be conflated.
+β(λ)'s functional form turns out to be **derivable** from two processes contributing additively, which supplies the mechanism the framework lacked and gives λ an operational definition. What remains open is **which two processes**. Separately, P12 is falsified, curvature is contested rather than established, and one conjecture is runnable today.
+
+---
+
+## Resolved this session
+
+### λ has a definition
+
+> **λ is the fractional contribution of one process to total metabolic rate**, where rate is a sum of two processes with different mass exponents.
+
+From B = a·M^p + b·M^q, the local log-log slope is **p·f + q·(1−f)** with **f = a·M^p / B**. That is exactly β(λ). Recorded in H5 *What The Math Says* with the derivation shown.
+
+Mentions no exponent. Measurable by measuring the two contributions separately. **Mass-dependent by construction**, which closes the earlier question about whether λ could be a species constant — it cannot, and now for a reason.
+
+### The endpoint question is superseded, not answered
+
+The endpoints are the two processes' exponents. Identify the processes and the endpoints follow. The earlier framing — "pick two bounding exponents" — was the wrong question.
+
+The [2/3, 3/4] decision taken earlier today is **neither confirmed nor reversed**. Its stated rationale weakened on all three grounds (Kolokotrones' local slopes run 0.57–0.87, outside the wedge at both ends; 0.676 is a tangent slope at the mean of White & Seymour's mass distribution rather than a property of mammals; the curvature it accommodated is contested). But the question it answered no longer needs answering.
+
+### The curvature-direction puzzle: min-rule vs sum-rule
+
+The puzzle assumed constraints combine as a **minimum**, under which the lower exponent binds at large mass → concave. The models that reproduce the curvature use **sums**, where the lower exponent dominates at small mass → convex, the observed direction.
+
+The thermal physics was sound. The combination rule was wrong.
+
+**Vocabulary consequence:** "which constraint binds" implies a min-rule and yields the wrong curvature sign. Under an additive decomposition nothing binds — processes contribute in proportion. The framework has been sliding between two different physics with opposite signatures.
 
 ---
 
@@ -16,9 +42,7 @@ The β(λ) framework has a **documented endpoint failure** and its central cross
 
 ### ① P14a — branching variance vs. exponent gap
 
-> Does vascular branching-ratio variance correlate with the BMR/MMR metabolic exponent gap across taxa?
-
-**The only item in the cluster with zero upstream dependencies.** No λ, no P13, no Q1, no resolution of the endpoint question.
+Unchanged by this session's findings, and still the only item with zero upstream dependencies.
 
 | | |
 |---|---|
@@ -28,101 +52,101 @@ The β(λ) framework has a **documented endpoint failure** and its central cross
 | **Confirms** | R² > 0.6 |
 | **Kills** | no significant correlation after controlling for body mass |
 
-Both criteria are inherited unchanged from P14 and both are already stated in the entry. Succeeds or fails independently of the mechanism claim.
+**Design caveat.** MMR is individual, trainable, and transient, so a null result is ambiguous between "no relationship" and "obscured by MMR heterogeneity." Pre-register that concern. A within-species design (micro-CT plus V̇O₂max on the *same* animals) is cleaner and matches MMR's actual level of description, at higher protocol cost — treat it as confirmatory.
 
 ---
 
-## What is blocked, and by what kind of thing
+## What is open
 
-The three blockers below are genuinely different and need different work. Treating them as one queue is what produced the earlier "promote P14 and P16" recommendation, which was too coarse.
+### ② Which two processes — *a literature question, not a free choice*
 
-### ② The endpoint question — *a decision, not a measurement*
+This replaces the old endpoint question and is the live item.
 
-β(λ) is a weighted average, so its output is confined between its two endpoints. With WBE's d_f = 3 the range is [0.750, 1.000], narrowing to [0.750, 0.875] under P13's floor. **Observed strict mammalian BMR is 0.676 — below the floor.**
+Named candidates:
 
-Nothing downstream can be settled until the endpoints are chosen, because the endpoints determine what λ is a fraction *of*.
+| Source | Decomposition |
+|---|---|
+| Ballesteros et al. 2018, *Sci. Rep.* 8:1448 | isometric (p=1) + surface (q=2/3), additive |
+| Zhao, arXiv:1509.08912 | both 2/3 and 3/4 from a single Murray-law network; **explicitly denies** the small-mass 2/3 is the surface law |
+| Kolokotrones et al. 2010 | vascular: pulsatile-to-smooth transition at a constant *fraction* of levels from the heart rather than a constant *number* from the capillaries |
 
-Candidates, none adopted:
+Reading these two papers directly is bounded work and would settle what the endpoints are.
 
-| Endpoints | Contains BMR? | Reaches MMR 0.87? | Reaches urban 1.15? | Notes |
-|---|---|---|---|---|
-| [0.75, 1.00] | ✗ | ✓ | ✗ | current; requires rejecting d_f = 3 |
-| [2/3, 3/4] | ✓ | ✗ | ✗ | maps onto the historical 2/3-vs-3/4 debate; gives curvature a natural reading |
-| regime-dependent pairs | ✓ | ✓ | ✗ | two formulas wearing one name |
-| abandon weighted-average form | — | — | — | most work, most freedom |
+### ③ Q4 — *a specification step*
 
-**Current lean:** [2/3, 3/4] for resting metabolism specifically. It contains the data and matches the real history. Its cost is silence on MMR and cities — which may be honest rather than fatal, if those are different questions.
-
-### ③ λ's definition — *blocked on ②*
-
-H3 defines λ by its effect on the exponent, which is circular, and the wiki uses it for two incompatible quantities (state variable in X1, structural variable in C1's table).
-
-Most promising replacement, from this session: **λ as realisation fraction** — how much of the theoretically optimal network topology a real vasculature achieves. Anatomically measurable, and it changes *topology* rather than *efficiency*, which matters because efficiency moves the prefactor while only topology moves the exponent.
-
-Candidates rejected on that test: capillary recruitment (wrong sign), impedance-matching degradation (prefactor, not exponent).
-
-Cannot be finalised until ② is settled — "fraction of the optimum" requires knowing which optimum.
-
-### ④ Q4 — *a specification step, not an experiment*
-
-P16 (RLCT = d_f) would supply exactly the β-independent route to d_f the framework needs. It is blocked at step zero: an RLCT is a property of a *specified* statistical model, and no biological learning problem has been mapped to the SLT framework in a way yielding a computable RLCT.
-
-**The queue item is Q4, not P16.** No measurement can help until metabolism is formulated with an explicit p(x|θ).
+P16 (RLCT = d_f) would supply a β-independent route to d_f. Blocked at step zero: an RLCT is a property of a *specified* statistical model, and no biological learning problem has been mapped to SLT in a way yielding a computable one. **The queue item is Q4, not P16.**
 
 ---
 
 ## Falsified
 
-**P12** — cross-domain universality. β(λ) is bounded above by 1 for every d_f and every λ ∈ [0,1]; urban socioeconomic exponents ~1.15 lie outside its range **structurally**, not for want of measurement. Falsified without new data.
+**P12** — cross-domain universality. β(λ) is bounded above by 1 for every d_f and λ ∈ [0,1]; urban socioeconomic exponents ~1.15 lie outside its range **structurally**. Falsified without new data.
 
-The biological half of P12 remains *blocked* rather than falsified — its antecedent ("whenever d_f and λ are independently measured") is untested and currently unsatisfiable.
+Its biological half remains *blocked* rather than falsified — the antecedent is untested and currently unsatisfiable.
 
-Worth noting: P12's stated `would_kill` anticipated the wrong failure mode. It expected mismatched β for matched parameters; the actual failure is that β values exist which the formula cannot produce at all. A falsification criterion that misses how a claim actually fails is itself a finding.
-
----
-
-## Retired as quantities
-
-Both retained visibly per the no-deletions rule; withdrawn from use in inference.
-
-- **C1's implied D_eff column** — produced by inverting β = d_f/(d_f+1) on observed exponents. Invalid outside its derivation range, applied to possibly-artifactual exponents, and yields values above the embedding dimension (reptiles 3.2, fish 7.3 — geometrically impossible).
-- **X1's d_f ≈ 2.7** — same inversion. The predictions computed from it reproduce the exponent used to generate the input.
+P12's stated `would_kill` anticipated the wrong failure mode: it expected mismatched β for matched parameters, where the actual failure is β values the formula cannot produce at all.
 
 ---
 
-## The constructive direction
+## Corrected or retired
 
-Recorded as its own calibration entry (`scaling_framework_root_diagnosis`).
+**Fabricated citation.** C1 attributed the ~10 kg breakpoint to "Xiao et al. (2015)." No such paper exists. It is Dodds, Rothman & Weitz 2001 — α = 0.668 ± 0.019 below 10 kg, 0.877 ± 0.088 above.
 
-**Predict individual organisms from measured anatomy, not cross-species exponents.**
+**Curvature downgraded** from established to contested. Griebeler & Werner 2016 (519 species): linear beat curvature in 16 of 17 orders. Hudson 2013: aquatic intercept shift. Plants curve concave. Invertebrate curvature vanishes under phylogenetic grouping. No replication in birds, reptiles, fish. MacKay 2011: only Rodentia survives a scale-invariant test. Packard: log-curvature from a non-zero arithmetic intercept. Quadratic adds 0.3% of variance. Full table in C1.
 
-> For a single animal, measured vascular network geometry predicts measured metabolic rate.
+What *is* well supported is the weaker negative: **no universal exponent exists** (Glazier 2022; White & Marshall 2023; Clarke 2025). Price et al. 2012, co-authored by both Savage and Dodds, concedes WBE's derivation is incomplete and a fuller treatment gives a curve that is not a pure power law.
 
-No exponent appears. This sidesteps the curvature problem entirely (no slope is fitted), sidesteps the 2/3-vs-3/4 debate, is falsifiable at n = 1, and yields the scaling result as a *consequence* rather than assuming it as input.
+**Slope range corrected** to Kolokotrones' actual 0.57–0.87.
 
-The WBE decomposition supports this:
+**Inverted d_f retired** — C1's implied column and X1's 2.7. Both produced by inverting β = d_f/(d_f+1); two values exceed the embedding dimension.
 
-**B = N_capillaries × (metabolic load per capillary)**
+**P15's motivation is dead.** (1−λ)²·d_f was justified as a Landauer cost of maintaining synchronisation. Under the resolved definition λ is not a synchronisation and not something an organism maintains. Any surviving P15 needs a wholly different rationale.
 
-which splits one hard question into two separately measurable ones — an anatomical question (how does capillary count scale?) and a physiological one (is load per capillary constant?). It also localises the anomaly: if capillary count scales as M^0.676, the deviation is anatomical and WBE's geometric premises are what's wrong; if count scales as M^0.75 but load varies, the anatomy is fine and the deviation is physiological. The current framework cannot tell these apart because everything collapses into one exponent.
+---
 
-It also resolves BMR-vs-MMR without a structural parameter: same animal, same capillary count, different load per capillary.
+## MMR is out of scope, on ontological grounds
+
+Not because the formula cannot reach 0.87. Because MMR is a temporary **overclock** — unsustainable, costly, individual rather than species-characteristic, trainable, never a baseline.
+
+| | BMR | MMR |
+|---|---|---|
+| Level | species-characteristic | individual |
+| Duration | sustainable indefinitely | minutes |
+| Cost | none beyond upkeep | recovery debt, oxidative stress |
+| Trainable | no | substantially |
+
+Generalises beyond metabolism: continuous vs peak power rating, base vs boost clock, yield vs ultimate strength, sustained vs burst bandwidth. Sustained capacity is limited by what can be held indefinitely; peak by instantaneous output plus tolerance for accumulating debt. No reason one formula covers both.
+
+This argument is **unaffected** by the Kolokotrones findings and stands on its own grounds.
 
 ---
 
 ## Suggested order
 
-1. **Run P14a.** Only item with no dependencies. Real result either way.
-2. **Decide the endpoints (②).** A decision you can make from the desk; unblocks λ.
-3. **Define λ (③)** once ② is settled, then check it is measurable without touching β.
-4. **Q4 (④)** if the SLT thread is worth pursuing — a separate, harder project.
+1. **Run P14a.** No dependencies. Real result either way.
+2. **Read Ballesteros 2018 and Zhao** to settle ②. Bounded — two papers.
+3. **Q4** if the SLT thread is worth a separate project.
 
-Items 1 and 2 are independent and can proceed in parallel.
+1 and 2 are independent.
+
+---
+
+## One thing worth a second pair of eyes
+
+The derivation in §Resolved is elementary and was verified, but it was produced by Claude at the end of a long session and it conveniently rescues a formula that same session had spent hours dismantling. That combination warrants scepticism. It is recorded in H5 with the steps shown so it can be checked rather than taken on trust.
 
 ---
 
 ## Symbol warning
 
-λ carries at least four unrelated meanings in this project, **two of them in adjacent conjectures**: phase coherence (H3/H5/P13/P14/P15) and λ_RLCT, Watanabe's Real Log-Canonical Threshold (Q4/P16). Also λ_i for eigenvalues in the CCA work, and λ for wavelength in QM4.
+λ carries at least four unrelated meanings, **two in adjacent conjectures**: the process-contribution fraction (H3/H5/P13/P14/P15) and λ_RLCT, Watanabe's Real Log-Canonical Threshold (Q4/P16). Also λ_i for eigenvalues in the CCA work, and wavelength in QM4. See `gloss_lambda`.
 
-Unlike the *Fisher information*, *effective dimension*, and *η* collisions found in the same session's deep-research pass, this one is entirely internal — no external literature forced it. See the `gloss_lambda` disambiguation page.
+The name "phase coherence" is now wrong under the resolved definition and should change — *process-contribution fraction* is honest.
+
+---
+
+## Superseded framing (kept for the record)
+
+The earlier version of this document listed three blockers: an endpoint **decision**, a λ **definition** blocked on it, and Q4 as a **specification**. It leaned toward [2/3, 3/4] and put "decide the endpoints" second in the suggested order.
+
+That framing treated the endpoints as something to choose. The two-process derivation shows they are something to *derive*, once the processes are identified. The blocker was never a decision — it was a missing mechanism, and the mechanism turned out to be addition.

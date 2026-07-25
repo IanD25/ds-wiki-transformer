@@ -37,7 +37,22 @@ Claude's standing instructions when working on this platform:
 
 ---
 
-## Current Status (2026-04-20, Post-CCA-Potts Phase E Sweep)
+## Current Status (2026-05-04, Post-Glossary + Scaling Reformulation)
+
+> **Read [`docs/SESSION_HANDOVER_2026-05-04.md`](docs/SESSION_HANDOVER_2026-05-04.md) first.** Two deep-research passes, a new glossary subsystem, and a substantially reworked scaling cluster. Commits `17b6742`, `5741f9c`, `4cf550c`.
+
+**Mission state:** Two research passes plus new infrastructure. Nothing promoted; several things corrected or falsified.
+
+**Headline (2026-05-04):**
+
+- **Glossary subsystem built** — 41 entries (20 disambiguation pages + 21 sense entries), `[[g:slug]]` markup, three renderers, and a load-bearing-word lint. First punch list: **611 high-severity flags across 122 entries**. This is the operational form of "name the specific mathematical object, every time." Markup has NOT yet been applied to entries — that is the next phase.
+- **Maldacena pass (5 agents)** — confirms M0's Fisher-gravity downgrade against 2020–2025 literature. **Retracted** `CCA_GRAVITY_FINDINGS.md` §1.3: Bianconi 2025 uses *quantum* relative entropy (Bures/Petz), not classical Fisher, so it is not an independent second path. GT10 gains the Casini-Galante-Myers scope caveat. P17/P23 DESI σ-levels corrected to 2.8–4.2σ (the 5σ was Amendola's forecast). P21 split into classical Chentsov uniqueness vs quantum Petz classification.
+- **Kolokotrones pass (3 agents)** — found a **fabricated citation** in C1 ("Xiao et al. 2015" does not exist; the ~10 kg breakpoint is Dodds 2001). Curvature **downgraded** from established to contested (Griebeler & Werner 2016: linear beat curvature in 16 of 17 orders; plants curve the opposite way; no replication in birds/reptiles/fish).
+- **P12 FALSIFIED** on cross-domain universality — β(λ) is bounded above by 1 for all d_f and λ, so urban superlinear ~1.15 is structurally unreachable.
+- **H5's form DERIVED** — for B = a·M^p + b·M^q the local slope is p·f + q·(1−f) with f = a·M^p/B, which is exactly β(λ). **λ is the fractional contribution of one process to the total** — measurable, mass-dependent by construction, endpoints derivable rather than chosen. This reversed the same session's "interpolation without mechanism" diagnosis.
+- **Scaling queue:** P14a runnable now (no dependencies); open question is *which two processes* (Ballesteros 2018 vs Zhao); Q4 is the real blocker behind P16. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md).
+
+**Earlier state (2026-04-20, Post-CCA-Potts Phase E Sweep):**
 
 **Mission state:** **Phase E experiment complete.** CCA Potts q=2,5,7,10 sweep answered the M0 Sixth-Addendum's sharpened mechanism question via 540-run Glauber MC (Brown-2022-faithful dynamics) + full L²×L² connected correlation matrix (Borgs-Chayes convention) + GTE estimator matching Brown's Suppl. exactly.
 
@@ -171,7 +186,11 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | File | Purpose |
 |------|---------|
 | `docs/RESEARCH_PLATFORM_CHARTER.md` | **ANCHOR DOCUMENT** — mission, epistemic contract, lifecycle |
-| `docs/SESSION_HANDOVER_2026-04-18.md` | **Most recent session handover (2026-04-18)** — GSW anchor architecture + retagging + 42% wiki provenance |
+| `docs/SESSION_HANDOVER_2026-05-04.md` | **Most recent session handover (2026-05-04)** — glossary subsystem, two deep-research passes, scaling reformulation |
+| `docs/SCALING_RESEARCH_QUEUE_2026_05_04.md` | Current state of the scaling cluster — what is runnable, open, falsified, retired |
+| `src/glossary/` | Glossary subsystem — `[[g:slug]]` markup parser, renderers, load-bearing-word lint |
+| `data/reports/glossary_lint_2026_05_04.md` | Punch list: 611 high-severity flags across 122 entries needing term binding |
+| `docs/SESSION_HANDOVER_2026-04-18.md` | Prior handover (2026-04-18) — GSW anchor architecture + retagging + 42% wiki provenance |
 | `docs/GSW_ANCHOR_ARCHITECTURE.md` | **GSW anchor schema + design** — relationships, canonical roles, tiering, durability model |
 | `docs/GSW_SOURCE_BASKET.md` | Per-domain canonical-source basket audit across 10 top-level domains × 5 canonical roles |
 | `docs/prior_art_reviews/` | Per-entry anchor proposal reports + domain-retag amendments + INFO1 smoke test |
@@ -337,7 +356,7 @@ python3 scripts/run_entity_catalog_pass.py \
 ## If You're A Fresh Claude Session
 
 1. **Read `docs/RESEARCH_PLATFORM_CHARTER.md` first.** It defines the mission and the epistemic rules.
-2. **Read `docs/SESSION_HANDOVER_2026-04-18.md`** — the latest session handover. Documents the GSW anchor architecture, retagging pass, and 42% wiki provenance state.
+2. **Read `docs/SESSION_HANDOVER_2026-05-04.md`** — the latest session handover. Glossary subsystem, two deep-research passes, scaling reformulation. Read `docs/SESSION_HANDOVER_2026-04-18.md` after it for the GSW anchor architecture and 42% provenance state.
 3. **Read `docs/GSW_ANCHOR_ARCHITECTURE.md`** for the schema and design decisions (relationship taxonomy, canonical roles, durability model).
 4. **For anchoring work, read `docs/GSW_SOURCE_BASKET.md`** — per-domain canonical source reference.
 5. **Prior context**: `docs/SESSION_HANDOVER_2026-04-16.md` (M0 audit closeout) is still relevant for conjecture calibration.
