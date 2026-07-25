@@ -58,6 +58,38 @@
 
 ---
 
+> **⚠️ NOTATION UPDATE (2026-05-04 — deep-research pass):**
+>
+> Two distinct issues identified, both load-bearing for any external use of CCA notation.
+>
+> **(1) The Phase E experiment (2026-04-20) used DIFFERENT formulas for `d_eff` and `η` than the v0.1 definitions on this page.** Same names, different observables:
+>
+> | Symbol | v0.1 doc (this file, §1.2) | Phase E experiment (`CCA_POTTS_SWEEP_REPORT_2026.md`) |
+> |---|---|---|
+> | `d_eff` | `argmax_i (σ_i / σ_{i+1}) + 1` (largest spectral-gap position) | `(Σ λ)² / Σ λ²` (participation ratio of FIM eigenvalue spectrum) |
+> | `η` | `σ_{d_eff+1} / σ_{d_eff}` (sharpness of gap, 0=perfect, 1=no gap) | log-log slope of eigenvalue tail (`λ_j` vs `j`, Zipf-tail exponent per Vinayak 2014) |
+>
+> The v0.1 definitions and the Phase E definitions are not the same function of the spectrum. The Phase E definitions are what the actual experiment computed and reported. **Going forward the Phase E definitions are canonical for CCA work**; the v0.1 definitions on this page are preserved (per the falsifications-as-learning-artifacts rule) but should be treated as superseded.
+>
+> **(2) Both Phase-E observables collide with established physics terminology.** Per `docs/CCA_TERMINOLOGY_RENAME_PROPOSAL.md`:
+>
+> | Phase-E symbol | Established physics object with the same symbol | Rename going forward |
+> |---|---|---|
+> | `d_eff` (PR of FIM) | `d_eff` in Mattingly et al. 2018 PNAS — `Σ_r r · Ω_r` from optimal discrete prior on parameter-manifold edges (different formula, same vocabulary) | **`PR_FIM`** (participation ratio of FIM) |
+> | `η` (Zipf-tail slope) | `η_critical` — standard 2D anomalous dimension of the two-point function, `C(r) ~ r^{-(d-2+η)}`; for 2D Ising `η = 1/4` | **`ι`** (iota for "isotropy"; or `iso_FIM`) |
+>
+> The deep-research pass on 2026-05-04 strengthened the case for the rename: the participation-ratio formula on FIM specifically has **no canonical primary-source citation** in the literature — it is a folklore transfer from random-matrix / neural-population covariance contexts. Sethna group itself (Quinn 2023 Rep. Prog. Phys.) deliberately avoids collapsing the FIM eigenvalue spectrum to a scalar, using hyperribbon widths and the Mattingly boundary-prior `d_eff` instead. **Continuing to use bare `d_eff` and `η` in CCA work risks a category error against both Mattingly 2018 and standard stat-mech terminology.**
+>
+> **In-flight policy:**
+>
+> - **Going forward (2026-05-04 onward):** use **`PR_FIM`** and **`ι`** (or `ι_CCA`) in any new CCA writeup, experiment script, conjecture statement, or wiki entry. State the formula on first use: `PR_FIM = (Σλ)²/Σλ²`; `ι = -slope(log λ_j vs log j)`.
+> - **Historical record (Phase E artifacts: spec, derivations, handover, report, run logs, raw .npz files):** preserved AS-IS. Renaming inside committed experiment outputs would corrupt the audit trail. Reference these in future writeups using the new names with a one-line footnote pinning each to the Phase E symbol it replaces.
+> - **This document (v0.1 §1.2 Definition 2):** the v0.1 gap-position formulas on this page are **superseded** but kept visible. New §X "Definitions (canonical, 2026-05-04+)" should be added in a follow-up edit (this banner is the placeholder).
+>
+> Calibration record: `wiki_history.db.confidence_calibration` audit_ref `gsw-maldacena-deep-research-2026-05-04`, entity_id `cca_terminology_rename`.
+
+---
+
 # Constrained Critical Attractor: Mathematical Formalization
 
 > **Status:** Working formalization with empirical grounding

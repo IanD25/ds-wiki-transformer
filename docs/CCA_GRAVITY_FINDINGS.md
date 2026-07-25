@@ -1,4 +1,21 @@
 > **⚠️ M0 AUDIT (2026-04-08):** The Fisher-gravity chain described in this document (M6→IT05→IT03→GT10→GT01) was audited and **downgraded from "structural coherence result" to "conceptual analogy."** Jacobson 2016 derives linearized Einstein equations using **von Neumann entanglement entropy on a quantum subalgebra** via the first law of entanglement — **not** classical Fisher information or classical KL divergence on a parameter manifold. The chain conflates three distinct mathematical objects (classical Fisher metric, classical KL divergence, quantum entanglement entropy) that share the word "relative entropy." It is **stacking vocabulary, not composing theorems**. Additionally: Jacobson 2016 is linearized only; its generality beyond CFT/holographic contexts is an assumption, not a theorem. The claim "GT10 as a CCA instance" is a post-hoc fit to a 5-feature descriptive checklist and is not predictive support. See `docs/M0_MILESTONE_COMPILATION.md` for full calibration. Do not cite this document as presenting an info-theoretic derivation of gravity.
+>
+> **⚠️ DEEP-RESEARCH PASS (2026-05-04):** Five-agent literature audit triggered by reading a Juan Maldacena interview confirms the M0 downgrade is **correct and conservative**. **No peer-reviewed paper 2020–2025 constructs a theorem-level bridge from classical Fisher information geometry on a parameter manifold to the Jacobson-2016 / modular-Hamiltonian / entanglement-entropy machinery.** Specific corrections to this document:
+>
+> - **§1.3 "The Parallel Chain (via Bianconi)" is RETRACTED.** Bianconi 2025 (PRD 111, 066001) uses **quantum** relative entropy on density-matrix-valued metrics; the Hessian is the **Bures / quantum Fisher metric**, not classical Fisher-Rao on a parameter manifold. Treating Bianconi as an "independent path from Fisher Rank to gravity" parallel to Jacobson is a category error: Bures ≠ Fisher-Rao except in the commutative limit. There is one program (Jacobson via modular-H) and one separate program (Bianconi via quantum-relative-entropy); they are not independent confirmations of each other.
+> - **§2.4 "Fisher Information in Gravity" is MISLEADING as written.** It lists Braunstein-Caves (Fubini-Study = quantum FI), Ruppeiner (which Brody-Rivier 1995 proved IS Fisher-Rao on the Gibbs canonical family in the thermodynamic limit, so not separate evidence), Bianconi (quantum, not classical), sloppy models (Sethna group makes NO emergent-spacetime claim), and Chentsov (uniqueness on classical simplices only — quantum case is Petz family). Each item is a different mathematical object; the section presents them as cumulative evidence for "Fisher information shows up everywhere in gravity" but the right reading is that "Fisher" in each item refers to a different object.
+> - **§2.2 d → 2 convergence list is mostly real**, but is evidence for *dimensional reduction in quantum gravity*, not for the CCA framework specifically. Listing it under "supporting evidence for GT10 as CCA instance" is a post-hoc framing the original authors do not endorse.
+> - **§3 "Structural prediction" overclaims.** Chentsov uniqueness applies to classical statistical manifolds (Chentsov 1972/1982; extended by Ay-Jost-Lê-Schwachhöfer 2015 arXiv:1306.1465). The quantum analog is Petz 1996 *classification* — a parameterized family of monotone metrics, not a single canonical metric (Bures/BKM/RLD/Wigner-Yanase as distinguished members). "The Fisher-Rao metric is the unique natural metric on statistical manifolds" is true classically; the quantum statement requires "uniqueness given a choice of operator-monotone function f."
+>
+> **Key new anchors added to wiki_history.db.external_anchors under audit_ref `gsw-maldacena-deep-research-2026-05-04`:**
+> - GT10 ← Casini-Galante-Myers 2016 (`contradicts`): modular-H-as-boost assumption fails for relevant operators with low conformal dimensions
+> - GT10 ← Faulkner-Lashkari-Van Raamsdonk 2014 (`cites`): parallel theorem-level holographic bridge to linearized bulk Einstein
+> - GT04 ← Bianconi 2025 (`canonical_authority`/`progenitor`) with explicit quantum-not-classical-Fisher disambiguation
+> - BR04 ← Brody-Rivier 1995 (`reframing_of`): Ruppeiner ⊂ Fisher-Rao on Gibbs canonical family in thermodynamic limit
+> - P21 ← Petz 1996, Ay-Jost-Lê-Schwachhöfer 2015 (`canonical_authority`): quantum classification + classical extension
+> - M6 ← Machta-Sethna 2013 (`canonical_authority`/`progenitor`) with note that Sethna group makes NO emergent-spacetime claim
+>
+> See `docs/M0_MILESTONE_COMPILATION.md` Maldacena addendum (forthcoming) and the migration script `scripts/migrations/m0_maldacena_research_pass_2026_05_04.py` for full calibration records.
 
 ---
 
@@ -58,7 +75,11 @@ Proven within scope. Jacobson 2016 explicitly recovers Jacobson 1995 as the clas
 
 The single assumption: Jacobson 2016 is correct beyond conformal matter. Status: published in PRL, 300+ citations, 10 years without disproof, one substantive criticism (Casini-Galante-Myers 2016 regarding relevant operators with low conformal dimensions — acknowledged, not fatal).
 
-### 1.3 The Parallel Chain (via Bianconi)
+### 1.3 The Parallel Chain (via Bianconi) — **RETRACTED 2026-05-04**
+
+> **RETRACTION (deep-research pass 2026-05-04):** This subsection's claim of "two independent paths from Fisher Rank to gravity" is **retracted**. The original prose is preserved below per the `preserve_falsifications` rule, but the framing is wrong: Bianconi 2025 uses **quantum** relative entropy on density-matrix-valued metrics, whose Hessian is the **Bures / quantum Fisher metric** — not the classical Fisher-Rao metric on a probability-distribution parameter manifold (which is what M6, the wiki's `Fisher Information Rank`, actually computes). Bures and Fisher-Rao coincide only in the commutative (classical) limit. Treating Bianconi 2025 as an independent path from M6's classical FIM is a category error of the same kind the M0 audit flagged for the main chain. There is one program (Jacobson via modular-H) and one separate program (Bianconi via quantum-relative-entropy); they are not independent confirmations of each other and they bridge different sides of the classical/quantum information-geometry split. See `wiki_history.db.confidence_calibration` audit_ref `gsw-maldacena-deep-research-2026-05-04` for the full calibration record.
+
+**Original prose (retracted, kept for the falsification graveyard):**
 
 ```
 M6 (Fisher Information Rank)
@@ -69,7 +90,7 @@ M6 (Fisher Information Rank)
 
 Bianconi (Phys. Rev. D 111:066001, 2025) derived Einstein equations from an entropic action defined as quantum relative entropy between the spacetime metric and the metric induced by matter fields. This is Fisher-information-adjacent (quantum relative entropy is the quantum generalization of KL divergence, whose Hessian is Fisher information). 3 hops instead of 4.
 
-**Two independent paths from Fisher Rank to gravity.** If one fails, the other still holds.
+~~**Two independent paths from Fisher Rank to gravity.** If one fails, the other still holds.~~
 
 ### 1.4 Extension to ER=EPR
 
