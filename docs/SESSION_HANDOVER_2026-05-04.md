@@ -7,8 +7,9 @@
 > 4. [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](SCALING_RESEARCH_QUEUE_2026_05_04.md) — if picking up the scaling thread
 > 5. [`docs/SESSION_HANDOVER_2026-04-20.md`](SESSION_HANDOVER_2026-04-20.md) — prior session (CCA Potts Phase E)
 
-**Commits:** `17b6742`, `5741f9c`, `4cf550c` — all on `main`.
+**Commits:** `17b6742`, `5741f9c`, `4cf550c`, `faca047` — all on `main`, **all unpushed**.
 **Final ChromaDB snapshot:** `snap_20260725_223034`
+**Uncommitted:** `docs/demo/` — see §Interview demo (decision pending).
 
 ---
 
@@ -129,6 +130,40 @@ Full detail: [`SCALING_RESEARCH_QUEUE_2026_05_04.md`](SCALING_RESEARCH_QUEUE_202
 **5. Every falsification this session was self-generated.** The curvature result had been sitting in C1 unread for its implications. The fabricated citation had been in the wiki through multiple prior sessions. Nothing external forced any of it.
 
 ---
+
+## Interview demo (built this session, commit decision pending)
+
+Built in `docs/demo/`: a five-minute screen-share demo of the wiki, framed for a business
+audience. The subject is the **verification apparatus**, not the science.
+
+| File | |
+|---|---|
+| `TALKING_POINTS_TATE_DEMO.md` | Timed script at 145 wpm, anchor lines, Q&A, prep checklist, fact-check appendix |
+| `tab1_inversion.html` | Operating model: AI as adversarial auditor rather than author |
+| `tab2_apparatus.html` | Anchors, glossary flags, calibration records, falsified-kept rule |
+| `tab3_catch.html` | **Centrepiece** — the three audit findings, in the exemplar's failure-tab format |
+| `tab4_playbook.html` | The six rules, framed as domain-agnostic |
+| `WIKI_DEMO_LEAVE_BEHIND.pdf` | 8 pages, 2 per tab |
+
+Every figure is computed from the project's real database files and carries a fact-check
+appendix entry naming its source. Load-bearing numbers: 278 entries, 23 conjectures, 900
+anchors across 274 entries, 82 calibration records across 11 audit passes, 47 entries
+labelled "no external source exists", 611 vague-term flags across 122 entries, 3 formally
+falsified claims.
+
+**Why it is not committed.** The repo has a GitHub remote and `CLAUDE.md` describes it as a
+"GitHub-shareable repo." The talking-points document contains a job requisition number, the
+hiring company, the interviewer's role, and personal interview strategy. That is private
+material and does not belong in a shareable repository by default. Three options, owner's
+call:
+
+1. **Keep local only** — add `docs/demo/` to `.gitignore`. Simplest, and the material stays private.
+2. **Move it out** — relocate to a personal directory outside the repo.
+3. **Commit deliberately** — only if this repo is in fact private, which should be verified
+   rather than assumed.
+
+Note also that **four commits are currently unpushed**, so nothing has left the machine yet
+either way.
 
 ## Deferred / not done
 
