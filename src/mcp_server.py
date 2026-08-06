@@ -545,19 +545,23 @@ def update_section(entry_id: str, section_name: str, new_content: str) -> dict:
 
 
 @mcp.tool()
-def trigger_sync(notes: str = "") -> dict:
+def trigger_sync(notes: str = "", milestone: bool = False) -> dict:
     """
     Manually trigger a full resync of the wiki.
     Use after making direct changes to ds_wiki.db outside of update_section.
     Backs up the DB, re-extracts all chunks, re-embeds, and records a new snapshot.
 
     Args:
-        notes: optional note to attach to this snapshot
+        notes:     optional note to attach to this snapshot
+        milestone: mark this snapshot permanent — exempt from retention pruning,
+                   so it becomes part of the longitudinal record of how the
+                   embedding space evolves. Reserve for meaningful rebuilds
+                   (e.g. after a research pass), not routine syncs.
 
     Returns: {snapshot_id, chunk_count, message}
     """
     from sync import sync
-    snapshot_id = sync(trigger="manual", notes=notes, backup=True)
+    snapshot_id = sync(trigger="manual", notes=notes, backup=True, milestone=milestone)
     snaps       = topo.list_snapshots()
     chunk_count = snaps[0]["chunk_count"] if snaps else 0
     return {

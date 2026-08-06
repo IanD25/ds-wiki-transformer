@@ -27,14 +27,27 @@ def _backup_source(label: str = "") -> Path:
     return dest
 
 
-def sync(trigger: str = "manual", notes: str = "", backup: bool = True) -> str:
+def sync(
+    trigger: str = "manual",
+    notes: str = "",
+    backup: bool = True,
+    milestone: bool = False,
+) -> str:
     """
     Full sync cycle:
       1. Backup ds_wiki.db
       2. Extract all chunks from source DB
       3. Embed + store in ChromaDB and wiki_history.db
     Returns snapshot_id.
+
+    Set milestone=True to mark this snapshot permanent — it is prefixed with
+    "milestone:" and exempted from retention pruning, so it accumulates into a
+    longitudinal record of the embedding space over time. Reserve it for
+    meaningful rebuilds (e.g. after a research pass), not routine syncs.
     """
+    if milestone and not trigger.lower().startswith("milestone"):
+        trigger = f"milestone:{trigger}"
+
     print(f"\n{'='*60}")
     print(f"DS Wiki Sync  |  trigger={trigger}")
     print(f"{'='*60}")
@@ -64,11 +77,14 @@ if __name__ == "__main__":
     parser.add_argument("--trigger", default="manual", help="Trigger label (default: manual)")
     parser.add_argument("--notes",   default="",       help="Optional note for this snapshot")
     parser.add_argument("--no-backup", action="store_true", help="Skip source backup")
+    parser.add_argument("--milestone", action="store_true",
+                        help="Mark this snapshot permanent (exempt from retention pruning)")
     args = parser.parse_args()
 
     snap = sync(
         trigger=args.trigger,
         notes=args.notes,
         backup=not args.no_backup,
+        milestone=args.milestone,
     )
     print(f"\nSnapshot ID: {snap}")

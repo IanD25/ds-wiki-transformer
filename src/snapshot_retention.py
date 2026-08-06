@@ -6,13 +6,24 @@ governs `ds_wiki.db`. Embedding snapshots in `wiki_history.db` are derivative
 measurements, fully regenerable from `ds_wiki.db` via `python3 -m src.sync`. They
 follow a retention policy so the DB stays under GitHub's 100MB file limit.
 
-Default policy: keep the N most recent snapshots (by created_at).
+Default policy: keep the N most recent snapshots (by created_at), PLUS every
+snapshot flagged as a milestone. Milestone snapshots are exempt from pruning so
+the project can accumulate a permanent, longitudinal record of how the embedding
+space evolves across meaningful rebuilds — while ordinary rebuilds still roll off
+under the N-most-recent window to keep the DB under GitHub's 100MB limit.
+
+A snapshot is a milestone when its `trigger` begins with "milestone" (case-
+insensitive), e.g. trigger="milestone:glossary-markup-applied". Mint one via
+`sync(..., milestone=True)` or the `trigger_sync(milestone=True)` MCP tool.
 """
 import sqlite3
 from typing import Optional
 
 
 DEFAULT_KEEP_N = 3
+
+# Snapshots whose trigger starts with this prefix are never pruned.
+MILESTONE_PREFIX = "milestone"
 
 
 def prune_snapshots(
@@ -21,19 +32,20 @@ def prune_snapshots(
     vacuum: bool = True,
     verbose: bool = False,
 ) -> dict:
-    """Delete all snapshots except the `keep_n` most recent (by created_at).
+    """Delete all snapshots except the `keep_n` most recent (by created_at) and
+    every milestone snapshot (trigger starting with MILESTONE_PREFIX).
 
     Cascades to chunk_embedding_history and topology_metrics. Optionally VACUUMs
     to reclaim freed pages. Safe to call when the DB has fewer than keep_n
     snapshots — it's a no-op in that case.
 
     Returns counts: {snapshots_kept, snapshots_deleted, embedding_rows_deleted,
-    metric_rows_deleted}.
+    metric_rows_deleted, milestones_protected}.
     """
     if keep_n < 1:
         raise ValueError(f"keep_n must be >= 1, got {keep_n}")
 
-    keepers = [
+    recent = [
         r[0] for r in conn.execute(
             "SELECT snapshot_id FROM wiki_snapshots "
             "ORDER BY created_at DESC LIMIT ?",
@@ -41,9 +53,22 @@ def prune_snapshots(
         ).fetchall()
     ]
 
+    milestones = [
+        r[0] for r in conn.execute(
+            "SELECT snapshot_id FROM wiki_snapshots "
+            "WHERE LOWER(trigger) LIKE ?",
+            (f"{MILESTONE_PREFIX}%",),
+        ).fetchall()
+    ]
+
+    # Union, preserving order (recent first). dict.fromkeys dedupes a snapshot
+    # that is both recent AND a milestone.
+    keepers = list(dict.fromkeys(recent + milestones))
+
     if not keepers:
         return {"snapshots_kept": 0, "snapshots_deleted": 0,
-                "embedding_rows_deleted": 0, "metric_rows_deleted": 0}
+                "embedding_rows_deleted": 0, "metric_rows_deleted": 0,
+                "milestones_protected": 0}
 
     placeholders = ",".join("?" for _ in keepers)
 
@@ -70,12 +95,17 @@ def prune_snapshots(
         "snapshots_deleted": n_snap,
         "embedding_rows_deleted": n_emb,
         "metric_rows_deleted": n_metric,
+        "milestones_protected": len(milestones),
     }
 
     if verbose:
+        milestone_note = (
+            f", {result['milestones_protected']} milestone(s) protected"
+            if result["milestones_protected"] else ""
+        )
         print(f"  retention: kept {result['snapshots_kept']} snapshots, "
               f"deleted {result['snapshots_deleted']} "
               f"({result['embedding_rows_deleted']} embedding rows, "
-              f"{result['metric_rows_deleted']} metric rows)")
+              f"{result['metric_rows_deleted']} metric rows){milestone_note}")
 
     return result
