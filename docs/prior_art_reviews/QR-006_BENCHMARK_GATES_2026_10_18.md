@@ -71,7 +71,7 @@ QR-006 itself stays in the log as the umbrella question. QR-006b is what the gat
 | | Explanation | Finding |
 |---|---|---|
 | a | Wrong vocabulary or field | Searched "mutual information", "transfer entropy", "permutation entropy", "Fisher information", "complexity", "information dissipation", "multivariate resilience indicators", "ROC/AUC", "null model". Nothing found under other names. |
-| b | Done but not as a paper | The Gaussian redundancy is very likely known informally: Weinans et al. describe MI as a *nonlinear alternative* to autocorrelation. Not found stated as an early-warning result; partial. |
+| b | Done but not as a paper | **Partly found:** Weinans et al. 2021 state the Gaussian identity, lag-1 MI = −½ log(1 − ρ²), and call MI a nonlinear alternative to autocorrelation (confirmed by the early-warning fold-in session's full-text reading, 2026-10-18). The equivalence for the CSD regime is therefore in the literature, not only derivable. No study found that uses it to stratify a benchmark by regime. |
 | c | Too obvious to publish | Applies to the Gaussian half (test 1) only. |
 | d | False premise | No: CSD's linear-Gaussian basis and its failure regimes are established. |
 | e | **Experts avoid it for a known reason** | **Yes, partly:** information measures are data-hungry, and their theoretical link to transitions is weaker than for simpler metrics (Weinans et al. 2021, background and Box 1, *verified*). Real ecological series are short. |
@@ -95,6 +95,8 @@ One trap: in noise- and rate-induced tipping, *nothing* may beat chance, and the
 - **A "no"** (they never beat CSD at matched false-alarm rates) rules out recommending them outside data-rich settings. That is a clean negative the field currently lacks: practice guidance changes either way.
 - **Decidable:** yes, on public data. The Bury et al. 2021 simulation scripts with null runs, plus the anoxia, thermoacoustic and paleoclimate records; the Weinans model family; standard estimators. Modest compute.
 - **Cost:** moderate, and it serves the owner's top question directly.
+
+**Update (later on 2026-10-18).** The early-warning fold-in session read Barnett et al. 2013 in full. Its transfer-entropy peak (T ≈ 2.354 vs T_c ≈ 2.269, L = 512) comes before the transition **in temperature, at equilibrium**. Using it as a lead **in time** is only suggested there. This supports Part 1, point 5.
 
 **Gate 2 verdict:**
 - **FOLD** the linear-Gaussian equivalence: information measures are functions of the autocovariance in the CSD regime. Record it as knowledge, a re-derivation from standard identities, not a finding.
