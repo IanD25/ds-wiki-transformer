@@ -667,8 +667,11 @@ class TestIntegration:
     def test_returns_gap_analysis_report(self, report):
         assert isinstance(report, GapAnalysisReport)
 
-    def test_total_entities_209(self, report):
-        assert report.summary_stats["total_entities"] == 278
+    def test_total_entities_matches_db(self, report):
+        conn = sqlite3.connect(REAL_DB)
+        n = conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0]
+        conn.close()
+        assert report.summary_stats["total_entities"] == n
 
     def test_total_links_positive(self, report):
         assert report.summary_stats["total_links"] > 0
@@ -684,12 +687,16 @@ class TestIntegration:
         assert len(mech) == 1
         assert mech[0].observed == 1
 
-    def test_no_isolated_entries(self, report):
-        """All entries now have at least one link — zero isolated entries.
-        Q2 was the last isolated entry, linked to H4 in 2026-04-05 session."""
-        isolated = [g for g in report.link_gaps if g.gap_type == "isolated"]
-        assert len(isolated) == 0, \
-            f"Expected 0 isolated entries, found: {[g.entry_id for g in isolated]}"
+    def test_no_isolated_content_entries(self, report):
+        """Every non-glossary entry has at least one link (Q2 was the last, linked 2026-04-05).
+        Glossary pages (added 2026-05-04) are unlinked by design and are excluded."""
+        conn = sqlite3.connect(REAL_DB)
+        glossary = {r[0] for r in conn.execute(
+            "SELECT id FROM entries WHERE entry_type IN ('defined_term', 'disambiguation_page')")}
+        conn.close()
+        isolated = [g.entry_id for g in report.link_gaps
+                    if g.gap_type == "isolated" and g.entry_id not in glossary]
+        assert len(isolated) == 0, f"Expected 0 isolated content entries, found: {isolated}"
 
     def test_archetype_coverage_complete(self, report):
         """All 209 entries have mathematical_archetype — no property gap for archetype."""
@@ -710,9 +717,9 @@ class TestIntegration:
         md = report.as_markdown()
         assert len(md) > 1000
 
-    def test_markdown_contains_209(self, report):
+    def test_markdown_contains_entity_count(self, report):
         md = report.as_markdown()
-        assert "278" in md
+        assert str(report.summary_stats["total_entities"]) in md
 
     def test_taxonomy_gaps_present(self, report):
         """With 14 archetype values across 149 reference_law entries, some are sparse."""

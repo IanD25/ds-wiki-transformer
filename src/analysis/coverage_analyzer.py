@@ -225,7 +225,7 @@ class CoverageAnalyzer:
 
     def _archetype_distribution(self, conn: sqlite3.Connection) -> Dict[str, int]:
         rows = conn.execute(
-            "SELECT property_value, COUNT(*) c FROM entry_properties "
+            "SELECT property_value, COUNT(DISTINCT entry_id) c FROM entry_properties "
             "WHERE property_name='mathematical_archetype' "
             "GROUP BY property_value ORDER BY c DESC"
         ).fetchall()
@@ -233,7 +233,7 @@ class CoverageAnalyzer:
 
     def _d_sensitivity_counts(self, conn: sqlite3.Connection, total: int) -> Dict[str, int]:
         rows = conn.execute(
-            "SELECT LOWER(property_value) v, COUNT(*) c FROM entry_properties "
+            "SELECT LOWER(property_value) v, COUNT(DISTINCT entry_id) c FROM entry_properties "
             "WHERE property_name='dimensional_sensitivity' "
             "GROUP BY LOWER(property_value)"
         ).fetchall()

@@ -23,6 +23,7 @@ Run with:
 
 from __future__ import annotations
 
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -45,6 +46,38 @@ skip_if_no_db = pytest.mark.skipif(
     reason="DS wiki DB files not present (run sync.py first)",
 )
 pytestmark = [pytest.mark.integration, skip_if_no_db]
+
+
+# ── Expected values, read from the DB rather than hard-coded ───────────────────
+# The wiki grows; frozen counts (278/231/209) went stale. These tests now check
+# that the analyzers agree with direct SQL on the live DB.
+
+GLOSSARY_TYPES = ("defined_term", "disambiguation_page")
+
+# Content entries known to lack mathematical_archetype and dimensional_sensitivity
+# (open data gap, 2026-10-18). A new untagged entry fails the tests below.
+KNOWN_UNTAGGED = {"HB09", "GT07", "IT06", "X8"}
+
+
+def _q(sql: str, *args):
+    conn = sqlite3.connect(SOURCE_DB)
+    try:
+        return conn.execute(sql, args).fetchall()
+    finally:
+        conn.close()
+
+
+def _n_entries() -> int:
+    return _q("SELECT COUNT(*) FROM entries")[0][0]
+
+
+def _untagged_content(prop: str) -> set:
+    rows = _q(
+        "SELECT id FROM entries e WHERE entry_type NOT IN (?, ?) AND NOT EXISTS "
+        "(SELECT 1 FROM entry_properties p WHERE p.entry_id = e.id AND p.property_name = ?)",
+        *GLOSSARY_TYPES, prop,
+    )
+    return {r[0] for r in rows}
 
 
 # ── Shared fixtures ─────────────────────────────────────────────────────────────
@@ -76,9 +109,10 @@ class TestCoverageAnalyzerLive:
 
     # ── Basic counts ──────────────────────────────────────────────────────────
 
-    def test_total_entities_209(self, live_report):
-        assert live_report.total_entities == 278, (
-            f"Expected 231 entities, got {live_report.total_entities}"
+    def test_total_entities_matches_db(self, live_report):
+        n = _n_entries()
+        assert live_report.total_entities == n, (
+            f"Expected {n} entities, got {live_report.total_entities}"
         )
 
     def test_total_sections_above_1200(self, live_report):
@@ -96,7 +130,8 @@ class TestCoverageAnalyzerLive:
     # ── Entity type distribution ───────────────────────────────────────────────
 
     def test_reference_law_count(self, live_report):
-        assert live_report.entity_type_distribution.get("reference_law", 0) == 213
+        n = _q("SELECT COUNT(*) FROM entries WHERE entry_type = 'reference_law'")[0][0]
+        assert live_report.entity_type_distribution.get("reference_law", 0) == n
 
     def test_method_count(self, live_report):
         assert live_report.entity_type_distribution.get("method", 0) == 18
@@ -104,9 +139,9 @@ class TestCoverageAnalyzerLive:
     def test_law_count(self, live_report):
         assert live_report.entity_type_distribution.get("law", 0) == 15
 
-    def test_entity_type_sums_to_209(self, live_report):
+    def test_entity_type_sums_to_total(self, live_report):
         total = sum(live_report.entity_type_distribution.values())
-        assert total == 278
+        assert total == _n_entries()
 
     # ── Property coverage ─────────────────────────────────────────────────────
 
@@ -116,10 +151,14 @@ class TestCoverageAnalyzerLive:
                 return pc
         raise KeyError(f"Property '{prop_name}' not found")
 
-    def test_mathematical_archetype_100pct(self, live_report):
+    def test_mathematical_archetype_covers_content_entries(self, live_report):
+        """Every non-glossary entry has an archetype, apart from the known gaps."""
         pc = self._get_pc(live_report, "mathematical_archetype")
-        assert pc.filled == 274
-        assert pc.coverage_pct >= 98.0
+        n = _q("SELECT COUNT(DISTINCT entry_id) FROM entry_properties "
+               "WHERE property_name = 'mathematical_archetype'")[0][0]
+        assert pc.filled == n
+        new_gaps = _untagged_content("mathematical_archetype") - KNOWN_UNTAGGED
+        assert not new_gaps, f"Content entries missing mathematical_archetype: {sorted(new_gaps)}"
 
     def test_dimensional_sensitivity_full_coverage(self, live_report):
         pc = self._get_pc(live_report, "dimensional_sensitivity")
@@ -182,9 +221,14 @@ class TestCoverageAnalyzerLive:
             f"Expected most entities to have d-sensitivity, got: {counts}"
         )
 
-    def test_d_sensitivity_missing_is_small(self, live_report):
+    def test_d_sensitivity_missing_is_glossary_or_known(self, live_report):
+        """Missing d-sensitivity counts entries, and only glossary pages and known gaps lack it."""
         missing = live_report.d_sensitivity_counts.get("missing", 0)
-        assert missing <= 2, f"Too many missing d-sensitivity values: {missing}"
+        n_filled = _q("SELECT COUNT(DISTINCT entry_id) FROM entry_properties "
+                      "WHERE property_name = 'dimensional_sensitivity'")[0][0]
+        assert missing == _n_entries() - n_filled
+        new_gaps = _untagged_content("dimensional_sensitivity") - KNOWN_UNTAGGED
+        assert not new_gaps, f"Content entries missing dimensional_sensitivity: {sorted(new_gaps)}"
 
     # ── Network metrics ───────────────────────────────────────────────────────
 
@@ -192,7 +236,7 @@ class TestCoverageAnalyzerLive:
         assert live_report.network_metrics.link_density > 0
 
     def test_possible_links_count(self, live_report):
-        n = 278
+        n = _n_entries()
         expected_possible = n * (n - 1) // 2
         assert live_report.network_metrics.possible_links == expected_possible
 
@@ -232,9 +276,9 @@ class TestCoverageAnalyzerLive:
         md = ca.generate_markdown()
         assert len(md) > 2000, "Markdown report seems too short"
 
-    def test_markdown_contains_209(self, ca):
+    def test_markdown_contains_entity_count(self, ca):
         md = ca.generate_markdown()
-        assert "278" in md
+        assert str(_n_entries()) in md
 
     def test_markdown_contains_archetype_section(self, ca):
         md = ca.generate_markdown()
@@ -242,7 +286,7 @@ class TestCoverageAnalyzerLive:
 
     def test_get_stats_total_entities(self, ca):
         stats = ca.get_stats()
-        assert stats["total_entities"] == 278
+        assert stats["total_entities"] == _n_entries()
 
 
 # ── HypothesisGenerator — Live DB ──────────────────────────────────────────────
@@ -466,7 +510,7 @@ class TestToolComposition:
 
         # Coverage report
         assert len(cov_md) > 1000
-        assert "278" in cov_md              # entity count
+        assert str(_n_entries()) in cov_md  # entity count
         assert "conservation-law" in cov_md  # most common archetype (post Option E)
 
         # Hypothesis report
@@ -491,6 +535,9 @@ class TestToolComposition:
 
         # Pipeline produces results (previously: isolated entries appeared in pairs)
         assert len(hypothesis_ids) > 0, "Hypothesis generator should produce candidate pairs"
-        assert len(isolated_ids) <= 5, (
-            f"Expected at most 5 isolated entries (DB is well-linked); got {len(isolated_ids)}: {isolated_ids}"
+        # Glossary pages are unlinked by design; content entries should not be.
+        glossary = {r[0] for r in _q("SELECT id FROM entries WHERE entry_type IN (?, ?)", *GLOSSARY_TYPES)}
+        content_isolated = isolated_ids - glossary
+        assert len(content_isolated) <= 5, (
+            f"Expected at most 5 isolated content entries; got {len(content_isolated)}: {content_isolated}"
         )

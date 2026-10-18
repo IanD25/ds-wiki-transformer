@@ -61,7 +61,7 @@ Claude's standing instructions when working on this platform:
 5. Scaling item ②: does metabolic rate decompose into separate parallel fluxes at all? (Zhao 2015 is a single-network rival, not a decomposition.)
 6. P9 is a monitoring gate and belongs in the Q-series; not moved.
 7. Anchors 818/819 (P6/P7 `contradicts` Machta 2013): notes look swapped and P7's relationship is doubtful — owner review.
-8. 12 tests hard-code pre-glossary counts (278/231/209 entities) and fail; not updated.
+8. Content-property gaps: HB09, GT07, IT06 and X8 have no `mathematical_archetype` or `dimensional_sensitivity` (allow-listed as `KNOWN_UNTAGGED` in `tests/test_integration.py`); 10 entries (CM9–CM11, CR1, EM12, EM13, FM7, GV4, MS1, TD14) carry duplicate, identical rows for both properties. Not fixed — values need a judgment call. (The stale hard-coded test counts were fixed 2026-10-18: tests now read expected counts from the DB.)
 9. `docs/demo/` commit decision — owner's.
 
 **Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
@@ -78,7 +78,7 @@ Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 201
 - **331 entries** = 290 content entries (225 reference_law — including 12 prior-art entries folded in 2026-10-18 — 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism) + **41 glossary entries** (21 disambiguation pages, 20 defined terms)
 - **887 links**, **1,174 property rows**, **2,128 ChromaDB chunks**
 - **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
-- **587 tests** — 575 pass; 12 fail on stale hard-coded counts (open item 8)
+- **587 tests** — all pass (2026-10-18)
 
 **Provenance (2026-10-18):**
 - **932 external anchors over 288 entities**, plus **47 internal constructions**
@@ -112,7 +112,7 @@ bash setup.sh
 
 # 3. Verify
 source .venv/bin/activate
-python3 -m pytest tests/ -v --tb=short   # 587 tests; 12 fail on stale pre-glossary counts
+python3 -m pytest tests/ -v --tb=short   # 587 tests, all passing
 
 # 4. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
@@ -319,7 +319,7 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 │   ├── run_entity_catalog_pass.py
 │   ├── ising_fim_*.py, potts_fim_test.py, cca1b_*.py   ← CCA experiments
 │   └── migrations/        ← one-time DB insert scripts
-├── tests/                 ← pytest suite (587 tests; 12 stale-count failures)
+├── tests/                 ← pytest suite (587 tests, all passing)
 ├── data/
 │   ├── ds_wiki.db         ← READ ONLY
 │   ├── chroma_db/, wiki_history.db
