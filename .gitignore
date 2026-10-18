@@ -73,3 +73,10 @@ data/wiki_history.db.*
 # side-work and does not belong in the wiki repo's commit history.
 alpha_entropy_v*.py
 
+
+# ── QR-006b benchmark (scripts/qr006b) ───────────────────────────────────────
+# separate experiment environment, third-party clones (licence: see
+# scripts/qr006b/README.md) and raw per-series outputs
+.venv-qr006b/
+external/
+data/experiments/qr006b/
