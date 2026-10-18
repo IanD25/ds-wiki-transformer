@@ -98,7 +98,7 @@ The likely reply from the seizure-prediction community is that a nonlinear or in
 
 ### Recommended RE-SCOPE of the baseline set
 
-This is a design change, not a new question. QR-006b should read "beat lag-1 autocorrelation and variance, **their rank-based versions, and the regime-appropriate non-information indicators** (skewness, kurtosis and bimodality; RAD; the α-stable scale factor; drift–diffusion–jump or Langevin estimates)". Without that, a "yes" is uninterpretable: it could mean information measures add something, or only that anything distributional beats AC1 when noise is non-Gaussian. The owner decides on the wording. The log's question line is not edited here.
+This is a design change, not a new question. QR-006b should read "beat lag-1 autocorrelation and variance, **their rank-based versions, and the regime-appropriate non-information indicators** (skewness, kurtosis and bimodality; RAD; the α-stable scale factor; drift–diffusion–jump or Langevin estimates)". Without that, a "yes" is uninterpretable: it could mean information measures add something, or only that anything distributional beats AC1 when noise is non-Gaussian. The owner decides on the wording. The log's question line is not edited here. *Owner approved the re-scope later on 2026-10-18; the log's question line now carries it.*
 
 ## 5. Final verdict: **STILL PROVISIONAL (narrowed)**
 
