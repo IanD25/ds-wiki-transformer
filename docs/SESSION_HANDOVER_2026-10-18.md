@@ -80,3 +80,44 @@ Milestone sync deferred to after the last content change. `conjecture_summary` u
 - Memory catalog: the pattern tags `over-extension-beyond-formula-range` and `conditional-claim-with-unsatisfiable-antecedent` (used on P12) are not yet in `feedback_diagnostic_labels.md`.
 - Fisher-rank monotonicity "as a theorem" (T1/M6): true for exact rank under fixed-parameter Markov coarse-graining, not for RG or the participation ratio. Recorded in the crosswalk; wiki not edited.
 - **Push:** done 2026-10-18 on the owner's instruction — 15 commits, `0b05eb1..0d162f2`. **`docs/demo/`** — still the owner's call; not committed.
+
+---
+
+## 10. Continuation — later on 2026-10-18 (written before compacting the session)
+
+After the consistency pass and the push (`0b05eb1..8affb8c`), the session went back to the wiki's original purpose: compile real science, map the connections, and log questions to ask the world.
+
+**Done (local commits, not pushed):**
+
+| Commit | What |
+|---|---|
+| `f21b24f` | **Questions Raised Log** started (`docs/QUESTIONS_RAISED_LOG.md`), QR-001 to QR-006; QR-006 (information measures vs classical early warnings) is the owner's priority |
+| `4214cdd`, `2548e72` | **Prior-art fold-in**, run in its own session: 12 reference entries (BIO12–16, IT09–11, STAT4–6, URB1) written from primary sources. P2 Retired as "Folded" (WBE 1997); P8 and P11 **Falsified** by their sources (Gefen 1980; Bettencourt 2013). Report: `docs/prior_art_reviews/PRIOR_ART_FOLD_IN_2026_10.md` |
+| `07fcbdc` | CLAUDE.md: three source mis-statements corrected (Vinayak, Borgs–Chayes, Brown) and numbers refreshed. **T5** bannered: the Sierpiński gasket has T_c = 0 |
+| `bc70959`, `0002d78` | QR-006 literature map (`docs/prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md`), compiled by an agent, with corrections |
+| `84e73db` | **Gate 2, the worth-asking gate** (`docs/QUESTION_GATES.md`), owner-requested, run after the prior-art gate; also saved as memory `feedback_worth_asking_gate.md` |
+| `b32c1e8` | QR-006 well-posedness review and both gates (`docs/prior_art_reviews/QR-006_BENCHMARK_GATES_2026_10_18.md`). QR-006 was not well posed. Re-scoped to **QR-006b**: on a common labelled benchmark at matched false-alarm rates, do information indicators beat lag-1 autocorrelation and variance where the linear-Gaussian assumptions fail? Verdicts: the generic benchmark is **open in the literature** (Dakos et al. 2024 names the gap); the regime-stratified version has **no prior art found (provisional)**. The Gaussian equivalence is **FOLDED** (`trivial-from-known-result`); QR-006b is **RE-SCOPE → PROCEED (provisional)** |
+
+**In flight — early-warning fold-in session** ([`local_c28d2239-29f6-4c4c-9e54-a48130e4e4e2`](#local_c28d2239-29f6-4c4c-9e54-a48130e4e4e2)). It has applied 10 entries, EWS1–EWS10, with the owner's decisions (all as recommended). Totals: 341 entries, 911 links, 957 anchors over 298 entities, 0 non-glossary orphans. Its index rebuild, test run and commits were still pending when this note was written; its uncommitted files are in the working tree. EWS8 records the Gaussian equivalences.
+
+**Loose ends (do these next):**
+1. **After the EWS fold-in commits**, edit `docs/QUESTIONS_RAISED_LOG.md`:
+   - add Gate 2 to the status ladder (raised → literature-mapped → Gate 1 → Gate 2 → filed);
+   - add **QR-006b** with its gate verdicts, linking the gate report;
+   - add **QR-007**: can correlation-matrix observables (CCA's participation ratio) classify transition *order* — first-order vs continuous? This is CCA's distinct angle; the CCA-1c reduction test bears on it.
+
+   Also add Gate 2 to CLAUDE.md's fresh-session step 8.
+2. **Downgrade one marker** in the gate report: Bandt & Shiha 2007 is marked "verified, abstract", but it was seen only via a search summary of its abstract. The EWS fold-in could not find the abstract or open text. Change the marker to "abstract via search summary".
+3. **Second, independent search for QR-006b.** Use a different session and different vocabulary, include the machine-learning early-warning literature, and read the *Entropy* 28:628 (2026) review (blocked with HTTP 403 this time), Dakos & Soler-Toscano 2017, and Eason et al. 2014. Only then does PROCEED stop being provisional.
+4. **Then design the benchmark** as a pre-registered Mode B project:
+   - Indicators: AC1, variance, lagged MI, TE, permutation entropy, the FI index, and the covariance-eigenvalue share and participation ratio.
+   - Data: Bury et al. 2021's simulation scripts with null runs, plus the anoxia, thermoacoustic and paleoclimate records (CC BY-NC-SA 4.0), and the Weinans model family.
+   - Method: identical preprocessing for every indicator, ROC-AUC, and lead time at a fixed false-alarm rate, stratified by regime: Gaussian vs non-Gaussian noise, B- vs N- vs R-tipping.
+5. **Still pending from earlier:**
+   - CCA-1c reduction-test and P7-restatement session cards (proposed, not started);
+   - P5 banner attribution check (Quinn 2023 vs Machta 2013);
+   - X0's Established / Tier 1 label looks generous (owner decision);
+   - Kooijman DEB book anchor;
+   - glossary `[[g:…]]` markup for the 22 new entries;
+   - QR-001 to QR-005 have not yet been through either gate.
+6. **Push** — `main` was 8 commits ahead of `origin/main` before the EWS fold-in commits; the owner decides. `docs/demo/` is git-excluded locally (`.git/info/exclude`) and is still the owner's decision.
