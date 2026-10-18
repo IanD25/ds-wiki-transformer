@@ -30,8 +30,27 @@
 - **Starting literature (not yet verified this session):** Scheffer et al. 2009 (*Nature* 461:53); Dakos et al. 2012 (*PLoS ONE*); Boettiger & Hastings 2012; Ditlevsen & Johnsen 2010; Barnett et al. 2013 (*PRL* 111:177203); Brown, Bossomaier & Barnett 2022; Fath, Cabezas & Pawlowski 2003 (Fisher information for regime shifts); Chen et al. 2012 (dynamical network biomarkers); Bury et al. 2021 (*PNAS*).
 - **What would decide it.** Head-to-head comparisons on the same data: lead time and false-alarm rate of each indicator, across transition types (fold, noise-induced, rate-induced), on systems where the transition is known.
 - **Possible prior art inside the wiki to check:** X0's "Fisher-information regime" classification against the ecological Fisher Information index; CCA's correlation-concentration signal against dynamical network biomarkers.
-- **Status:** Raised → **literature mapping in progress** (2026-10-18).
-- **Next:** read the literature map; fold the classical EWS and information-EWS literature in as reference entries (Mode A); then decide whether the first-order vs continuous angle from the CCA work is a question the field already asks.
+- **Status:** **Literature-mapped (partial)**, 2026-10-18 — [`prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md`](prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md). Compiled by a research agent; several key sources not yet read; not yet gated.
+- **What the field currently says (provisional):**
+  - **Unproven.** Information-theoretic indicators have all been *proposed* as earlier or better warnings, but head-to-head tests on the same data are rare, mostly on models, small, and scored differently. The one multi-indicator benchmark that included one (Weinans et al. 2021, 13 indicators) found no overall winner; mutual information was among the least robust to noise.
+  - **No study found** compares transfer entropy against autocorrelation or variance on lead time or ROC.
+  - The only systematic ROC win over the classical signals is deep learning (Bury et al. 2021), which is not information-theoretic.
+  - Classical signals are well grounded for slow approaches to a bifurcation (whole-lake and yeast experiments). They fail for noise- and rate-induced tipping, give false alarms on trends, did not appear before epileptic seizures, and only partly before market crashes. They do not distinguish abrupt from continuous transitions.
+  - Information flow peaks on the *disordered* side of a transition, and for first-order transitions only in finite systems (Barnett 2013; Brown 2022). There is no test yet on real time series.
+- **Provisional verdicts on the wiki's own work:**
+  - **X0** vs the ecological Fisher Information index: ADJACENT (different mathematical objects). X0's three regimes restate the textbook disordered / critical / ordered phases, and its finance case is close to the "absorption ratio" (Kritzman 2011).
+  - **CCA**: using correlation-matrix concentration as a warning signal is a RESTATEMENT (dynamical network biomarkers, eigenvalue-share indicators). Using the participation ratio to *classify transition order* has no prior art found yet (provisional).
+  - **Triviality warning:** the agent derives that CCA's first-order jump may simply be the order-parameter jump seen through S(k=0). That is the CCA-1c reduction test, still unrun.
+- **Open sub-questions** (from the map; each with deciding data):
+  1. **Do information indicators add ROC skill over autocorrelation and variance?** Test on a common benchmark, such as Bury et al. 2021's public set of 268 transition and null series.
+  2. **Is the Fisher Information index a pooled-variance proxy?**
+  3. **Does a transfer-entropy peak give lead *time* in a slowly driven system,** not just a peak in temperature?
+  4. **Does participation-ratio collapse add anything beyond the eigenvalue share?**
+  5. **Does any indicator beat chance for noise-induced tipping** (seizures, crashes, Dansgaard–Oeschger events)?
+- **Next:**
+  - **(a) Mode A:** read the unread key sources (Barnett 2013, Fath 2003, Dakos 2012, Ditlevsen & Johnsen 2010), then fold the early-warning literature into the wiki. That fills the coverage gap below.
+  - **(b) Gate:** run the prior-art gate on sub-question 1. If it comes back open, it is a concrete project on public data that could answer the owner's question directly.
+  - **(c)** Run the CCA-1c reduction test, which the triviality warning feeds.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -88,3 +107,4 @@
 ## Changelog
 
 - **2026-10-18** — Log started with QR-001 to QR-006, drawn from the big-picture review after the consistency pass. QR-006 marked priority by the owner; literature mapping launched.
+- **2026-10-18** — QR-006 literature-mapped (partial); map saved under `docs/prior_art_reviews/`. Headline: information-theoretic early warning is unproven against the classical signals; the decisive test (a common-benchmark ROC comparison) appears not to have been done.
