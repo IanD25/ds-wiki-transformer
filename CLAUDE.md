@@ -43,11 +43,11 @@ Claude's standing instructions when working on this platform:
 
 **Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0; the 2026-10-18 pass made corrections only.
 
-**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 26 Speculative · 8 Supported · 7 Established · 5 Falsified · 1 Retired (P2, folded). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (92 rows / 14 audit refs — several rows per entity, and process items mixed in).
+**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 25 Speculative · 8 Supported · 7 Established · 5 Falsified · 2 Retired (P2 and CCA-1c, both folded). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (92 rows / 14 audit refs — several rows per entity, and process items mixed in).
 
 **State by thread:**
 - **D_eff / Fisher-rank (DFIG)** — P5 Supported only as an application of Machta et al. 2013 sloppy models (and at a continuous transition it reduces to standard exponents); P6 contradicted by own tests; P7 partially falsified (the participation ratio fails monotonicity in every tested configuration); P8 **Falsified** by Gefen–Mandelbrot–Aharony 1980 — critical behaviour on fractals depends on topology as well as dimension (now reference entry STAT4); JJK 2004 does not address transition order. Ax2, OmD and T1 remain internal constructions.
-- **CCA** — CCA-1 and CCA-1b scaling Falsified; CCA-1b magnitude and CCA-2 Supported on a single test family; CCA-1c Speculative after Phase E (outcome C). Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
+- **CCA** — CCA-1 and CCA-1b scaling Falsified; CCA-1b magnitude and CCA-2 Supported on a single test family; CCA-1c **Retired — Folded** 2026-10-18 by the λ₁ reduction test ([report](docs/experiments/CCA1C_LAMBDA1_REDUCTION_TEST_2026_10_18.md)): because tr χ = N(q−1) is fixed, the first-order d_eff jump is the Potts order-parameter jump read through λ₁ ≈ N(q−1)⟨M²⟩ (Wu 1982); with λ₁ removed nothing jumps. STAT3's Phase E "strengthening" withdrawn (label unchanged; owner to review). Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
 - **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only.
 - **Cosmological coupling (P17, P23, GT11)** — Speculative, high risk. GW tension with k = 3 is ~3σ (Amendola 2024's 5σ was a forecast); Cadoni 2023's k = 1 is universal for regular BHs, with their own analysis preferring k = 3. Wording corrected throughout 2026-10-18.
 - **Scaling** — P12 Falsified (β(λ) ≤ 1). P11 **Falsified** by Bettencourt 2013 (δ = H/[D(D+H)], not D/(D+1); now URB1). P2 **Retired — folded** into WBE 1997 (BIO12). H5's two-process form is a re-derivation and a **RESTATEMENT of West et al. 2003** ([prior-art report](docs/prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md)). C1's curvature is contested. C2's "β = 1 ± 1/D_eff" withdrawn as a restatement of Bettencourt 2013. P14a is the only runnable item. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md), banners included.
@@ -270,13 +270,13 @@ python3 scripts/run_entity_catalog_pass.py \
 Labels are the latest calibration rows (`claim_status_latest`); `conjectures.three_state` now carries the same label as a prefix (2026-10-18).
 
 - **Falsified:** P12 (structural bound β(λ) ≤ 1); P8 (by Gefen–Mandelbrot–Aharony 1980; STAT4); P11 (by Bettencourt 2013; URB1); CCA-1 (Phase C); CCA-1b L^d scaling (Phase D)
-- **Retired — folded into the literature:** P2 (WBE 1997; BIO12)
+- **Retired — folded into the literature:** P2 (WBE 1997; BIO12); CCA-1c (order-parameter discontinuity via λ₁ = S(k=0); Wu 1982 — 2026-10-18 λ₁ reduction test)
 - **Established:** P21 — Chentsov's classical uniqueness theorem only; the quantum case is Petz's classification
 - **Supported:** P5 (as application of Machta 2013); P18, P19, P20 (single-domain, US equities / AlphaEntropy); CCA-1b magnitude, CCA-2 (single test family)
 - **Speculative — contradicted by own tests:** P6; P7 (partially falsified)
 - **Speculative — ansatz without derivation:** P13, P15 (P15's Landauer motivation void), P23
 - **Speculative — heterodox, no unique prediction:** P1, P4, P10
-- **Speculative — other:** P3 (over-parameterized operator), P9 (monitoring gate; belongs in Q-series), P14 (split into P14a runnable / P14b blocked), P16 (blocked on Q4 specification), P17 (high risk), P22 (trichotomy unproven); CCA-1c (outcome C)
+- **Speculative — other:** P3 (over-parameterized operator), P9 (monitoring gate; belongs in Q-series), P14 (split into P14a runnable / P14b blocked), P16 (blocked on Q4 specification), P17 (high risk), P22 (trichotomy unproven)
 
 **Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): Speculative — conceptual analogy, not a structural result.
 
