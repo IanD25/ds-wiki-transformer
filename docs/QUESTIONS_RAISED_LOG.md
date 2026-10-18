@@ -12,11 +12,13 @@
 
 1. **Raised** — written down, with why the wiki's map suggests it.
 2. **Literature-mapped** — the field's current state found and read from primary sources: who works on it, what is settled, what is not.
-3. **Gated** — the prior-art gate (`memory/feedback_prior_art_gate.md`) has run, with one verdict:
-   - `open-in-literature` — a recognised open problem; record it as such, citing who frames it.
-   - `answered` — the literature already settles it; fold the answer in as reference entries.
-   - `narrow-angle-provisional` — the field asks it, but the wiki's cross-domain view adds a specific sub-question nobody seems to ask. Provisional until a second, primary-source search fails to find it.
-4. **Filed** (optional) — becomes a Q-series entry in `ds_wiki.db`, anchored `open_in_literature`.
+3. **Gated** — both gates in [`QUESTION_GATES.md`](QUESTION_GATES.md) have run, in order, with the report in `prior_art_reviews/`:
+   - **Gate 1, prior art** (`memory/feedback_prior_art_gate.md`), with one verdict:
+     - `open-in-literature` — a recognised open problem; record it as such, citing who frames it.
+     - `answered` — the literature already settles it; fold the answer in as reference entries.
+     - `narrow-angle-provisional` — the field asks it, but the wiki's cross-domain view adds a specific sub-question nobody seems to ask. Provisional until a second, primary-source search fails to find it.
+   - **Gate 2, worth asking** — runs whenever Gate 1 is not `answered`. Five tests (triviality, absence, obvious or erroneous, expert view, should it be asked), then **PROCEED**, **RE-SCOPE**, **FOLD** or **DROP**, each with a reason tag. A PROCEED stays provisional until a second, independent search fails to explain the absence.
+4. **Filed** (optional) — becomes a Q-series entry in `ds_wiki.db`, anchored `open_in_literature`. Only a question with a Gate 2 PROCEED can be filed.
 
 **Rules.** Literature cited below is a *starting point* unless marked verified. No question becomes a wiki entity without the gate. Each entry names the wiki entities involved and the gaps in the wiki's own coverage, because a question sitting on an empty patch of the map needs grounding (Mode A) before any exploration (Mode B).
 
@@ -36,7 +38,7 @@
 - **Starting literature (not yet verified this session):** Scheffer et al. 2009 (*Nature* 461:53); Dakos et al. 2012 (*PLoS ONE*); Boettiger & Hastings 2012; Ditlevsen & Johnsen 2010; Barnett et al. 2013 (*PRL* 111:177203); Brown, Bossomaier & Barnett 2022; Fath, Cabezas & Pawlowski 2003 (Fisher information for regime shifts); Chen et al. 2012 (dynamical network biomarkers); Bury et al. 2021 (*PNAS*).
 - **What would decide it.** Head-to-head comparisons on the same data: lead time and false-alarm rate of each indicator, across transition types (fold, noise-induced, rate-induced), on systems where the transition is known.
 - **Possible prior art inside the wiki to check:** X0's "Fisher-information regime" classification against the ecological Fisher Information index; CCA's correlation-concentration signal against dynamical network biomarkers.
-- **Status:** **Literature-mapped (partial)**, 2026-10-18 — [`prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md`](prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md). Compiled by a research agent; several key sources not yet read; not yet gated.
+- **Status:** **Literature-mapped (partial)**, 2026-10-18 — [`prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md`](prior_art_reviews/QR-006_EWS_LITERATURE_MAP_2026_10_18.md). Compiled by a research agent; several key sources not yet read. QR-006 stays the umbrella question and is not itself gated: as posed ("any measure, any real system") it is too broad to decide. Its testable form is **QR-006b** below, which is gated.
 - **What the field currently says (provisional):**
   - **Unproven.** Information-theoretic indicators have all been *proposed* as earlier or better warnings, but head-to-head tests on the same data are rare, mostly on models, small, and scored differently. The one multi-indicator benchmark that included one (Weinans et al. 2021, 13 indicators) found no overall winner; mutual information was among the least robust to noise.
   - **No study found** compares transfer entropy against autocorrelation or variance on lead time or ROC.
@@ -57,6 +59,29 @@
   - **(a) Mode A:** read the unread key sources (Barnett 2013, Fath 2003, Dakos 2012, Ditlevsen & Johnsen 2010), then fold the early-warning literature into the wiki. That fills the coverage gap below.
   - **(b) Gate:** run the prior-art gate on sub-question 1. If it comes back open, it is a concrete project on public data that could answer the owner's question directly.
   - **(c)** Run the CCA-1c reduction test, which the triviality warning feeds.
+  - *Update:* (a) is done (EWS fold-in). (b) is done for the re-scoped form, QR-006b, below. (c) is still unrun; it now feeds QR-007.
+
+### QR-006b · Regime-stratified benchmark: do information indicators beat autocorrelation and variance where critical slowing down's assumptions fail?
+
+- **Question.** On a common labelled benchmark of transition series and matched no-transition series, scored at matched false-alarm rates, does any information-theoretic indicator beat lag-1 autocorrelation and variance, measured by ROC-AUC or by lead time at fixed specificity? In particular, does it do so where the linear-Gaussian approximation fails: non-Gaussian or multiplicative noise, strong nonlinearity near the fold, and noise- or rate-induced tipping?
+- **Why re-scoped.** In the linear-Gaussian regime where critical slowing down holds, the information measures are functions of the autocovariance (lag-1 MI = −½ log(1 − ρ²); transfer entropy = Granger causality; Gaussian ordinal-pattern probabilities are fixed by the autocorrelations). There they can at best match autocorrelation and variance. That half of QR-006's sub-question 1 is a re-derivation and was folded.
+- **Gate report:** [`prior_art_reviews/QR-006_BENCHMARK_GATES_2026_10_18.md`](prior_art_reviews/QR-006_BENCHMARK_GATES_2026_10_18.md) (first use of Gate 2).
+- **Gate 1:** the generic benchmark is `open-in-literature` — Dakos et al. 2024 (*Earth Syst. Dyn.* 15:1117, §4.3.1) name the gap; the closest study, Weinans et al. 2021, used one model family, Kendall τ rather than ROC, and only mutual information. The regime-stratified version is `narrow-angle-provisional` (no prior art found).
+- **Gate 2:** **FOLD** the linear-Gaussian equivalence (`trivial-from-known-result`). **RE-SCOPE → PROCEED (provisional)** on the regime-stratified form. The absence is partly explained by data-hungriness (e, Weinans 2021) and by labelled benchmarks existing only since 2021 (f, Bury et al.).
+- **Design conditions** (from Gate 2 test 3): indicators, windows, detrending and thresholds fixed in advance; identical preprocessing for every indicator; matched null series; every indicator scored against chance as well as against autocorrelation and variance, because in noise- and rate-induced tipping nothing may beat chance.
+- **Status:** **Gated — PROCEED (provisional)**, 2026-10-18.
+- **Provisional until:** (1) a second, independent search — different session, different vocabulary, including the machine-learning early-warning literature and the unread *Entropy* 28:628 (2026) review — fails to find the study; (2) Dakos & Soler-Toscano 2017 and Eason et al. 2014 are read in full.
+- **Next:** the second search; then a pre-registered benchmark design on the Bury et al. 2021 scripts and records (CC BY-NC-SA 4.0) and the Weinans model family.
+
+## QR-007 · Can correlation-matrix observables classify a transition's order?
+
+- **Question.** Can observables of the connected correlation matrix (participation ratio, eigenvalue concentration) tell a first-order transition from a continuous one, on data where the order is known — and do they carry anything beyond the order-parameter jump and existing order-discrimination methods?
+- **Why the wiki raises it.** It is CCA's distinct angle, split out of QR-006 by the QR-006b gate report: as a *warning* signal, correlation-matrix concentration is a restatement (dynamical network biomarkers, eigenvalue-share indicators), and the participation ratio is a second-order statistic with no special standing in QR-006b. Classifying transition *order* is a separate question.
+- **Wiki holdings.** CCA-1c, STAT3, STAT6 (Brown 2022), EWS3 (transitions without warning), EWS7 (covariance-eigenvalue indicators), M3 (hysteresis).
+- **Starting literature (not yet verified this session):** Brown, Bossomaier & Barnett 2022 (*Sci. Rep.*; transfer entropy across Potts q = 5, 7, 10); the standard finite-size methods for telling first-order from continuous transitions — the energy cumulant (Challa, Landau & Binder 1986, *PRB* 34:1841) and the free-energy-barrier method (Lee & Kosterlitz 1990, *PRL* 65:137). These are the baselines any new discriminator has to beat. (Janke, Johnston & Kenna 2004, sometimes cited here, does not address transition order.)
+- **Triviality warning (carried over).** CCA's first-order jump may simply be the order-parameter jump seen through S(k = 0). The CCA-1c reduction test, still unrun, decides that; if it reduces, QR-007 folds.
+- **What would decide it.** The reduction test, then a comparison against standard order-discrimination methods on Potts q = 2, 5, 7, 10.
+- **Status:** Raised, 2026-10-18. Not gated.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -115,3 +140,4 @@
 - **2026-10-18** — Log started with QR-001 to QR-006, drawn from the big-picture review after the consistency pass. QR-006 marked priority by the owner; literature mapping launched.
 - **2026-10-18** — QR-006 literature-mapped (partial); map saved under `docs/prior_art_reviews/`. Headline: information-theoretic early warning is unproven against the classical signals; the decisive test (a common-benchmark ROC comparison) appears not to have been done.
 - **2026-10-18** — QR-006 coverage gap filled: EWS fold-in added EWS1–EWS10 (audit_ref `gsw-ews-fold-in-2026-10-18`; report `prior_art_reviews/EWS_FOLD_IN_2026_10.md`). Changed only QR-006's "Wiki holdings" line and the coverage-gaps bullet.
+- **2026-10-18** — Gate 2 (worth-asking, `QUESTION_GATES.md`) added to the status ladder. QR-006b added: the re-scoped, regime-stratified benchmark, gated PROCEED (provisional); the linear-Gaussian half folded. QR-007 (transition-order classification by correlation-matrix observables) split out of QR-006 and raised.

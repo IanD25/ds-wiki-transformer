@@ -17,7 +17,7 @@
 4. **In the regime where the classical theory holds, the answer is largely known in advance (triviality — see Gate 2, test 1).** Near a bifurcation, with small noise, fluctuations are approximately a linear, stationary, Gaussian (Ornstein–Uhlenbeck) process. That approximation is the basis of CSD theory. For such processes the information measures are functions of the autocovariance:
    - lagged mutual information = −½ log(1 − ρ²) for a bivariate Gaussian with correlation ρ (textbook identity), so it is a monotone function of lag-1 autocorrelation;
    - transfer entropy equals Granger causality for Gaussian variables — Barnett, Barrett & Seth 2009, *PRL* 103:238701 (*verified, abstract*) — a second-order quantity;
-   - ordinal-pattern probabilities, and hence permutation entropy, for Gaussian and ARMA processes are derived in Bandt & Shiha 2007, *J. Time Ser. Anal.* 28:646 (*verified, abstract*). For Gaussian processes they are orthant probabilities fixed by the autocorrelations;
+   - ordinal-pattern probabilities, and hence permutation entropy, for Gaussian and ARMA processes are derived in Bandt & Shiha 2007, *J. Time Ser. Anal.* 28:646 (*abstract via search summary*). For Gaussian processes they are orthant probabilities fixed by the autocorrelations;
    - the location Fisher information of a Gaussian is 1/σ² (textbook), the inverse of variance.
 
    So in the textbook CSD regime the information measures carry **no information beyond autocorrelation and variance**. They can differ only through estimation, where they are noisier: Weinans et al. 2021 found them data-hungry (*verified, full text*). Information measures can add real skill only where the linear-Gaussian picture fails: non-Gaussian, heavy-tailed or multiplicative noise; strong nonlinearity close to the fold (skewness, flickering, multimodality); and noise- or rate-induced tipping, where CSD itself fails.
@@ -53,7 +53,7 @@ QR-006 itself stays in the log as the umbrella question. QR-006b is what the gat
 | Yu & Liang 2026, arXiv:2606.17553 | *verified, abstract* | Uses transfer entropy to build a spatial causal graph; the warning comes from recovery rates. AUROC 0.783 on AMOC against an AR1 baseline. TE is a network-building tool there, not the indicator under test. **Adjacent.** |
 | Tirabassi & Masoller 2023, *PNAS* 120:e2215667120 | agent map | Spatial permutation entropy vs spatial correlation: mixed (better / similar / worse by system). Not against AC1 and variance on a common benchmark. **Adjacent.** |
 | Bury et al. 2020, *J. R. Soc. Interface* 17:20200482 (spectral EWS) | search summary | AUCs for a spectral indicator vs variance. Spectral, not information-theoretic. **Adjacent.** |
-| Barnett, Barrett & Seth 2009; Bandt & Shiha 2007 | *verified, abstracts* | Establish the Gaussian equivalences in Part 1 (Gate 2, test 1). |
+| Barnett, Barrett & Seth 2009; Bandt & Shiha 2007 | Barnett 2009 *verified, abstract*; Bandt & Shiha *abstract via search summary* (marker corrected 2026-10-18) | Establish the Gaussian equivalences in Part 1 (Gate 2, test 1). |
 | *Entropy* 28:628 (2026), "Early warning signals in ecological time-series" | **not read** (HTTP 403) | Unknown; could contain a comparison. **Open check.** |
 
 **Gate 1 verdict:**
