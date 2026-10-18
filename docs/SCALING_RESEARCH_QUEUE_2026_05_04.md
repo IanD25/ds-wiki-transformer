@@ -22,6 +22,14 @@
 
 ## Resolved this session
 
+> **PRIOR-ART GATE — added 2026-10-18 (`gsw-consistency-pass-2026-10-18`; report: [`prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md`](prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md)).** The two-process identity below is a **re-derivation, not a finding** (charter rule 2), and a **RESTATEMENT of West, Savage, Gillooly, Enquist, Woodruff & Brown 2003** (*Nature* 421:713; arXiv:physics/0211058). They give b = Σ cᵢbᵢ with cᵢ = Bᵢ/B — exactly "λ = fractional contribution" — as the corrected form of Darveau et al. 2002's allometric-cascade equation, and call the additive model "only a consistency check of energy conservation, which must be trivially correct". H5 stays **Speculative**. What this section overstates:
+>
+> - **"λ has a definition"** — yes, as a share of the total. But that share is measurable only where the two fluxes are genuinely separate and add in parallel, which has to be shown for any proposed pair (West et al.'s objection to Darveau was double-counting steps that act in series).
+> - **"The endpoint question is superseded"** — relocated, not answered. p and q are inputs to the identity; it says nothing about their values.
+> - **"Supplies the mechanism the framework lacked"** (one-line state, above) — it supplies a meaning for λ, not a mechanism.
+>
+> **Open item ② needs reframing.** Ballesteros et al. 2018's f is a mass-independent constant, not λ (their λ-equivalent is fkM/B). Zhao 2015 is **not** a two-process decomposition: it is a single-network model, B = αM^x / log(M/β), that yields convex curvature with no second process — a rival account of the curvature. The live question is whether metabolic rate decomposes into separate parallel fluxes at all, and if so which. The text below is kept as written.
+
 ### λ has a definition
 
 > **λ is the fractional contribution of one process to total metabolic rate**, where rate is a sum of two processes with different mass exponents.
