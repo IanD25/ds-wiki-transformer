@@ -274,7 +274,7 @@ The CCA-gravity connection would be falsified if:
 
 | Result | Authors | Year | Status |
 |--------|---------|------|--------|
-| Farrah/Croker k = 3 cosmological coupling | Farrah et al. | 2023 | Challenged: GW 5σ, Gaia 6.9%, Cadoni k = 1 |
+| Farrah/Croker k = 3 cosmological coupling | Farrah et al. | 2023 | Challenged: GW ~3σ (GWTC-3; 5σ was Amendola et al. 2024's forecast), Gaia 6.9%, Cadoni k = 1 for regular BHs — *corrected 2026-10-18 (`gsw-consistency-pass-2026-10-18`); previously "GW 5σ"* |
 | Verlinde entropic gravity | Verlinde | 2010 | Wang-Braunstein criticism re holographic screens |
 | Caticha entropic dynamics | Caticha | 2015 | QM derived, gravity program in progress |
 | Ansari-Smolin SOC in quantum gravity | Ansari, Smolin | 2004 | Preliminary, not reproduced |
