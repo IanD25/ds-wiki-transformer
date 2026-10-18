@@ -26,7 +26,7 @@ This search used other fields' own vocabulary:
 | Source | Read | Bearing on QR-006b |
 |---|---|---|
 | **Alvarez-Martinez & Miramontes 2026**, *Entropy* 28:628, doi:10.3390/e28060628 (the review the first search could not open) | **Full text** (Europe PMC XML, PMC13298826; figures not inspected) | **Not prior art.** A narrative review. Its Table 1 lists permutation/Shannon entropy and Fisher information among 15 indicators, with expected direction and caveats ("interpretation is system-specific"). There is no head-to-head scoring of any information measure against AR(1) or variance. Its recommendations (null-model benchmarking, preregistered protocols, prospective false-alarm rates; §3.2.3 and §5.6) **independently restate the gap** Dakos et al. 2024 named. Oddity: its entropy-indicator citation [27] is Quax et al. 2017 on synergistic information, not an early-warning study. |
-| **Harris, Gollo & Fulcher 2024**, *Phys. Rev. X* 14:031021 (arXiv:2310.14791v3) | **Full text** (arXiv PDF; Supplemental Tables S1–S3 **not read**) | **Closest new adjacent work.** A "highly comparative" screen of about 7,500 hctsa features, which include entropy and automutual-information features, for tracking distance to criticality near a supercritical Hopf bifurcation. **Fixed noise:** SD and AC1 are among the best. **Variable noise amplitude:** SD and AC1 collapse (Spearman ρ 0.98 → 0.23 and 0.97 → 0.48). The winners measure *the shape of the value distribution relative to the spread of differences*, and the authors build a new statistic from that (RAD). The top features named are distributional, extreme-value and motif features, not entropies. Scoring is Spearman ρ against the control parameter, not ROC with null series. One model, additive Gaussian noise. The authors state they did **not** study non-Gaussian or multiplicative noise (Discussion). |
+| **Harris, Gollo & Fulcher 2024**, *Phys. Rev. X* 14:031021 (arXiv:2310.14791v3) | **Full text** (arXiv PDF). **Supplemental Table S1 read in full** as a data file (arXiv ancillary file; §7); Tables S2–S3 and supp.pdf not read | **Closest new adjacent work.** A "highly comparative" screen of about 7,500 hctsa features, which include entropy and automutual-information features, for tracking distance to criticality near a supercritical Hopf bifurcation. **Fixed noise:** SD and AC1 are among the best. **Variable noise amplitude:** SD and AC1 collapse (Spearman ρ 0.98 → 0.23 and 0.97 → 0.48). The winners measure *the shape of the value distribution relative to the spread of differences*, and the authors build a new statistic from that (RAD). The top features named are distributional, extreme-value and motif features, not entropies. Scoring is Spearman ρ against the control parameter, not ROC with null series. One model, additive Gaussian noise. The authors state they did **not** study non-Gaussian or multiplicative noise (Discussion). |
 | **Layritz, Rammig, Pavlyukevich & Kuehn 2025**, *Sci. Rep.* 15:13758, doi:10.1038/s41598-025-88659-0 | **Full text, keyword scan** (Europe PMC XML) | **Adjacent; confirms the premise.** Under α-stable (non-Gaussian) noise, rising variance and autocorrelation lack theoretical support and risk false positives. The replacement they propose is the α-stable scale factor γ_X, a **distributional** parameter, not an information measure. No ROC, no information measures. |
 | **Mormann et al. 2005**, *Clin. Neurophysiol.* 116:569 | **Abstract** (Europe PMC) + **search summary** of a secondary write-up (Sapien Labs) | **Prior art in another field's vocabulary, for one empirical regime.** An ROC comparison of 30 univariate and bivariate, linear and nonlinear EEG measures (preictal vs interictal) on multi-day recordings, with surrogate-based significance testing. Abstract: linear measures performed "similar or better than non-linear measures". Many earlier claims were not significant. **Not verified:** whether the measure set includes variance and decorrelation time, and which "nonlinear" measures are information-theoretic. |
 | **McSharry, Smith & Tarassenko 2003**, *IEEE Trans. Biomed. Eng.* 50:628; and *Nat. Med.* 9:241 (2003) | IEEE: **abstract** (LSE copy; its header says 2002). *Nat. Med.*: bibliographic record only | **Same direction.** With surrogate tests, the pre-seizure drop in correlation density (a nonlinear measure) "may simply reflect increases in the variance". The seizure field's stated rule: a nonlinear statistic must beat variance to be worth using. |
@@ -104,13 +104,13 @@ This is a design change, not a new question. QR-006b should read "beat lag-1 aut
 
 **Not overturned.** No study found does the regime-stratified, matched-false-alarm benchmark. Not confirmed either, for two reasons:
 1. The search turned up a needed baseline re-scope (§4) and a further triviality fold (test 1).
-2. Four specific items that could still flip the verdict were not readable in this session.
+2. Four specific items that could still flip the verdict were not readable in this session. Item 4 has since been read (§7) and does not contain the study; three remain.
 
 **What is left before PROCEED stops being provisional (no third search needed if these come back clean):**
 1. **Dakos & Soler-Toscano 2017**, full text (closed; needs library access). This is the item most likely to contain a complexity-vs-CSD comparison across transition types.
 2. **Mormann et al. 2005**, full text: the 30-measure list (are any information-theoretic, and are variance and decorrelation time included?) and the per-measure ROC results. This decides how much of the non-CSD regime the seizure literature has already settled negatively.
 3. **Eason et al. 2014**, results section: how Fisher information was scored against variance, skewness and kurtosis. The owner can open the UNL Digital Commons copy (usepapapers/197) in their own browser.
-4. **Harris et al. 2024, Supplemental Table S1** (public; PRX supplement or the `brendanjohnharris/criticality` repository): the variable-noise scores of entropy and automutual-information features.
+4. ~~**Harris et al. 2024, Supplemental Table S1**~~: **read, 2026-10-18 (§7).** Not the study: one model, trend-tracking scores, no nulls or ROC. It gives a partial answer that supports the §4 baseline re-scope.
 
 **If 1–4 do not contain the study:** confirm PROCEED on the re-scoped QR-006b (baseline set as in §4).
 **If any does:** FOLD the matching regime with tag `found-under-other-vocabulary`, and RE-SCOPE the rest.
@@ -120,3 +120,47 @@ This is a design change, not a new question. QR-006b should read "beat lag-1 aut
 - **Candidate reference knowledge, not yet anchored:** the seizure-prediction negative result (Mormann 2005; McSharry 2003) as the neuroscience counterpart of EWS3/EWS4, and Layritz 2025 and Harris 2024 as non-Gaussian and unknown-noise limits of EWS1. All four would need reading upgrades first (two are abstract-only).
 - **The Gaussian-copula fold** (§4, test 1) could join EWS8's linear-Gaussian equivalence note once the owner accepts it.
 - **CCA and QR-007:** nothing here bears on transition-order classification.
+
+## 7. Addendum (later on 2026-10-18): Harris et al. 2024, Supplemental Table S1
+
+**Source and reading level.** Supplemental_Table_S1.xls is an arXiv ancillary file (`arxiv.org/src/2310.14791v3/anc/`). It is *not* in the `brendanjohnharris/criticality` GitHub repository, which holds code and figure PDFs only. **Full text** (the data file was read in full).
+
+**Contents.** 8,018 features: 7,873 from hctsa plus 145 of the authors' own (the RAD family). Each has a fixed-noise and a variable-noise score, the Spearman ρ between the feature and the control parameter μ. 7,637 features have a variable-noise score. Rows without one carry 0 in the table's "absolute" column; this analysis treats them as missing.
+
+**Classification.** A feature counts as "information-theoretic" if its hctsa keywords include entropy, information, AMI, sampen or mse, or if its name marks it as an entropy, automutual-information or Lempel-Ziv feature. That gives 1,299 features (1,249 scored, 16% of the scored total). This is a keyword heuristic, not a feature-by-feature reading. Symbolic-motif features (SB_Motif*) are counted as non-information.
+
+**Reference points.** SD: fixed 0.977 (rank 7), variable 0.233 (rank 3,976). AC1: fixed 0.966 (rank 81), variable 0.482 (rank 1,516).
+
+| Variable-noise threshold \|ρ\| | All features | Information-theoretic |
+|---|---|---|
+| > 0.48 (beats AC1) | 1,603 | 244 |
+| > 0.7 | 177 | 4 |
+| > 0.8 | 74 | **0** |
+| > 0.9 | 13 | **0** |
+
+| Family (best variable-noise \|ρ\|, rank of 7,637) | Best fixed-noise \|ρ\| |
+|---|---|
+| Recurrence-period density entropy, EN_rpde: **0.747, rank 120** (best information feature) | 0.755 |
+| Sample / multiscale entropy: 0.708, rank 164 | 0.960 |
+| Automutual information: 0.689, rank 189 | 0.971 |
+| Lempel-Ziv complexity: 0.638, rank 345 | 0.958 |
+| Distribution (Shannon) entropy: 0.629, rank 389 | 0.960 |
+| Permutation entropy: 0.616, rank 496 | 0.892 |
+| Approximate entropy: 0.419, rank 2,404 (below AC1) | 0.942 |
+| *For comparison:* RAD 0.927 (rank 1); best hctsa feature CO_Embed2_Basic_1_stdincircle 0.905; SB_MotifTwo_mean_uu 0.877, rank 27 | |
+
+**Findings.** Tag: **Established** for the numbers, read from the authors' table; **Supported** for the interpretation, which is mine.
+
+1. **The fixed-noise regime confirms the linear-Gaussian fold on independent data.** The information features that score highest there are proxies for their second-order counterparts:
+   - The entropy of the kernel-smoothed value distribution (DN_FitKernelSmoothraw_entropy) scores 0.980 fixed and 0.252 variable, almost exactly SD's 0.977 and 0.233. For a near-Gaussian distribution, differential entropy is ½ log(2πeσ²), a function of variance.
+   - The automutual-information features (fixed ≈ 0.97, variable 0.54–0.60) behave like AC1 (0.966, 0.482).
+2. **Under unknown noise amplitude, many information features beat SD and AC1.** 244 beat AC1's variable-noise score; the best is 0.747. **None reaches the top 100, and none exceeds 0.8.** All 74 features above 0.8 are distribution-shape, extreme-value, embedding-geometry or motif features. In this regime the answer to "does an information measure beat AC1 and variance?" is **yes, but distribution-shape features beat both by a wide margin**.
+3. **Consequence for QR-006b.** This is direct evidence for the §4 baseline re-scope. Without distributional baselines, a QR-006b "yes" in this kind of regime would credit information measures with a gain that non-information features deliver more strongly.
+4. **Limits.** These limits are why this is not the study QR-006b asks for:
+   - one model (the supercritical Hopf normal form) with additive Gaussian noise of unknown amplitude, not non-Gaussian or multiplicative noise;
+   - noise amplitude varies *across recordings*, not within a series;
+   - scored by Spearman trend-tracking, not ROC against matched nulls;
+   - no N- or R-tipping.
+
+**Effect on the verdict.** Item 4 of §5 is closed and does not contain the study. The verdict stays **STILL PROVISIONAL (narrowed)**, with three items left: Dakos & Soler-Toscano 2017, Mormann 2005 and Eason 2014, each in full.
+
