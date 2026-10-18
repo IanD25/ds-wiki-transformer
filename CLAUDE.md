@@ -37,83 +37,53 @@ Claude's standing instructions when working on this platform:
 
 ---
 
-## Current Status (2026-05-04, Post-Glossary + Scaling Reformulation)
+## Current Status (2026-10-18 — pre-merge baseline)
 
-> **Read [`docs/SESSION_HANDOVER_2026-05-04.md`](docs/SESSION_HANDOVER_2026-05-04.md) first.** Two deep-research passes, a new glossary subsystem, and a substantially reworked scaling cluster. Commits `17b6742`, `5741f9c`, `4cf550c`.
+> **Read [`docs/SESSION_HANDOVER_2026-10-18.md`](docs/SESSION_HANDOVER_2026-10-18.md) first.** Mode A consistency pass `gsw-consistency-pass-2026-10-18`: the source DB brought in line with the calibration record, residual errors swept (including errors shared with the *Relatively Human* podcast), the H5 prior-art gate, claim/process views, a podcast crosswalk, and the M1 milestone. Milestone snapshot `snap_20261018_190812` is the **pre-merge baseline** for the planned wiki + podcast merge.
 
-**Mission state:** Two research passes plus new infrastructure. Nothing promoted; several things corrected or falsified.
+**Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0; the 2026-10-18 pass made corrections only.
 
-**Headline (2026-05-04):**
+**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 29 Speculative · 8 Supported · 7 Established · 3 Falsified. Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (89 rows / 13 audit refs — several rows per entity, and process items mixed in).
 
-- **Glossary subsystem built** — 41 entries (20 disambiguation pages + 21 sense entries), `[[g:slug]]` markup, three renderers, and a load-bearing-word lint. First punch list: **611 high-severity flags across 122 entries**. This is the operational form of "name the specific mathematical object, every time." Markup has NOT yet been applied to entries — that is the next phase.
-- **Maldacena pass (5 agents)** — confirms M0's Fisher-gravity downgrade against 2020–2025 literature. **Retracted** `CCA_GRAVITY_FINDINGS.md` §1.3: Bianconi 2025 uses *quantum* relative entropy (Bures/Petz), not classical Fisher, so it is not an independent second path. GT10 gains the Casini-Galante-Myers scope caveat. P17/P23 DESI σ-levels corrected to 2.8–4.2σ (the 5σ was Amendola's forecast). P21 split into classical Chentsov uniqueness vs quantum Petz classification.
-- **Kolokotrones pass (3 agents)** — found a **fabricated citation** in C1 ("Xiao et al. 2015" does not exist; the ~10 kg breakpoint is Dodds 2001). Curvature **downgraded** from established to contested (Griebeler & Werner 2016: linear beat curvature in 16 of 17 orders; plants curve the opposite way; no replication in birds/reptiles/fish).
-- **P12 FALSIFIED** on cross-domain universality — β(λ) is bounded above by 1 for all d_f and λ, so urban superlinear ~1.15 is structurally unreachable.
-- **H5's form DERIVED** — for B = a·M^p + b·M^q the local slope is p·f + q·(1−f) with f = a·M^p/B, which is exactly β(λ). **λ is the fractional contribution of one process to the total** — measurable, mass-dependent by construction, endpoints derivable rather than chosen. This reversed the same session's "interpolation without mechanism" diagnosis.
-- **Scaling queue:** P14a runnable now (no dependencies); open question is *which two processes* (Ballesteros 2018 vs Zhao); Q4 is the real blocker behind P16. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md).
+**State by thread:**
+- **D_eff / Fisher-rank (DFIG)** — P5 Supported only as an application of Machta et al. 2013 sloppy models (and at a continuous transition it reduces to standard exponents); P6 contradicted by own tests; P7 partially falsified (the participation ratio fails monotonicity in every tested configuration); P8 a restatement of Gefen–Mandelbrot–Aharony 1980 + Janke–Johnston–Kenna 2004. Ax2, OmD and T1 remain internal constructions.
+- **CCA** — CCA-1 and CCA-1b scaling Falsified; CCA-1b magnitude and CCA-2 Supported on a single test family; CCA-1c Speculative after Phase E (outcome C). Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
+- **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only.
+- **Cosmological coupling (P17, P23, GT11)** — Speculative, high risk. GW tension with k = 3 is ~3σ (Amendola 2024's 5σ was a forecast); Cadoni 2023's k = 1 is universal for regular BHs, with their own analysis preferring k = 3. Wording corrected throughout 2026-10-18.
+- **Scaling** — P12 Falsified (β(λ) ≤ 1). P11 scope-bounded. H5's two-process form is a re-derivation and a **RESTATEMENT of West et al. 2003** ([prior-art report](docs/prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md)). C1's curvature is contested. C2's "β = 1 ± 1/D_eff" withdrawn as a restatement of Bettencourt 2013. P14a is the only runnable item. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md), banners included.
+- **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
-**Earlier state (2026-04-20, Post-CCA-Potts Phase E Sweep):**
+**Open items:**
+1. Merge with the *Relatively Human* podcast — crosswalk ready at [`docs/PODCAST_CROSSWALK_2026-10-18.md`](docs/PODCAST_CROSSWALK_2026-10-18.md); the merge itself is not designed.
+2. Apply glossary markup from the lint punch list.
+3. Renames: CCA d_eff / η in body text; λ "phase coherence" → process-contribution fraction (H3 title, C1, P13, P15).
+4. P14a (branching-ratio variance vs BMR/MMR exponent gap) — runnable, not run.
+5. Scaling item ②: does metabolic rate decompose into separate parallel fluxes at all? (Zhao 2015 is a single-network rival, not a decomposition.)
+6. P9 is a monitoring gate and belongs in the Q-series; not moved.
+7. Anchors 818/819 (P6/P7 `contradicts` Machta 2013): notes look swapped and P7's relationship is doubtful — owner review.
+8. 12 tests hard-code pre-glossary counts (278/231/209 entities) and fail; not updated.
+9. `docs/demo/` commit decision — owner's.
 
-**Mission state:** **Phase E experiment complete.** CCA Potts q=2,5,7,10 sweep answered the M0 Sixth-Addendum's sharpened mechanism question via 540-run Glauber MC (Brown-2022-faithful dynamics) + full L²×L² connected correlation matrix (Borgs-Chayes convention) + GTE estimator matching Brown's Suppl. exactly.
-
-**Headline results (docs/CCA_POTTS_SWEEP_REPORT_2026.md):**
-- **Reduction-check R1 soft pass at q=2**: ζ_∞ = 0.858 ± 0.009 vs Vinayak ζ_theory = 0.875 (1.89σ, FSS extrapolation across L ∈ {16,24,32}). CCA's η_CCA at continuous T_c reduces to standard η_std. No novel content at q=2 T_c.
-- **Brown comparison outcome C at q=5,7,10**: CCA discriminates first-order from continuous via *different curve signatures* than Brown's GTE. Specifically: (a) η_CCA peak locations track GTE peak locations nearly perfectly (8/9 (q,L) configs with first-order q have identical peak T_ratio, both converging to T_c as q increases); (b) η_CCA jump magnitudes are 2-5× smaller than GTE's; (c) d_eff_CCA jump magnitudes exceed GTE's by 9-400× (q=10 L=32: d_eff jumps 1.5 → 370 across T_c ± 0.01), but d_eff_CCA doesn't peak-track GTE.
-- **CCA-1c stays Speculative** (outcome C ≠ required outcome A for promotion). Positive discriminative evidence but no clean GTE-tracking. Sharpened follow-up: is d_eff_CCA's jump reducible to λ_1 ordering-mode collapse (textbook), or something more? **Not pursued** (charter rule 8).
-- **STAT3 strengthened to Supported**: CCA class framework empirically validated as transition-order discriminator in 2D Potts q-family.
-- **P5 rationale refined**: "Fisher rank = d_eff" equivalence to std η at continuous T_c is now a re-expression of standard critical exponents (Vinayak 2014), not a new observable.
-- Calibration rows added to `wiki_history.db.confidence_calibration` under audit_ref `gsw-cca-potts-sweep-phase-E-2026-04-20`.
-
-**Earlier state (2026-04-18, Post-GSW Anchor Pass):**
-
-**Mission state:** Reset complete. **M0 audit complete.** **GSW anchor architecture built + 42% of wiki now has external provenance recorded.** The current honest snapshot of belief is `docs/M0_MILESTONE_COMPILATION.md` — read it before doing any new conjecture work. M0 downgrades a substantial fraction of previously-"supported" claims to Speculative based on a skeptical literature audit.
-
-**Major 2026-04-18 additions (see `docs/SESSION_HANDOVER_2026-04-18.md` for full detail):**
-
-- **GSW Anchor Architecture** — three new tables in `wiki_history.db`: `external_anchors`, `internal_constructions`, `pending_anchor_reviews`. Each wiki entry can now be anchored to canonical external sources (DOIs, ISBNs, Wikipedia, Scholarpedia, etc.) with typed relationships (10 types), tiered source ranking, 5-role canonical-authority subdivision, and trigger-based durability.
-- **Hierarchical Domain Taxonomy** — 57 tags across 3 levels (10 top-level + 42 sub-tags + 5 sub-sub-tags) + 16 cross-domain borrowings at the sub-tag level. GSW hierarchy ordering: formal_logic → mathematics → info_theory → stats → CS → physics → chemistry → biology → earth_sciences → networks_systems.
-- **Complete retag of 300 items** — all 277 entries + 23 conjectures normalized from 44 inconsistent free-text `domain` strings to canonical hierarchical tags.
-- **All 9 M0 fold-in conjectures closed** — 4 via `reframing_of` (P2→WBE, P5→Machta, P8→Gefen+JJK, P11→Bettencourt); 4 via `null_hypothesis` (P1/P3/P4/P10 = heterodox without unique predictions); P21 canonical_authority to Chentsov+Amari.
-- **88 entries anchored** (29%) via 307 anchor rows + **37 entries flagged `internal_construction`** (12%, includes X8 AlphaEntropy exclusion + 31 DFIG-framework entries). **125/300 items = 42% have GSW provenance recorded.**
-- **Cluster-template workflow** demonstrated — formal_logic at 96% coverage (22/23), CS at 81% (13/16), physics-classical cluster at 26% (up from 6%). Remaining sub-clusters: QM, cosmology, thermo, biology, chemistry, math, earth sciences.
-
-**Earlier M0 findings (still current):**
+**Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
 
 - **DFIG is a re-parameterization of the sloppy-models program** (Sethna group, 2006–present). Not novel. P5 is Supported as application, not Established as discovery.
 - **CCA's general setting is Machta-Chachra-Transtrum-Sethna Science 2013** (arXiv:1303.6738) — confirmed via primary-source reading. FIM eigenvalue spectrum on 2D Ising at criticality with stiff/sloppy hierarchy. Uses global couplings, not per-site fields. Does not sweep temperature. No Potts, no first-order discrimination. **Primary-source reading of 4 additional papers completed** (Transtrum 2015 JCP perspective, Mattingly 2018 PNAS, Brown-Bossomaier-Barnett 2022 Sci. Rep., Quinn 2023 Rep. Prog. Phys.): **no paper covers CCA's specific construction** (per-site fields + d_eff/η + T-sweep + first-order-vs-continuous discriminator). However, **two important findings from primary-source reading**: (1) **Mattingly 2018 is a mandatory citation** — it uses the term `d_eff` with a DIFFERENT formula (d_eff = Σ_r r·Ω_r from optimal discrete prior weight on manifold boundaries vs CCA's d_eff = (Σλ)²/Σλ² participation ratio) — CCA must cite Mattingly and distinguish the two formulas. (2) **Brown-Bossomaier-Barnett 2022 is the prior art for the broader research program** — they study Potts q=2,5,7,10 via Global Transfer Entropy and find curve-shape differences qualitatively similar to CCA-1c, with a simple physical mechanism (cluster interfacial length). CCA currently lacks a comparable mechanism. **Highest-leverage open question:** can CCA's d_eff/η be explained via cluster interfacial geometry, or does it measure something structurally different from transfer entropy? See `docs/M0_MILESTONE_COMPILATION.md` Fourth Addendum for full findings. CCA-1 and CCA-1b L^d scaling are FALSIFIED; CCA-1b magnitude and CCA-1c shape are qualitatively supported on a single test only; charter rule prohibits promoting above Speculative without a second independent test (recommended: extend to q=2,5,7,10 to enable direct comparison with Brown et al.).
 - **Fisher-gravity chain is downgraded from "structural coherence result" to conceptual analogy.** It stacks vocabulary ("relative entropy") across three distinct mathematical objects; Jacobson 2016 uses quantum entanglement entropy, not classical Fisher.
-- **P17 is Speculative, high risk.** Citations VERIFIED via deep-research pass (Fifth Addendum): Amendola, Rodrigues, Kumar, Quartin 2024 MNRAS 528, 2377 (arXiv:2307.02474) is real — but wiki's "5σ" claim was the paper's FORECAST, not current data; current GWTC-3 gives 2σ upper limit k<2.1 with ~3σ tension. Cadoni et al. 2023 JCAP 11, 007 (arXiv:2306.11588) verified — 7-author paper, "universal" not "generic" k=1 for regular BHs, and crucially their own KS analysis prefers k=3 over k=1. Wiki wording for P17/P23 must be corrected.
+- **P17 is Speculative, high risk.** Citations VERIFIED via deep-research pass (Fifth Addendum): Amendola, Rodrigues, Kumar, Quartin 2024 MNRAS 528, 2377 (arXiv:2307.02474) is real — but wiki's "5σ" claim was the paper's FORECAST, not current data; current GWTC-3 gives 2σ upper limit k<2.1 with ~3σ tension. Cadoni et al. 2023 JCAP 11, 007 (arXiv:2306.11588) verified — 7-author paper, "universal" not "generic" k=1 for regular BHs, and crucially their own KS analysis prefers k=3 over k=1. Wiki wording for P17/P23/GT11/G12 corrected 2026-10-18.
 - **CCA prior-art surface broadened by Fifth Addendum deep-research pass; corrected by Sixth Addendum primary-source reading.** The FIM in CCA IS the connected correlation matrix χ_ij — textbook stat mech. Prior-art map: **Vinayak-Prosen-Buča-Seligman 2014 EPL 108, 20006** (arXiv:1403.7218) proves correlation-matrix eigenvalue density at 2D Ising criticality is power-law from η_critical; **Borgs-Chayes 1996 J. Stat. Phys. 82, 1235** (arXiv:adap-org/9411001) rigorously connects Potts covariance matrix to FK clusters. **Saberi-Saber-Moessner 2024 PRB 110, L180102** (arXiv:2503.03472) is NOT direct prior art (Sixth Addendum correction): their matrix is the spin configuration arranged as L×L matrix, not the connected correlation matrix. Different mathematical object. Saberi uses rescaled max eigenvalue as order parameter, recovers Onsager magnetization with β/ν=1/8. CCA-1c remains Speculative; narrow-novelty surface is slightly broader than Fifth Addendum claimed. Sharpened mechanism question (Brown 2022): Brown's GTE is a hybrid 2-point + multi-point observable; CCA's d_eff/η are pure 2-point. At first-order Potts, can pure 2-point reproduce hybrid 2-point + multi-point discrimination? Or only partial signal? Test via q=2,5,7,10 with both observables. **Saberi is the obvious external reviewer** for any CCA writeup — works on both cluster geometry and matrix-spectrum of 2D Ising. **Two terminology collisions** flagged: CCA d_eff vs Mattingly 2018 d_eff (different formulas), CCA η vs standard stat-mech η_critical (anomalous dimension). Both must be renamed.
 
 Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 2015, Quinn et al. 2022, Janke-Johnston-Kenna 2004, Prokopenko-Lizier 2011 (prior-art reading list in M0).
 
-**Wiki scale (2026-04-18 — post-retag, anchoring in progress):**
-- **278 entries** (213 reference_law, 18 method, 15 law, 9 instantiation, 8 open_question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism)
-- **819 links** (35 tier-1, 528 tier-1.5, 87 tier-2, 169 original null-tier)
-- **1,913 ChromaDB chunks**, **1,126 property rows**
+**Wiki scale (2026-10-18):**
+- **319 entries** = 278 content entries (213 reference_law, 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism) + **41 glossary entries** (21 disambiguation pages, 20 defined terms)
+- **849 links**, **1,126 property rows**, **2,056 ChromaDB chunks**
 - **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
-- **587 tests passing**
-- Entry ID prefixes: A/B/C/D/E/F/G/H/M/Q/T/X/Ax/OmD + BIO/CHEM/MATH/INFO/STAT/CS/CR/MS/FL/NE/IT/GT/HB/BR/RG/EM/FM/TD/GV/ES/OP
+- **587 tests** — 575 pass; 12 fail on stale hard-coded counts (open item 8)
 
-**GSW provenance state (2026-04-18):**
-- **300 items tagged** with canonical hierarchical domains (277 entries + 23 conjectures)
-- **545 `entry_source_domains` rows** (primary + secondary + auxiliary)
-- **88 entries anchored** to external canonical sources (29%)
-- **37 entries flagged `internal_construction`** (12% — X8 + DFIG-framework)
-- **307 `external_anchors` rows** across 8+ co-citation hubs
-- **125/300 items = 42% have GSW provenance recorded**
-
-**Research threads currently live:**
-- **CCA (Constrained Critical Attractor) framework** — wounded from 2026-04-07 falsification cascade. CCA-1 falsified, CCA-1b scaling falsified, CCA-1b magnitude and CCA-1c curve-shape qualitatively confirmed. **Needs literature audit before continuing.** Likely overlap with sloppy-models (Sethna) and Amari information geometry.
-- **Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01) — structural observation derived in-wiki. **Needs audit:** is this a genuine structural insight or stacked analogies? Depends on Jacobson 2016 generality claim which is itself contested.
-- **P17 cosmological coupling** — updated with 2024-2025 tensions (GW 5σ rejection of k=3, Gaia BH, Cadoni k=1, JWST AGN). Contested, honestly documented.
-
-**Pending M0 audit actions** (see charter § "Immediate Next Steps"):
-1. Conjecture audit P1–P23 against confidence calibration
-2. CCA literature check (sloppy models, Amari, Sethna)
-3. Fisher-gravity chain audit
-4. Archive product-arc documents
-5. Write M0 milestone compilation
+**Provenance (2026-10-18):**
+- **910 external anchors over 276 entities**, plus **47 internal constructions**
+- Every non-glossary entry has an anchor or an internal-construction flag (the last orphan, GT05, was anchored 2026-10-18). The 21 glossary disambiguation pages have neither, by design.
+- History: 42% provenance on 2026-04-18; full non-glossary coverage from commit `89a989d` (2026-04-20).
 
 ---
 
@@ -130,6 +100,8 @@ Mode B depends on Mode A. Don't run experiments on ungrounded foundations.
 
 ## Quick Start (Fresh Machine)
 
+> **The local iCloud copy is canonical:** `~/Library/Mobile Documents/com~apple~CloudDocs/Projects/DS_Wiki_Transformation`. **GitHub is behind** — `origin/main` was last pushed at `0b05eb1` (2026-04-20); all later work is local until the owner pushes, so a fresh clone gets a stale wiki. Also: the `.venv` editable install still points at the old path `/Users/iandarling/Projects/DS_Wiki_Transformation/src` (tracebacks show it); re-run `pip install -e .` from the iCloud path if imports misbehave.
+
 ```bash
 # 1. Clone
 git clone https://github.com/IanD25/ds-wiki-transformer.git
@@ -140,7 +112,7 @@ bash setup.sh
 
 # 3. Verify
 source .venv/bin/activate
-python3 -m pytest tests/ -v --tb=short   # 587 tests should pass
+python3 -m pytest tests/ -v --tb=short   # 587 tests; 12 fail on stale pre-glossary counts
 
 # 4. Optional: start MCP server (for Claude tool access)
 python3 src/mcp_server.py
@@ -150,10 +122,10 @@ python3 src/mcp_server.py
 - `data/ds_wiki.db` — the knowledge graph (READ ONLY, committed)
 - `data/rrp/` — external dataset bundles (zoo_classes, ecoli_core, periodic_table, opera, ccbh, ieee_power_grid)
 - `data/chroma_db/` — ChromaDB semantic index (bge-large 1024-dim, committed)
-- `data/wiki_history.db` — embedding snapshots + **GSW anchor tables** + **domain tagging** + **calibration records**. **Exceeds GitHub's 100MB file limit as of 2026-04-18; likely needs to be gitignored with a rebuild script (pending owner decision).** Reconstructible from the migration scripts in `scripts/migrations/`.
+- `data/wiki_history.db` — embedding snapshots + **GSW anchor tables** + **domain tagging** + **calibration records** + the `claim_status_latest` / `process_status_latest` views. ~29 MB, tracked. Snapshot retention keeps the 3 most recent plus every **milestone** snapshot (trigger `milestone:*`, never pruned — each adds ~10 MB). Anchors, tags and calibration rows are reconstructible from `scripts/migrations/`; historical embeddings are not.
 - `data/reports/` — diagnostic reports + experiment outputs
 
-**Rebuild only if ds_wiki.db changes:** `python3 -m src.sync`
+**Rebuild only if ds_wiki.db changes:** `python3 -m src.sync` (add `--milestone` only for a snapshot that must be kept permanently)
 
 ---
 
@@ -186,14 +158,18 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | File | Purpose |
 |------|---------|
 | `docs/RESEARCH_PLATFORM_CHARTER.md` | **ANCHOR DOCUMENT** — mission, epistemic contract, lifecycle |
-| `docs/SESSION_HANDOVER_2026-05-04.md` | **Most recent session handover (2026-05-04)** — glossary subsystem, two deep-research passes, scaling reformulation |
+| `docs/SESSION_HANDOVER_2026-10-18.md` | **Most recent session handover (2026-10-18)** — pre-merge consistency pass, podcast crosswalk, M1 |
+| `docs/M1_MILESTONE_COMPILATION.md` | **M1 belief snapshot (2026-10-18)** — pre-merge baseline, numbers from `claim_status_latest` |
+| `docs/PODCAST_CROSSWALK_2026-10-18.md` | *Relatively Human* podcast claims vs current wiki status, with on-air corrections |
+| `docs/KNOWLEDGE_BASE_BLUEPRINT.md` | Generalised build blueprint for a knowledge base like this one |
+| `docs/SESSION_HANDOVER_2026-05-04.md` | Prior handover — glossary, Maldacena + Kolokotrones passes, scaling (two calendar days; dates erratum at top) |
 | `docs/SCALING_RESEARCH_QUEUE_2026_05_04.md` | Current state of the scaling cluster — what is runnable, open, falsified, retired |
 | `src/glossary/` | Glossary subsystem — `[[g:slug]]` markup parser, renderers, load-bearing-word lint |
 | `data/reports/glossary_lint_2026_05_04.md` | Punch list: 611 high-severity flags across 122 entries needing term binding |
-| `docs/SESSION_HANDOVER_2026-04-18.md` | Prior handover (2026-04-18) — GSW anchor architecture + retagging + 42% wiki provenance |
+| `docs/SESSION_HANDOVER_2026-04-18.md` | Earlier handover (2026-04-18) — GSW anchor architecture + retagging (provenance reached full coverage 2026-04-20) |
 | `docs/GSW_ANCHOR_ARCHITECTURE.md` | **GSW anchor schema + design** — relationships, canonical roles, tiering, durability model |
 | `docs/GSW_SOURCE_BASKET.md` | Per-domain canonical-source basket audit across 10 top-level domains × 5 canonical roles |
-| `docs/prior_art_reviews/` | Per-entry anchor proposal reports + domain-retag amendments + INFO1 smoke test |
+| `docs/prior_art_reviews/` | Prior-art gate reports (incl. H5 two-process, 2026-10-18), anchor proposals, domain-retag amendments |
 | `docs/M0_MILESTONE_COMPILATION.md` | M0 belief snapshot (2026-04-08) — post-audit conjecture calibration, headline downgrades, action items |
 | `src/config.py` | Paths, model, thresholds |
 | `src/sync.py` | Rebuild chroma_db + wiki_history.db from ds_wiki.db |
@@ -214,9 +190,9 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | `MASTER_SUMMARY.md` | Legacy technical narrative (partially superseded by charter) |
 | `docs/SESSION_HANDOVER_2026-04-16.md` | Prior session handover — M0 audit closeout (six addenda) performed 2026-04-08 |
 | `docs/SESSION_HANDOVER_2026-04-07.md` | Earlier session handover — CCA falsification cascade (Phase A-D experiments) |
-| `docs/CCA_TERMINOLOGY_RENAME_PROPOSAL.md` | Pending: terminology fixes for CCA d_eff vs Mattingly d_eff and CCA η vs standard stat-mech η_critical |
-| `docs/CCA_MATHEMATICAL_FORMALIZATION.md` | CCA framework — pending literature audit |
-| `docs/CCA_GRAVITY_FINDINGS.md` | Fisher-gravity chain — pending audit |
+| `docs/CCA_TERMINOLOGY_RENAME_PROPOSAL.md` | Proposed (banners in place, body text not migrated): CCA d_eff vs Mattingly d_eff; CCA η vs η_critical |
+| `docs/CCA_MATHEMATICAL_FORMALIZATION.md` | CCA framework — audited in M0 (six addenda) and Phase E; notation banner |
+| `docs/CCA_GRAVITY_FINDINGS.md` | Fisher-gravity chain — audited: conceptual analogy; §1.3 (Bianconi path) retracted 2026-05-04 |
 | `docs/archive/` | Product-arc docs (PFD foundational plan, Phase 3 designs) — historical only |
 
 **Deprecated / deprioritized (still exist, no longer primary):**
@@ -289,23 +265,20 @@ python3 scripts/run_entity_catalog_pass.py \
 
 ---
 
-## Conjecture Summary (23 total — **pending M0 audit, numbers may shift**)
+## Conjecture Summary (23 P-series + CCA — status as of 2026-10-18)
 
-**Honest status as of 2026-04-08 — all of these need recalibration in the M0 pass:**
+Labels are the latest calibration rows (`claim_status_latest`); `conjectures.three_state` now carries the same label as a prefix (2026-10-18).
 
-- Previously called "strongest": P4, P15 (information-thermodynamics chain via B5↔INFO1↔INFO5)
-- Previously "strengthened": P2, P8, P11, P12, P13
-- Contested: P17 (cosmological coupling — multiple 2024-2025 tensions documented)
-- New / speculative: P23 (horizon formation as Bekenstein-saturation phase transition) — inherits contested GT11
+- **Falsified:** P12 (structural bound β(λ) ≤ 1); CCA-1 (Phase C); CCA-1b L^d scaling (Phase D)
+- **Established:** P21 — Chentsov's classical uniqueness theorem only; the quantum case is Petz's classification
+- **Supported:** P5 (as application of Machta 2013); P18, P19, P20 (single-domain, US equities / AlphaEntropy); CCA-1b magnitude, CCA-2 (single test family)
+- **Speculative — restatements of literature:** P2 (WBE 1997), P8 (Gefen–Mandelbrot–Aharony 1980; JJK 2004), P11 (Bettencourt et al. 2007; scope bounded)
+- **Speculative — contradicted by own tests:** P6; P7 (partially falsified)
+- **Speculative — ansatz without derivation:** P13, P15 (P15's Landauer motivation void), P23
+- **Speculative — heterodox, no unique prediction:** P1, P4, P10
+- **Speculative — other:** P3 (over-parameterized operator), P9 (monitoring gate; belongs in Q-series), P14 (split into P14a runnable / P14b blocked), P16 (blocked on Q4 specification), P17 (high risk), P22 (trichotomy unproven); CCA-1c (outcome C)
 
-**CCA-related conjectures (from 2026-04-07 session):**
-- CCA-1 (isotropy = criticality) — **FALSIFIED** Phase C
-- CCA-1b L^d scaling — **FALSIFIED** Phase D
-- CCA-1b magnitude separation (dη/dT ~20× for first-order) — qualitatively confirmed, single test, **not yet in DB as conjecture**
-- CCA-1c curve shape — qualitatively confirmed, single test, **not yet in DB as conjecture**
-- CCA-2 (d_eff = d_lattice + 1 for d ≥ 2) — confirmed for 2D and 3D tori, single topology family
-
-**Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): structural observation derived in-wiki from the 2026-04-07 session. Currently framed as a "discovery" — **needs audit** (is this a genuine structural insight or stacked analogies via Jacobson 2016 generality?).
+**Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): Speculative — conceptual analogy, not a structural result.
 
 ---
 
@@ -316,10 +289,14 @@ python3 scripts/run_entity_catalog_pass.py \
 ├── CLAUDE.md                            ← YOU ARE HERE
 ├── docs/
 │   ├── RESEARCH_PLATFORM_CHARTER.md     ← ANCHOR — read this first
-│   ├── SESSION_HANDOVER_2026-04-16.md   ← most recent (M0 closeout, written 2026-04-16)
-│   ├── SESSION_HANDOVER_2026-04-07.md   ← prior (CCA falsification cascade)
-│   ├── CCA_MATHEMATICAL_FORMALIZATION.md ← pending audit
-│   ├── CCA_GRAVITY_FINDINGS.md          ← pending audit
+│   ├── SESSION_HANDOVER_2026-10-18.md   ← most recent (pre-merge consistency pass)
+│   ├── M1_MILESTONE_COMPILATION.md      ← current belief snapshot (M0 is the 2026-04-08 one)
+│   ├── PODCAST_CROSSWALK_2026-10-18.md  ← podcast claims vs wiki status
+│   ├── SESSION_HANDOVER_2026-*.md       ← earlier handovers (05-04, 04-20, 04-18, 04-16, 04-07, …)
+│   ├── SCALING_RESEARCH_QUEUE_2026_05_04.md
+│   ├── CCA_MATHEMATICAL_FORMALIZATION.md ← audited (M0, Phase E)
+│   ├── CCA_GRAVITY_FINDINGS.md          ← audited (analogy; §1.3 retracted)
+│   ├── prior_art_reviews/               ← prior-art gate reports
 │   ├── FISHER_PIPELINE_REDESIGN.md      ← tool spec (still valid)
 │   ├── ARCHITECTURE_DECISIONS.md        ← ADR log
 │   └── archive/                         ← product-arc docs (historical only)
@@ -342,7 +319,7 @@ python3 scripts/run_entity_catalog_pass.py \
 │   ├── run_entity_catalog_pass.py
 │   ├── ising_fim_*.py, potts_fim_test.py, cca1b_*.py   ← CCA experiments
 │   └── migrations/        ← one-time DB insert scripts
-├── tests/                 ← pytest suite (587 tests)
+├── tests/                 ← pytest suite (587 tests; 12 stale-count failures)
 ├── data/
 │   ├── ds_wiki.db         ← READ ONLY
 │   ├── chroma_db/, wiki_history.db
@@ -356,7 +333,7 @@ python3 scripts/run_entity_catalog_pass.py \
 ## If You're A Fresh Claude Session
 
 1. **Read `docs/RESEARCH_PLATFORM_CHARTER.md` first.** It defines the mission and the epistemic rules.
-2. **Read `docs/SESSION_HANDOVER_2026-05-04.md`** — the latest session handover. Glossary subsystem, two deep-research passes, scaling reformulation. Read `docs/SESSION_HANDOVER_2026-04-18.md` after it for the GSW anchor architecture and 42% provenance state.
+2. **Read `docs/SESSION_HANDOVER_2026-10-18.md`** — the latest session handover — then `docs/M1_MILESTONE_COMPILATION.md` for current beliefs. For older context: `docs/SESSION_HANDOVER_2026-05-04.md` (note its dates erratum) and `docs/SESSION_HANDOVER_2026-04-18.md` (GSW anchor architecture).
 3. **Read `docs/GSW_ANCHOR_ARCHITECTURE.md`** for the schema and design decisions (relationship taxonomy, canonical roles, durability model).
 4. **For anchoring work, read `docs/GSW_SOURCE_BASKET.md`** — per-domain canonical source reference.
 5. **Prior context**: `docs/SESSION_HANDOVER_2026-04-16.md` (M0 audit closeout) is still relevant for conjecture calibration.
@@ -364,4 +341,5 @@ python3 scripts/run_entity_catalog_pass.py \
 7. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion. Anchor confidence: high / medium / low.
 8. **Run the prior-art gate before any new Q/P/Postulate.** See `memory/feedback_prior_art_gate.md` — mandatory deep literature review; "yes and" scaffolding is explicitly harmful.
 9. **Preserve falsifications.** Never delete wrong claims — label as falsified per `memory/feedback_preserve_falsifications.md`. Use specific labels per `memory/feedback_diagnostic_labels.md`.
-10. **Anchoring continues** — ~175 entries still to anchor, chunked by domain cluster (QM, cosmology, thermo, biology, chemistry, math, earth sciences, remaining conjectures). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` §"Cluster-template workflow".
+10. **Provenance is complete for non-glossary entries** (910 anchors over 276 entities + 47 internal constructions). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
+11. **Report numbers from `claim_status_latest` / `process_status_latest`**, not raw calibration rows. If a correction collides with an existing (entity, date, audit_ref) row, use a `-<topic>` sub-ref (precedent: `gsw-consistency-pass-2026-10-18-h5-gate`).

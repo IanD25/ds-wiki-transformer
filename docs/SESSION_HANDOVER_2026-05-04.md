@@ -179,4 +179,5 @@ either way.
 - **P17/P23 wording** in `ds_wiki.db` — partially corrected this session for σ-levels; the broader Amendola/Cadoni rewording from M0 Fifth Addendum is still open.
 - **CCA terminology rename** — banners are in place, body-text migration is not.
 - **Wiki anchoring** — ~175 entries still unanchored from the 2026-04-18 pass.
+  > **Correction 2026-10-18 (`gsw-consistency-pass-2026-10-18`):** this item was already stale when written. Commit `89a989d` (2026-04-20, "GSW anchoring to 100% provenance") had covered the remaining entries. At the 2026-10-18 baseline: 900 anchors over 274 entities plus 47 internal constructions, with a single non-glossary orphan (GT05), resolved in this pass. Now 910 anchors over 276 entities; every non-glossary entry has an anchor or an internal-construction flag. The 21 glossary disambiguation pages have neither, by design.
 - **Deeds, Savage & Fontana 2011** reply to MacKay is paywalled and unread. Anchored at `medium` confidence with that stated. Anyone leaning on the MacKay critique should read it first.
