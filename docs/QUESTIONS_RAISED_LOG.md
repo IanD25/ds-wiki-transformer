@@ -26,7 +26,13 @@
 
 - **Question.** Do information-theoretic measures (transfer entropy and information flow, mutual information, Fisher-information indices, entropy rates, complexity measures, correlation-matrix concentration) give earlier or more reliable warning of critical transitions in real systems — ecosystems, climate, medicine, markets — than rising variance and autocorrelation (critical slowing down)?
 - **Why the wiki raises it.** It is the honest descendant of the CCA thread. CCA found that correlation-matrix observables discriminate first-order from continuous transitions, using different signatures from Brown–Bossomaier–Barnett's transfer entropy (STAT3, CCA-1c, Phase E). It is also the subject of the podcast's S1E2 *Tipping Points*. It is the owner's top real-world question.
-- **Wiki holdings.** STAT3, CCA-1c, X0_FIM_Regimes, M3 (Preisach hysteresis), D2 (Feigenbaum). **Gap:** the wiki has no entries for critical slowing down, early-warning signals, bifurcation types, or regime-shift ecology. The question sits on an almost empty patch of the map.
+- **Wiki holdings.** STAT3, CCA-1c, X0_FIM_Regimes, M3 (Preisach hysteresis), D2 (Feigenbaum), STAT6 (Brown 2022), and, since the 2026-10-18 EWS fold-in ([report](prior_art_reviews/EWS_FOLD_IN_2026_10.md)), **EWS1–EWS10**:
+  - EWS1 critical slowing down and the classical indicators; EWS2 the lake and yeast experiments.
+  - EWS3 B-, N- and R-tipping and transitions without warning; EWS4 false alarms and limits of detection.
+  - EWS5 Barnett 2013's information-flow peak; EWS6 the ecological Fisher Information index.
+  - EWS7 covariance-eigenvalue and dominant-mode indicators; EWS8 the Weinans 2021 benchmark.
+  - EWS9 Bury 2021 deep learning with ROC; EWS10 spatial permutation entropy.
+  - **Remaining gap:** biological criticality (QR-002), and the unread sources listed in the report (Fath 2003, Kritzman 2011, Prokopenko 2011).
 - **Starting literature (not yet verified this session):** Scheffer et al. 2009 (*Nature* 461:53); Dakos et al. 2012 (*PLoS ONE*); Boettiger & Hastings 2012; Ditlevsen & Johnsen 2010; Barnett et al. 2013 (*PRL* 111:177203); Brown, Bossomaier & Barnett 2022; Fath, Cabezas & Pawlowski 2003 (Fisher information for regime shifts); Chen et al. 2012 (dynamical network biomarkers); Bury et al. 2021 (*PNAS*).
 - **What would decide it.** Head-to-head comparisons on the same data: lead time and false-alarm rate of each indicator, across transition types (fold, noise-induced, rate-induced), on systems where the transition is known.
 - **Possible prior art inside the wiki to check:** X0's "Fisher-information regime" classification against the ecological Fisher Information index; CCA's correlation-concentration signal against dynamical network biomarkers.
@@ -101,10 +107,11 @@
 
 ## Coverage gaps the log has surfaced
 
-- **Tipping points and early-warning signals (QR-006):** no entries for critical slowing down, bifurcation classes, regime-shift ecology, or information-based early warning. This is the highest-priority Mode A gap.
+- **Tipping points and early-warning signals (QR-006):** largely filled 2026-10-18 by EWS1–EWS10 (critical slowing down, tipping types, false alarms, information-flow, Fisher-index, eigenvalue, deep-learning and permutation-entropy indicators). Still thin: Fath et al. 2003 and Kritzman et al. 2011 (anchored, not read), and Prokopenko et al. 2011 (abstract only; a lead for IT10).
 - **Criticality in biology (QR-002):** almost no entries.
 
 ## Changelog
 
 - **2026-10-18** — Log started with QR-001 to QR-006, drawn from the big-picture review after the consistency pass. QR-006 marked priority by the owner; literature mapping launched.
 - **2026-10-18** — QR-006 literature-mapped (partial); map saved under `docs/prior_art_reviews/`. Headline: information-theoretic early warning is unproven against the classical signals; the decisive test (a common-benchmark ROC comparison) appears not to have been done.
+- **2026-10-18** — QR-006 coverage gap filled: EWS fold-in added EWS1–EWS10 (audit_ref `gsw-ews-fold-in-2026-10-18`; report `prior_art_reviews/EWS_FOLD_IN_2026_10.md`). Changed only QR-006's "Wiki holdings" line and the coverage-gaps bullet.
