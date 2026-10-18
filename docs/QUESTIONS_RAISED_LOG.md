@@ -20,6 +20,8 @@
    - **Gate 2, worth asking** — runs whenever Gate 1 is not `answered`. Five tests (triviality, absence, obvious or erroneous, expert view, should it be asked), then **PROCEED**, **RE-SCOPE**, **FOLD** or **DROP**, each with a reason tag. A PROCEED stays provisional until a second, independent search fails to explain the absence.
 4. **Filed** (optional) — becomes a Q-series entry in `ds_wiki.db`, anchored `open_in_literature`. Only a question with a Gate 2 PROCEED can be filed.
 
+**Parked** (any stage) — set aside by owner decision, with a date, a reason and a resume condition. Nothing is lost: the entry stays as written and picks up where it stopped.
+
 **Rules.** Literature cited below is a *starting point* unless marked verified. No question becomes a wiki entity without the gate. Each entry names the wiki entities involved and the gaps in the wiki's own coverage, because a question sitting on an empty patch of the map needs grounding (Mode A) before any exploration (Mode B).
 
 ---
@@ -126,7 +128,7 @@
 - **Wiki holdings.** RG01, RG04, M4 (Mori–Zwanzig), M6, IT03, IT05, P5, P7; sloppy models arriving via the fold-in (Machta 2013). Coverage is good.
 - **Starting literature:** Machta, Chachra, Transtrum & Sethna 2013 (*Science* 342:604; anchored); Transtrum et al. 2015 (*J. Chem. Phys.* 143:010901); Quinn et al. 2023 (*Rep. Prog. Phys.*).
 - **What would decide it.** A predictor of compressibility, such as the eigenvalue-spectrum shape of the Fisher information, tested on model classes from different fields before fitting.
-- **Status:** Raised.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: the established answer is the sloppy-models programme already in the wiki (Machta 2013; Transtrum 2015), and mapping it would mostly fold the wiki's own versions (P5–P7); nothing decidable by us.
 
 ## QR-002 · Are living systems poised at criticality, and what tunes them there?
 
@@ -137,7 +139,7 @@
 - **Shared work.** QR-002's literature mapping is also STAT3's prior-art gate: one reading, starting with Muñoz 2018 (which, from memory, reviews the proposed self-tuning mechanisms), settles both.
 - **Starting literature:** Mora & Bialek 2011 (*J. Stat. Phys.*); Muñoz 2018 (*Rev. Mod. Phys.* 90:031001).
 - **What would decide it.** Criticality tests that survive known artefacts (subsampling, thresholding, latent common drivers); evidence of a tuning mechanism.
-- **Status:** Raised.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: a large, contested field with almost no wiki coverage; its main payoff here would be settling STAT3, which is already Speculative and a classification rather than a testable claim. If wanted later, one review (Muñoz 2018) settles STAT3's novelty claim.
 
 ## QR-003 · What sets biological and urban scaling exponents, and why is there no universal one?
 
@@ -146,7 +148,7 @@
 - **Wiki holdings.** C1, C2, H5, X1, and soon WBE 1997, the allometric-cascade debate, metabolic-level boundaries, DEB and Bettencourt 2013 as reference entries (fold-in in progress). Coverage will be good.
 - **Starting literature:** West, Brown & Enquist 1997; Bettencourt 2013 (verified 2026-10-18: δ = H/[D(D+H)] ≈ 1/6); Glazier 2010; Kooijman (DEB); Kolokotrones 2010 and its replication record (in C1).
 - **What would decide it.** Each theory's prediction for a system it was not built for (WBE for a planar network, Bettencourt for a 3-D one), checked against data.
-- **Status:** Raised.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: the wiki's own scaling claims have mostly folded or been falsified; the open cross-theory test is a large project. P14a stays runnable separately.
 
 ## QR-004 · How close do living systems run to the thermodynamic limits of information processing?
 
@@ -164,7 +166,7 @@
 - **Wiki holdings.** GT01, GT02, GT05 (corrected 2026-10-18), GT10, HB02, BR01. Coverage is good.
 - **Starting literature:** Bose et al. 2017 (*PRL* 119:240401); Marletto & Vedral 2017 (*PRL* 119:240402); Carney, Karydas, Scharnhorst, Singh & Taylor 2025 (*PRX* 15:031038, **verified 2026-10-18**: free-energy models, with S_FF(0) force noise and decoherence signatures; the non-local λ = 0 model is already excluded).
 - **What would decide it.** A gravitational-entanglement witness, or the absence of predicted excess decoherence and force noise, at the relevant mass and separation scales.
-- **Status:** Raised.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: the deciding experiments (gravitational-entanglement witnesses, force-noise tests) are years away, so nothing is decidable by us now. Flagged: the question closest to the owner's own gravity strand, where an aesthetic prior can stand in for evidence.
 
 ---
 
@@ -185,3 +187,4 @@
 - **2026-10-18** — QR-008 raised (classify, then measure; owner's synthesis), with two scoring requirements: actionable lead time, and prediction scored separately from in-progress detection. QR-007 gains a note separating the equilibrium setting from the driven one (spinodal vs nucleation).
 - **2026-10-18** — QR-007 folded for the equilibrium setting: the CCA-1c λ₁ reduction test reduces (`experiments/CCA1C_LAMBDA1_REDUCTION_TEST_2026_10_18.md`; audit_ref `gsw-cca1c-lambda1-reduction-2026-10-18`). Only QR-007's status line changed (tag `trivial-from-known-result`).
 - **2026-10-18** — QR-007 merged into QR-008 (owner): the equilibrium form had folded, and the pre-transition form is QR-008's stage 1. QR-002 gains STAT3 as the wiki's own candidate answer (STAT3 downgraded to Speculative the same day, audit_ref `gsw-stat3-downgrade-2026-10-18`); QR-002's literature mapping doubles as STAT3's prior-art gate.
+- **2026-10-18** — Owner review of the open questions. Active: QR-006b (readings, then benchmark design) and QR-004 (literature mapping). QR-008 waits on QR-006b. Parked until those two finish: QR-001, QR-002, QR-003, QR-005 (reasons in each entry). "Parked" added to the status ladder.
