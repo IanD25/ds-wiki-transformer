@@ -10,7 +10,7 @@
 
 **Mode:** A (curation / grounding). No promotions, no new conjectures, no experiments.
 **audit_ref:** `gsw-consistency-pass-2026-10-18` (plus `gsw-consistency-pass-2026-10-18-h5-gate` for one owner-approved collision, §6).
-**Commits (all local, unpushed):** `c30bce3` (Ph 1) · `7233acd` (Ph 2) · `208f799` (Ph 3) · `9b7c78e` (Ph 5) · `4560aa0` (Ph 6a) · `d66b227` (Ph 4) · `ca1e642` (Ph 7) · `70deb71` (Ph 6b) · this commit (Ph 8). Phase 4 was committed after 5 and 6a because its literature read ran in parallel.
+**Commits (pushed to `origin/main` 2026-10-18, through `0d162f2`):** `c30bce3` (Ph 1) · `7233acd` (Ph 2) · `208f799` (Ph 3) · `9b7c78e` (Ph 5) · `4560aa0` (Ph 6a) · `d66b227` (Ph 4) · `ca1e642` (Ph 7) · `70deb71` (Ph 6b) · this commit (Ph 8). Phase 4 was committed after 5 and 6a because its literature read ran in parallel.
 **Milestone snapshot:** `snap_20261018_190812` (trigger `milestone:pre-merge-baseline`) — the pre-merge baseline, exempt from pruning.
 **Not touched:** `docs/demo/` (owner's decision; see §8 for one accidental read).
 
@@ -79,4 +79,4 @@ Milestone sync deferred to after the last content change. `conjecture_summary` u
 - `.venv` editable install points at the dead path `/Users/iandarling/Projects/DS_Wiki_Transformation/src`.
 - Memory catalog: the pattern tags `over-extension-beyond-formula-range` and `conditional-claim-with-unsatisfiable-antecedent` (used on P12) are not yet in `feedback_diagnostic_labels.md`.
 - Fisher-rank monotonicity "as a theorem" (T1/M6): true for exact rank under fixed-parameter Markov coarse-graining, not for RG or the participation ratio. Recorded in the crosswalk; wiki not edited.
-- **Push (15 commits ahead of `origin/main`, last pushed `0b05eb1` 2026-04-20) and `docs/demo/`** — both the owner's calls.
+- **Push:** done 2026-10-18 on the owner's instruction — 15 commits, `0b05eb1..0d162f2`. **`docs/demo/`** — still the owner's call; not committed.

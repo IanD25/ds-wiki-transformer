@@ -100,7 +100,7 @@ Mode B depends on Mode A. Don't run experiments on ungrounded foundations.
 
 ## Quick Start (Fresh Machine)
 
-> **The local iCloud copy is canonical:** `~/Library/Mobile Documents/com~apple~CloudDocs/Projects/DS_Wiki_Transformation`. **GitHub is behind** — `origin/main` was last pushed at `0b05eb1` (2026-04-20); all later work is local until the owner pushes, so a fresh clone gets a stale wiki. Also: the `.venv` editable install still points at the old path `/Users/iandarling/Projects/DS_Wiki_Transformation/src` (tracebacks show it); re-run `pip install -e .` from the iCloud path if imports misbehave.
+> **The local iCloud copy is canonical:** `~/Library/Mobile Documents/com~apple~CloudDocs/Projects/DS_Wiki_Transformation`. GitHub (`origin/main`) was brought level with it on 2026-10-18 (pushed through `0d162f2`); after that, check `git status -sb` — anything local and unpushed is newer than a fresh clone. Also: the `.venv` editable install still points at the old path `/Users/iandarling/Projects/DS_Wiki_Transformation/src` (tracebacks show it); re-run `pip install -e .` from the iCloud path if imports misbehave.
 
 ```bash
 # 1. Clone
