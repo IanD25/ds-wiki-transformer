@@ -164,3 +164,90 @@ This is a design change, not a new question. QR-006b should read "beat lag-1 aut
 
 **Effect on the verdict.** Item 4 of §5 is closed and does not contain the study. The verdict stays **STILL PROVISIONAL (narrowed)**, with three items left: Dakos & Soler-Toscano 2017, Mormann 2005 and Eason 2014, each in full.
 
+
+## 8. Addendum (later on 2026-10-18): the three open readings, and the final verdict
+
+**Purpose.** This closes §5's three remaining items. The reading markers follow the rule at the top of this report, and none is upgraded. Session: QR-006b readings + pre-registration (Mode A for this section).
+
+### 8.1 Access attempts
+
+| Source | Routes tried | Outcome |
+|---|---|---|
+| **Eason, Garmestani & Cabezas 2014** | EPA archive PDF; UNL Digital Commons `usepapapers/197`; Unpaywall, OpenAlex, Semantic Scholar | EPA copy is a 2-page excerpt. The UNL PDF sits behind a Cloudflare bot check, which was not bypassed. **The owner downloaded the UNL copy in their own browser**; it was read from that file |
+| **Dakos & Soler-Toscano 2017** | Unpaywall, OpenAlex (closed, "no repository has full text"), Semantic Scholar (closed; abstract elided); HAL `hal-01990931` ("Fichier non déposé"); Universidad de Sevilla idUS (not found); ScienceDirect (blocked the in-app browser); Dakos's 2019 BIRS talk slides (they list the paper in a table only) | **Unobtainable this session.** The owner chose not to pursue library access or an author request |
+| **Mormann et al. 2005** | Unpaywall, OpenAlex, Semantic Scholar (all closed); Jülich JuSER record 49824 (full abstract, no file); UCL Discovery 145363 (404); the same group's 2007 *Brain* review (closed); one secondary search for a published list of the 30 measures | **Full text unobtainable.** The abstract was re-read in full from JuSER |
+
+### 8.2 Eason et al. 2014: **full text** (owner-supplied UNL Digital Commons PDF)
+
+**What it does.** It relates the Fisher Information index to variance, skewness, kurtosis and AR1, and to the variance index (the largest covariance eigenvalue), in four cases:
+- a time-varying sinusoid;
+- a two-species Lotka–Volterra predator–prey model with a time-varying parameter;
+- a discrete shallow-lake phosphorus model with AR(1)-correlated input noise;
+- the Bering Strait / North Pacific record: 65 variables (35 biological, 30 climate), 1965–1997, with known shifts in 1977 and 1989 (Hare & Mantua 2000).
+
+**How indicators are scored.** In the two model systems, the relationship is the **Spearman rank correlation between the indicator time courses** ("SROC"). In the lake model and the real record, the "leading indicator" claim rests on **visual inspection of single trajectories**. There are:
+- no null (no-transition) series;
+- no ROC and no false-alarm rate;
+- no replicate realisations;
+- no stratification by noise type or tipping mechanism.
+
+**Results relevant here.**
+- In the sinusoid, FI correlates with variance at ρ = −0.98, with kurtosis at +0.81 and with skewness at −0.78.
+- In the predator–prey model, FI correlates with variance at −0.74 and with AR1 at −0.68.
+- The FI–AR1 and FI–skewness relationships were inconsistent across the two models.
+- The near-perfect anti-correlation with variance is what the identity I = 1/σ² for Gaussian fluctuations predicts (EWS6). It is consistent with the linear-Gaussian fold, on the developers' own data.
+
+**Verdict on this item:** **not the study.** It is a qualitative single-run comparison, by the method's developers.
+
+### 8.3 Dakos & Soler-Toscano 2017: **search summary only** (unchanged)
+
+**What is known** (from search summaries and a citing work's reference list only): block-decomposition (BDM) Kolmogorov complexity "decreased before all ecological transitions" in simulated time series and spatial data, across several transition types.
+
+**Not known:**
+- whether it scores against AR1 or variance at all;
+- whether it uses null series, ROC or false-alarm rates;
+- which transition types are included, in particular whether any are noise- or rate-induced.
+
+**Which QR-006b regimes it could touch:**
+- the bifurcation-induced strata of the pre-registration (C0 and S3, possibly S1);
+- S4 and S5, if its "types of transition" include noise- or rate-induced tipping.
+
+It could not touch the α-stable (S2) or multivariate (SM) strata. Neither is in its reported scope, which is a search-summary-level statement.
+
+**Its measure (BDM complexity) is not in the pre-registered indicator set.** If the paper turns out to show BDM complexity beating AC1 and variance at matched false-alarm rates in some regime, that regime FOLDs (`found-under-other-vocabulary`), and adding BDM to the benchmark is an owner decision (a logged deviation).
+
+### 8.4 Mormann et al. 2005: **abstract** (re-read in full, Jülich JuSER record)
+
+**What is known.**
+- 30 univariate and bivariate, linear and non-linear measures, on continuous intracranial EEG from five patients over days.
+- ROC curves separate the amplitude distributions of preictal and interictal profiles, with an emphasis on statistical validation.
+- Univariate measures were significant only in a channelwise, seizurewise analysis with an adaptive baseline (changes 5–30 min before seizures).
+- Bivariate measures were significant with a constant baseline (changes at least 240 min before).
+- "Linear measures were found to perform similar or better than non-linear measures."
+
+**Not known:**
+- the measure list: whether any of the non-linear measures are information-theoretic, and whether variance and decorrelation time are the linear baselines;
+- the per-measure ROC values.
+
+A secondary search summary says decorrelation time separated the periods, and that correlation dimension, Lyapunov exponent and signal energy did not. That is a lead, not a reading.
+
+**Which QR-006b regimes it could touch.** It is one empirical system (epileptic EEG), not labelled by noise type or tipping mechanism, and it does not stratify. It therefore **cannot fold any simulated stratum**. It bears on the empirical stratum E only, and as a prior on the answer: the seizure field's negative result for univariate non-linear measures, at abstract level, is evidence for an eventual NO.
+
+### 8.5 Final verdict: **PROCEED with named gaps**
+
+| Item | Reading level | Contains the QR-006b study? |
+|---|---|---|
+| Eason et al. 2014 | full text | **No** (clean) |
+| Dakos & Soler-Toscano 2017 | search summary | **Unknown: gap.** Could touch C0/S1/S3, and S4/S5 if those types are included |
+| Mormann et al. 2005 | abstract | **Unknown in detail, but structurally cannot be the stratified study** (one empirical system, no regime labels). Gap for stratum E and for the prior only |
+
+- **Not PROCEED confirmed.** Two items are unobtainable, so "all three clean" is not established.
+- **Not FOLD.** The one item read in full is clean, and nothing read contains the study.
+- The QR-006b PROCEED (re-scoped, widened baselines) stands, **with two named gaps**:
+  1. **Dakos & Soler-Toscano 2017** (bifurcation, flickering and possibly N/R strata; BDM complexity not in the indicator set);
+  2. **Mormann et al. 2005** (empirical stratum and prior).
+
+  Both are carried into the pre-registration (`docs/experiments/QR006B_BENCHMARK_PREREGISTRATION.md` §10, gap 1).
+- **Re-open the verdict if either is read later.** If Dakos & Soler-Toscano 2017 contains a matched-false-alarm comparison against AR1 and variance, the overlapping strata are recorded as replications (`found-under-other-vocabulary`), not new answers.
+
+**Tag:** the verdict is a process record, not a scientific claim. Nothing is promoted.
