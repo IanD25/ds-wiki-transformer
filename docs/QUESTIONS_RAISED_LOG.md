@@ -87,7 +87,31 @@
 - **Starting literature (not yet verified this session):** Brown, Bossomaier & Barnett 2022 (*Sci. Rep.*; transfer entropy across Potts q = 5, 7, 10); the standard finite-size methods for telling first-order from continuous transitions — the energy cumulant (Challa, Landau & Binder 1986, *PRB* 34:1841) and the free-energy-barrier method (Lee & Kosterlitz 1990, *PRL* 65:137). These are the baselines any new discriminator has to beat. (Janke, Johnston & Kenna 2004, sometimes cited here, does not address transition order.)
 - **Triviality warning (carried over).** CCA's first-order jump may simply be the order-parameter jump seen through S(k = 0). The CCA-1c reduction test, still unrun, decides that; if it reduces, QR-007 folds.
 - **What would decide it.** The reduction test, then a comparison against standard order-discrimination methods on Potts q = 2, 5, 7, 10.
+- **Two settings, not one (2026-10-18 discussion).** CCA-1c was scored on an *equilibrium* temperature sweep, across the transition. For use as a warning (QR-008) the order must be read from data taken *before* the transition, which CCA has never been tested on. In a driven system the outcome also depends on noise against barrier height. At low noise, with hysteresis, the jump happens at the spinodal. The spinodal is a fold bifurcation, so critical slowing down does precede it (the lake experiments, EWS2). At high noise or large system size, the jump comes earlier through nucleation, with little or no slowing down. *Established* (standard nucleation and bifurcation theory).
 - **Status:** Raised, 2026-10-18. Not gated.
+
+## QR-008 · Classify, then measure: can a transition's type be identified first, and the best indicators for that type then used?
+
+- **Question.** Can a two-stage early-warning tool work? Stage 1 identifies the kind of transition approaching:
+  - bifurcation type (fold, Hopf, transcritical);
+  - mechanism (bifurcation-, noise- or rate-induced tipping);
+  - first-order or continuous.
+
+  Stage 2 then applies the indicators that QR-006b's benchmark finds best for that type. Does the pair beat a single classifier or a single indicator at matched false-alarm rates?
+- **Why the wiki raises it.** The owner's synthesis (2026-10-18). It joins QR-007 (can one measure classify the type?) to QR-006b (which indicator works for which type?), and descends from the earlier D_eff / CCA transition-classification work.
+- **Prior art already in the wiki (stage 1).** EWS9: Bury et al. 2021 (*PNAS*) train a classifier that warns of a transition and predicts its bifurcation type (fold, Hopf, transcritical or none) ahead of time. Successor work extends this to more bifurcation types (from memory, not checked). Fitting the drift and diffusion of a Langevin model also reconstructs the stability landscape, which amounts to classification. Stage 1 is therefore prior art for bifurcation type.
+- **Possibly open (provisional, no search run):** classifying the *mechanism* (B / N / R) and the *order* ahead of time; and using the predicted type to choose which indicators to trust.
+- **Problems it must survive:**
+  1. **Pre-transition data.** Stage 1 must work before the transition. CCA has only been scored across one (QR-007).
+  2. **Types that leave no trace.** Noise- and rate-induced tipping can give no warning (EWS3), and the classical signals also precede smooth, non-catastrophic transitions (Kéfi et al. 2013, from memory). A classifier cannot sort what leaves nothing in the data.
+  3. **Errors compound, and stage 1 may already be the warning.** A misclassified type picks the wrong indicators, and Bury's classifier warns and classifies in one step. The two-stage design earns its place only if stage-2 indicators add skill beyond the classifier's own output, which is testable.
+- **Scoring requirement 1: actionable lead time.** Score the warning time *minus the response time of the intended intervention*, not warning time alone. A few seconds is useless for policy and enough for an automated controller.
+- **Scoring requirement 2: prediction and detection kept apart.**
+  - *Prediction* means warning before the transition begins, from slowing down or other precursors. It is limited by record length in units of the system's recovery time, not by sampling rate: once the sampling interval is shorter than the recovery time, extra samples are largely redundant. *Established* (effective sample size ≈ record length / recovery time).
+  - *In-progress detection* means catching a transition already under way: a nucleating patch, or an escape trajectory leaving the basin. High sampling rate and spatial coverage help here. Lead time is short, about the duration of the escape, but can be enough for an automated response.
+  - Score and report the two separately. The seizure field draws this line explicitly: prediction (minutes to hours ahead) mostly failed, while onset detection (seconds) is in clinical use in responsive neurostimulation. Other fast-detection practice: deep-learning disruption predictors in fusion plasmas, tens to hundreds of milliseconds ahead (Kates-Harbeck et al. 2019, *Nature*); grid protection on phasor measurements; thermoacoustic onset control. *All from memory, not verified this session.*
+- **Depends on:** QR-006b's benchmark (stage 2 is its type-by-indicator table) and QR-007 (whether type can be read before the transition).
+- **Status:** Raised, 2026-10-18. Not gated; gate after QR-006b's benchmark exists.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -150,3 +174,4 @@
 - **2026-10-18** — QR-006b second, independent prior-art search (`prior_art_reviews/QR-006b_SECOND_SEARCH_2026_10_18.md`). The *Entropy* 28:628 review was read in full and is not prior art. Verdict: PROCEED still provisional, narrowed: not overturned; baseline re-scope recommended; Gaussian-copula sub-case folded; four unread items listed. Only QR-006b's status line changed.
 - **2026-10-18** — Harris et al. 2024 Supplemental Table S1 read (arXiv ancillary file; report §7). Not the QR-006b study. It supports the baseline re-scope: under unknown noise amplitude no information feature reaches the top 100, and distribution-shape features win. Open items now three.
 - **2026-10-18** — QR-006b baselines widened (owner-approved): an information indicator must now beat AC1 and variance, their rank-based versions, and the regime-appropriate distributional and model-based indicators. Original wording kept in the entry.
+- **2026-10-18** — QR-008 raised (classify, then measure; owner's synthesis), with two scoring requirements: actionable lead time, and prediction scored separately from in-progress detection. QR-007 gains a note separating the equilibrium setting from the driven one (spinodal vs nucleation).
