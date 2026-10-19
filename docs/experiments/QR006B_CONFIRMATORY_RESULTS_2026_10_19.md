@@ -73,6 +73,19 @@ On S5:
 - **Detection (§5.4)** is computed in `results.json` but not interpreted here. It uses the same causal residuals and inherits the same caveat.
 - **Fixed-direction note:** in SM the Fisher index (pre-registered ↓) and variance (↑) score below 0.5 (0.11 and 0.08). Under multiplicative noise the fluctuations shrink as abundances fall, so both move the "wrong" way. With learned directions they are still below the best baseline.
 
+### 4b. Window-0.5 sensitivity (§5.7), added 2026-10-19 afternoon
+
+Run `run_confirmatory --only S1,S2,S3,SM --variants window0.5`, commit `2b977f0`, 10:47–14:52, in the decidable test strata only. Scored with the report's own sensitivity call (`scripts/qr006b/score_window05_partial.py` → `data/reports/qr006b/window05_interim.json`). Reported, not decisive, uncorrected. Each window doubles: for example 353 → 707 points in S1(a) and 157 → 314 in S3(b).
+
+| Stratum | Best baseline, AUC (primary → w0.5) | Best information indicator, AUC (primary → w0.5) | Δ vs best baseline at w0.5 [95% CI] |
+|---|---|---|---|
+| S1 | AC1 0.901 → 0.902 | FI 0.803 → 0.736; MI 0.774 → 0.752 | MI −0.150 [−0.172, −0.127] |
+| S2 | MAD 0.890 → 0.893 | MI 0.865 → 0.825 | −0.068 [−0.089, −0.048] |
+| S3 | variance 0.845 → 0.852 | FI 0.842 → 0.800 | −0.052 [−0.073, −0.031] |
+| SM | AC1 0.975 → 0.981 | MI 0.967 → 0.957 | −0.024 [−0.031, −0.017] |
+
+**With doubled windows the information indicators do not improve.** Most fall slightly; the best baselines are unchanged or rise a little. Every information indicator's Δ CI lies below zero in all four strata. So the data-hunger threat (threat 2) does not explain the NO in the decidable regimes. This also tightens §4's full-segment remark, which on its own was weak because those baselines sit near the ceiling.
+
 ## 5. Predictions scored (from `QR006B_PREDICTIONS_2026_10_18.md`)
 
 | Prediction | Outcome |

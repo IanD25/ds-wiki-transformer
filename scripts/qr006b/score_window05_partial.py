@@ -1,4 +1,4 @@
-"""Interim score of the window-0.5 sensitivity (§5.7) for the 1D test strata S1-S3.
+"""Score of the window-0.5 sensitivity (§5.7) for the decidable test strata S1-S3 and SM.
 
 Uses report.py's own sensitivity call (A.prediction on the window0.5 variant), so the
 numbers are what the full report will print. Writes
@@ -15,7 +15,7 @@ import os
 from . import analysis as A
 from . import report as R
 
-STRATA = ("S1", "S2", "S3")
+STRATA = ("S1", "S2", "S3", "SM")
 
 
 def main():
@@ -24,8 +24,9 @@ def main():
     out = {}
     for st in STRATA:
         names = R.names_for(st)
-        w = A.prediction(rv, st, names, A.PRIMARY_INFO_1D, R.base_for(st))
-        p = A.prediction(res, st, names, A.PRIMARY_INFO_1D, R.base_for(st))
+        info = A.PRIMARY_INFO_M if st in ("CM", "SM") else A.PRIMARY_INFO_1D
+        w = A.prediction(rv, st, names, info, R.base_for(st))
+        p = A.prediction(res, st, names, info, R.base_for(st))
         out[st] = dict(
             best_baseline_w05=w["best_baseline"], best_baseline_primary=p["best_baseline"],
             rows={n: dict(auc_w05=r["auc"], delta_w05=r.get("delta"), delta_ci_w05=r.get("delta_ci"),
@@ -38,7 +39,7 @@ def main():
         bw = d["best_baseline_w05"]
         print(f"{st}: best baseline (w0.5) {bw} AUC {d['rows'][bw]['auc_w05']:.3f} "
               f"(primary best {d['best_baseline_primary']} {d['rows'][d['best_baseline_primary']]['auc_primary']:.3f})")
-        for n in A.PRIMARY_INFO_1D:
+        for n in (A.PRIMARY_INFO_M if st in ("CM", "SM") else A.PRIMARY_INFO_1D):
             r = d["rows"][n]
             ci = r["delta_ci_w05"]
             print(f"   {n:10s} AUC w0.5 {r['auc_w05']:.3f} (primary {r['auc_primary']:.3f})  "

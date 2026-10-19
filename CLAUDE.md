@@ -105,7 +105,7 @@ Claude's standing instructions when working on this platform:
 - **Early-warning signals (QR-006 / QR-006b)** — answered 2026-10-19 by a pre-registered benchmark ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md)):
   - **NO in all decidable regimes (Supported).** No information indicator (lagged MI, transfer entropy, permutation and sample entropy, Fisher index, RPDE) beat the best non-information indicator by ΔAUC ≥ 0.05 in multiplicative noise, α-stable noise, flickering, or the multivariate network. The near-ties are near-copies: the Fisher index tracks variance, and MI tracks autocorrelation.
   - **Two strata gave no decision.** S4 (noise-induced tipping) is undetectable by any indicator. S5 (rate-induced) is inconclusive, with every indicator near chance.
-  - **Window-0.5 sensitivity:** the information indicators did not improve with doubled windows in S1–S3 (most fell), so the NO is not a data-length effect there. SM is still pending.
+  - **Window-0.5 sensitivity (done 2026-10-19):** with doubled windows the information indicators did not improve in S1, S2, S3 or SM (most fell), so the NO is not a data-length effect.
   - **Lead-time scores are unreliable in ramped strata** (causal-detrending artefact, found in the post-hoc audit). One Speculative lead remains: the Fisher index's online detection under flickering.
   - **For QR-008 (exploratory, not pre-registered):** the best *classical* indicator varies by regime. AC1 wins under multiplicative noise, MAD under α-stable noise, variance under flickering.
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
@@ -139,7 +139,7 @@ Claude's standing instructions when working on this platform:
     - the RGG d + 1 is unexplained (prior-art gate first if anyone claims it);
     - ~~P5's anchor 100 holds the wrong DOI~~: fixed 2026-10-19 (`gsw-p5-anchor-doi-2026-10-19`; now 10.1063/1.4923066, Crossref-checked).
 14. QR-006b leftovers ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md) §7):
-    - window-0.5 sensitivity: S1–S3 scored (interim, `data/reports/qr006b/window05_interim.json`); SM still computing;
+    - ~~window-0.5 sensitivity~~: done 2026-10-19 for S1–S3 and SM (results report §4b); no improvement;
     - the other §5.7 sensitivities (detrending, buffer 50, observation noise, Null-B) and stratum E (empirical) not run;
     - the S3 Fisher-index lead-time lead is Speculative and parked;
     - QR-008 is the natural follow-on and has not been gated.
