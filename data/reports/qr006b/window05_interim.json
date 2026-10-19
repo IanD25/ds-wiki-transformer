@@ -1,0 +1,527 @@
+{
+  "S1": {
+    "best_baseline_w05": "B1_ac1",
+    "best_baseline_primary": "B1_ac1",
+    "rows": {
+      "I1_mi": {
+        "auc_w05": 0.752421875,
+        "delta_w05": -0.14988437500000007,
+        "delta_ci_w05": [
+          -0.1723540625,
+          -0.12705933593749996
+        ],
+        "auc_primary": 0.7741453125,
+        "delta_primary": -0.12687187499999997
+      },
+      "I3_pe": {
+        "auc_w05": 0.695753125,
+        "delta_w05": -0.20655312500000012,
+        "delta_ci_w05": [
+          -0.23286949218749997,
+          -0.18111628906249996
+        ],
+        "auc_primary": 0.687428125,
+        "delta_primary": -0.21358906249999998
+      },
+      "I4_sampen": {
+        "auc_w05": 0.6432687500000001,
+        "delta_w05": -0.25903750000000003,
+        "delta_ci_w05": [
+          -0.2873019921875,
+          -0.23186050781249992
+        ],
+        "auc_primary": 0.6423593750000001,
+        "delta_primary": -0.25865781249999986
+      },
+      "I5_fi": {
+        "auc_w05": 0.735521875,
+        "delta_w05": -0.1667843750000001,
+        "delta_ci_w05": [
+          -0.19159246093749996,
+          -0.14128855468750007
+        ],
+        "auc_primary": 0.802784375,
+        "delta_primary": -0.09823281249999993
+      },
+      "I6_rpde": {
+        "auc_w05": 0.5168843750000001,
+        "delta_w05": -0.385421875,
+        "delta_ci_w05": [
+          -0.4167354296875,
+          -0.35364941406249994
+        ],
+        "auc_primary": 0.59009375,
+        "delta_primary": -0.31092343749999996
+      },
+      "B1_ac1": {
+        "auc_w05": 0.9023062500000001,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.9010171874999999,
+        "delta_primary": null
+      },
+      "B2_rank_ac1": {
+        "auc_w05": 0.8929296875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.8914718749999999,
+        "delta_primary": null
+      },
+      "B3_var": {
+        "auc_w05": 0.8375375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.83946875,
+        "delta_primary": null
+      },
+      "B4_mad": {
+        "auc_w05": 0.7770625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.7768203124999999,
+        "delta_primary": null
+      },
+      "B5_skew": {
+        "auc_w05": 0.49877031250000003,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5005968749999999,
+        "delta_primary": null
+      },
+      "B6_kurt": {
+        "auc_w05": 0.5005875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.49760625,
+        "delta_primary": null
+      },
+      "B7_bc": {
+        "auc_w05": 0.5043828125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5052171875,
+        "delta_primary": null
+      },
+      "B8_crad": {
+        "auc_w05": 0.5780296875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5899625,
+        "delta_primary": null
+      },
+      "B9_stable_gamma": {
+        "auc_w05": 0.767771875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.769896875,
+        "delta_primary": null
+      },
+      "B10_restoring": {
+        "auc_w05": 0.7859828124999999,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.794171875,
+        "delta_primary": null
+      },
+      "B11_diffusion": {
+        "auc_w05": 0.5633640625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.55985625,
+        "delta_primary": null
+      },
+      "B12_jump": {
+        "auc_w05": 0.5410296875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5497875,
+        "delta_primary": null
+      },
+      "x_pe3": {
+        "auc_w05": 0.6510812500000001,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.65205,
+        "delta_primary": null
+      },
+      "x_pe5": {
+        "auc_w05": 0.69254375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6891968749999999,
+        "delta_primary": null
+      },
+      "x_rpde_m3": {
+        "auc_w05": 0.596390625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5998875,
+        "delta_primary": null
+      },
+      "x_rad": {
+        "auc_w05": 0.49690781250000005,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5013062500000001,
+        "delta_primary": null
+      },
+      "x_fi_raw": {
+        "auc_w05": 0.9690468750000001,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.972146875,
+        "delta_primary": null
+      }
+    }
+  },
+  "S2": {
+    "best_baseline_w05": "B4_mad",
+    "best_baseline_primary": "B4_mad",
+    "rows": {
+      "I1_mi": {
+        "auc_w05": 0.8250640625,
+        "delta_w05": -0.06782031249999998,
+        "delta_ci_w05": [
+          -0.088580078125,
+          -0.04785730468749999
+        ],
+        "auc_primary": 0.864659375,
+        "delta_primary": -0.024906249999999908
+      },
+      "I3_pe": {
+        "auc_w05": 0.6764421875,
+        "delta_w05": -0.2164421875,
+        "delta_ci_w05": [
+          -0.24308347656249996,
+          -0.18963492187500008
+        ],
+        "auc_primary": 0.6790921875,
+        "delta_primary": -0.21047343749999992
+      },
+      "I4_sampen": {
+        "auc_w05": 0.552746875,
+        "delta_w05": -0.3401375,
+        "delta_ci_w05": [
+          -0.37144675781250003,
+          -0.30865578125
+        ],
+        "auc_primary": 0.58768125,
+        "delta_primary": -0.30188437499999987
+      },
+      "I5_fi": {
+        "auc_w05": 0.7212796875,
+        "delta_w05": -0.1716046874999999,
+        "delta_ci_w05": [
+          -0.1976033593750001,
+          -0.14578414062499997
+        ],
+        "auc_primary": 0.790934375,
+        "delta_primary": -0.09863124999999995
+      },
+      "I6_rpde": {
+        "auc_w05": 0.495628125,
+        "delta_w05": -0.39725625,
+        "delta_ci_w05": [
+          -0.42920183593749994,
+          -0.3647153515625
+        ],
+        "auc_primary": 0.506290625,
+        "delta_primary": -0.3832749999999999
+      },
+      "B1_ac1": {
+        "auc_w05": 0.8236890625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.8321125,
+        "delta_primary": null
+      },
+      "B2_rank_ac1": {
+        "auc_w05": 0.8569765625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.852165625,
+        "delta_primary": null
+      },
+      "B3_var": {
+        "auc_w05": 0.694290625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6741937499999999,
+        "delta_primary": null
+      },
+      "B4_mad": {
+        "auc_w05": 0.892884375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.8895656249999999,
+        "delta_primary": null
+      },
+      "B5_skew": {
+        "auc_w05": 0.4679359375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.4810296875,
+        "delta_primary": null
+      },
+      "B6_kurt": {
+        "auc_w05": 0.6735718749999999,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.59735625,
+        "delta_primary": null
+      },
+      "B7_bc": {
+        "auc_w05": 0.4990203125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5239812500000001,
+        "delta_primary": null
+      },
+      "B8_crad": {
+        "auc_w05": 0.689421875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.63265,
+        "delta_primary": null
+      },
+      "B9_stable_gamma": {
+        "auc_w05": 0.8885390625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.8832093750000001,
+        "delta_primary": null
+      },
+      "B10_restoring": {
+        "auc_w05": 0.697453125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6909203125000001,
+        "delta_primary": null
+      },
+      "B11_diffusion": {
+        "auc_w05": 0.5615203125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.583946875,
+        "delta_primary": null
+      },
+      "B12_jump": {
+        "auc_w05": 0.49312812500000003,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.4941171875,
+        "delta_primary": null
+      },
+      "x_pe3": {
+        "auc_w05": 0.648696875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.652225,
+        "delta_primary": null
+      },
+      "x_pe5": {
+        "auc_w05": 0.698846875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.700653125,
+        "delta_primary": null
+      },
+      "x_rpde_m3": {
+        "auc_w05": 0.533696875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.549934375,
+        "delta_primary": null
+      },
+      "x_rad": {
+        "auc_w05": 0.48835312499999994,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.48921875000000004,
+        "delta_primary": null
+      },
+      "x_fi_raw": {
+        "auc_w05": 0.6822656250000001,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.812675,
+        "delta_primary": null
+      }
+    }
+  },
+  "S3": {
+    "best_baseline_w05": "B3_var",
+    "best_baseline_primary": "B3_var",
+    "rows": {
+      "I1_mi": {
+        "auc_w05": 0.74619375,
+        "delta_w05": -0.10589375000000001,
+        "delta_ci_w05": [
+          -0.12902968750000005,
+          -0.0821339453125001
+        ],
+        "auc_primary": 0.761146875,
+        "delta_primary": -0.08388125000000002
+      },
+      "I3_pe": {
+        "auc_w05": 0.630821875,
+        "delta_w05": -0.22126562500000002,
+        "delta_ci_w05": [
+          -0.2511251171875,
+          -0.19155914062499999
+        ],
+        "auc_primary": 0.639965625,
+        "delta_primary": -0.20506250000000004
+      },
+      "I4_sampen": {
+        "auc_w05": 0.6706890624999999,
+        "delta_w05": -0.18139843750000006,
+        "delta_ci_w05": [
+          -0.20804378906249998,
+          -0.155075859375
+        ],
+        "auc_primary": 0.6774875,
+        "delta_primary": -0.167540625
+      },
+      "I5_fi": {
+        "auc_w05": 0.800084375,
+        "delta_w05": -0.05200312500000004,
+        "delta_ci_w05": [
+          -0.07272148437499999,
+          -0.03100539062499992
+        ],
+        "auc_primary": 0.842025,
+        "delta_primary": -0.0030031249999999954
+      },
+      "I6_rpde": {
+        "auc_w05": 0.5260890625000001,
+        "delta_w05": -0.3259984374999999,
+        "delta_ci_w05": [
+          -0.3595223828125,
+          -0.2925290234375
+        ],
+        "auc_primary": 0.6030656249999999,
+        "delta_primary": -0.24196250000000008
+      },
+      "B1_ac1": {
+        "auc_w05": 0.7780343750000001,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.7885187499999999,
+        "delta_primary": null
+      },
+      "B2_rank_ac1": {
+        "auc_w05": 0.7853703125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.7812703125,
+        "delta_primary": null
+      },
+      "B3_var": {
+        "auc_w05": 0.8520875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.845028125,
+        "delta_primary": null
+      },
+      "B4_mad": {
+        "auc_w05": 0.795209375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.79411875,
+        "delta_primary": null
+      },
+      "B5_skew": {
+        "auc_w05": 0.5543906249999999,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5459156249999999,
+        "delta_primary": null
+      },
+      "B6_kurt": {
+        "auc_w05": 0.5122328125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5419875000000001,
+        "delta_primary": null
+      },
+      "B7_bc": {
+        "auc_w05": 0.54289375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5790437500000001,
+        "delta_primary": null
+      },
+      "B8_crad": {
+        "auc_w05": 0.5073234375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.53539375,
+        "delta_primary": null
+      },
+      "B9_stable_gamma": {
+        "auc_w05": 0.7736156249999999,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.7858703125,
+        "delta_primary": null
+      },
+      "B10_restoring": {
+        "auc_w05": 0.69673125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.708653125,
+        "delta_primary": null
+      },
+      "B11_diffusion": {
+        "auc_w05": 0.6103046875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6303156249999999,
+        "delta_primary": null
+      },
+      "B12_jump": {
+        "auc_w05": 0.5244796875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.525890625,
+        "delta_primary": null
+      },
+      "x_pe3": {
+        "auc_w05": 0.6133578125,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.613253125,
+        "delta_primary": null
+      },
+      "x_pe5": {
+        "auc_w05": 0.6345375,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6333718749999999,
+        "delta_primary": null
+      },
+      "x_rpde_m3": {
+        "auc_w05": 0.654671875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.6526765625,
+        "delta_primary": null
+      },
+      "x_rad": {
+        "auc_w05": 0.54831875,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.5489296875,
+        "delta_primary": null
+      },
+      "x_fi_raw": {
+        "auc_w05": 0.7679265625,
+        "delta_w05": null,
+        "delta_ci_w05": null,
+        "auc_primary": 0.8339593750000001,
+        "delta_primary": null
+      }
+    }
+  }
+}
