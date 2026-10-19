@@ -95,8 +95,8 @@ Claude's standing instructions when working on this platform:
     - **As worded, ill-posed** (`emergent-read-as-classical`); re-scoped to QR-005b, *does gravity entangle?*
     - **The thermodynamic half is answered** and folded (`premise-false`).
     - **"Thermodynamic ⇒ irreversible, noisy gravity" restates Galley, Giacomini & Selby 2023** (*Quantum* 7:1142).
-    - **QR-005b is open in the literature; Gate 2 DROP in-house** (`undecidable-with-obtainable-data`); park recommended.
-    - **Plávala 2026** (*PRD* 113:085004) argues that an indirect single-mass test is possible now, under stated assumptions. So "7.5–10 orders" applies to the direct experiment only.
+    - **QR-005b is open in the literature; Gate 2 DROP in-house** (`undecidable-with-obtainable-data`). **Parked 2026-10-19 (owner)**; resume conditions are in the log.
+    - **Plávala 2026** (*PRD* 113:085004) argues that an indirect single-mass test is possible now, under stated assumptions. So "7.5–10 orders" applies to the direct experiment only. GT12 now records this route (note and anchor, `gsw-qr005-gates-2026-10-19`).
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
 **Open items:**
@@ -115,7 +115,7 @@ Claude's standing instructions when working on this platform:
 11. The `dimensional_sensitivity` facet in many entries (QM2, Q3, T6, T9 …) rests on the DS-internal posit that Ω_D acts on k_B and ℏ, not on any reference law. A DFIG-level review, not a quick fix.
 12. QR-005 leftovers ([corrections report](docs/prior_art_reviews/QR005_CORRECTIONS_2026_10_19.md) §5):
     - map §G R7–R14 not folded in (owner deferred);
-    - gates run 2026-10-19; owner to decide whether to park QR-005b, and whether to add a Plávala banner and anchor to GT12;
+    - gates run 2026-10-19; QR-005b parked; the GT12 Plávala note was added;
     - link 869 (GT10 → HB09, "Einstein equation as fixed point of the GSL") is unsourced;
     - BR01's `mathematical_archetype` (conservation-law) does not fit.
 13. DFIG / QR-001 leftovers ([reduction report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md) §3.4; [QR-001 map](docs/prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md)):
@@ -142,7 +142,7 @@ Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 201
 - **587 tests** — all pass (2026-10-19, run after the QR-005 commit `34edbef`)
 
 **Provenance (2026-10-19):**
-- **1,040 external anchors over 317 entities**, plus **47 internal constructions**
+- **1,041 external anchors over 317 entities**, plus **47 internal constructions**
 - Every non-glossary entry has an anchor or an internal-construction flag (the last orphan, GT05, was anchored 2026-10-18). The 21 glossary disambiguation pages have neither, by design.
 - History: 42% provenance on 2026-04-18; full non-glossary coverage from commit `89a989d` (2026-04-20).
 
@@ -403,5 +403,5 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 7. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion. Anchor confidence: high / medium / low.
 8. **Run both question gates before any new Q/P/Postulate or Questions Raised Log entry** — see `docs/QUESTION_GATES.md`. Gate 1, prior art (`memory/feedback_prior_art_gate.md`): mandatory deep literature review; "yes and" scaffolding is explicitly harmful. Gate 2, worth asking (`memory/feedback_worth_asking_gate.md`): if no prior work is found, find out why — trivial, absent for a reason, obvious or erroneous, avoided by experts — before PROCEED / RE-SCOPE / FOLD / DROP. Open questions are logged in `docs/QUESTIONS_RAISED_LOG.md`.
 9. **Preserve falsifications.** Never delete wrong claims — label as falsified per `memory/feedback_preserve_falsifications.md`. Use specific labels per `memory/feedback_diagnostic_labels.md`.
-10. **Provenance is complete for non-glossary entries** (1,040 anchors over 317 entities + 47 internal constructions, 2026-10-19). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
+10. **Provenance is complete for non-glossary entries** (1,041 anchors over 317 entities + 47 internal constructions, 2026-10-19). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
 11. **Report numbers from `claim_status_latest` / `process_status_latest`**, not raw calibration rows. If a correction collides with an existing (entity, date, audit_ref) row, use a `-<topic>` sub-ref (precedent: `gsw-consistency-pass-2026-10-18-h5-gate`).

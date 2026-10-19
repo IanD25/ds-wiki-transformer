@@ -219,7 +219,15 @@
   Map §G proposed 14 reference entries (R1–R14); R1–R6 are folded in.
 - **Starting literature:** Bose et al. 2017 (*PRL* 119:240401); Marletto & Vedral 2017 (*PRL* 119:240402); Carney, Karydas, Scharnhorst, Singh & Taylor 2025 (*PRX* 15:031038, **verified 2026-10-18**: free-energy models, with S_FF(0) force noise and decoherence signatures; the non-local λ = 0 model is already excluded).
 - **What would decide it.** A gravitational-entanglement witness, or the absence of predicted excess decoherence and force noise, at the relevant mass and separation scales.
-- **Status:** **Gated** 2026-10-19 ([gate report](prior_art_reviews/QR-005_GATES_2026_10_19.md)).
+- **Status:** **Gated** 2026-10-19, then **Parked 2026-10-19** (owner) ([gate report](prior_art_reviews/QR-005_GATES_2026_10_19.md)).
+  - **Why parked:** QR-005b is a real open question, but every route to an answer needs new experiments by specialist groups, and the project has no in-house lever on it.
+  - **Resume when any of:**
+    - a published gravity-mediated entanglement result;
+    - a below-threshold gravitational noise measurement;
+    - Plávala's indirect single-mass test (*PRD* 113:085004) being done, and its inference accepted or rebutted in print;
+    - publication or rebuttal of Fabiano et al. 2026;
+    - a peer-reviewed resolution of Aziz & Howl 2025.
+  - **Possible Mode A follow-up, if wanted:** check which classical models in the wiki (GT13–GT16) break both of Plávala's assumptions. Run the prior-art gate first.
   - **As worded the question is ill-posed.** "Quantum vs thermodynamic" is a false choice, and the wording itself shows the `emergent-read-as-classical` pattern. Re-scoped to **QR-005b**: *does gravity entangle two masses, or, equivalently within stated model classes, is it quieter than the noise any non-entangling gravity must add?*
   - **Gate 1:**
     - the thermodynamic half (S1) is `answered`: no lab difference without a microscopic model (Carney, Stamp & Taylor 2019). FOLD, tag `premise-false`;
@@ -237,15 +245,9 @@
 - **Next.** Corrections (§F) and the R1–R6 fold-in are done, both owner-approved 2026-10-19.
   - **S5 is resolved.** The map's "31 orders" came from arXiv v1 of Oppenheim et al.; the published windows, with Janse 2024's upper bounds, leave ~9 and ~11 orders (GT14).
   - **Gates run 2026-10-19** (see Status).
-  - **Remaining owner decisions:**
-    1. Whether to **park** QR-005b as a watch item (recommended). Resume on any of:
-       - a published gravity-mediated entanglement result;
-       - a below-threshold gravitational noise measurement;
-       - Plávala's indirect single-mass test (*PRD* 113:085004) being done and its inference accepted or rebutted in print;
-       - publication or rebuttal of Fabiano et al. 2026;
-       - a peer-reviewed resolution of Aziz & Howl 2025.
-    2. Whether to fold in R7–R14. R14 (emergent-gravity compatibility) would complete S1's fold.
-    3. Whether to add a Plávala banner and anchor to GT12 (a DB write; gate report §5).
+  - **Parked 2026-10-19** (owner); the resume conditions are under Status.
+  - **GT12 now records Plávala's indirect route:** an added note and anchor (`gsw-qr005-gates-2026-10-19`).
+  - **Open owner choice:** whether to fold in R7–R14. R14 (emergent-gravity compatibility) would complete S1's fold.
 
   Nothing is runnable in-house.
 
@@ -287,3 +289,4 @@
 - **2026-10-19** — QR-001 un-parked (owner) and literature-mapped (partial): map `prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md`. Headline: why few parameters suffice is settled for smooth least-squares models and RG coarse-graining, open for general probabilistic models (Quinn 2023 §8.2); the wiki's DFIG claims sit outside this literature (DFIG reduction test, same day). Only QR-001's status line changed. No gates run; no DB writes.
 - **2026-10-19** — QR-005: map §F corrections applied (`gsw-qr005-corrections-2026-10-19`; tag `emergent-read-as-classical`) and R1–R6 folded in as GT12–GT17 (`gsw-qr005-fold-in-2026-10-19`), both owner-approved; S5 resolved. Status unchanged. Only QR-005's holdings, gaps and next lines changed.
 - **2026-10-19** — QR-005 gated (`prior_art_reviews/QR-005_GATES_2026_10_19.md`). As worded, ill-posed: re-scoped to QR-005b ("does gravity entangle?"). Thermodynamic half `answered` and folded (`premise-false`); the "thermodynamic ⇒ irreversible, noisy" angle is a restatement of Galley, Giacomini & Selby 2023. QR-005b is `open-in-literature`, Gate 2 DROP in-house (`undecidable-with-obtainable-data`); park recommended. Map and primer misquoted Plávala 2026 (dated notes added). Only QR-005's status and next lines changed.
+- **2026-10-19** — QR-005 (QR-005b) parked by the owner, with resume conditions. GT12 gains a note and anchor for Plávala 2026's indirect route (`gsw-qr005-gates-2026-10-19`). Only QR-005's status and next lines changed.
