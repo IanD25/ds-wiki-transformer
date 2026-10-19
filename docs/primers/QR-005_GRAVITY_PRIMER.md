@@ -118,6 +118,8 @@ There is a cheaper idea. Any gravity that *cannot* entangle must add a minimum a
 
 **No published roadmap gives a date.** The 2025 review in *Reviews of Modern Physics* and a 55-author 2025 white paper set out paths but not years. One 2026 paper puts even optimistic projections "outside of the short-term future".
 
+> **Note 2026-10-19.** The 2026 paper quoted here (Plávala, *PRD* 113:085004) mainly argues something more hopeful: existing atom and molecule interferometers could prove *indirectly* that gravity entangles, by checking the Schrödinger equation for a single mass in two places near another mass, given one of two stated assumptions. That indirect route has not been carried out, and its assumptions can be disputed, but it means "multi-decade" applies to the *direct* experiment only. See `prior_art_reviews/QR-005_GATES_2026_10_19.md` §5. *The text above is unchanged.*
+
 My own reading of the gaps (an inference, not a sourced estimate) is that the direct entanglement test is a multi-decade project. Collapse and classical-gravity bounds will keep tightening year by year in the meantime. Treat any "within ten years" headline with caution unless it cites a design that closes all three gaps.
 
 ### Even success would not settle everything

@@ -143,6 +143,8 @@ Carney et al. call the λ = 0 noise level "nearly observable" (MS, fetch). On th
 5. **What black-hole entropy counts.** Either quantum-gravitational microstates (string theory, loop quantum gravity) or entanglement of quantum matter with G itself induced (Jacobson 1994; Sakharov). No observation discriminates between them. Wald 2001 and Carlip 2014 list the nature of the microstates and the "universality" of A/4 as open.
 6. **Timeline.** No published date. The only sourced phrase is Plávala (*PRD* 2026): optimistic projections place the experiment "outside of the short-term future" (search summary). A late-2025 preprint finds current ground-based designs short by a factor of 4–5 and points to space (search summary).
 
+   > **Note 2026-10-19 (QR-005 gates, [`QR-005_GATES_2026_10_19.md`](QR-005_GATES_2026_10_19.md) §5).** This quotes only Plávala's background sentence. His paper (full text read 2026-10-19; DOI 10.1103/87dc-qt73) argues that today's matter-wave interferometers could establish gravity-mediated entanglement *indirectly*. The argument is: verify the Schrödinger equation for a single delocalised mass interacting with an external mass, then infer entanglement under one of two assumptions (a ~20 g mass delocalisable with exchange-symmetric dynamics; or an interaction depending only on m₁m₂). He calls theory, not experiment, the main bottleneck. *The text above is unchanged.*
+
 ---
 
 ## (E) What the wiki holds, and its gaps
