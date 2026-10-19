@@ -1,10 +1,23 @@
 """Every QR-006b parameter in one place (pre-registration §2-§7 plus Amendments).
 
-FROZEN must be False until the freeze commit; run_confirmatory.py refuses to
-run otherwise.
+run_confirmatory.py refuses to run unless FROZEN is True and the code and
+protocol are committed.
 """
 
-FROZEN = False
+FROZEN = True     # freeze commit, 2026-10-18 (pre-registration §13)
+
+# Values set by the pilot (§7), by their stated rules; see §13 and
+# data/reports/qr006b_pilot/pilot_settings.json
+PILOT_VALUES = {
+    "S3_sigma_a": 0.06,
+    "S3_sigma_b": 0.35,
+    "S4_sigma_a": 0.03988249760664515,
+    "S4_sigma_b": 0.21661863433423317,
+    "S5_rc_a": 2.005835039594678,
+    "S5_rc_b": 0.3779846535916829,
+    "S5_sigma_a": 0.05,
+    "S5_sigma_b": 0.05,
+}
 
 # ---- seeds (§2.5) ----------------------------------------------------------
 SEED_CONFIRMATORY = 20261018
@@ -73,7 +86,6 @@ TE_PAIRS_20D = 20
 FAR = 0.05
 FAR_SENS = 0.10
 ALARM_RUN = 5
-ONLINE_MIN_SPAN_WINDOWS = None   # set in indicator pipeline: Amendment A4
 DETECT_WINDOW = 50
 DETECT_OFFSETS = (0, 5, 10, 20)
 T_RESP_MULTIPLES = (0, 1, 5, 20)

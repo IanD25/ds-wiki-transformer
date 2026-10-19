@@ -1,6 +1,7 @@
 # QR-006b Benchmark — Pre-registration
 
 **Mode:** B (design only). **Nothing has been simulated, downloaded or computed for this benchmark.** Every choice below is fixed before any data is touched.
+**Status (2026-10-18): FROZEN after the pilot.** Amendments made while building the pipeline are in §12; the values the pilot set, the filled §10 inputs and the revised compute estimate are in §13. The confirmatory run has not started; the owner starts it. *(The line above describes the protocol as first written.)*
 **Date:** 2026-10-18
 **Question:** QR-006b, `docs/QUESTIONS_RAISED_LOG.md` (widened-baseline wording, owner-approved 2026-10-18).
 **Gate status:** **PROCEED with named gaps**: `docs/prior_art_reviews/QR-006b_SECOND_SEARCH_2026_10_18.md` §8. Eason 2014 was read in full and is clean. Dakos & Soler-Toscano 2017 and Mormann et al. 2005 could not be obtained; both are carried into §10, gap 1.
@@ -315,7 +316,7 @@ The controls are computed and opened **first**. The test strata's confirmation r
 3. **Leakage check:** S4 prediction AUCs lie in 0.5 ± 0.1 for all indicators.
 4. **Runtime** per series within 2× of the §8 estimate; otherwise §8 is re-estimated in the freeze commit.
 
-**Values the pilot sets.** Only these, each by its stated rule:
+**Values the pilot sets.** Only these, each by its stated rule (values as set: §13):
 - **S3 σ:** the smallest grid value at which ≥ 50% of transition runs flicker before t_crit. Flickering means at least one excursion past t_tip's threshold and back, lasting ≥ 5 sampled points.
 - **S4 σ:** the grid value (geometric grid, 8 points) whose median first-passage time is closest to the record length.
 - **S5 r_c:** from deterministic runs, by bisection to 1% relative precision.
@@ -379,7 +380,7 @@ The confirmatory scripts log the commit hash, package versions and seeds into th
 
 ## 10. Known gaps and threats to validity
 
-**Gaps:**
+**Gaps** (status after the pilot: §13):
 1. **Reading gaps from the gate** (second-search report §8; verdict **PROCEED with named gaps**). Eason et al. 2014 was read in full and is clean. Two items could not be obtained:
    - **Dakos & Soler-Toscano 2017** (search summary only) could already hold a complexity-vs-CSD comparison for the bifurcation strata (C0, S1, S3), and for S4/S5 if its transition types include noise- or rate-induced tipping. Its measure, BDM Kolmogorov complexity, is not in §4.1. Adding it would be an owner decision, logged as a deviation.
    - **Mormann et al. 2005** (abstract only) is one empirical system with no regime labels. It cannot pre-empt a simulated stratum, but its negative result for univariate non-linear measures is a prior in favour of NO.
@@ -434,3 +435,42 @@ The confirmatory scripts log the commit hash, package versions and seeds into th
 - **A16 · Stratum E deferred (§2.1, gap 5).** E is not built in the pilot. Bury's `test_empirical` scripts were *code read* (AR(1) nulls fitted to the first 20% of residuals for anoxia and paleoclimate; real fixed-voltage segments for thermoacoustic). E is descriptive and outside the decision rules; it is built after the freeze with the frozen preprocessing and indicators, and any E-specific choice is logged in §11 before E's results are opened.
 - **A17 · Wrapper-fidelity check (§7 item 1).** Bury's unmodified `sim_*`, `sim_*_null` and `compute_ktau.py` scripts are run in a scratch directory (seaborn and sklearn, imported but unused, are stubbed because they are not installed). Our code recomputes the Lowess residuals, rolling variance and AC1, and Kendall τ on their own series in "Bury mode" (stride 1, τ from the second defined value, as `compute_ktau.py`), and must match to 10⁻⁶. The benchmark's primary scoring keeps stride 5 (§3.4).
 - **A18 · Pooling within C0's family (a) (§5.1, §6.1).** C0(a) holds Bury's three models. Its family AUC is the mean of the three per-model AUCs (each a Mann–Whitney over that model's own transition and null series), and the bootstrap resamples within each model. Comparing one model's transitions with another model's nulls would mix model differences into the score. The pooled C0 AUC is then ½(AUC_a + AUC_b), as for every stratum.
+
+### 12.2 Amendments made after the pilot ran (2026-10-18)
+
+These were made after the pilot had run. Each was prompted by a pipeline diagnostic (NaN counts, a crash, the structure of the confirmatory code), **not** by any information-versus-baseline comparison; the pilot computed none outside the controls and the S4 leakage check. None can be informed by confirmatory data, which do not exist yet.
+
+- **A19 · Learned directions per stratum (§4).** In the confirmatory analysis a learned direction is set **once per stratum**, from the calibration split pooled over its model families, and applied to both families. A per-family sign would let each family pick its own direction and weaken the replication rule (§6.1, item 3). (The pilot's control checks used per-family directions; they are discarded.)
+- **A20 · Undefined indicator values (§5.1, §5.4).** (i) Sample entropy with no (m+1)-matches now returns +∞, EntropyHub's own output (−log 0); the earlier NaN was an implementation deviation from the pre-registered package, now fixed and tested. (ii) In every AUC, a pair in which either value is undefined (NaN) counts as a tie (½), so undefined values are uninformative rather than silently dropped from one class. Prompted by the pilot's detection windows (50 points): sample entropy was undefined in up to 58 of 100 series per family and RPDE with m = 3 widely; the offline prediction τ had no undefined values in any stratum.
+- **A21 · Null-B for the Layritz fold (§2.4, §5.7).** Null-B was not defined for a ramp that ends at the fold: k now ramps from 5 to 2.5 (halfway to the fold at k = 0) over the ramp. A Null-B run that escapes or diverges is counted and excluded (Null-B is a sensitivity analysis only). Found by an end-to-end smoke test on throwaway seeds.
+- **A22 · Analysis families (§6.3).** The chance family in `report.py` is every primary indicator (I and B, plus the multivariate additions) × every stratum; the declared secondaries (`x_*`: PE orders 3 and 5, RPDE m = 3, uncentred RAD, raw-data Fisher index) are exploratory and outside it. The primary family is exactly the 31 tests of §6.3.
+
+## 13. Freeze: values set by the pilot, filled inputs, revised compute (2026-10-18)
+
+The pilot ran on 2026-10-18 (code at commit `e42b6c5`; report `docs/experiments/QR006B_PILOT_REPORT_2026_10_18.md`). It passed §7's criteria (item 3 after the A15 extension). Its results are discarded.
+
+**Values the pilot set (§7), each by its stated rule** (also in `scripts/qr006b/config.py`, `PILOT_VALUES`):
+
+| Item | Value | How |
+|---|---|---|
+| S3 σ, May (a) | **0.06** | smallest grid value with ≥ 50% of transition runs flickering before t_crit (0.02–0.05: 0–10%; 0.06: 54%; 50 runs each) |
+| S3 σ, cubic (b) | **0.35** | as above (0.15–0.30: 0–8%; 0.35: 50%) |
+| S4 σ, May at b = 0.24 (a) | **0.03988** | grid value whose median first-passage time (2,433) is closest, in log ratio, to the record length (1,500); neighbour 0.04403 gave 901 (A9 grid, Kramers centre 0.0419) |
+| S4 σ, cubic at c = 0.1 (b) | **0.21662** | as above: median 3,160; neighbour 0.23917 gave 686 (Kramers centre 0.2276) |
+| S5 r_c, model (a) | **2.0058** | deterministic bisection to 1%; Ritchie & Sieber 2016 give r_c = 2 in this parametrisation (A11) |
+| S5 r_c, model (b) | **0.37798** | deterministic bisection to 1% |
+| S5 σ, both models | **0.05** (unchanged) | 0 of 100 null runs tipped at 0.05, so no halving was needed |
+| Lever δ_c | 4D **0.36568**, 20D **1.49446** | deterministic collapse point (A12) |
+| Fisher index | discrete formula of A5 | transcribed (Ahmad 2016 eq. 2.4 and the developers' code) |
+
+**§10 open inputs, as filled.**
+- Gap 1 (Dakos & Soler-Toscano 2017; Mormann 2005): unchanged, still unread.
+- Gap 2 (Fisher index discrete estimator): filled, A5.
+- Gap 3 (R-tipping forms): model (a) now has a primary source, Ritchie & Sieber 2016 (*full text*); model (b) remains an own construction. A11.
+- Gap 4 (Lever parameters): filled from Weinans 2021 Methods and SI, with the ramp extension and unreported details listed in A12.
+- Gap 5 (Bury's empirical nulls): *code read*; summarised in A16. Stratum E is still deferred.
+
+**Revised compute (§8; pilot criterion 4).** Measured on the M4 with 9 workers. Per-series times were 0.3–3.7 s for univariate models, 8 s for Lever 4D and 24 s for Lever 20D, all within §8's assumption (≈ 7 s univariate, ≈ 40 s multivariate). Extrapolated to 600 + 600 per family:
+- primary analysis + C0g (everything the decision rules use): **≈ 32 CPU-hours, ≈ 3.5 hours wall-clock**; half of it is Lever 20D;
+- the §5.7 sensitivity analyses add ≈ 130 CPU-hours (window 0.5 ≈ 2× primary; Gaussian and no detrending ≈ 0.5× each, offline only; buffer 50 ≈ 1×; observation noise on C0 and S2; Null-B on ramped families);
+- **total ≈ 160 CPU-hours, ≈ 18 hours wall-clock.** The §8 figure (90–100) covered less than the full sensitivity set. `run_confirmatory.py --variants primary,C0g` runs the decisive part alone; the sensitivities can follow.
