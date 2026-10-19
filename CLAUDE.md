@@ -158,15 +158,15 @@ Claude's standing instructions when working on this platform:
 Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 2015, Quinn et al. 2022, Janke-Johnston-Kenna 2004, Prokopenko-Lizier 2011 (prior-art reading list in M0).
 
 **Wiki scale (2026-10-19):**
-- **360 entries** = 319 content entries + **41 glossary entries** (21 disambiguation pages, 20 defined terms).
-  - The 319 content entries: 254 reference_law, 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism.
-  - The reference_law count includes recent fold-ins: on 2026-10-18, 12 prior-art entries, 10 early-warning-signal entries (EWS1–EWS10) and 13 QR-004 thermodynamic-limits entries (NE07–NE10, BIO17–BIO25); on 2026-10-19, 6 QR-005 gravity-test entries (GT12–GT17).
-- **987 links**, **1,290 property rows**, **2,302 ChromaDB chunks**
+- **363 entries** = 322 content entries + **41 glossary entries** (21 disambiguation pages, 20 defined terms).
+  - The 322 content entries: 257 reference_law, 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism.
+  - The reference_law count includes recent fold-ins: on 2026-10-18, 12 prior-art entries, 10 early-warning-signal entries (EWS1–EWS10) and 13 QR-004 thermodynamic-limits entries (NE07–NE10, BIO17–BIO25); on 2026-10-19, 6 QR-005 gravity-test entries (GT12–GT17) and 3 QR-010 machine-learning entries (ML1, ML2, ML5; the wiki's first ML generalisation entries).
+- **994 links**, **1,302 property rows**, **2,320 ChromaDB chunks**
 - **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
 - **587 tests** — all pass (2026-10-19, run after the QR-005 commit `34edbef`)
 
 **Provenance (2026-10-19):**
-- **1,041 external anchors over 317 entities**, plus **47 internal constructions**
+- **1,070 external anchors over 320 entities**, plus **47 internal constructions**
 - Every non-glossary entry has an anchor or an internal-construction flag (the last orphan, GT05, was anchored 2026-10-18). The 21 glossary disambiguation pages have neither, by design.
 - History: 42% provenance on 2026-04-18; full non-glossary coverage from commit `89a989d` (2026-04-20).
 
@@ -431,5 +431,5 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 7. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion. Anchor confidence: high / medium / low.
 8. **Run both question gates before any new Q/P/Postulate or Questions Raised Log entry** — see `docs/QUESTION_GATES.md`. Gate 1, prior art (`memory/feedback_prior_art_gate.md`): mandatory deep literature review; "yes and" scaffolding is explicitly harmful. Gate 2, worth asking (`memory/feedback_worth_asking_gate.md`): if no prior work is found, find out why — trivial, absent for a reason, obvious or erroneous, avoided by experts — before PROCEED / RE-SCOPE / FOLD / DROP. Open questions are logged in `docs/QUESTIONS_RAISED_LOG.md`.
 9. **Preserve falsifications.** Never delete wrong claims — label as falsified per `memory/feedback_preserve_falsifications.md`. Use specific labels per `memory/feedback_diagnostic_labels.md`.
-10. **Provenance is complete for non-glossary entries** (1,041 anchors over 317 entities + 47 internal constructions, 2026-10-19). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
+10. **Provenance is complete for non-glossary entries** (1,070 anchors over 320 entities + 47 internal constructions, 2026-10-19). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
 11. **Report numbers from `claim_status_latest` / `process_status_latest`**, not raw calibration rows. If a correction collides with an existing (entity, date, audit_ref) row, use a `-<topic>` sub-ref (precedent: `gsw-consistency-pass-2026-10-18-h5-gate`).
