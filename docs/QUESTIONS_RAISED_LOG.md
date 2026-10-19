@@ -171,6 +171,21 @@
   - whether to fold in R1, R3, R4 and R9 first;
   - gates: the main form is likely `answered`, giving FOLD (`found-under-other-vocabulary`); S1's few-events corner only after the S8 search.
 
+## QR-010 · Why does modern machine learning escape the complexity tax, and where doesn't it?
+
+- **Question.** QR-009 finds that extra model freedom is usually taxed by estimation and selection noise. Yet the largest machine-learning models generalise well. What lets them escape the tax: scale of data, pooling across tasks, implicit regularisation, inductive biases, double descent and benign overfitting? Where do they still pay it: benchmark overfitting and contamination, distribution shift, scarce-event domains such as finance, and contested "emergent abilities"? And how is the field developing these themes (scaling laws, the "bitter lesson")?
+- **Why the wiki raises it.** It is the counterpoint half of QR-009 (map §D, "When complexity wins"), and the owner's choice for the episode after the complexity-tax episode in Season 3 of the podcast.
+- **Starting leads (from memory, unverified):**
+  - Sutton 2019, "The Bitter Lesson" (an essay);
+  - Belkin et al. 2019 (double descent, checked in the QR-009 map) and the benign-overfitting literature;
+  - scaling laws (Kaplan et al. 2020; Hoffmann et al. 2022, "Chinchilla");
+  - Zhang et al. 2017 (deep nets fit random labels);
+  - benchmark contamination and overfitting studies;
+  - the emergent-abilities debate (Wei et al. 2022 vs Schaeffer et al. 2023);
+  - Kelly, Malamud & Zhou 2024 vs Nagel 2025 (finance, checked in the QR-009 map).
+- **Cautions.** The field moves fast and is hype-prone: use current sources, honest reading markers and tripwire discipline. Keep any link to QR-001 (sloppy models) or effective dimension specific; QR-009's drift note applies.
+- **Status:** Raised 2026-10-19 (owner). Deep-dive literature map and primer launched the same day.
+
 ## QR-001 · Why is nature describable with so few parameters?
 
 - **Question.** Is there a measurable, domain-general signature of when a complex system — biological, ecological, economic — admits a low-dimensional effective description, and when it does not?
@@ -345,3 +360,4 @@
 - **2026-10-19** — QR-009 raised (owner): the complexity tax. A first-pass prior-art list was recorded; a deep-dive map and primer were launched.
 - **2026-10-19** — QR-006b window-0.5 sensitivity completed (S1–S3, SM): no improvement; data-hunger threat not supported.
 - **2026-10-19** — QR-009 literature-mapped (partial): map `prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md`, primer `primers/QR-009_COMPLEXITY_TAX_PRIMER.md`. Headline: the tax is documented across fields under other names. It comes from seven mechanisms; three share mathematics (estimation variance, selection, lag against noise). The proposed simulation is mostly answered already. P19 and P20 are flagged for owner review. Only QR-009's lines changed. No gates run; no DB writes.
+- **2026-10-19** — QR-010 raised (owner): why machine learning escapes the complexity tax, and where it doesn't. A deep-dive map and primer were launched.
