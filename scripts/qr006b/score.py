@@ -8,15 +8,21 @@ from . import config as C
 
 
 def auc(pos, neg):
-    """Mann-Whitney P(pos > neg) + 0.5 P(tie); NaNs dropped."""
+    """Mann-Whitney P(pos > neg) + 0.5 P(tie). Amendment A20: a pair in which
+    either value is undefined (NaN) counts as a tie, so undefined values are
+    uninformative instead of being dropped from one class only."""
     pos = np.asarray(pos, float)
     neg = np.asarray(neg, float)
-    pos = pos[~np.isnan(pos)]
-    neg = neg[~np.isnan(neg)]
-    if len(pos) == 0 or len(neg) == 0:
+    n_all = len(pos) * len(neg)
+    if n_all == 0:
         return np.nan
-    r = rankdata(np.concatenate([pos, neg]))
-    return (r[: len(pos)].sum() - len(pos) * (len(pos) + 1) / 2) / (len(pos) * len(neg))
+    p = pos[~np.isnan(pos)]
+    q = neg[~np.isnan(neg)]
+    if len(p) == 0 or len(q) == 0:
+        return 0.5
+    r = rankdata(np.concatenate([p, q]))
+    u = r[: len(p)].sum() - len(p) * (len(p) + 1) / 2
+    return (u + 0.5 * (n_all - len(p) * len(q))) / n_all
 
 
 def learned_direction(tr_cal, nu_cal):

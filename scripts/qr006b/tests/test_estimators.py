@@ -223,3 +223,12 @@ def test_kendall_and_expanding_tau_match_scipy():
     for k in (10, 57, 199):
         assert et[k] == pytest.approx(kendalltau(np.arange(k + 1), y[: k + 1])[0], abs=1e-12)
     assert np.isnan(et[:10]).all()
+
+
+def test_sample_entropy_undefined_cases_match_entropyhub():
+    """No (m+1)-matches: EntropyHub returns inf; keep its convention."""
+    EH = pytest.importorskip("EntropyHub")
+    w = np.array([0.0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7.0])
+    ref = EH.SampEn(w, m=2, r=0.01)[0][2]
+    got = I.sample_entropy(w, 2, 0.01 / w.std())
+    assert (np.isinf(ref) and np.isinf(got)) or (np.isnan(ref) and np.isnan(got)) or got == pytest.approx(ref)

@@ -181,8 +181,10 @@ def sample_entropy(w, m, rfrac):
                 b += 1
             if length >= m + 1:
                 a += 1
-    if a == 0 or b == 0:
-        return np.nan
+    if b == 0:
+        return np.nan          # EntropyHub: -log(0/0) = nan
+    if a == 0:
+        return np.inf          # EntropyHub: -log(0/B) = inf
     return -math.log(a / b)
 
 

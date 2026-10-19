@@ -194,16 +194,18 @@ def tau_rec0(model):
     if model in ("cr_hopf", "cr_trans"):
         P = C.CR_HOPF if model == "cr_hopf" else C.CR_TRANS
         r, k, h, e, m, a = P["r"], P["k"], P["h"], P["e"], P["m"], P["a_lo"]
-        # interior equilibrium
-        x = m / (a * (e - h * m))
-        y = r * (1 - x / k) * (1 + a * h * x) / a
-        eps = 1e-7
+
         def F(v):
             X, Y = v
             return np.array([r * X * (1 - X / k) - a * X * Y / (1 + a * h * X),
                              e * a * X * Y / (1 + a * h * X) - m * Y])
-        J = np.column_stack([(F([x + eps, y]) - F([x - eps, y])) / (2 * eps),
-                             (F([x, y + eps]) - F([x, y - eps])) / (2 * eps)])
+        # the stable state at a_lo, by deterministic integration from Bury's x0, y0
+        v = np.array([P["x0"], P["y0"]])
+        for _ in range(200_000):
+            v = v + 0.01 * F(v)
+        eps = 1e-7
+        J = np.column_stack([(F(v + [eps, 0]) - F(v - [eps, 0])) / (2 * eps),
+                             (F(v + [0, eps]) - F(v - [0, eps])) / (2 * eps)])
         return -1.0 / np.linalg.eigvals(J).real.max()
     raise ValueError(model)
 
@@ -355,6 +357,10 @@ def simulate_layritz(rng, cls, alpha, extra_steps=10_000):
         k = np.concatenate([P["k_hi"] - P["k_step"] * np.arange(nramp),
                             np.zeros(extra_steps)])
         k[k < 0] = 0.0
+    elif cls == "nullB":
+        # Null-B: k ramps from k_hi to halfway to the fold (k = 0) over the ramp
+        k = np.concatenate([np.linspace(P["k_hi"], 0.5 * P["k_hi"], nramp),
+                            np.full(extra_steps, 0.5 * P["k_hi"])])
     else:
         # same record length as a transition run (ramp + post-ramp extension)
         k = np.full(nramp + extra_steps, P["k_hi"])

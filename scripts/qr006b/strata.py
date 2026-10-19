@@ -22,8 +22,9 @@ FAMILIES = {
 LEVELS = {"a_layritz": C.S2_ALPHAS, "b_may_stable": C.S2_ALPHAS}
 MULTIVARIATE = {"a_lever4", "b_lever20", "a_lever4_mul", "b_lever20_mul"}
 
-# Values the pilot sets (§7); filled in by run_pilot.py and frozen in config
-PILOT_SET = {}
+# Values the pilot sets (§7): frozen in config.PILOT_VALUES at the freeze
+# commit; run_pilot.py passes its own values explicitly
+PILOT_SET = dict(getattr(C, "PILOT_VALUES", {}))
 
 
 def seed_for(root, stratum, family, cls, run):
@@ -190,3 +191,56 @@ def generate_pairs(stratum, family, n_pairs, root, max_runs_factor=20, ps=None):
         p["split"] = "calibration" if p["pair"] % C.CALIBRATION_EVERY == 0 else "confirmation"
     counts["pairs"] = len(pairs)
     return pairs, counts
+
+
+def tau_rec0_samples(family, ps=None):
+    """Linear recovery time at the starting parameter, in sampled points (§5.2)."""
+    ps = PILOT_SET if ps is None else ps
+    if family in ("a_may", "a_may_mul", "b_may_stable", "a_may_high"):
+        return M.tau_rec0("may") / C.SAMPLE_EVERY
+    if family in ("b_cubic", "b_cubic_mul", "b_cubic_high"):
+        return M.tau_rec0("cubic") / C.SAMPLE_EVERY
+    if family == "a_hopf":
+        return M.tau_rec0("cr_hopf") / C.SAMPLE_EVERY
+    if family == "a_trans":
+        return M.tau_rec0("cr_trans") / C.SAMPLE_EVERY
+    if family == "a_layritz":
+        P = C.LAYRITZ
+        return (1.0 / (2.0 * math.sqrt(P["k_hi"]))) / (P["sample_every"] * P["dt"])
+    if family == "a_may_fixed":
+        b = C.S4_PARAM["a"]
+        return -1.0 / M.may_jac(M.may_roots(b).max(), b) / C.SAMPLE_EVERY
+    if family == "b_cubic_fixed":
+        x = M.cubic_roots(C.S4_PARAM["b"]).min()
+        return -1.0 / (1 - 3 * x * x) / C.SAMPLE_EVERY
+    if family in ("a_rtip_sn", "b_rtip_dw"):
+        rc = ps["S5_rc_a" if family == "a_rtip_sn" else "S5_rc_b"]
+        _T, ds, _dt = M.rtip_window(rc)
+        return 0.5 / ds                     # both models: f'(stable state) = -2
+    if family in MULTIVARIATE:
+        dim = 4 if "lever4" in family else 20
+        p = M.lever_params(dim)
+        x = M.lever_equilibrium(dim, 0.0)
+        nP = len(p["rP"])
+        eps = 1e-6
+
+        def F(v):
+            fP, fA = M._lever_drift(v[:nP], v[nP:], p["rP"], p["rA0"], p["gP"], p["gA"],
+                                    p["cP"], p["cA"], p["h"])
+            return np.concatenate([fP, fA])
+        J = np.column_stack([(F(x + eps * e_) - F(x - eps * e_)) / (2 * eps)
+                             for e_ in np.eye(len(x))])
+        return -1.0 / np.linalg.eigvals(J).real.max() / C.SAMPLE_EVERY
+    raise ValueError(family)
+
+
+def family_groups(stratum):
+    """Model families (a) and (b); C0's (a) holds Bury's three models (A18)."""
+    fams = FAMILIES["C0" if stratum == "C0g" else stratum]
+    return {"a": [f for f in fams if f.startswith("a_")],
+            "b": [f for f in fams if f.startswith("b_")]}
+
+
+ABRUPT = {"a_may", "b_cubic", "a_lever4", "b_lever20", "a_may_mul", "b_cubic_mul",
+          "a_layritz", "b_may_stable", "a_may_high", "b_cubic_high", "a_may_fixed",
+          "b_cubic_fixed", "a_rtip_sn", "b_rtip_dw", "a_lever4_mul", "b_lever20_mul"}
