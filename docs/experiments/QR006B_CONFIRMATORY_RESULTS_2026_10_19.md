@@ -2,6 +2,7 @@
 
 **Date:** 2026-10-19. **Mode:** B. **Protocol:** [`QR006B_BENCHMARK_PREREGISTRATION.md`](QR006B_BENCHMARK_PREREGISTRATION.md), frozen at tag `qr006b-prereg-frozen`, with deviations D1–D2 (§11), made before any confirmatory data existed. **Predictions recorded beforehand:** [`QR006B_PREDICTIONS_2026_10_18.md`](QR006B_PREDICTIONS_2026_10_18.md) (commit `9a8ca84`). **Post-hoc audit:** [`QR006B_LEADTIME_AUDIT_2026_10_19.md`](QR006B_LEADTIME_AUDIT_2026_10_19.md).
 **Numbers:** `data/reports/qr006b/controls.json` (commit `d061776`, opened first) and `results.json` (commit `89d40e0`).
+**Owner decisions (2026-10-19):** the answer is labelled **"NO in all decidable regimes"**, and S5 is accepted as **inconclusive** (not extended). See protocol §11 D3.
 **Not yet run:** the §5.7 sensitivity analyses (window 0.5, detrending, buffer 50, observation noise, Null-B) and stratum E. **Nothing promoted; no DB writes.**
 
 ---
@@ -101,7 +102,7 @@ On S5:
 ## 7. Pending
 
 1. §5.7 sensitivity analyses: `run_confirmatory --variants window0.5,detrend_gaussian,detrend_none,buffer50,obsnoise,nullB`, ≈ 19 h. Their lead-time parts inherit the causal-detrending artefact. The window-0.5 run matters most: it is the test of the data-hunger threat.
-2. S5: accept as inconclusive, or extend to ≈ 1,100 + 1,100 scored series per family (owner).
+2. ~~S5: accept or extend~~ — **accepted as inconclusive** (owner, 2026-10-19).
 3. The S3 Fisher-index lead-time lead: Speculative. Parked unless the owner wants a prior-art check and a pre-registered follow-up on fresh seeds.
-4. §6.5 gap: the owner decides how the "NO + UNDETECTABLE + one INCONCLUSIVE" outcome is labelled. Recommended: "NO in all decidable regimes (S5 inconclusive)".
+4. ~~§6.5 gap~~ — labelled **"NO in all decidable regimes"** (owner, 2026-10-19; protocol §11 D3).
 5. QR-008 stage 2 receives the type-by-indicator table: for every regime tested, the best warning indicator is a non-information one.

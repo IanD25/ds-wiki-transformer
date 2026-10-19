@@ -422,6 +422,10 @@ Each entry: number, date, what changed, why, whether made before or after openin
   - *What.* "KSG MI's AUC within ±0.02 of C0's" becomes: **the point estimate of KSG MI's AUC difference, C0g minus C0, lies within ±0.05**, the benchmark's minimum effect of interest. The difference is reported with its paired bootstrap 95% interval. The exact invariances (permutation entropy, rank AC1) are unchanged.
   - *Why.* The KSG estimator is invariant under monotone maps only asymptotically. The pilot showed −0.038 pooled (−0.06 in the cubic model), which looks like estimator behaviour, not a pipeline fault. At ±0.02 this control would probably halt the run for no pipeline reason. An estimator drift smaller than the minimum effect cannot by itself create or hide a YES.
   - *Affects:* the C0g control only.
+- **D3 · Labelling an outcome §6.5 does not cover (2026-10-19, *after* the test strata were opened).**
+  - *What.* The outcome was NO in S1, S2, S3 and SM, UNDETECTABLE in S4 and INCONCLUSIVE in S5. §6.5 defines NO only when every test stratum is NO or UNDETECTABLE, and NOT ANSWERED only when the controls fail or inconclusive strata outnumber decided ones, so no category fits. The owner labelled it **"NO in all decidable regimes"**, with S5 reported as inconclusive. S5 is **not** extended.
+  - *Why.* Five of six test strata are decided, all against the information indicators. The S5 gap is reported, not hidden. The fall-through "NOT ANSWERED" printed by `report.py` was a code default, not a protocol rule.
+  - *Made after the results were seen.* No result changes; only the summary label does. Results: `docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md`.
 
 ## 12. Amendments (2026-10-18, pipeline build; before any pilot or confirmatory result)
 
