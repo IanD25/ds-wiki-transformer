@@ -227,7 +227,30 @@ Were the features *harmful*, or just *worthless and adopted by luck*?
 - If the ablation ran on the same history the features were tuned on, features that fail even there suggest their adoption gains were noise (the optimiser's curse) or that they interfered with each other.
 - Bailey et al. show that, when returns mean-revert, optimised variants can be *worse* out of sample than unoptimised ones, so harm is possible.
 
-From the facts available, the selection tax and the structural tax cannot be separated.
+From the review summary alone, the selection tax and the structural tax cannot be separated. The project records below separate them partly.
+
+### What the project records add
+*Source: AlphaEntropy project records (owner's private repo), via main session 2026-10-19. These are a main-session check of project files, not a publication, and this session did not read them.*
+
+- **The deflated Sharpe ratio test (Bailey & López de Prado's correction for the number of strategies tried).**
+  - In the V28.8c validation battery (2026-05-04), the script and report gave DSR = 0.0, "observed SR plausibly random given # tested", with N = 9.
+  - The JSON value was later hand-edited to 0.948, and that figure entered the project history as "borderline-strong".
+  - A 2026-10-18 audit found the test mis-specified: computed on a local simulation rather than the QuantConnect backtest, and with N = 9 when about 66 Sharpe values were on file.
+  - Recomputed on the real curves, DSR ≈ 1.00 for N up to 200. So "Sharpe above zero" **survives** a proper multiple-testing correction.
+  - The stronger claim, beating a passive alternative with Sharpe 0.55, holds only at about 84% confidence.
+- **The factor-zoo novelty claim.**
+  - An archived note said the "profitability durability" composite matched none of the 319+ documented factors, citing Harvey, Liu & Zhu.
+  - The traded signal uses only about 3 months of fundamentals, so it is mostly the *level* of profitability: a known factor.
+  - The audit's regression on standard factor sets (Fama–French five-factor, momentum, quality-minus-junk, betting-against-beta) left an alpha of about 4.5%/yr (t ≈ 4.3), with a structure close to profitability + size + momentum.
+  - So the "new factor" claim was a framing error (Zakamulin's point: check what known bet you are making before calling it new). The residual alpha is an in-sample backtest statistic: it says nothing about the future, and none of this is investment advice.
+- **What this does to the reading.**
+  - The core system (quality sleeve, trend sleeve, near-static hedge) survives a correction for everything tried. Its record is not just a lucky pick from many variants.
+  - The **added complexity** does not survive: its increments were smaller than repeat-run noise, and the ablation preferred it switched off.
+  - **The tax fell on the increments, not on the whole system.** That is exactly what the literature predicts. A strategy built from known, durable effects can be real, while the fine-tuning layered on top is mostly selection noise (M2), turning-point misses (M5) and estimation variance (M1).
+- **The process lesson.**
+  - A failed test was recorded as a pass, and an audit caught it later. The files do not show who made the edit, and the point is not blame.
+  - It is the strongest argument in this case for three practices: pre-register a test before running it; write results to a log that cannot be edited afterwards; re-run key validations against the production record, not a local stand-in.
+  - The wiki's own QR-006b benchmark used pre-registration and commit-ordered results for the same reason.
 
 ### What would make it measurable
 These are the standard tools, not new ones:
@@ -237,7 +260,7 @@ These are the standard tools, not new ones:
 - keep a sealed holdout that no decision has touched;
 - count evidence in drawdowns, not days.
 
-**Calibrated summary.** AlphaEntropy looks like a textbook case, but mostly of the *selection* tax plus the *turning-point* tax on few events, rather than a newly measured "complexity tax". **Supported** as a reading of the summary; not tested.
+**Calibrated summary.** AlphaEntropy looks like a textbook case: a core built from known effects survives a correction for multiple testing, while the dynamic additions on top carry the tax. The tax on those additions is mostly the *selection* tax plus the *turning-point* tax on few events, rather than a newly measured "complexity tax". **Supported** as a reading of the review summary and the project-record facts above; not independently tested.
 
 ---
 

@@ -53,6 +53,7 @@
   - P20's error formula conflicts with the textbook identity for averaging equally good signals.
 
   Both are flagged for owner review (§G.3); nothing was changed.
+- **The AlphaEntropy case** (project records, §G.4). The core strategy survives a correctly specified deflated Sharpe test. The dynamic additions do not survive their own tests. The tax fell on the increments, not on the whole system.
 
 **Calibrated summary.**
 
@@ -302,6 +303,25 @@ QR-009 sits on an almost empty patch of the map. Per the log's rules, that means
    - P20 is labelled an empirical fit to 19 variants with ρ "estimated qualitatively". The map suggests a reading against the combination literature (§I, S7). This is a Mode A check, not a research question.
 3. **P18 and X8 rest on few independent episodes** (four D_eff troughs; a handful of crises). Per §E, the effective sample is the event count. Nothing is proposed beyond noting it.
 
+### G.4 The AlphaEntropy case: facts from the project records (added 2026-10-19)
+*Source: AlphaEntropy project records (owner's private repo), via main session 2026-10-19. Reading marker: main-session check of project files; not a publication; not read by this session.*
+
+1. **The deflated Sharpe ratio test** (Bailey & López de Prado 2014; §B3).
+   - V28.8c validation battery, 2026-05-04: DSR = 0.0 ("plausibly random given # tested", N = 9).
+   - The JSON value was later hand-edited to 0.948 and recorded as "borderline-strong".
+   - A 2026-10-18 audit found the test mis-specified: run on a local simulation rather than the QuantConnect backtest, with N = 9 when about 66 Sharpe values were on file.
+   - Recomputed on the real curves: DSR ≈ 1.00 for N up to 200, so "Sharpe > 0" survives multiple testing. "Beats a 0.55-Sharpe passive alternative" holds only at about 84%.
+2. **The factor-zoo novelty claim** (Harvey, Liu & Zhu 2016; Zakamulin 2017).
+   - An archived note claimed the "profitability durability" composite matched none of "319+ documented" factors.
+   - The traded signal uses only about 3 months of fundamentals, so it is mostly profitability level.
+   - Regressed on FF5 + momentum + QMJ + BAB: alpha ≈ 4.5%/yr (t ≈ 4.3, an in-sample backtest statistic). The structure is close to RMW + size + momentum.
+   - The novelty claim was a framing error, tag `found-under-other-vocabulary`.
+3. **Reading.**
+   - The core system (quality sleeve, trend sleeve, near-static hedge) survives a proper correction for the number of tries.
+   - The added dynamic layers do not: their increments were below repeat-run noise, and the ablation preferred them off.
+   - **The tax fell on the increments, not on the whole system.** This matches mechanisms M1, M2 and M5. It is consistent with §E, and it is the pattern the literature predicts for durable known effects plus tuning on few events. **Supported** as a reading of project records; not independently checked here.
+4. **Process lesson** (neutral: the files do not show who made the edit). A failed test was recorded as a pass and caught later by audit. That supports pre-registration, results logs that cannot be edited afterwards, and re-running validations on the production record. QR-006b's commit-ordered, pre-registered design is the wiki's own precedent.
+
 ---
 
 ## (H) Candidate fold-in reference entries (owner decides; nothing written)
@@ -517,6 +537,11 @@ Nothing below is upgraded.
 | Kitano 2004, *Nat. Rev. Genet.* 5:826; Kitano 2007, *Mol. Syst. Biol.* 3:137 | meta | cit (2004) |
 | Dekel & Alon 2005, *Nature* 436:588 | abs | cit |
 | Kussell & Leibler 2005, *Science* 309:2075 (exact sensing-vs-switching inequality unverified) | abs | cit, abs |
+
+### Case study
+| Source | Sub-agent | MS |
+|---|---|---|
+| AlphaEntropy project records (owner's private repo): V28.8c DSR battery 2026-05-04; 2026-10-18 audit; archived factor note (§G.4) | — | not read by this session; facts relayed by the main session, which checked the project files (not a publication) |
 
 ### Phrase provenance
 | Source | Sub-agent | MS |
