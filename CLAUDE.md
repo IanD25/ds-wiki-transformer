@@ -132,13 +132,13 @@ Claude's standing instructions when working on this platform:
 13. DFIG / QR-001 leftovers ([reduction report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md) §3.4; [QR-001 map](docs/prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md)):
     - QR-001 literature-mapped (partial), not gated; likely FOLD for the wiki's version, open in the literature for general probabilistic models (Quinn 2023 §8.2);
     - the RGG d + 1 is unexplained (prior-art gate first if anyone claims it);
-    - P5's anchor 100 holds the wrong DOI (10.1063/1.4918623 is unrelated; correct 10.1063/1.4923066).
+    - ~~P5's anchor 100 holds the wrong DOI~~: fixed 2026-10-19 (`gsw-p5-anchor-doi-2026-10-19`; now 10.1063/1.4923066, Crossref-checked).
 14. QR-006b leftovers ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md) §7):
     - window-0.5 sensitivity: S1–S3 scored (interim, `data/reports/qr006b/window05_interim.json`); SM still computing;
     - the other §5.7 sensitivities (detrending, buffer 50, observation noise, Null-B) and stratum E (empirical) not run;
     - the S3 Fisher-index lead-time lead is Speculative and parked;
     - QR-008 is the natural follow-on and has not been gated.
-15. QR-002 and QR-003 were parked "until QR-006b and QR-004 are finished". That condition is now met, and they stay parked pending an owner decision.
+15. QR-002 and QR-003 were parked "until QR-006b and QR-004 are finished". That condition is now met; the owner kept both parked (2026-10-19).
 
 **Standing M0 findings (2026-04-08; P17/P23 wording since corrected).**
 

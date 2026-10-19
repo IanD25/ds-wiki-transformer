@@ -139,7 +139,7 @@
 - **Shared work.** QR-002's literature mapping is also STAT3's prior-art gate: one reading, starting with Muñoz 2018 (which, from memory, reviews the proposed self-tuning mechanisms), settles both.
 - **Starting literature:** Mora & Bialek 2011 (*J. Stat. Phys.*); Muñoz 2018 (*Rev. Mod. Phys.* 90:031001).
 - **What would decide it.** Criticality tests that survive known artefacts (subsampling, thresholding, latent common drivers); evidence of a tuning mechanism.
-- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. *That condition was met 2026-10-19; it stays parked pending an owner decision.* Reason: a large, contested field with almost no wiki coverage; its main payoff here would be settling STAT3, which is already Speculative and a classification rather than a testable claim. If wanted later, one review (Muñoz 2018) settles STAT3's novelty claim.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. *That condition was met 2026-10-19; the owner kept it parked (2026-10-19).* Reason: a large, contested field with almost no wiki coverage; its main payoff here would be settling STAT3, which is already Speculative and a classification rather than a testable claim. If wanted later, one review (Muñoz 2018) settles STAT3's novelty claim.
 
 ## QR-003 · What sets biological and urban scaling exponents, and why is there no universal one?
 
@@ -148,7 +148,7 @@
 - **Wiki holdings.** C1, C2, H5, X1, and soon WBE 1997, the allometric-cascade debate, metabolic-level boundaries, DEB and Bettencourt 2013 as reference entries (fold-in in progress). Coverage will be good.
 - **Starting literature:** West, Brown & Enquist 1997; Bettencourt 2013 (verified 2026-10-18: δ = H/[D(D+H)] ≈ 1/6); Glazier 2010; Kooijman (DEB); Kolokotrones 2010 and its replication record (in C1).
 - **What would decide it.** Each theory's prediction for a system it was not built for (WBE for a planar network, Bettencourt for a 3-D one), checked against data.
-- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. *That condition was met 2026-10-19; it stays parked pending an owner decision.* Reason: the wiki's own scaling claims have mostly folded or been falsified; the open cross-theory test is a large project. P14a stays runnable separately.
+- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. *That condition was met 2026-10-19; the owner kept it parked (2026-10-19).* Reason: the wiki's own scaling claims have mostly folded or been falsified; the open cross-theory test is a large project. P14a stays runnable separately.
 
 ## QR-004 · How close do living systems run to the thermodynamic limits of information processing?
 
@@ -291,3 +291,4 @@
 - **2026-10-19** — QR-005 gated (`prior_art_reviews/QR-005_GATES_2026_10_19.md`). As worded, ill-posed: re-scoped to QR-005b ("does gravity entangle?"). Thermodynamic half `answered` and folded (`premise-false`); the "thermodynamic ⇒ irreversible, noisy" angle is a restatement of Galley, Giacomini & Selby 2023. QR-005b is `open-in-literature`, Gate 2 DROP in-house (`undecidable-with-obtainable-data`); park recommended. Map and primer misquoted Plávala 2026 (dated notes added). Only QR-005's status and next lines changed.
 - **2026-10-19** — QR-005 (QR-005b) parked by the owner, with resume conditions. GT12 gains a note and anchor for Plávala 2026's indirect route (`gsw-qr005-gates-2026-10-19`). Only QR-005's status and next lines changed.
 - **2026-10-19** — Housekeeping (main session): QR-006b status set to answered; QR-008 status notes the benchmark's type-by-indicator table; QR-002 and QR-003 marked as having met their park condition, still parked.
+- **2026-10-19** — Owner decision: QR-002 and QR-003 stay parked.
