@@ -65,7 +65,11 @@ Claude's standing instructions when working on this platform:
 **What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 25 Speculative · 4 Supported · 7 Established · 7 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). These are the counts after the DFIG reduction (commit `927c975`): P6 and P7 → Falsified, P5 → Speculative. Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (107 rows / 21 audit refs as of 2026-10-19 — several rows per entity, and process items mixed in).
 
 **State by thread:**
-- **D_eff / Fisher-rank (DFIG)** — **Updated 2026-10-19** by the DFIG reduction (`gsw-dfig-reduction-2026-10-19`, commit `927c975`; [report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md)): P6 and P7 **Falsified**, P5 **Supported → Speculative**, M6 corrected (label unchanged). The rest of this bullet predates that pass. P5 Supported only as an application of Machta et al. 2013 sloppy models (and at a continuous transition it reduces to standard exponents); P6 contradicted by own tests; P7 partially falsified (the participation ratio fails monotonicity in every tested configuration); P8 **Falsified** by Gefen–Mandelbrot–Aharony 1980 — critical behaviour on fractals depends on topology as well as dimension (now reference entry STAT4); JJK 2004 does not address transition order. Ax2, OmD and T1 remain internal constructions.
+- **D_eff / Fisher-rank (DFIG)** — reduction-tested 2026-10-19 (`gsw-dfig-reduction-2026-10-19`, commit `927c975`; [report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md)). M6's Phase 1 validation (owner repo `D_eff-Test-1.0`) used the uncentred gap-position Fisher rank, the same object as CCA-2.
+  - **Tori and coarse-graining reduce:** every recorded rank and PR is an exact closed form in (σ, L, d), fixed by lattice symmetry. "Rank = d" is the d-fold translation sector (the Fisher rank of a d-dimensional location family), in a σ window only. The Erdős–Rényi "rank 1" is the estimator's mean term.
+  - **Random geometric graphs give d + 1, not d;** the +1 survives centring and is unexplained.
+  - **P5 Speculative** (downgraded from Supported by the owner; the 2026-04-20 χ-spectrum row re-expresses standard exponents). **P6 Falsified:** the kagome lattice (d_H = 2) gives PR 1.61, set by 60° neighbour angles (`local-geometry-coincidence`). **P7 Falsified:** at fixed physical scale the rank rises d → d + 1 under block-spin; the Fisher DPI (Zamir 1998) is not engaged because F is recomputed on a new graph. **M6** Established for the textbook Fisher matrix only (correction row).
+  - Machta 2013 is a vocabulary anchor, not the same object: the Phase 1 matrix has no model parameters. P8 **Falsified** by Gefen–Mandelbrot–Aharony 1980 (STAT4). Ax2, OmD and T1 remain internal constructions; Ax2 and T1 carry 2026-10-19 banners.
 - **CCA** — CCA-1 and CCA-1b scaling Falsified; **no CCA item is Supported any more**. CCA-1b magnitude and CCA-2 **Retired** 2026-10-18 by a pre-registered reduction test ([report](docs/experiments/CCA1B_CCA2_REDUCTION_TEST_2026_10_18.md)): the April Phase A–D observables were the gap-position d_eff and gap-ratio η of `fisher_diagnostics` (not the χ spectrum). Phase C/D η is a fixed function of the nearest-neighbour bond energy, so the ~20× dη/dT separation is latent heat vs the 2D Ising log specific heat (Folded); on hypercubic tori d_eff ∈ {1, d, d+1} by symmetry, with d+1 = d translations + 1 uncentred-mean mode in an α window only (forced by definition; the 1e-8 spectral tolerance was missed via the tool's EPS guard, deviation accepted by owner). CCA-1c **Retired — Folded** 2026-10-18 by the λ₁ reduction test ([report](docs/experiments/CCA1C_LAMBDA1_REDUCTION_TEST_2026_10_18.md)): because tr χ = N(q−1) is fixed, the first-order d_eff jump is the Potts order-parameter jump read through λ₁ ≈ N(q−1)⟨M²⟩ (Wu 1982); with λ₁ removed nothing jumps. STAT3 (the CCA class) **downgraded Supported → Speculative** 2026-10-18 (owner): its only support was that d_eff result; it is a classification, its "novel framing" claim is ungated and overlaps QR-002 / self-organised criticality. Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
 - **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only. The IT06 check (2026-10-18) found that the slow-driving minimum-dissipation metric is the friction tensor (Sivak & Crooks 2012), which is Fisher–Rao only for constant relaxation time. So P21's instance (4) is withdrawn from Chentsov coverage (label unchanged), and X8's "Seifert bound" was mis-stated (its measured η values stand). The chain itself does not depend on IT06.
   - **QR-005 corrections (2026-10-19)** found three of the chain's four hop descriptions wrong as written; the label stays Speculative:
@@ -114,6 +118,10 @@ Claude's standing instructions when working on this platform:
     - gates run 2026-10-19; owner to decide whether to park QR-005b, and whether to add a Plávala banner and anchor to GT12;
     - link 869 (GT10 → HB09, "Einstein equation as fixed point of the GSL") is unsourced;
     - BR01's `mathematical_archetype` (conservation-law) does not fit.
+13. DFIG / QR-001 leftovers ([reduction report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md) §3.4; [QR-001 map](docs/prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md)):
+    - QR-001 literature-mapped (partial), not gated; likely FOLD for the wiki's version, open in the literature for general probabilistic models (Quinn 2023 §8.2);
+    - the RGG d + 1 is unexplained (prior-art gate first if anyone claims it);
+    - P5's anchor 100 holds the wrong DOI (10.1063/1.4918623 is unrelated; correct 10.1063/1.4923066).
 
 **Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
 
@@ -318,16 +326,16 @@ python3 scripts/run_entity_catalog_pass.py \
 
 ---
 
-## Conjecture Summary (23 P-series + CCA — status as of 2026-10-18)
+## Conjecture Summary (23 P-series + CCA — status as of 2026-10-19)
 
 Labels are the latest calibration rows (`claim_status_latest`); `conjectures.three_state` now carries the same label as a prefix (2026-10-18).
 
-- **Falsified:** P12 (structural bound β(λ) ≤ 1); P8 (by Gefen–Mandelbrot–Aharony 1980; STAT4); P11 (by Bettencourt 2013; URB1); CCA-1 (Phase C); CCA-1b L^d scaling (Phase D)
+- **Falsified:** P12 (structural bound β(λ) ≤ 1); P8 (by Gefen–Mandelbrot–Aharony 1980; STAT4); P11 (by Bettencourt 2013; URB1); P6 (kagome counter-test, 2026-10-19); P7 (rank rises d → d + 1 at fixed physical scale, 2026-10-19); CCA-1 (Phase C); CCA-1b L^d scaling (Phase D)
 - **Retired — folded into the literature:** P2 (WBE 1997; BIO12); CCA-1c (order-parameter discontinuity via λ₁ = S(k=0); Wu 1982 — 2026-10-18 λ₁ reduction test); CCA-1b magnitude (η = function of NN bond energy; latent heat vs log specific heat — 2026-10-18 reduction test)
 - **Retired — forced by definition:** CCA-2 (gap-position d_eff = d+1 only in an α window, from hypercubic symmetry + uncentred estimator — 2026-10-18 reduction test)
 - **Established:** P21 — Chentsov's classical uniqueness theorem only; the quantum case is Petz's classification
-- **Supported:** P5 (as application of Machta 2013); P18, P19, P20 (single-domain, US equities / AlphaEntropy)
-- **Speculative — contradicted by own tests:** P6; P7 (partially falsified)
+- **Supported:** P18, P19, P20 (single-domain, US equities / AlphaEntropy)
+- **Speculative — support reduced to a textbook fact:** P5 (torus rank = d is the location-family Fisher rank via lattice symmetry; RGGs give d + 1; downgraded 2026-10-19, owner)
 - **Speculative — ansatz without derivation:** P13, P15 (P15's Landauer motivation void), P23
 - **Speculative — heterodox, no unique prediction:** P1, P4, P10
 - **Speculative — other:** P3 (over-parameterized operator), P9 (monitoring gate; belongs in Q-series), P14 (split into P14a runnable / P14b blocked), P16 (blocked on Q4 specification), P17 (high risk), P22 (trichotomy unproven)
