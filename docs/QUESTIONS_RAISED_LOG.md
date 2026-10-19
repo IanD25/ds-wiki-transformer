@@ -141,8 +141,35 @@
   - modern machine learning and double descent;
   - published rebuttals of 1/N (Kirby & Ostdiek 2012; Zakamulin 2017).
 - **Link to QR-001.** QR-001's settled answer (sloppy models) and QR-009 are two sides of one coin: the parameter combinations a model cannot pin down are exactly the ones whose estimation error is taxed.
-- **Candidate in-house sub-question (to gate later).** Measure the "tax rate" directly in simulation: out-of-sample loss of an adaptive rule against a static one, as a function of record length (number of events), model flexibility and regime-change rate. It is pre-registerable and laptop-sized.
-- **Status:** Raised 2026-10-19 (owner). Deep-dive literature map and primer launched the same day.
+- **Candidate in-house sub-question (to gate later).** Measure the "tax rate" directly in simulation: out-of-sample loss of an adaptive rule against a static one, as a function of record length (number of events), model flexibility and regime-change rate. It is pre-registerable and laptop-sized. *Map §I S1 (2026-10-19): mostly answered already.* The pieces:
+  - drift: Muth 1960 and Pesaran & Timmermann 2007;
+  - regime switching: Dacco & Satchell 1999 and Bessec & Bouabdallah 2005;
+  - worst case: Besbes, Gur & Zeevi;
+  - costs: no-trade bands;
+  - variants tried: Bailey et al. 2014.
+
+  Only the few-events corner (about 5–20 regime episodes, detect-and-switch, asymmetric loss, per-switch cost) might remain, and it needs a targeted search first.
+- **Wiki holdings.**
+  - IT09 and M6 (the QR-001 side);
+  - INFO2 and INFO5 (next to MDL, unlinked);
+  - F1, Ashby's requisite variety (the counterweight: a floor on controller complexity);
+  - EWS4, EWS8 and the QR-006b result (simple indicators won);
+  - H1 and M2 (regime machinery);
+  - X8 and P18–P20 (AlphaEntropy-derived).
+
+  Map §G.3 flags two of these for owner review, with nothing changed:
+  - P19's "validated" fix is +0.006 Calmar, below the project's +0.02 threshold;
+  - P20's formula conflicts with the textbook identity for averaging equally good signals.
+- **Gaps.** No reference entry on any of: bias–variance; AIC/BIC/MDL; effective degrees of freedom; multiple testing and backtest overfitting; 1/N and estimation error; out-of-sample failure of return predictors; forecast combination and the M-competitions; forecasting under breaks; heuristics; Goodhart and Lucas; HOT and Bode; adaptive control; Orr's cost of complexity. Candidate fold-ins R1–R14 are in map §H, with R1, R3, R4 and R9 the priority.
+- **Status:** Literature-mapped (partial), 2026-10-19. Map: [`prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md`](prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md). Primer: [`primers/QR-009_COMPLEXITY_TAX_PRIMER.md`](primers/QR-009_COMPLEXITY_TAX_PRIMER.md). Partial because many sources were read only at abstract level.
+  - **Settled:** the mechanisms and their rates for estimation variance, selection over many tries, and lag against noise. Costs per adjustment are settled in continuous-time theory.
+  - **Open in the literature:** benign overfitting in low-signal, changing data (Kelly, Malamud & Zhou 2024 vs Nagel 2025); the split between estimation error and instability in the combination puzzle; how much factor research replicates; the empirical cost of complexity in evolution.
+  - **Not one law:** at least seven mechanisms, of which only three share mathematics.
+  - "Complexity tax" is not a technical term. No gates run; no DB writes.
+- **Next.** The owner decides on the following:
+  - the §G.3 review of P19 and P20;
+  - whether to fold in R1, R3, R4 and R9 first;
+  - gates: the main form is likely `answered`, giving FOLD (`found-under-other-vocabulary`); S1's few-events corner only after the S8 search.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -317,3 +344,4 @@
 - **2026-10-19** — Owner decision: QR-002 and QR-003 stay parked.
 - **2026-10-19** — QR-009 raised (owner): the complexity tax. A first-pass prior-art list was recorded; a deep-dive map and primer were launched.
 - **2026-10-19** — QR-006b window-0.5 sensitivity completed (S1–S3, SM): no improvement; data-hunger threat not supported.
+- **2026-10-19** — QR-009 literature-mapped (partial): map `prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md`, primer `primers/QR-009_COMPLEXITY_TAX_PRIMER.md`. Headline: the tax is documented across fields under other names. It comes from seven mechanisms; three share mathematics (estimation variance, selection, lag against noise). The proposed simulation is mostly answered already. P19 and P20 are flagged for owner review. Only QR-009's lines changed. No gates run; no DB writes.
