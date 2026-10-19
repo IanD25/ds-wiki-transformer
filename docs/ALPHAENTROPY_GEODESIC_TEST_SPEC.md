@@ -5,6 +5,14 @@
 **To:** AlphaEntropy LLM / trading system
 **Purpose:** Concrete, implementable tests bridging PFD's non-equilibrium thermodynamic framework with AlphaEntropy's empirical trajectory data
 
+> **CORRECTION 2026-10-18 (`gsw-it06-geodesic-check-2026-10-18`).** This spec repeats IT06's claim that minimum-dissipation paths are Fisher–Rao geodesics, and calls the bound "Seifert's". Both are corrected; see [`prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md`](prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md), items 13, 14 and 20.
+> - **Metric.** For slow driving, the metric that governs dissipation is a friction tensor, ζ = k_BT τ∘I (Sivak & Crooks 2012). It is Fisher–Rao times a constant only when the relaxation time is constant.
+> - **Regime.** The bound W_ex ≥ L²/Δt holds only for slow driving, so it does not apply to fast shocks.
+> - **P21.** The geodesic efficiency η is a path-straightness measure, and it does not test P21 (Established only as Chentsov's theorem). The "same path in both directions" prediction (Test 3, "Subtlety") and the "Refined P21 scope" note near the end rest on the same misreading.
+> - **Measurements.** The measured η values stand.
+>
+> *The text below is unchanged.*
+
 ---
 
 ## Context
