@@ -19,6 +19,13 @@ PRIMARY_INFO_M = PRIMARY_INFO_1D + ["I2_te"]
 TEST_STRATA_1D = ("S1", "S2", "S3", "S4", "S5")
 
 
+def primary_key(stratum):
+    """§11 D1: the decisive prediction score: the 80% early cut in slow-ramp
+    strata; the full segment (to t_tip - B) in S4 and S5."""
+    base = "C0" if stratum == "C0g" else stratum
+    return "tau_cut80" if base in C.CUT_STRATA else "tau_off"
+
+
 def _rs(results, stratum, family):
     return sorted([r for r in results if r["stratum"] == stratum and r["family"] == family],
                   key=lambda r: r["pair"])
@@ -32,31 +39,33 @@ def _seed(*parts):
     return zlib.crc32("|".join(map(str, parts)).encode())
 
 
-def stratum_directions(results, stratum, names, learn_all=False):
+def stratum_directions(results, stratum, names, learn_all=False, key=None):
     """A19: learned directions are set once per stratum, on the calibration
     split pooled over its model families."""
     fams = sum(ST.family_groups(stratum).values(), [])
     cal = sum([_split(_rs(results, stratum, f), "calibration") for f in fams], [])
-    Tc = np.array([r["tr"]["tau_off"] for r in cal])
-    Nc = np.array([r["nu"]["tau_off"] for r in cal])
+    key = key or primary_key(stratum)
+    Tc = np.array([r["tr"][key] for r in cal])
+    Nc = np.array([r["nu"][key] for r in cal])
     return S.directions(names, P.DIRECTION, Tc, Nc, learn_all)
 
 
-def prediction(results, stratum, names, info, base, learn_all=False, n_boot=C.N_BOOT):
+def prediction(results, stratum, names, info, base, learn_all=False, n_boot=C.N_BOOT, key=None):
     """§5.1, §5.5, §5.6 for one stratum. Returns per-indicator AUCs (families
     a, b, pooled), CIs, chance p-values, best baseline and delta-AUCs."""
     groups = ST.family_groups(stratum)
-    dirs = stratum_directions(results, stratum, names, learn_all)
+    key = key or primary_key(stratum)
+    dirs = stratum_directions(results, stratum, names, learn_all, key)
     sgn = np.array([dirs[n] for n in names], float)
     per_model = {}
     for g, fams in groups.items():
         for f in fams:
             rs = _rs(results, stratum, f)
             cal, con = _split(rs, "calibration"), _split(rs, "confirmation")
-            Tq = np.array([r["tr"]["tau_off"] for r in con]) * sgn
-            Nq = np.array([r["nu"]["tau_off"] for r in con]) * sgn
-            Tc = np.array([r["tr"]["tau_off"] for r in cal]) * sgn
-            Nc = np.array([r["nu"]["tau_off"] for r in cal]) * sgn
+            Tq = np.array([r["tr"][key] for r in con]) * sgn
+            Nq = np.array([r["nu"][key] for r in con]) * sgn
+            Tc = np.array([r["tr"][key] for r in cal]) * sgn
+            Nc = np.array([r["nu"][key] for r in cal]) * sgn
             per_model[f] = dict(
                 auc=S._auc_matrix(Tq, Nq), auc_cal=S._auc_matrix(Tc, Nc),
                 boot=S.bootstrap_auc(Tq, Nq, n_boot, seed=_seed(stratum, f)),
@@ -93,7 +102,7 @@ def prediction(results, stratum, names, info, base, learn_all=False, n_boot=C.N_
                              ci=[float(np.nanpercentile(pboot[:, j] - pboot[:, names.index(b)], 2.5)),
                                  float(np.nanpercentile(pboot[:, j] - pboot[:, names.index(b)], 97.5))])
                      for b in base})
-    return dict(stratum=stratum, best_baseline=best, rows=rows, directions=dirs,
+    return dict(stratum=stratum, score=key, best_baseline=best, rows=rows, directions=dirs,
                 n={f: v["n"] for f, v in per_model.items()},
                 se_pooled={n: float(np.nanstd(pboot[:, j])) for j, n in enumerate(names)})
 

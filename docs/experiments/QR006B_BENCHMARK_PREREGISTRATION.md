@@ -1,7 +1,7 @@
 # QR-006b Benchmark — Pre-registration
 
 **Mode:** B (design only). **Nothing has been simulated, downloaded or computed for this benchmark.** Every choice below is fixed before any data is touched.
-**Status (2026-10-18): FROZEN after the pilot.** Amendments made while building the pipeline are in §12; the values the pilot set, the filled §10 inputs and the revised compute estimate are in §13. The confirmatory run has not started; the owner starts it. *(The line above describes the protocol as first written.)*
+**Status (2026-10-18): FROZEN after the pilot.** Amendments made while building the pipeline are in §12; the values the pilot set, the filled §10 inputs and the revised compute estimate are in §13. Post-freeze deviations D1–D2 (§11) were made before any confirmatory data existed; D1 changes the decisive prediction score. The confirmatory run has not started; the owner starts it. *(The line above describes the protocol as first written.)*
 **Date:** 2026-10-18
 **Question:** QR-006b, `docs/QUESTIONS_RAISED_LOG.md` (widened-baseline wording, owner-approved 2026-10-18).
 **Gate status:** **PROCEED with named gaps**: `docs/prior_art_reviews/QR-006b_SECOND_SEARCH_2026_10_18.md` §8. Eason 2014 was read in full and is clean. Dakos & Soler-Toscano 2017 and Mormann et al. 2005 could not be obtained; both are carried into §10, gap 1.
@@ -406,7 +406,22 @@ The confirmatory scripts log the commit hash, package versions and seeds into th
 
 ## 11. Deviations
 
-*None yet.* Each entry: number, date, what changed, why, whether made before or after opening any confirmatory result, and which results it affects. Changes made while building the pipeline, before the pilot was run, are in §12 (Amendments).
+Each entry: number, date, what changed, why, whether made before or after opening any confirmatory result, and which results it affects. Changes made while building the pipeline, before the pilot was run, are in §12 (Amendments).
+
+**Timing of D1–D2.** Both were made on 2026-10-18, after the freeze commit (`717badf`) and **before any confirmatory series was simulated**. They respond to two risks raised in the pilot report (§6), which were seen **in the control strata only**; no test-stratum result was computed or opened. They were proposed by Claude and approved by the owner ("go with your recommendations", 2026-10-18).
+
+- **D1 · Decisive prediction score on an early cut (§5.1, §6.1).**
+  - *What.* In the slow-ramp strata (C0 and C0g, CM, S1, S2, S3, SM), the decisive prediction ROC uses Kendall τ computed on the record up to **80% of the way to the tip**, [0, 0.8 × t_tip), processed as if the record ended there: Lowess detrending, the 25% window, the reference period and the FI size of states are all recomputed on that shorter stretch. The null is cut to the same length.
+  - *Reported alongside, not decisive:* the 60% cut, and the original score on the full segment up to t_tip − B.
+  - *Unchanged:* in S4 (noise-induced, fixed parameter) and S5 (rate-induced) the decisive score stays on the full segment. In S5 the rate ramp lies within the last few percent of the record (§12, A11), so an 80% cut would remove it, which is the failure A11 fixed. S4 is a chance and leakage stratum with no slow approach. Lead time (§5.2), actionable lead time and detection are unchanged. The best baseline, the learned directions and every §6 rule are applied to the decisive score.
+  - *Why.* In every control stratum of the pilot the best baseline scored AUC 0.98–1.00. At that ceiling no indicator can show ΔAUC ≥ 0.05, so a stratum could return NO only because its baseline is perfect. Scoring an earlier stretch asks the more useful question (can the transition be seen coming early?) and follows Bury et al. 2021, who scored an "early" band (60–80% of the way) as well as a late one.
+  - *Cost to the information indicators.* A shorter stretch disadvantages the data-hungrier measures; the window-0.5 sensitivity partly offsets this. Noted as a threat (§10, threat 2).
+  - *Compute.* About +55% on the decisive part: ≈ 49 CPU-hours, ≈ 5.5 h wall-clock at 9 workers. All analyses ≈ 220 CPU-hours, ≈ 24 h.
+  - *Affects:* every prediction-ROC result in the slow-ramp strata, and C0's, C0g's and CM's control checks, which use the decisive score.
+- **D2 · C0g's mutual-information expectation (§6.4).**
+  - *What.* "KSG MI's AUC within ±0.02 of C0's" becomes: **the point estimate of KSG MI's AUC difference, C0g minus C0, lies within ±0.05**, the benchmark's minimum effect of interest. The difference is reported with its paired bootstrap 95% interval. The exact invariances (permutation entropy, rank AC1) are unchanged.
+  - *Why.* The KSG estimator is invariant under monotone maps only asymptotically. The pilot showed −0.038 pooled (−0.06 in the cubic model), which looks like estimator behaviour, not a pipeline fault. At ±0.02 this control would probably halt the run for no pipeline reason. An estimator drift smaller than the minimum effect cannot by itself create or hide a YES.
+  - *Affects:* the C0g control only.
 
 ## 12. Amendments (2026-10-18, pipeline build; before any pilot or confirmatory result)
 

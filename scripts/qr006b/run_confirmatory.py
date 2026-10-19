@@ -106,6 +106,12 @@ def _ind(args):
                tip=pair["tip"], L=L)
     rng_obs = (lambda side: np.random.default_rng(
         ST.seed_for(root, stratum, family, "aux", 10_000_000 + 2 * pair["pair"] + side))) if obs else None
+    cuts = {}
+    if stratum in C.CUT_STRATA and variant != "buffer50":
+        cuts["cut80"] = int(round(C.CUT_PRIMARY * pair["tip"]))
+        if variant == "primary":
+            cuts["cut60"] = int(round(C.CUT_SECONDARY * pair["tip"]))
+    kw["cut_lens"] = cuts
     t0 = time.time()
     if sides in ("both",):
         out["tr"] = P.compute_series(pair["x_tr"], L, det_tr, transform=tf,

@@ -132,3 +132,12 @@ Each of these can be handled by a numbered deviation in §11 **before** the conf
 - Pilot outputs: `data/reports/qr006b_pilot/`.
 - Readings behind A5–A12: primary sources named in the protocol's §12, with reading levels. Transcribed Weinans 2021 matrices: `scripts/qr006b/data/`.
 - Confirmatory entry points, not run: `run_confirmatory.py` (refuses unless `config.FROZEN` is True and the code and protocol are committed) and `report.py` (opens the controls first).
+
+## 9. Owner decisions on §6 (later on 2026-10-18)
+
+The owner accepted the recommendations. They are logged as protocol deviations D1 and D2 (§11), made before any confirmatory data existed.
+
+- **Ceiling (§6, item 1) → D1.** In the slow-ramp strata the decisive prediction score uses the record up to 80% of the way to the tip, processed as if it ended there. The 60% cut and the original full-length score are reported alongside. S4 and S5 keep the full-length score, because S5's rate ramp sits in the last few percent of its record.
+- **C0g mutual information (§6, item 2) → D2.** The tolerance becomes ±0.05 on the point estimate (the minimum effect of interest), with the interval reported.
+- **Compute, revised for D1:** decisive part ≈ 49 CPU-hours (≈ 5.5 h wall-clock); everything ≈ 220 CPU-hours (≈ 24 h). The extra cost buys a clean early score, with no leakage from the final stretch through the smoothing.
+- Items 3–7 of §6 are unchanged.

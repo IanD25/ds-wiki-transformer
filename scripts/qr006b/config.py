@@ -91,3 +91,10 @@ DETECT_OFFSETS = (0, 5, 10, 20)
 T_RESP_MULTIPLES = (0, 1, 5, 20)
 N_BOOT = 10_000
 DELTA_AUC_MIN = 0.05
+
+# §11 deviation D1: primary prediction score on an early cut of the record
+CUT_STRATA = ("C0", "CM", "S1", "S2", "S3", "SM")     # slow-ramp strata (C0g via C0)
+CUT_PRIMARY = 0.8          # score on [0, 0.8 * t_tip): decisive
+CUT_SECONDARY = 0.6        # reported alongside
+# §11 deviation D2: C0g KSG-MI check tolerance = the minimum effect of interest
+C0G_MI_TOL = DELTA_AUC_MIN

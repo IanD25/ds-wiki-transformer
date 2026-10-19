@@ -76,17 +76,21 @@ def controls():
         rg = A._rs(res + resg, "C0g", f)
         jpe, jr = names.index("I3_pe"), names.index("B2_rank_ac1")
         inv[f] = dict(
-            pe_tau_identical=bool(all(np.array_equal(a["tr"]["tau_off"][jpe], b["tr"]["tau_off"][jpe]) and
-                                      np.array_equal(a["nu"]["tau_off"][jpe], b["nu"]["tau_off"][jpe])
+            pe_tau_identical=bool(all(np.array_equal(a["tr"]["tau_cut80"][jpe], b["tr"]["tau_cut80"][jpe]) and
+                                      np.array_equal(a["nu"]["tau_cut80"][jpe], b["nu"]["tau_cut80"][jpe])
                                       for a, b in zip(r0, rg))),
-            rank_ac1_tau_identical=bool(all(abs(a["tr"]["tau_off"][jr] - b["tr"]["tau_off"][jr]) < 1e-12 and
-                                            abs(a["nu"]["tau_off"][jr] - b["nu"]["tau_off"][jr]) < 1e-12
+            rank_ac1_tau_identical=bool(all(abs(a["tr"]["tau_cut80"][jr] - b["tr"]["tau_cut80"][jr]) < 1e-12 and
+                                            abs(a["nu"]["tau_cut80"][jr] - b["nu"]["tau_cut80"][jr]) < 1e-12
                                             for a, b in zip(r0, rg))))
     c0 = out["C0"]["rows"]
     c0g = out["C0g"]["rows"]
-    inv["mi_auc_within_0.02"] = bool(abs(c0g["I1_mi"]["auc"] - c0["I1_mi"]["auc"]) <= 0.02)
+    # §11 D2: the KSG-MI drift under the copula map must be smaller than the
+    # minimum effect of interest (point estimate); the difference is reported
+    inv["mi_auc_diff_C0g_minus_C0"] = float(c0g["I1_mi"]["auc"] - c0["I1_mi"]["auc"])
+    inv["mi_auc_within_tol"] = bool(abs(inv["mi_auc_diff_C0g_minus_C0"]) < C.C0G_MI_TOL)
     inv["pearson_ac1_auc_not_above_C0"] = bool(c0g["B1_ac1"]["auc"] <= c0["B1_ac1"]["auc"])
-    inv_ok = all(v if isinstance(v, bool) else all(v.values()) for v in inv.values())
+    inv_ok = all(v if isinstance(v, bool) else all(v.values())
+                 for k, v in inv.items() if not k.startswith("mi_auc_diff"))
     ok = ok and inv_ok
     # S4 leakage (§6.4): no prediction AUC > 0.6 with CI excluding 0.5
     p4 = A.prediction(res, "S4", names, A.PRIMARY_INFO_1D, base_for("S4"))
@@ -170,7 +174,16 @@ def tests(audited=None):
         for st in sorted({r["stratum"] for r in rv}):
             info = A.PRIMARY_INFO_M if st in ("CM", "SM") else A.PRIMARY_INFO_1D
             sens[v][st] = {n: dict(auc=r["auc"], delta=r.get("delta"), delta_ci=r.get("delta_ci"))
-                           for n, r in A.prediction(rv, st, names_for(st), info, base_for(st))["rows"].items()}
+                           for n, r in A.prediction(rv, st, names_for(st), info, base_for(st),
+                                                    key="tau_off" if v == "buffer50" else None)["rows"].items()}
+    # secondary prediction scores (§11 D1): the 60% cut and the full segment
+    for key in ("tau_cut60", "tau_off"):
+        sens["score_" + key] = {}
+        for st in [x for x in ("C0", "CM", "S1", "S2", "S3", "SM") if x in C.CUT_STRATA]:
+            info = A.PRIMARY_INFO_M if st in ("CM", "SM") else A.PRIMARY_INFO_1D
+            sens["score_" + key][st] = {n: dict(auc=r["auc"], delta=r.get("delta"), delta_ci=r.get("delta_ci"))
+                                        for n, r in A.prediction(res, st, names_for(st), info, base_for(st),
+                                                                 key=key)["rows"].items()}
     sens["learned_directions"] = {
         st: {n: r["auc"] for n, r in A.prediction(res, st, names_for(st),
                                                   A.PRIMARY_INFO_M if st in ("CM", "SM") else A.PRIMARY_INFO_1D,

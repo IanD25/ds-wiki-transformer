@@ -160,56 +160,59 @@ def _window_matrix(R, ends, w, sos, multi, te_pairs, pc1):
     return np.array(rows, dtype=np.float64)
 
 
+def _offline(X, L, window, detr, transform, multi, te_pairs):
+    """Offline residuals on X[:L], windowed indicators, Kendall tau (§5.1)."""
+    d = X.shape[1]
+    seg = X[:L]
+    nref = int(C.REFERENCE_FRACTION * L)
+    R_off = np.column_stack([detr(seg[:, v]) for v in range(d)])
+    sref = R_off[:nref].std(axis=0, ddof=1)
+    if transform is not None:
+        R_off = transform(R_off, sref)
+    sos = 2.0 * R_off[:nref].std(axis=0, ddof=1)    # FI size of states (±2 SD, §4.1 I5)
+    pc1 = None
+    if multi:
+        _ev, evec = np.linalg.eigh(np.cov(R_off[:nref], rowvar=False))
+        pc1 = evec[:, -1]
+    w, ends = window_ends(L, window)
+    M_off = _window_matrix(R_off, ends, w, sos, multi, te_pairs, pc1)
+    # declared secondary: FI on raw, undetrended data (Karunanithi usage)
+    sos_raw = 2.0 * seg[:nref].std(axis=0, ddof=1)
+    fi_raw = np.array([I.fisher_index(np.ascontiguousarray(seg[e - w + 1: e + 1]),
+                                      sos_raw, 80.0 if multi else 100.0) for e in ends])
+    M_off = np.column_stack([M_off, fi_raw])
+    tau = np.array([kendall_tau_b(M_off[:, j]) for j in range(M_off.shape[1])])
+    return tau, M_off, w, ends
+
+
 def compute_series(x, seg_len, det_ends, *, window=C.WINDOW, detrend="lowess",
-                   transform=None, online=True, obs_noise_rng=None):
+                   transform=None, online=True, obs_noise_rng=None, cut_lens=None):
     """x: observed series (n,) or (n, d), at least as long as max(det_ends)+1.
     seg_len: pre-transition segment length L (indices 0..L-1).
     det_ends: indices at which 50-point detection windows end.
     transform: optional strictly increasing map applied to residuals (C0g).
+    cut_lens: {name: length} - extra offline scores on X[:length] only, as if
+      the record ended there (§11 deviation D1, early-cut prediction score).
     """
     X = _as2d(np.asarray(x, dtype=np.float64))
-    if obs_noise_rng is not None:
-        X = X.copy()
     d = X.shape[1]
     multi = d > 1
     L = int(seg_len)
-    seg = X[:L]
     nref = int(C.REFERENCE_FRACTION * L)
-
     detr = {"lowess": lowess_residuals, "gaussian": gaussian_residuals,
             "none": lambda v: v - v.mean()}[detrend]
-    R_off = np.column_stack([detr(seg[:, v]) for v in range(d)])
     if obs_noise_rng is not None:
         # §5.7: Gaussian observation noise at 10% of the residual SD
-        sdr = R_off[:nref].std(axis=0, ddof=1)
+        R0 = np.column_stack([detr(X[:L, v]) for v in range(d)])
+        sdr = R0[:nref].std(axis=0, ddof=1)
         X = X + obs_noise_rng.standard_normal(X.shape) * 0.1 * sdr
-        seg = X[:L]
-        R_off = np.column_stack([detr(seg[:, v]) for v in range(d)])
-    sref = R_off[:nref].std(axis=0, ddof=1)
-    if transform is not None:
-        R_off = transform(R_off, sref)
-        sref_t = R_off[:nref].std(axis=0, ddof=1)
-    else:
-        sref_t = sref
-    sos = 2.0 * sref_t                      # FI size of states (±2 SD, §4.1 I5)
-
     te_pairs = te_pairs_for(d) if multi else None
-    pc1 = None
-    if multi:
-        ev, evec = np.linalg.eigh(np.cov(R_off[:nref], rowvar=False))
-        pc1 = evec[:, -1]
 
-    w, ends = window_ends(L, window)
-    out = {"ends": ends, "w": w, "seg_len": L}
-    M_off = _window_matrix(R_off, ends, w, sos, multi, te_pairs, pc1)
-    # declared secondary: FI on raw, undetrended data (Karunanithi usage)
-    raw = seg
-    sos_raw = 2.0 * raw[:nref].std(axis=0, ddof=1)
-    fi_raw = np.array([I.fisher_index(np.ascontiguousarray(raw[e - w + 1: e + 1]),
-                                      sos_raw, 80.0 if multi else 100.0) for e in ends])
-    M_off = np.column_stack([M_off, fi_raw])
-    out["tau_off"] = np.array([kendall_tau_b(M_off[:, j]) for j in range(M_off.shape[1])])
-    out["vals_off"] = M_off.astype(np.float32)
+    tau, M_off, w, ends = _offline(X, L, window, detr, transform, multi, te_pairs)
+    out = {"ends": ends, "w": w, "seg_len": L, "tau_off": tau,
+           "vals_off": M_off.astype(np.float32)}
+    for name, Lc in (cut_lens or {}).items():
+        out["tau_" + name] = _offline(X, int(Lc), window, detr, transform, multi, te_pairs)[0]
 
     if online:
         n_full = max(L, (max(det_ends) + 1) if len(det_ends) else 0)
