@@ -177,7 +177,7 @@
   - **The second half is open in the literature.** "What does running near the bound buy?" is framed as open by Yang et al. 2021; the evidence so far says machines are tuned for speed.
   - **P15/Q5's "cost of coherence" has a published answer** (Zhang et al. 2020): cost diverges as synchrony becomes perfect, the reverse of the retired ansatz.
 - **Next.** Owner decisions, in order:
-  1. *Done 2026-10-18:* §F corrections applied and all 13 §G entries folded in. Hopfield 1974, Lan 2012 and Terauchi 2007 were re-read in full and Laughlin 1998 at abstract level. Follow-up: IT06's Fisher–Rao geodesic claim (X8 and the Fisher–gravity chain depend on it).
+  1. *Done 2026-10-18:* §F corrections applied and all 13 §G entries folded in. Hopfield 1974, Lan 2012 and Terauchi 2007 were re-read in full and Laughlin 1998 at abstract level. IT06 follow-up done 2026-10-18 (`gsw-it06-geodesic-check-2026-10-18`, commit 6aaece6; [report](prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md)): the slow-driving dissipation metric is the friction tensor, Fisher–Rao only for constant relaxation time; X8's bound mis-stated; P21 instance (4) withdrawn, label unchanged; the Fisher–gravity chain does not depend on IT06.
   2. Whether to run the gates on candidate sub-question S6 (does the synchronization-cost threshold depend on network dimension?). It is the only one that looks both possibly unasked and decidable in-house, and it carries a drift warning (it revives the d_f thread).
   3. S1–S3 look answered (fold). S4–S5 are open but experimental (record, don't pursue). S7 looks like DROP.
 

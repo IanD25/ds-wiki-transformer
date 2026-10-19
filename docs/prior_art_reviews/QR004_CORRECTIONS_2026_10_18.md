@@ -109,7 +109,7 @@ No correction changes a confidence label. Of the touched entities, only **H3** a
 
 ## 4. Left out, recorded as follow-ups
 
-- **IT06** — "minimum-dissipation paths are geodesics on the Fisher–Rao manifold" (Sivak & Crooks 2012 derive a friction-tensor metric), and Jarzynski stated without its equilibrium-initial-state condition. X8's "⟨W_diss⟩ ≥ d_geodesic²/τ" and the Fisher–gravity chain depend on it. Needs its own check (map item 25).
+- **IT06** — "minimum-dissipation paths are geodesics on the Fisher–Rao manifold" (Sivak & Crooks 2012 derive a friction-tensor metric), and Jarzynski stated without its equilibrium-initial-state condition. X8's "⟨W_diss⟩ ≥ d_geodesic²/τ" depends on it. **Done 2026-10-18** in a separate pass (`gsw-it06-geodesic-check-2026-10-18`, commit 6aaece6; `IT06_GEODESIC_CHECK_2026_10_18.md`), which also found that the Fisher–gravity chain does *not* depend on IT06.
 - **RG04** carries the same DPI ⇒ c-theorem overstatement as INFO4 (C9).
 - **IT03** What It Claims: "the free energy difference between two thermal states equals kT times their KL divergence". Imprecise: kT·D(ρ‖ρ_eq) is the *non-equilibrium* free energy of ρ above equilibrium.
 - The `dimensional_sensitivity` facet in many entries (QM2, Q3, T6, T9 …) encodes the DS-internal posit that Ω_D acts on k_B and ℏ. Only B5, E2 and TD3 are changed here.
