@@ -37,7 +37,7 @@ Claude's standing instructions when working on this platform:
 
 ---
 
-## Current Status (2026-10-18 — pre-merge baseline)
+## Current Status (2026-10-19; pre-merge baseline 2026-10-18)
 
 > **Read [`docs/SESSION_HANDOVER_2026-10-18.md`](docs/SESSION_HANDOVER_2026-10-18.md) first.** Mode A consistency pass `gsw-consistency-pass-2026-10-18`: the source DB brought in line with the calibration record, residual errors swept (including errors shared with the *Relatively Human* podcast), the H5 prior-art gate, claim/process views, a podcast crosswalk, and the M1 milestone. Milestone snapshot `snap_20261018_190812` is the **pre-merge baseline** for the planned wiki + podcast merge.
 
@@ -48,7 +48,7 @@ Claude's standing instructions when working on this platform:
 > - **QR-004 corrections** `gsw-qr004-corrections-2026-10-18` ([report](docs/prior_art_reviews/QR004_CORRECTIONS_2026_10_18.md)): 28 thermodynamics-of-information errors, mostly Landauer charged to operations that are not erasures (new drift tag `landauer-scope-overreach`).
 > - **QR-004 fold-in** `gsw-qr004-fold-in-2026-10-18` ([report](docs/prior_art_reviews/QR004_FOLD_IN_2026_10_18.md)): NE07–NE10, BIO17–BIO25.
 > - **IT06 geodesic check** `gsw-it06-geodesic-check-2026-10-18` ([report](docs/prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md)).
-> - **QR-006b:** pilot passed and protocol frozen; the confirmatory run is next (see `docs/QUESTIONS_RAISED_LOG.md`).
+> - **QR-006b:** pilot passed and protocol frozen (tag `qr006b-prereg-frozen`); predictions recorded beforehand ([note](docs/experiments/QR006B_PREDICTIONS_2026_10_18.md)). Results on 2026-10-19, below.
 >
 > **2026-10-19 (owner-approved, corrections and fold-ins only, no promotions):**
 > - **QR-005 corrections** `gsw-qr005-corrections-2026-10-19` ([report](docs/prior_art_reviews/QR005_CORRECTIONS_2026_10_19.md)). The 27 gravity-strand errors from the QR-005 map, all re-checked against primary sources, plus 10 further entries repeating the Bianconi misdescription.
@@ -58,9 +58,14 @@ Claude's standing instructions when working on this platform:
 >   - The entries: BMV entanglement witness; the excluded pairwise classical channel; Oppenheim's classical–quantum gravity; Diósi–Penrose collapse bounds; Schrödinger–Newton gravity; minimum-noise tests.
 >   - The Oppenheim/Janse window discrepancy (S5) is resolved: the map used arXiv v1, not the published version.
 >
+> - **QR-006b confirmatory run** ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md), [lead-time audit](docs/experiments/QR006B_LEADTIME_AUDIT_2026_10_19.md)): **NO in all decidable regimes** (Supported). See the early-warning thread.
+> - **DFIG reduction test** `gsw-dfig-reduction-2026-10-19` ([report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md)): P6 and P7 Falsified, P5 → Speculative (owner); new drift tag `local-geometry-coincidence`.
+> - **QR-001** literature-mapped ([map](docs/prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md)).
+> - **QR-005 gates** ([report](docs/prior_art_reviews/QR-005_GATES_2026_10_19.md)): re-scoped to QR-005b, parked as a watch item; GT12 Plávala note.
+>
 > The latest per-pass hand-over notes are these reports; no newer `SESSION_HANDOVER` file exists.
 
-**Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0; the 2026-10-18 pass made corrections only.
+**Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0. Every pass since (2026-10-18/19) made corrections, fold-ins, retirements and falsifications only.
 
 **What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 25 Speculative · 4 Supported · 7 Established · 7 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). These are the counts after the DFIG reduction (commit `927c975`): P6 and P7 → Falsified, P5 → Speculative. Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (107 rows / 21 audit refs as of 2026-10-19 — several rows per entity, and process items mixed in).
 
@@ -97,6 +102,12 @@ Claude's standing instructions when working on this platform:
     - **"Thermodynamic ⇒ irreversible, noisy gravity" restates Galley, Giacomini & Selby 2023** (*Quantum* 7:1142).
     - **QR-005b is open in the literature; Gate 2 DROP in-house** (`undecidable-with-obtainable-data`). **Parked 2026-10-19 (owner)**; resume conditions are in the log.
     - **Plávala 2026** (*PRD* 113:085004) argues that an indirect single-mass test is possible now, under stated assumptions. So "7.5–10 orders" applies to the direct experiment only. GT12 now records this route (note and anchor, `gsw-qr005-gates-2026-10-19`).
+- **Early-warning signals (QR-006 / QR-006b)** — answered 2026-10-19 by a pre-registered benchmark ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md)):
+  - **NO in all decidable regimes (Supported).** No information indicator (lagged MI, transfer entropy, permutation and sample entropy, Fisher index, RPDE) beat the best non-information indicator by ΔAUC ≥ 0.05 in multiplicative noise, α-stable noise, flickering, or the multivariate network. The near-ties are near-copies: the Fisher index tracks variance, and MI tracks autocorrelation.
+  - **Two strata gave no decision.** S4 (noise-induced tipping) is undetectable by any indicator. S5 (rate-induced) is inconclusive, with every indicator near chance.
+  - **Window-0.5 sensitivity:** the information indicators did not improve with doubled windows in S1–S3 (most fell), so the NO is not a data-length effect there. SM is still pending.
+  - **Lead-time scores are unreliable in ramped strata** (causal-detrending artefact, found in the post-hoc audit). One Speculative lead remains: the Fisher index's online detection under flickering.
+  - **For QR-008 (exploratory, not pre-registered):** the best *classical* indicator varies by regime. AC1 wins under multiplicative noise, MAD under α-stable noise, variance under flickering.
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
 **Open items:**
@@ -122,8 +133,16 @@ Claude's standing instructions when working on this platform:
     - QR-001 literature-mapped (partial), not gated; likely FOLD for the wiki's version, open in the literature for general probabilistic models (Quinn 2023 §8.2);
     - the RGG d + 1 is unexplained (prior-art gate first if anyone claims it);
     - P5's anchor 100 holds the wrong DOI (10.1063/1.4918623 is unrelated; correct 10.1063/1.4923066).
+14. QR-006b leftovers ([results](docs/experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md) §7):
+    - window-0.5 sensitivity: S1–S3 scored (interim, `data/reports/qr006b/window05_interim.json`); SM still computing;
+    - the other §5.7 sensitivities (detrending, buffer 50, observation noise, Null-B) and stratum E (empirical) not run;
+    - the S3 Fisher-index lead-time lead is Speculative and parked;
+    - QR-008 is the natural follow-on and has not been gated.
+15. QR-002 and QR-003 were parked "until QR-006b and QR-004 are finished". That condition is now met, and they stay parked pending an owner decision.
 
-**Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
+**Standing M0 findings (2026-04-08; P17/P23 wording since corrected).**
+
+> **Superseded in part, 2026-10-18/19. The thread bullets above take precedence.** The DFIG bullet's "P5 Supported as application" no longer holds: P5 is Speculative, and Machta 2013 is a vocabulary anchor, not the same object. The CCA bullet's "CCA-1c remains Speculative / narrow-novel" no longer holds: every CCA item is now Falsified or Retired. The rest stands as historical context.
 
 - **DFIG is a re-parameterization of the sloppy-models program** (Sethna group, 2006–present). Not novel. P5 is Supported as application, not Established as discovery.
 - **CCA's general setting is Machta-Chachra-Transtrum-Sethna Science 2013** (arXiv:1303.6738) — confirmed via primary-source reading. FIM eigenvalue spectrum on 2D Ising at criticality with stiff/sloppy hierarchy. Uses global couplings, not per-site fields. Does not sweep temperature. No Potts, no first-order discrimination. **Primary-source reading of 4 additional papers completed** (Transtrum 2015 JCP perspective, Mattingly 2018 PNAS, Brown-Bossomaier-Barnett 2022 Sci. Rep., Quinn 2023 Rep. Prog. Phys.): **no paper covers CCA's specific construction** (per-site fields + d_eff/η + T-sweep + first-order-vs-continuous discriminator). However, **two important findings from primary-source reading**: (1) **Mattingly 2018 is a mandatory citation** — it uses the term `d_eff` with a DIFFERENT formula (d_eff = Σ_r r·Ω_r from optimal discrete prior weight on manifold boundaries vs CCA's d_eff = (Σλ)²/Σλ² participation ratio) — CCA must cite Mattingly and distinguish the two formulas. (2) **Brown-Bossomaier-Barnett 2022 is the prior art for the broader research program** — they study Potts q=5,7,10 via Global Transfer Entropy (q=2 enters only through their earlier Ising work (corrected 2026-10-18 per `docs/prior_art_reviews/PRIOR_ART_FOLD_IN_2026_10.md` §5)) and find curve-shape differences qualitatively similar to CCA-1c, with a simple physical mechanism (cluster interfacial length). CCA currently lacks a comparable mechanism. **Highest-leverage open question:** can CCA's d_eff/η be explained via cluster interfacial geometry, or does it measure something structurally different from transfer entropy? See `docs/M0_MILESTONE_COMPILATION.md` Fourth Addendum for full findings. CCA-1 and CCA-1b L^d scaling are FALSIFIED; CCA-1b magnitude and CCA-1c shape are qualitatively supported on a single test only; charter rule prohibits promoting above Speculative without a second independent test (recommended: extend to q=2,5,7,10 to enable direct comparison with Brown et al.).
@@ -161,7 +180,7 @@ Mode B depends on Mode A. Don't run experiments on ungrounded foundations.
 
 ## Quick Start (Fresh Machine)
 
-> **The local iCloud copy is canonical:** `~/Library/Mobile Documents/com~apple~CloudDocs/Projects/DS_Wiki_Transformation`. GitHub (`origin/main`) was brought level with it on 2026-10-18 (pushed through `0d162f2`); after that, check `git status -sb` — anything local and unpushed is newer than a fresh clone. Also: the `.venv` editable install still points at the old path `/Users/iandarling/Projects/DS_Wiki_Transformation/src` (tracebacks show it); re-run `pip install -e .` from the iCloud path if imports misbehave.
+> **The local iCloud copy is canonical:** `~/Library/Mobile Documents/com~apple~CloudDocs/Projects/DS_Wiki_Transformation`. GitHub (`origin/main`) is pushed periodically at the owner's request; check `git status -sb` — anything local and unpushed is newer than a fresh clone. Also: the `.venv` editable install still points at the old path `/Users/iandarling/Projects/DS_Wiki_Transformation/src` (tracebacks show it); re-run `pip install -e .` from the iCloud path if imports misbehave.
 
 ```bash
 # 1. Clone
@@ -230,7 +249,11 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | `docs/SESSION_HANDOVER_2026-04-18.md` | Earlier handover (2026-04-18) — GSW anchor architecture + retagging (provenance reached full coverage 2026-04-20) |
 | `docs/GSW_ANCHOR_ARCHITECTURE.md` | **GSW anchor schema + design** — relationships, canonical roles, tiering, durability model |
 | `docs/GSW_SOURCE_BASKET.md` | Per-domain canonical-source basket audit across 10 top-level domains × 5 canonical roles |
-| `docs/prior_art_reviews/` | Prior-art gate reports (incl. H5 two-process, 2026-10-18), anchor proposals, domain-retag amendments |
+| `docs/prior_art_reviews/` | Prior-art gate reports, literature maps (QR-001, QR-004, QR-005, QR-006), correction and fold-in reports, anchor proposals |
+| `docs/QUESTIONS_RAISED_LOG.md` | Open questions the wiki raises, with status (raised → mapped → gated → filed / parked) |
+| `docs/QUESTION_GATES.md` | Gate 1 (prior art) and Gate 2 (worth asking): rules and verdicts |
+| `docs/experiments/` | Pre-registered tests: reduction tests (CCA, DFIG), the QR-006b benchmark (pre-registration, predictions, pilot, results, audit) |
+| `docs/primers/` | Plain-language primers for the owner (QR-005 gravity) |
 | `docs/M0_MILESTONE_COMPILATION.md` | M0 belief snapshot (2026-04-08) — post-audit conjecture calibration, headline downgrades, action items |
 | `src/config.py` | Paths, model, thresholds |
 | `src/sync.py` | Rebuild chroma_db + wiki_history.db from ds_wiki.db |
@@ -395,7 +418,7 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 ## If You're A Fresh Claude Session
 
 1. **Read `docs/RESEARCH_PLATFORM_CHARTER.md` first.** It defines the mission and the epistemic rules.
-2. **Read `docs/SESSION_HANDOVER_2026-10-18.md`** — the latest session handover — then `docs/M1_MILESTONE_COMPILATION.md` for current beliefs. For older context: `docs/SESSION_HANDOVER_2026-05-04.md` (note its dates erratum) and `docs/SESSION_HANDOVER_2026-04-18.md` (GSW anchor architecture).
+2. **Read `docs/SESSION_HANDOVER_2026-10-18.md`** — the latest session handover (its §10 covers the start of the later passes). The **Current Status** block above, the per-pass reports it links and `docs/QUESTIONS_RAISED_LOG.md` cover everything since. Then read `docs/M1_MILESTONE_COMPILATION.md` for beliefs as of the M1 baseline. The claim counts above supersede M1's. For older context: `docs/SESSION_HANDOVER_2026-05-04.md` (note its dates erratum) and `docs/SESSION_HANDOVER_2026-04-18.md` (GSW anchor architecture).
 3. **Read `docs/GSW_ANCHOR_ARCHITECTURE.md`** for the schema and design decisions (relationship taxonomy, canonical roles, durability model).
 4. **For anchoring work, read `docs/GSW_SOURCE_BASKET.md`** — per-domain canonical source reference.
 5. **Prior context**: `docs/SESSION_HANDOVER_2026-04-16.md` (M0 audit closeout) is still relevant for conjecture calibration.
