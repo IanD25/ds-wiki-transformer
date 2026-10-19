@@ -28,7 +28,8 @@ from . import pipeline as P
 from . import strata as ST
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-RAW = os.path.join(REPO, "data", "experiments", "qr006b", "confirmatory")
+# raw outputs are several GB: QR006B_RAW_DIR can point outside iCloud-synced folders
+RAW = os.environ.get("QR006B_RAW_DIR") or os.path.join(REPO, "data", "experiments", "qr006b", "confirmatory")
 PREREG = "docs/experiments/QR006B_BENCHMARK_PREREGISTRATION.md"
 
 RAMPED = {"a_may", "a_hopf", "a_trans", "b_cubic", "a_lever4", "b_lever20", "a_may_mul",

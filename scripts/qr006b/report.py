@@ -25,7 +25,8 @@ from . import pipeline as P
 from . import score as S
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-RAW = os.path.join(REPO, "data", "experiments", "qr006b", "confirmatory", "indicators")
+RAW = os.path.join(os.environ.get("QR006B_RAW_DIR")
+                   or os.path.join(REPO, "data", "experiments", "qr006b", "confirmatory"), "indicators")
 OUT = os.path.join(REPO, "data", "reports", "qr006b")
 
 
