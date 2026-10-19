@@ -7,17 +7,14 @@ Analysis: scripts/dfig_reduction_2026_10_19.py → data/reports/dfig_reduction_2
 Verdicts (pre-registered rules): H-T REDUCES, H-CG REDUCES, H-ER REDUCES, H-RGG DOES NOT REDUCE,
 H-P6 FALSIFIED (PR form; kagome lattice, d_H = 2, gives PR 1.61).
 
-*** PROPOSAL — NOT YET OWNER-APPROVED. Do not run with --apply until the owner has ruled on:
-    (1) P7: are σ ∝ side block-spin schedules valid coarse-grainings? (yes → Falsified, as coded;
-        no → change P7 to Retired, forced by definition);
-    (2) P5: correction row with label unchanged (as coded) or Speculative;
-    (3) the new pattern tag `local-geometry-coincidence` (P6). ***
-Also wait until the qr005-corrections session has committed its DB changes.
+Owner rulings 2026-10-19: (1) P7 — σ ∝ side block-spin schedules ARE valid coarse-grainings → Falsified;
+(2) P5 → Speculative (downgrade from Supported); (3) new pattern tag `local-geometry-coincidence` accepted.
+Apply only after the qr005-corrections session has committed its DB changes.
 
 Writes:
 - calibration (append-only): P6 Speculative → Falsified; P7 Speculative → Falsified;
-  P5 correction row (Supported, unchanged); M6 correction row (Established, unchanged).
-- ds_wiki.db conjectures: dated banner prepended to P5/P6/P7 `claim`; P6/P7 `three_state` relabelled
+  P5 Supported → Speculative; M6 correction row (Established, unchanged).
+- ds_wiki.db conjectures: dated banner prepended to P5/P6/P7 `claim`; P5/P6/P7 `three_state` relabelled
   ("<new> | was: <old>", as for P8/P11 on 2026-10-18).
 - ds_wiki.db sections: dated banners prepended to M6 "Phase 1 Validation…", Ax2 "Grounding and Risk",
   T1 "Phase 1 Results…"; one sentence appended to gloss_effective_dimension "Why this disambig exists".
@@ -42,8 +39,9 @@ P6_LABEL = ("Falsified by the 2026-10-19 kagome counter-test: the participation 
 P7_LABEL = ("Falsified by own Phase 1 data, shown exact 2026-10-19: under σ ∝ side block-spin schedules the gap rank "
             "rises d → d + 1; PR fails at every level; the fixed-σ rank 'pass' is the torus closed form at shrinking L "
             "and the DPI is not engaged")
-P5_SHORT = ("Correction, label unchanged: Phase 1 torus 'rank = d' is the translation sector of the hypercubic point "
-            "group (exact closed form); ER rank 1 is the uncentred mean term; RGGs give d + 1, unexplained")
+P5_SHORT = ("Downgraded (owner): Phase 1 torus 'rank = d' is the translation sector of the hypercubic point group "
+            "(exact closed form, textbook location-family Fisher rank); ER rank 1 is the uncentred mean term; RGGs give "
+            "d + 1, not d, unexplained")
 M6_SHORT = ("Correction, label unchanged: Established covers the textbook Fisher matrix only; Phase 1 graph validation "
             "is symmetry-forced (tori, coarse-graining) or an estimator term (ER); RGG d + 1 unexplained; PR → d_H falsified")
 
@@ -65,16 +63,18 @@ CALIBRATIONS = [
      "as L shrinks. Under σ = side/8 and side/16 (fixed physical scale) the rank rises 2 → 3 (2D) and 3 → 4 (3D): exact "
      "closed-form values, previously set aside as 'σ < 2, unreliable'. F is recomputed on each new graph, so the Fisher "
      "DPI (Zamir 1998) is not engaged; in its valid setting monotonicity is a theorem. PR fails at every level (Phase "
-     "1). Owner ruled the σ ∝ side schedules valid coarse-grainings. Pattern tags: contradicted-by-own-tests; "
+     "1). Owner ruled (2026-10-19) the σ ∝ side schedules valid coarse-grainings. Pattern tags: contradicted-by-own-tests; "
      "answer-forced-by-definition (the rank pass). Revertible by appending a later row."),
-    ("P5", "conjecture", "Supported", D, AUDIT_REF, P5_SHORT,
+    ("P5", "conjecture", "Speculative", D, AUDIT_REF, P5_SHORT,
      "Pre-registered reduction test (commit f29dd61) — " + REPORT + ". P5's M0 support rows rest on Phase 1 "
      "(D_eff-Test-1.0 @ 8f8094b): uncentred gap-position rank of a k×k neighbour-basis Fisher matrix. Tori: every rank "
      "and PR (2D 200², 3D 50³, 4D 12⁴ σ sweep) is the closed form, identity to 1.1e-12; 'rank = d' is the d-fold "
      "translation sector = Fisher rank of a d-dimensional location family, holding only for σ ≳ 1.7–2.3 (d + 1 below, "
      "then 1). ER 'rank 1': top singular vector aligned with the mean-score vector at 180/180 vertices (median |cos| "
      "0.999). RGG: rank d + 1 survives centring (centred mode 3 in 2D, 4 in 3D) — not the mean term, unexplained; so "
-     "on RGGs the rank is not the dimension. Pre-registered rule: not REDUCES (needs the RGG leg); label unchanged. "
+     "on RGGs the rank is not the dimension. Pre-registered rule: not REDUCES (needs the RGG leg), which would keep the "
+     "label; the owner downgraded to Speculative because the only reproduced support left is the textbook fact that a "
+     "d-dimensional location family has Fisher rank d, plus an unexplained d + 1 that contradicts the claim on RGGs. "
      "The 2026-04-20 row concerns the χ spectrum, a different object. Machta 2013 is a vocabulary anchor: the Phase 1 "
      "matrix has no model parameters. Pattern tags: answer-forced-by-definition; restatement-in-new-vocabulary."),
     ("M6", "entry", "Established", D, AUDIT_REF, M6_SHORT,
@@ -96,12 +96,13 @@ CLAIM_BANNERS = {
            "an exact closed-form value, not noise. The fixed-σ 'pass' is the torus closed form at shrinking size; the "
            "data processing inequality is not engaged because F is recomputed on a new graph. "
            f"See `{REPORT}`.\n\n"),
-    "P5": (f"> **UPDATE {D} (`{AUDIT_REF}`), label unchanged.** Phase 1's torus result ('rank = d') is the "
+    "P5": (f"> **DOWNGRADED {D} (`{AUDIT_REF}`): Supported → Speculative (owner).** Phase 1's torus result ('rank = d') is the "
            "translation sector of the hypercubic lattice in a σ window, an exact closed form (the Fisher rank of a "
            "d-dimensional location family). The Erdős–Rényi 'rank 1' is the estimator's mean term. On random "
            f"geometric graphs the rank is d + 1, not d, and the +1 is unexplained. See `{REPORT}`.\n\n"),
 }
 NEW_THREE_STATE = {
+    "P5": f"Speculative — {P5_SHORT} [answer-forced-by-definition; restatement-in-new-vocabulary] ({AUDIT_REF})",
     "P6": f"{P6_LABEL} [contradicted-by-own-tests; local-geometry-coincidence] ({AUDIT_REF})",
     "P7": f"{P7_LABEL} [contradicted-by-own-tests; answer-forced-by-definition] ({AUDIT_REF})",
 }

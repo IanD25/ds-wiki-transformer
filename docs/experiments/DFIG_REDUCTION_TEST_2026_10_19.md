@@ -268,3 +268,11 @@ audit_ref `gsw-dfig-reduction-2026-10-19`, append-only, one row each:
 3. D5's 1.6 is a heuristic for an isotropic distance field; the kagome lattice reaching 1.610 is consistent with it, not a proof of it.
 4. The RGG +1 is unexplained (§2.3). If anyone wants to claim it as a new "disorder direction", the prior-art gate applies first. Random-geometric-graph hop metrics distort Euclidean distance, a known effect, and are the first place to look.
 5. External repository `D_eff-Test-1.0` was read, not modified; values were transcribed from its results files at `8f8094b`.
+
+### 3.5 Owner rulings (2026-10-19)
+
+1. **P7:** the σ ∝ side schedules (physical scale held fixed) are valid coarse-grainings → **Falsified**, as proposed.
+2. **P5:** downgraded **Supported → Speculative**, not kept with a correction row. Reason: the only reproduced support left is the textbook fact that a d-dimensional location family has Fisher rank d, and on random geometric graphs the rank is d + 1, which contradicts the claim as stated. This departs from the mechanical outcome of §1.5 (no change) by owner decision.
+3. New pattern tag **`local-geometry-coincidence`** accepted (P6).
+
+Resulting counts (`claim_status_latest`, 47 claims): **25 Speculative · 4 Supported · 7 Established · 7 Falsified · 4 Retired**.
