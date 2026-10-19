@@ -163,7 +163,7 @@ Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 201
   - The reference_law count includes recent fold-ins: on 2026-10-18, 12 prior-art entries, 10 early-warning-signal entries (EWS1–EWS10) and 13 QR-004 thermodynamic-limits entries (NE07–NE10, BIO17–BIO25); on 2026-10-19, 6 QR-005 gravity-test entries (GT12–GT17) and 3 QR-010 machine-learning entries (ML1, ML2, ML5; the wiki's first ML generalisation entries).
 - **994 links**, **1,302 property rows**, **2,320 ChromaDB chunks**
 - **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
-- **587 tests** — all pass (2026-10-19, run after the QR-005 commit `34edbef`)
+- **587 tests** — all pass (2026-10-19, run after the QR-010 fold-in commit `4f4d436`)
 
 **Provenance (2026-10-19):**
 - **1,070 external anchors over 320 entities**, plus **47 internal constructions**

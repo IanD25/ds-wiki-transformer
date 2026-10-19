@@ -201,7 +201,20 @@
 
   X6 ("Neural Networks") is about biological networks and is not relevant.
 - **Gaps.** No reference entry on generalisation theory, double descent and tempered overfitting, implicit regularisation, scaling laws, transfer and pre-training, benchmark reuse and contamination, Goodhart in ML, distribution shift and shortcuts, emergent abilities, ML in return prediction, or the bitter lesson. Candidate fold-ins ML1–ML10 are in map §H. ML1 supersedes QR-009 R5; ML1, ML2 and ML5 are the priority.
-- **Status:** Literature-mapped (partial), 2026-10-19. Map: [`prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md`](prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md). Primer: [`primers/QR-010_ML_COMPLEXITY_PRIMER.md`](primers/QR-010_ML_COMPLEXITY_PRIMER.md). Partial because many sources were read only at abstract level, and several key ones are preprints or blogs.
+- **Status:** **Gated 2026-10-19** ([report](prior_art_reviews/QR-010_GATES_2026_10_19.md)).
+  - **Gate 1, main form:** `answered`, so **FOLD** (`found-under-other-vocabulary`). Re-scoped wording: *measured on effective rather than raw complexity, when does a heavily over-parameterised learner predict well, and through which mechanisms does it still lose accuracy?*
+  - **Folded the same day** as ML1, ML2 and ML5 (`gsw-qr010-fold-in-2026-10-19`; [fold-in report](prior_art_reviews/QR010_FOLD_IN_2026_10_19.md)).
+  - **Open edges D1–D7** (feature-learning theory; emergence; virtue of complexity in finance; scaling slowdown; RL with verifiable rewards; shift vs scale; the bitter lesson untested) are `open-in-literature`. **Gate 2: DROP in-house** (`undecidable-with-obtainable-data`); kept as watch items with resume conditions (report Part 3).
+  - **Sub-questions:**
+    - S2 partly framed in toy models only, not pursued;
+    - S4 RESTATEMENT (FOLD, `trivial-from-known-result`; in ML5);
+    - S5 answered in parts (FOLD, `found-under-other-vocabulary`; a future ML4);
+    - S7 done: no sloppy-models paper joins MacKay's effective-parameter count to the Fisher spectrum; the join is a one-line identity (`trivial-from-known-result`), so **no ML2 → IT09 link was made**;
+    - S8 a teaching demo only.
+
+  Nothing reaches PROCEED, so nothing is filed.
+
+  Previously: Literature-mapped (partial), 2026-10-19. Map: [`prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md`](prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md). Primer: [`primers/QR-010_ML_COMPLEXITY_PRIMER.md`](primers/QR-010_ML_COMPLEXITY_PRIMER.md). Partial because many sources were read only at abstract level, and several key ones are preprints or blogs.
   - **Settled:** measured on *effective* rather than raw complexity, ML is an extreme case of QR-009's cures, not an exception. It escapes through more independent evidence per effective parameter (20 to ≥ 1,875 tokens per parameter; ~3.6 bits/parameter capacity), pooling (pre-training), and implicit regularisation (the "shrunk middle"). It does so in high-SNR, stable domains. Proven for linear and kernel models; Supported for deep nets.
   - **Measured:** where ML still pays, each through a QR-009 mechanism:
     - M2: leaderboard best-of-N, emergence claims;
@@ -213,10 +226,11 @@
 
     Test-set reuse cost little, because the effective number of tries was small.
   - **Open in the literature:** whether effective-complexity accounting fully explains feature learning (Wilson 2025 vs Nagarajan & Kolter; Poggio et al.); emergent abilities (Schaeffer 2023 vs Du 2024); the virtue of complexity in finance (KMZ vs three converging critiques); whether pre-training scaling has bent (no primary evidence found); what RL with verifiable rewards adds.
-  - **No eighth mechanism needed.** The "broken holdout" deserves its own row in ML. No gates run; no DB writes.
-- **Next.** The owner decides on the following:
-  - whether to fold in ML1, ML2 and ML5 (with QR-009's R1, R3, R4 and R9);
-  - gates: the main form is likely `answered`, giving FOLD (`found-under-other-vocabulary`); S4 is a likely RESTATEMENT; S7 is a Mode A search before any IT09 link.
+  - **No eighth mechanism needed.** The "broken holdout" deserves its own row in ML.
+- **Next.** The owner decides on the following (all optional):
+  - further fold-ins from map §H (ML3 scaling laws; ML4 pre-training as borrowed evidence; ML6–ML10);
+  - a small glossary pass adding the four machine-learning senses of "effective dimension" to `gloss_effective_dimension` (gate report Part 5);
+  - otherwise QR-010 rests as a set of watch items.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -394,3 +408,4 @@
 - **2026-10-19** — QR-009 literature-mapped (partial): map `prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md`, primer `primers/QR-009_COMPLEXITY_TAX_PRIMER.md`. Headline: the tax is documented across fields under other names. It comes from seven mechanisms; three share mathematics (estimation variance, selection, lag against noise). The proposed simulation is mostly answered already. P19 and P20 are flagged for owner review. Only QR-009's lines changed. No gates run; no DB writes.
 - **2026-10-19** — QR-010 raised (owner): why machine learning escapes the complexity tax, and where it doesn't. A deep-dive map and primer were launched.
 - **2026-10-19** — QR-010 literature-mapped (partial): map `prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md`, primer `primers/QR-010_ML_COMPLEXITY_PRIMER.md`. Headline: measured on effective rather than raw complexity, modern ML escapes the tax through QR-009's own cures (vastly more evidence per effective parameter, pooling, implicit regularisation) in high-SNR, stable domains, and still pays through M2, M3, M5–M7 and broken holdouts. Over-parameterisation's demonstrated extra benefit is easier optimisation. Open edges: feature-learning theory, emergence, finance. Only QR-010's lines changed. No gates run; no DB writes.
+- **2026-10-19** — QR-010 folded in and gated (owner-approved). Fold-in `gsw-qr010-fold-in-2026-10-19`: ML1 (double descent, benign and tempered overfitting; established, Tier 2), ML2 (implicit regularisation and effective complexity; contested, Tier 2 †) and ML5 (benchmark reuse, contamination, leakage and leaderboard selection; contested, Tier 2 †); 7 links, 29 anchors (`prior_art_reviews/QR010_FOLD_IN_2026_10_19.md`). Gates (`prior_art_reviews/QR-010_GATES_2026_10_19.md`): main form `answered`, FOLD (`found-under-other-vocabulary`); open edges D1–D7 `open-in-literature`, DROP in-house (`undecidable-with-obtainable-data`), kept as watch items. S7: no sloppy-models paper joins MacKay's effective-parameter count to the Fisher spectrum, so no ML2 → IT09 link. Only QR-010's lines changed.

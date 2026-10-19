@@ -359,6 +359,8 @@ The terms are QR-009's:
 
 A claim that "effective dimension explains why deep learning works" would stack four objects under one word (`vocabulary-stacking-analogy`). It is not supported by anything found.
 
+> **Note 2026-10-19 (S7 done; [`QR-010_GATES_2026_10_19.md`](QR-010_GATES_2026_10_19.md) Part 4).** MacKay 1992's count is confirmed: γ = Σ λ_a/(λ_a + α), Eq. 4.9, "the effective number of parameters that are well determined by the data". Maddox et al. cite it. But none of Transtrum et al. 2015, Quinn et al. 2023 or Sethna's 2024 book draft cites MacKay or uses that count. The join to the Fisher spectrum is a one-line identity (`trivial-from-known-result`), not a sourced connection, so **no ML2 → IT09 link was made.** Body text above unchanged.
+
 ---
 
 ## (G) What the wiki holds, and its gaps
