@@ -41,16 +41,33 @@ Claude's standing instructions when working on this platform:
 
 > **Read [`docs/SESSION_HANDOVER_2026-10-18.md`](docs/SESSION_HANDOVER_2026-10-18.md) first.** Mode A consistency pass `gsw-consistency-pass-2026-10-18`: the source DB brought in line with the calibration record, residual errors swept (including errors shared with the *Relatively Human* podcast), the H5 prior-art gate, claim/process views, a podcast crosswalk, and the M1 milestone. Milestone snapshot `snap_20261018_190812` is the **pre-merge baseline** for the planned wiki + podcast merge.
 
+> **Later the same day (after that baseline; all owner-approved, corrections and fold-ins only, no promotions):**
+> - **Prior-art fold-in:** BIO12–16, IT09–11, STAT4–6, URB1 ([report](docs/prior_art_reviews/PRIOR_ART_FOLD_IN_2026_10.md)).
+> - **Early-warning-signal fold-in:** EWS1–EWS10 ([report](docs/prior_art_reviews/EWS_FOLD_IN_2026_10.md)).
+> - **CCA reduction tests:** CCA-1c, CCA-1b magnitude and CCA-2 retired (see the CCA thread).
+> - **QR-004 corrections** `gsw-qr004-corrections-2026-10-18` ([report](docs/prior_art_reviews/QR004_CORRECTIONS_2026_10_18.md)): 28 thermodynamics-of-information errors, mostly Landauer charged to operations that are not erasures (new drift tag `landauer-scope-overreach`).
+> - **QR-004 fold-in** `gsw-qr004-fold-in-2026-10-18` ([report](docs/prior_art_reviews/QR004_FOLD_IN_2026_10_18.md)): NE07–NE10, BIO17–BIO25.
+> - **IT06 geodesic check** `gsw-it06-geodesic-check-2026-10-18` ([report](docs/prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md)).
+> - **QR-006b:** pilot passed and protocol frozen; the confirmatory run is next (see `docs/QUESTIONS_RAISED_LOG.md`).
+>
+> The latest per-pass hand-over notes are these reports; no newer `SESSION_HANDOVER` file exists.
+
 **Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0; the 2026-10-18 pass made corrections only.
 
-**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 26 Speculative · 5 Supported · 7 Established · 5 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (92 rows / 14 audit refs — several rows per entity, and process items mixed in).
+**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 26 Speculative · 5 Supported · 7 Established · 5 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (99 rows / 19 audit refs as of 2026-10-18 — several rows per entity, and process items mixed in).
 
 **State by thread:**
 - **D_eff / Fisher-rank (DFIG)** — P5 Supported only as an application of Machta et al. 2013 sloppy models (and at a continuous transition it reduces to standard exponents); P6 contradicted by own tests; P7 partially falsified (the participation ratio fails monotonicity in every tested configuration); P8 **Falsified** by Gefen–Mandelbrot–Aharony 1980 — critical behaviour on fractals depends on topology as well as dimension (now reference entry STAT4); JJK 2004 does not address transition order. Ax2, OmD and T1 remain internal constructions.
 - **CCA** — CCA-1 and CCA-1b scaling Falsified; **no CCA item is Supported any more**. CCA-1b magnitude and CCA-2 **Retired** 2026-10-18 by a pre-registered reduction test ([report](docs/experiments/CCA1B_CCA2_REDUCTION_TEST_2026_10_18.md)): the April Phase A–D observables were the gap-position d_eff and gap-ratio η of `fisher_diagnostics` (not the χ spectrum). Phase C/D η is a fixed function of the nearest-neighbour bond energy, so the ~20× dη/dT separation is latent heat vs the 2D Ising log specific heat (Folded); on hypercubic tori d_eff ∈ {1, d, d+1} by symmetry, with d+1 = d translations + 1 uncentred-mean mode in an α window only (forced by definition; the 1e-8 spectral tolerance was missed via the tool's EPS guard, deviation accepted by owner). CCA-1c **Retired — Folded** 2026-10-18 by the λ₁ reduction test ([report](docs/experiments/CCA1C_LAMBDA1_REDUCTION_TEST_2026_10_18.md)): because tr χ = N(q−1) is fixed, the first-order d_eff jump is the Potts order-parameter jump read through λ₁ ≈ N(q−1)⟨M²⟩ (Wu 1982); with λ₁ removed nothing jumps. STAT3 (the CCA class) **downgraded Supported → Speculative** 2026-10-18 (owner): its only support was that d_eff result; it is a classification, its "novel framing" claim is ungated and overlaps QR-002 / self-organised criticality. Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
-- **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only.
+- **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only. The IT06 check (2026-10-18) found that the slow-driving minimum-dissipation metric is the friction tensor (Sivak & Crooks 2012), which is Fisher–Rao only for constant relaxation time. So P21's instance (4) is withdrawn from Chentsov coverage (label unchanged), and X8's "Seifert bound" was mis-stated (its measured η values stand). The chain itself does not depend on IT06.
 - **Cosmological coupling (P17, P23, GT11)** — Speculative, high risk. GW tension with k = 3 is ~3σ (Amendola 2024's 5σ was a forecast); Cadoni 2023's k = 1 is universal for regular BHs, with their own analysis preferring k = 3. Wording corrected throughout 2026-10-18.
 - **Scaling** — P12 Falsified (β(λ) ≤ 1). P11 **Falsified** by Bettencourt 2013 (δ = H/[D(D+H)], not D/(D+1); now URB1). P2 **Retired — folded** into WBE 1997 (BIO12). H5's two-process form is a re-derivation and a **RESTATEMENT of West et al. 2003** ([prior-art report](docs/prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md)). C1's curvature is contested. C2's "β = 1 ± 1/D_eff" withdrawn as a restatement of Bettencourt 2013. P14a is the only runnable item. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md), banners included.
+- **Thermodynamics of information (QR-004)** — the answer, now folded in:
+  - Cells run 10× (translation) to ~10⁸× (neural signalling) above Landauer: Established. Most cellular operations are not erasures, and copying is logically reversible (NE07, BIO19).
+  - Against the bounds that do apply (TUR NE09, proofreading BIO17, sensing BIO20/BIO21), a few machines sit within ~2–6×, all from fitted models. The evidence says they are tuned for speed, not minimum energy (BIO18).
+  - Whether near-bound operation buys fitness is open in the literature (BIO23; Yang 2021).
+  - Q5/P15's "cost of coherence" has a published answer that contradicts the ansatz in form for molecular clocks (NE10: Zhang 2020, cost diverges as 1/(1−r)). Continuous oscillator models are model-dependent.
+  - The B5/E2/TD3 "D-sensitive" facet was corrected to D-invariant.
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
 **Open items:**
@@ -63,6 +80,10 @@ Claude's standing instructions when working on this platform:
 7. Anchors 818/819 (P6/P7 `contradicts` Machta 2013): notes look swapped and P7's relationship is doubtful — owner review.
 8. Content-property gaps: HB09, GT07, IT06 and X8 have no `mathematical_archetype` or `dimensional_sensitivity` (allow-listed as `KNOWN_UNTAGGED` in `tests/test_integration.py`); 10 entries (CM9–CM11, CR1, EM12, EM13, FM7, GV4, MS1, TD14) carry duplicate, identical rows for both properties. Not fixed — values need a judgment call. (The stale hard-coded test counts were fixed 2026-10-18: tests now read expected counts from the DB.)
 9. `docs/demo/` commit decision — owner's.
+10. QR-004 leftovers:
+    - sub-question S6 (does the synchronization-cost threshold depend on network dimension?) needs both gates before any work, and carries a drift warning: it revives the d_f thread;
+    - small corrections: RG04 (DPI ⇒ c-theorem overstatement, as fixed in INFO4), IT03 ("free energy = kT·KL between thermal states"), the CHEM2→B5 analogy link.
+11. The `dimensional_sensitivity` facet in many entries (QM2, Q3, T6, T9 …) rests on the DS-internal posit that Ω_D acts on k_B and ℏ, not on any reference law. A DFIG-level review, not a quick fix.
 
 **Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
 
