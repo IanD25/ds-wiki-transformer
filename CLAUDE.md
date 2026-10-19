@@ -50,16 +50,30 @@ Claude's standing instructions when working on this platform:
 > - **IT06 geodesic check** `gsw-it06-geodesic-check-2026-10-18` ([report](docs/prior_art_reviews/IT06_GEODESIC_CHECK_2026_10_18.md)).
 > - **QR-006b:** pilot passed and protocol frozen; the confirmatory run is next (see `docs/QUESTIONS_RAISED_LOG.md`).
 >
+> **2026-10-19 (owner-approved, corrections and fold-ins only, no promotions):**
+> - **QR-005 corrections** `gsw-qr005-corrections-2026-10-19` ([report](docs/prior_art_reviews/QR005_CORRECTIONS_2026_10_19.md)). The 27 gravity-strand errors from the QR-005 map, all re-checked against primary sources, plus 10 further entries repeating the Bianconi misdescription.
+>   - Main pattern: a thermodynamic, entropic or induced derivation of gravity read as "not quantum / no gravitons", although each uses ħ. New drift tag `emergent-read-as-classical`.
+>   - Writes: 67 section banners and 19 links. Three wrong anchors fixed (HB09's Wall 2009 DOI pointed at Kerr/CFT; two GT02 anchors credited Dai & Stojkovic to Hossenfelder). Four calibration rows, labels unchanged. A dated banner in `CCA_GRAVITY_FINDINGS.md` §1.1.
+> - **QR-005 fold-in** `gsw-qr005-fold-in-2026-10-19` ([report](docs/prior_art_reviews/QR005_FOLD_IN_2026_10_19.md)): GT12–GT17, the experimental side of the question.
+>   - The entries: BMV entanglement witness; the excluded pairwise classical channel; Oppenheim's classical–quantum gravity; Diósi–Penrose collapse bounds; Schrödinger–Newton gravity; minimum-noise tests.
+>   - The Oppenheim/Janse window discrepancy (S5) is resolved: the map used arXiv v1, not the published version.
+>
 > The latest per-pass hand-over notes are these reports; no newer `SESSION_HANDOVER` file exists.
 
 **Mission state:** M0 audit complete (2026-04-08). **M1 compiled 2026-10-18** — [`docs/M1_MILESTONE_COMPILATION.md`](docs/M1_MILESTONE_COMPILATION.md). Nothing has been promoted since M0; the 2026-10-18 pass made corrections only.
 
-**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 26 Speculative · 5 Supported · 7 Established · 5 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (99 rows / 19 audit refs as of 2026-10-18 — several rows per entity, and process items mixed in).
+**What we believe — 47 scientific claims, latest status each (`claim_status_latest` view in `wiki_history.db`):** 26 Speculative · 5 Supported · 7 Established · 5 Falsified · 4 Retired (P2, CCA-1c and CCA-1b magnitude folded; CCA-2 forced by definition). Eight process records (terminology decisions, reading priorities, framework diagnoses) are tracked separately in `process_status_latest`. **Quote numbers from these views, never from raw calibration rows** (103 rows / 20 audit refs as of 2026-10-19 — several rows per entity, and process items mixed in).
 
 **State by thread:**
 - **D_eff / Fisher-rank (DFIG)** — P5 Supported only as an application of Machta et al. 2013 sloppy models (and at a continuous transition it reduces to standard exponents); P6 contradicted by own tests; P7 partially falsified (the participation ratio fails monotonicity in every tested configuration); P8 **Falsified** by Gefen–Mandelbrot–Aharony 1980 — critical behaviour on fractals depends on topology as well as dimension (now reference entry STAT4); JJK 2004 does not address transition order. Ax2, OmD and T1 remain internal constructions.
 - **CCA** — CCA-1 and CCA-1b scaling Falsified; **no CCA item is Supported any more**. CCA-1b magnitude and CCA-2 **Retired** 2026-10-18 by a pre-registered reduction test ([report](docs/experiments/CCA1B_CCA2_REDUCTION_TEST_2026_10_18.md)): the April Phase A–D observables were the gap-position d_eff and gap-ratio η of `fisher_diagnostics` (not the χ spectrum). Phase C/D η is a fixed function of the nearest-neighbour bond energy, so the ~20× dη/dT separation is latent heat vs the 2D Ising log specific heat (Folded); on hypercubic tori d_eff ∈ {1, d, d+1} by symmetry, with d+1 = d translations + 1 uncentred-mean mode in an α window only (forced by definition; the 1e-8 spectral tolerance was missed via the tool's EPS guard, deviation accepted by owner). CCA-1c **Retired — Folded** 2026-10-18 by the λ₁ reduction test ([report](docs/experiments/CCA1C_LAMBDA1_REDUCTION_TEST_2026_10_18.md)): because tr χ = N(q−1) is fixed, the first-order d_eff jump is the Potts order-parameter jump read through λ₁ ≈ N(q−1)⟨M²⟩ (Wu 1982); with λ₁ removed nothing jumps. STAT3 (the CCA class) **downgraded Supported → Speculative** 2026-10-18 (owner): its only support was that d_eff result; it is a classification, its "novel framing" claim is ungated and overlaps QR-002 / self-organised criticality. Terminology renames (d_eff vs Mattingly 2018; η vs η_critical) proposed, banners in place, body text not migrated.
 - **Fisher–gravity chain** — Speculative: a conceptual analogy stacking "relative entropy" across different objects, confirmed by the 2026-05-04 Maldacena pass. Bianconi 2025 is not an independent second path (it uses quantum relative entropy). GT10 Supported, linearized only. P21 Established for Chentsov's classical theorem only. The IT06 check (2026-10-18) found that the slow-driving minimum-dissipation metric is the friction tensor (Sivak & Crooks 2012), which is Fisher–Rao only for constant relaxation time. So P21's instance (4) is withdrawn from Chentsov coverage (label unchanged), and X8's "Seifert bound" was mis-stated (its measured η values stand). The chain itself does not depend on IT06.
+  - **QR-005 corrections (2026-10-19)** found three of the chain's four hop descriptions wrong as written; the label stays Speculative:
+    - Hop 2's identity (Fisher = Hessian of KL) is not Cramér–Rao.
+    - Hop 3 (IT03 → GT10) rests on the first law of entanglement (Jacobson 2016 Eq. 16). The relative-entropy variation vanishes for *any* state, whether or not Einstein's equation holds, so that link carries no Einstein content. The quantity is quantum relative entropy, not KL.
+    - Hop 4's "classical limit" is not in Jacobson 2016. Both derivations are semiclassical; 2016 calls its key step "the usual Clausius relation" at T = ħ/2π.
+  - Bianconi 2025 uses no Fisher metric at all (full text; the earlier "Bures" reading was an inference).
+  - GT10 stays Supported, restated as: semiclassical, first-order state variations, no holography, silent on gravitons.
 - **Cosmological coupling (P17, P23, GT11)** — Speculative, high risk. GW tension with k = 3 is ~3σ (Amendola 2024's 5σ was a forecast); Cadoni 2023's k = 1 is universal for regular BHs, with their own analysis preferring k = 3. Wording corrected throughout 2026-10-18.
 - **Scaling** — P12 Falsified (β(λ) ≤ 1). P11 **Falsified** by Bettencourt 2013 (δ = H/[D(D+H)], not D/(D+1); now URB1). P2 **Retired — folded** into WBE 1997 (BIO12). H5's two-process form is a re-derivation and a **RESTATEMENT of West et al. 2003** ([prior-art report](docs/prior_art_reviews/H5_TWO_PROCESS_PRIOR_ART_2026_10_18.md)). C1's curvature is contested. C2's "β = 1 ± 1/D_eff" withdrawn as a restatement of Bettencourt 2013. P14a is the only runnable item. See [`docs/SCALING_RESEARCH_QUEUE_2026_05_04.md`](docs/SCALING_RESEARCH_QUEUE_2026_05_04.md), banners included.
 - **Thermodynamics of information (QR-004)** — the answer, now folded in:
@@ -68,6 +82,11 @@ Claude's standing instructions when working on this platform:
   - Whether near-bound operation buys fitness is open in the literature (BIO23; Yang 2021).
   - Q5/P15's "cost of coherence" has a published answer that contradicts the ansatz in form for molecular clocks (NE10: Zhang 2020, cost diverges as 1/(1−r)). Continuous oscillator models are model-dependent.
   - The B5/E2/TD3 "D-sensitive" facet was corrected to D-invariant.
+- **Gravity: quantum or thermodynamic? (QR-005)** — map, corrections and fold-in done 2026-10-19:
+  - **"Quantum vs thermodynamic" is largely a false choice.** Every thermodynamic derivation of gravity (Jacobson 1995/2016, Verlinde 2011, Sakharov) uses ħ and is silent on whether the field is quantized. Reading it as "not quantum" is the drift tag `emergent-read-as-classical`. "Einstein's equation behaves like an equation of state" is Supported; "therefore gravity is not quantum" is not what the cited authors claim.
+  - **The live question is experimental: does gravity entangle, and if not, how much noise must it add?** Excluded: the pairwise classical channel (GT13); parameter-free Diósi–Penrose (GT15; R₀ > 4.5 × 10⁻¹⁰ m); Oppenheim's "noise everywhere" kernel (GT14).
+  - **Still open:** Oppenheim's other kernels, with ~9 and ~11 orders left on direct data (GT14); a positive BMV witness would rule out LOCC gravity but not by itself prove gravitons, which is open in the literature (GT12); the noise route (GT17; threshold ~10⁻¹⁸ m s⁻²/√Hz at 1 mm, from one preprint).
+  - The experiments are 7.5–10 orders of magnitude away. Nothing here is decidable in-house.
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
 **Open items:**
@@ -84,6 +103,11 @@ Claude's standing instructions when working on this platform:
     - sub-question S6 (does the synchronization-cost threshold depend on network dimension?) needs both gates before any work, and carries a drift warning: it revives the d_f thread;
     - small corrections: RG04 (DPI ⇒ c-theorem overstatement, as fixed in INFO4), IT03 ("free energy = kT·KL between thermal states"), the CHEM2→B5 analogy link.
 11. The `dimensional_sensitivity` facet in many entries (QM2, Q3, T6, T9 …) rests on the DS-internal posit that Ω_D acts on k_B and ℏ, not on any reference law. A DFIG-level review, not a quick fix.
+12. QR-005 leftovers ([corrections report](docs/prior_art_reviews/QR005_CORRECTIONS_2026_10_19.md) §5):
+    - map §G R7–R14 not folded in (owner deferred);
+    - the question gates are not run (Gate 1 likely `open-in-literature`; S1, the thermodynamic half, looks `answered`; S7 is a DROP candidate);
+    - link 869 (GT10 → HB09, "Einstein equation as fixed point of the GSL") is unsourced;
+    - BR01's `mathematical_archetype` (conservation-law) does not fit.
 
 **Standing M0 findings (2026-04-08, still current; P17/P23 wording since corrected):**
 
@@ -95,14 +119,16 @@ Claude's standing instructions when working on this platform:
 
 Before any new experimental or conjecture work: read Transtrum-Machta-Sethna 2015, Quinn et al. 2022, Janke-Johnston-Kenna 2004, Prokopenko-Lizier 2011 (prior-art reading list in M0).
 
-**Wiki scale (2026-10-18):**
-- **354 entries** = 313 content entries (248 reference_law — including, all folded in 2026-10-18, 12 prior-art entries, 10 early-warning-signal entries (EWS1–EWS10) and 13 QR-004 thermodynamic-limits entries (NE07–NE10, BIO17–BIO25) — 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism) + **41 glossary entries** (21 disambiguation pages, 20 defined terms)
-- **964 links**, **1,266 property rows**, **2,266 ChromaDB chunks**
+**Wiki scale (2026-10-19):**
+- **360 entries** = 319 content entries + **41 glossary entries** (21 disambiguation pages, 20 defined terms).
+  - The 319 content entries: 254 reference_law, 18 method, 15 law, 9 instantiation, 8 open question, 5 constraint, 3 axiom, 3 parameter, 3 theorem, 1 mechanism.
+  - The reference_law count includes recent fold-ins: on 2026-10-18, 12 prior-art entries, 10 early-warning-signal entries (EWS1–EWS10) and 13 QR-004 thermodynamic-limits entries (NE07–NE10, BIO17–BIO25); on 2026-10-19, 6 QR-005 gravity-test entries (GT12–GT17).
+- **987 links**, **1,290 property rows**, **2,302 ChromaDB chunks**
 - **23 conjectures (P1–P23)**, **12 gates (G1–G12)**
-- **587 tests** — all pass (2026-10-18)
+- **587 tests** — all pass (2026-10-19, run after the QR-005 commit `34edbef`)
 
-**Provenance (2026-10-18):**
-- **1,006 external anchors over 311 entities**, plus **47 internal constructions**
+**Provenance (2026-10-19):**
+- **1,040 external anchors over 317 entities**, plus **47 internal constructions**
 - Every non-glossary entry has an anchor or an internal-construction flag (the last orphan, GT05, was anchored 2026-10-18). The 21 glossary disambiguation pages have neither, by design.
 - History: 42% provenance on 2026-04-18; full non-glossary coverage from commit `89a989d` (2026-04-20).
 
@@ -300,7 +326,7 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 - **Speculative — heterodox, no unique prediction:** P1, P4, P10
 - **Speculative — other:** P3 (over-parameterized operator), P9 (monitoring gate; belongs in Q-series), P14 (split into P14a runnable / P14b blocked), P16 (blocked on Q4 specification), P17 (high risk), P22 (trichotomy unproven)
 
-**Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): Speculative — conceptual analogy, not a structural result.
+**Fisher-gravity chain** (M6→IT05→IT03→GT10→GT01): Speculative — conceptual analogy, not a structural result. Hops 2–4 were also mis-described; hop 3 is vacuous (first law of entanglement). Corrected 2026-10-19 under `gsw-qr005-corrections-2026-10-19`.
 
 ---
 
@@ -363,5 +389,5 @@ Labels are the latest calibration rows (`claim_status_latest`); `conjectures.thr
 7. **Confidence tag everything new.** Established / Supported / Speculative. No silent promotion. Anchor confidence: high / medium / low.
 8. **Run both question gates before any new Q/P/Postulate or Questions Raised Log entry** — see `docs/QUESTION_GATES.md`. Gate 1, prior art (`memory/feedback_prior_art_gate.md`): mandatory deep literature review; "yes and" scaffolding is explicitly harmful. Gate 2, worth asking (`memory/feedback_worth_asking_gate.md`): if no prior work is found, find out why — trivial, absent for a reason, obvious or erroneous, avoided by experts — before PROCEED / RE-SCOPE / FOLD / DROP. Open questions are logged in `docs/QUESTIONS_RAISED_LOG.md`.
 9. **Preserve falsifications.** Never delete wrong claims — label as falsified per `memory/feedback_preserve_falsifications.md`. Use specific labels per `memory/feedback_diagnostic_labels.md`.
-10. **Provenance is complete for non-glossary entries** (1,006 anchors over 311 entities + 47 internal constructions, 2026-10-18). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
+10. **Provenance is complete for non-glossary entries** (1,040 anchors over 317 entities + 47 internal constructions, 2026-10-19). New entries need an anchor or an internal-construction flag at creation; check orphans with one JOIN (entries in neither table). Use the cluster-template pattern per `SESSION_HANDOVER_2026-04-18.md` when anchoring a batch.
 11. **Report numbers from `claim_status_latest` / `process_status_latest`**, not raw calibration rows. If a correction collides with an existing (entity, date, audit_ref) row, use a `-<topic>` sub-ref (precedent: `gsw-consistency-pass-2026-10-18-h5-gate`).

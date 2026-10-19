@@ -190,7 +190,7 @@
 
 - **Question.** Will tabletop experiments show gravity carrying quantum information (mediating entanglement), or the decoherence and force noise that entropic and thermodynamic models predict?
 - **Why the wiki raises it.** It is the testable form of the Fisher–gravity and entropic-gravity strand, and of the owner's information-first worldview.
-- **Wiki holdings.** The thermodynamic and holographic side is well covered: GT01–GT08, GT10, HB01–HB10, BR01–BR05, plus IT02–IT05 on the Fisher–gravity chain. GT05 was corrected 2026-10-18. The map (§F) found 27 errors or needed qualifications in these entries, none applied (proposed tag `emergent-read-as-classical`). Examples:
+- **Wiki holdings.** The thermodynamic and holographic side is well covered: GT01–GT08, GT10, HB01–HB10, BR01–BR05, plus IT02–IT05 on the Fisher–gravity chain. GT05 was corrected 2026-10-18. The map (§F) found 27 errors or needed qualifications in these entries. **All 27 were applied 2026-10-19** (`gsw-qr005-corrections-2026-10-19`; tag `emergent-read-as-classical`; [report](prior_art_reviews/QR005_CORRECTIONS_2026_10_19.md)), with the Bianconi error also fixed in 10 further entries and the three anchors repaired. Examples of what was wrong:
   - GT10 says gravity is "not transmitted by gravitons";
   - GT10→IT03 "δS_EE = 0 ⇔ δD_KL = 0";
   - GT01's Λ "exactly as in Einstein–Hilbert";
@@ -200,13 +200,15 @@
   - HB02's "exactly entanglement entropy";
   - the BR03/HB07 RT-surface contradiction;
   - three wrong anchors (two on GT02, one on HB09).
-- **Gaps.** The experimental side of the question is empty. The wiki has no entry on:
-  - gravitationally mediated entanglement (BMV) or its interpretation debate;
-  - the classical-channel model and its exclusion;
-  - Oppenheim's classical-quantum gravity;
-  - Diósi–Penrose collapse and its underground bounds;
-  - semiclassical (Schrödinger–Newton) gravity;
-  - the minimum-noise theorems;
+- **Gaps.** The experimental side of the question was empty. As of 2026-10-19 it holds GT12–GT17 (`gsw-qr005-fold-in-2026-10-19`; [report](prior_art_reviews/QR005_FOLD_IN_2026_10_19.md)):
+  - GT12, the BMV witness and its interpretation debate;
+  - GT13, the classical channel and its exclusion;
+  - GT14, Oppenheim's classical-quantum gravity;
+  - GT15, Diósi–Penrose and its bounds;
+  - GT16, Schrödinger–Newton gravity;
+  - GT17, the minimum-noise tests.
+
+  Still missing (map R7–R14, deferred by the owner):
   - quantum matter in external gravity;
   - the mass gap;
   - graviton detectability;
@@ -214,7 +216,7 @@
   - the Page curve;
   - Verlinde 2016 as its own theory.
 
-  Map §G proposes 14 reference entries (R1–R14), owner's call.
+  Map §G proposed 14 reference entries (R1–R14); R1–R6 are folded in.
 - **Starting literature:** Bose et al. 2017 (*PRL* 119:240401); Marletto & Vedral 2017 (*PRL* 119:240402); Carney, Karydas, Scharnhorst, Singh & Taylor 2025 (*PRX* 15:031038, **verified 2026-10-18**: free-energy models, with S_FF(0) force noise and decoherence signatures; the non-local λ = 0 model is already excluded).
 - **What would decide it.** A gravitational-entanglement witness, or the absence of predicted excess decoherence and force noise, at the relevant mass and separation scales.
 - **Status:** **Literature-mapped (partial)** 2026-10-18; un-parked 2026-10-18 at owner's request. Map: [`prior_art_reviews/QR-005_GRAVITY_QUANTUM_VS_THERMO_MAP_2026_10_18.md`](prior_art_reviews/QR-005_GRAVITY_QUANTUM_VS_THERMO_MAP_2026_10_18.md). Primer for the owner: [`primers/QR-005_GRAVITY_PRIMER.md`](primers/QR-005_GRAVITY_PRIMER.md). It is partial because most sources were read at abstract level and several numbers are flagged unresolved (map §I). Headline:
@@ -223,12 +225,13 @@
   - **Open in the literature:** what a positive entanglement witness would prove. It rules out LOCC-type classical gravity, but proving gravitons needs extra assumptions; framed by Bose et al. *RMP* 2025, Huggett et al. 2022 and Fragkos et al. 2022. Classical entanglement claims (Trillo & Navascués 2025; Aziz & Howl 2025) are contested.
   - **Not decidable by us.** The mass gap is ~7.5 orders of magnitude in superposed mass and ~10 in measured source mass, and the noise route is ~9 orders short. No published timeline exists.
   - Flagged: the question closest to the owner's own gravity strand, where an aesthetic prior can stand in for evidence (primer §(e)).
-- **Next.** Owner decisions, in order:
-  1. Whether to apply map §F (27 corrections; tag `emergent-read-as-classical`), including the three anchor fixes.
-  2. Whether to fold in §G entries, R1–R6 first. Before R3, do the small Mode A reconciliation S5: the Janse 2024 and Oppenheim 2023 windows disagree.
-  3. Whether to run the gates. Gate 1 looks headed for `open-in-literature` for the question as worded, and `answered` for its thermodynamic half (S1). S7 is a DROP candidate.
+- **Next.** Corrections (§F) and the R1–R6 fold-in are done, both owner-approved 2026-10-19.
+  - **S5 is resolved.** The map's "31 orders" came from arXiv v1 of Oppenheim et al.; the published windows, with Janse 2024's upper bounds, leave ~9 and ~11 orders (GT14).
+  - **Remaining owner decisions:**
+    1. Whether to run the gates. Gate 1 looks headed for `open-in-literature` for the question as worded, and `answered` for its thermodynamic half (S1). S7 is a DROP candidate.
+    2. Whether to fold in R7–R14.
 
-  Nothing is runnable in-house beyond the S5 bookkeeping.
+  Nothing is runnable in-house.
 
 ---
 
@@ -266,3 +269,4 @@
 - **2026-10-19** — QR-006b confirmatory run (primary analysis): controls pass; NO in S1, S2, S3 and SM; S4 undetectable; S5 inconclusive (`experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md`). The post-hoc lead-time audit finds a causal-detrending artefact (`experiments/QR006B_LEADTIME_AUDIT_2026_10_19.md`). Only QR-006b's status and "Next" lines changed; nothing promoted.
 - **2026-10-19** — QR-006b answer labelled "NO in all decidable regimes"; S5 accepted as inconclusive (owner; protocol §11 D3). Only QR-006b's "Next" line changed.
 - **2026-10-19** — QR-001 un-parked (owner) and literature-mapped (partial): map `prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md`. Headline: why few parameters suffice is settled for smooth least-squares models and RG coarse-graining, open for general probabilistic models (Quinn 2023 §8.2); the wiki's DFIG claims sit outside this literature (DFIG reduction test, same day). Only QR-001's status line changed. No gates run; no DB writes.
+- **2026-10-19** — QR-005: map §F corrections applied (`gsw-qr005-corrections-2026-10-19`; tag `emergent-read-as-classical`) and R1–R6 folded in as GT12–GT17 (`gsw-qr005-fold-in-2026-10-19`), both owner-approved; S5 resolved. Status unchanged. Only QR-005's holdings, gaps and next lines changed.
