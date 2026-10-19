@@ -154,7 +154,20 @@
 
 - **Question.** Do cells, organisms and ecosystems operate near Landauer and thermodynamic-uncertainty bounds when sensing, signalling and regulating, and what does running near those bounds buy them?
 - **Why the wiki raises it.** It is the real version of P15's retired "cost of coherence". It runs through the map's biggest genuine hubs (Second Law TD3, Shannon INFO1, Landauer B5) into biology.
-- **Wiki holdings.** TD3, INFO1, INFO2, INFO4, INFO5, B5, BIO5, F1, F5, plus adjacent IT06, NE03–NE06 and BIO10. The physics bound is held (B5, anchored to Landauer 1961). None of the literature that tests biology against the bounds is held. The map found 28 errors or needed qualifications in these and related entries. The main pattern is Landauer applied to operations that are not erasures (copying, encoding, spikes, synchronization), the same mistake that voided P15. See map §F.
+- **Wiki holdings.** TD3, INFO1, INFO2, INFO4, INFO5, B5, BIO5, F1, F5, plus adjacent IT06, NE03–NE06 and BIO10. **Corrected 2026-10-18** (`gsw-qr004-corrections-2026-10-18`, owner-approved; [report](prior_art_reviews/QR004_CORRECTIONS_2026_10_18.md)): the map's §F errors were applied as dated banners across 59 sections, 20 link descriptions and 3 facet values; tag `landauer-scope-overreach`; IT06 left for a separate check. **Folded in 2026-10-18** (`gsw-qr004-fold-in-2026-10-18`; [report](prior_art_reviews/QR004_FOLD_IN_2026_10_18.md)): 13 reference entries close the gaps listed below:
+  - NE07 Bennett reversibility;
+  - NE08 generalised and finite-time Landauer;
+  - NE09 TUR;
+  - NE10 cost of oscillation and synchronization;
+  - BIO17 kinetic proofreading;
+  - BIO18 speed over accuracy;
+  - BIO19 copying;
+  - BIO20 Berg–Purcell;
+  - BIO21 cost of adaptation;
+  - BIO22 neural cost per bit;
+  - BIO23 cellular efficiency and the open question;
+  - BIO24 motors;
+  - BIO25 information-limited chemotaxis.
 - **Gaps.** No TUR; no kinetic proofreading (Hopfield); no Bennett reversible computation as its own result; no sensing limits (Berg–Purcell); no cost of oscillation or synchronization; no motor energetics; no measured energy-per-bit figures (Laughlin, Kempes). Map §G proposes 13 reference entries (R1–R13), owner's call.
 - **Starting literature:** Bérut et al. 2012 (Landauer test); Barato & Seifert 2015 (*PRL* 114:158101); Lan et al. 2012 (*Nat. Phys.* 8:422, energy–speed–accuracy in sensory adaptation).
 - **What would decide it.** Measured dissipation versus precision for specific biochemical networks, compared with the bound.
@@ -164,7 +177,7 @@
   - **The second half is open in the literature.** "What does running near the bound buy?" is framed as open by Yang et al. 2021; the evidence so far says machines are tuned for speed.
   - **P15/Q5's "cost of coherence" has a published answer** (Zhang et al. 2020): cost diverges as synchrony becomes perfect, the reverse of the retired ansatz.
 - **Next.** Owner decisions, in order:
-  1. Which §F corrections to apply, and which §G entries to fold in. Re-read abstract-only primaries first.
+  1. *Done 2026-10-18:* §F corrections applied and all 13 §G entries folded in. Hopfield 1974, Lan 2012 and Terauchi 2007 were re-read in full and Laughlin 1998 at abstract level. Follow-up: IT06's Fisher–Rao geodesic claim (X8 and the Fisher–gravity chain depend on it).
   2. Whether to run the gates on candidate sub-question S6 (does the synchronization-cost threshold depend on network dimension?). It is the only one that looks both possibly unasked and decidable in-house, and it carries a drift warning (it revives the d_f thread).
   3. S1–S3 look answered (fold). S4–S5 are open but experimental (record, don't pursue). S7 looks like DROP.
 
@@ -199,3 +212,4 @@
 - **2026-10-18** — Owner review of the open questions. Active: QR-006b (readings, then benchmark design) and QR-004 (literature mapping). QR-008 waits on QR-006b. Parked until those two finish: QR-001, QR-002, QR-003, QR-005 (reasons in each entry). "Parked" added to the status ladder.
 - **2026-10-18** — QR-004 literature-mapped (partial); map saved as `prior_art_reviews/QR-004_THERMO_LIMITS_LITERATURE_MAP_2026_10_18.md`. Headline: cells sit far above Landauer, and the field already knows why. Several machines sit within a few-fold of the TUR and process-specific bounds; what that closeness buys is open in the literature. Found 28 wiki errors or needed qualifications, none applied (proposed tag `landauer-scope-overreach`). Only QR-004's holdings, gaps, status and next lines changed. No gates run; no DB writes.
 - **2026-10-18** — QR-006b readings closed (second-search report §8): **PROCEED with named gaps**. Eason 2014 clean (full text); Dakos & Soler-Toscano 2017 and Mormann 2005 unobtainable, named gaps. Pre-registered benchmark design written (`experiments/QR006B_BENCHMARK_PREREGISTRATION.md`); nothing run. Only QR-006b's status, "Provisional until" and "Next" lines changed.
+- **2026-10-18** — QR-004: map §F corrections applied (`gsw-qr004-corrections-2026-10-18`; tag `landauer-scope-overreach`; IT06 deferred) and 13 reference entries folded in (NE07–NE10, BIO17–BIO25; `gsw-qr004-fold-in-2026-10-18`), both owner-approved. Status unchanged. Only QR-004's holdings and next lines changed.
