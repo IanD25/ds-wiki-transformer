@@ -175,16 +175,48 @@
 
 - **Question.** QR-009 finds that extra model freedom is usually taxed by estimation and selection noise. Yet the largest machine-learning models generalise well. What lets them escape the tax: scale of data, pooling across tasks, implicit regularisation, inductive biases, double descent and benign overfitting? Where do they still pay it: benchmark overfitting and contamination, distribution shift, scarce-event domains such as finance, and contested "emergent abilities"? And how is the field developing these themes (scaling laws, the "bitter lesson")?
 - **Why the wiki raises it.** It is the counterpoint half of QR-009 (map §D, "When complexity wins"), and the owner's choice for the episode after the complexity-tax episode in Season 3 of the podcast.
-- **Starting leads (from memory, unverified):**
-  - Sutton 2019, "The Bitter Lesson" (an essay);
-  - Belkin et al. 2019 (double descent, checked in the QR-009 map) and the benign-overfitting literature;
-  - scaling laws (Kaplan et al. 2020; Hoffmann et al. 2022, "Chinchilla");
-  - Zhang et al. 2017 (deep nets fit random labels);
-  - benchmark contamination and overfitting studies;
-  - the emergent-abilities debate (Wei et al. 2022 vs Schaeffer et al. 2023);
-  - Kelly, Malamud & Zhou 2024 vs Nagel 2025 (finance, checked in the QR-009 map).
-- **Cautions.** The field moves fast and is hype-prone: use current sources, honest reading markers and tripwire discipline. Keep any link to QR-001 (sloppy models) or effective dimension specific; QR-009's drift note applies.
-- **Status:** Raised 2026-10-19 (owner). Deep-dive literature map and primer launched the same day.
+- **Leads (2026-10-19; verified in the map, markers in its §J).** All starting leads were checked; corrections are in map §J:
+  - Sutton 2019 is an essay of 13 March 2019;
+  - double descent dates from 1989–1990;
+  - interpolating deep nets are "tempered", not benign;
+  - "20 tokens per parameter" is not a constant.
+
+  Main additions:
+  - Curth et al. 2023 (effective parameters restore the U-curve);
+  - Mallinar et al. 2022 (tempered overfitting);
+  - Hernandez et al. 2021 (pre-training as data transferred; "ossification");
+  - Recht et al. 2019 and Mania et al. 2019 (test-set reuse cost little: correlated tries);
+  - Singh et al. 2025 (leaderboard best-of-N, preprint);
+  - Gao et al. 2023 (Goodhart curve);
+  - Zech 2018, Lazer 2014 and Sun 2025 (shortcuts, overfitting in deployment, rare events);
+  - Gu, Kelly & Xiu 2020;
+  - Elmore & Strauss 2026 and Fallahgoul 2025 (finance).
+- **Cautions.** The field moves fast and is hype-prone: use current sources, honest reading markers and tripwire discipline. Keep any link to QR-001 (sloppy models) or effective dimension specific; QR-009's drift note applies. *Map §F drift note (2026-10-19):* four "effective" quantities are in play (Bartlett's effective rank, Maddox's Hessian N_eff, Sharma & Kaplan's data-manifold dimension, Nakkiran's effective model complexity). None is the retired D_eff object, and they are not one another. The one specific link to QR-001 is MacKay-style counting on the loss Hessian, unchecked (map §I S7).
+- **Wiki holdings.** Almost none (map §G):
+  - CS10 (No Free Lunch; inductive bias);
+  - EWS9 (a CNN-LSTM trained on simulated normal forms: the synthetic-prior pattern);
+  - INFO5 and INFO1 (compression and simplicity-bias links);
+  - F1 (Ashby);
+  - IT09 and M6 (adjacent only via the S7 link).
+
+  X6 ("Neural Networks") is about biological networks and is not relevant.
+- **Gaps.** No reference entry on generalisation theory, double descent and tempered overfitting, implicit regularisation, scaling laws, transfer and pre-training, benchmark reuse and contamination, Goodhart in ML, distribution shift and shortcuts, emergent abilities, ML in return prediction, or the bitter lesson. Candidate fold-ins ML1–ML10 are in map §H. ML1 supersedes QR-009 R5; ML1, ML2 and ML5 are the priority.
+- **Status:** Literature-mapped (partial), 2026-10-19. Map: [`prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md`](prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md). Primer: [`primers/QR-010_ML_COMPLEXITY_PRIMER.md`](primers/QR-010_ML_COMPLEXITY_PRIMER.md). Partial because many sources were read only at abstract level, and several key ones are preprints or blogs.
+  - **Settled:** measured on *effective* rather than raw complexity, ML is an extreme case of QR-009's cures, not an exception. It escapes through more independent evidence per effective parameter (20 to ≥ 1,875 tokens per parameter; ~3.6 bits/parameter capacity), pooling (pre-training), and implicit regularisation (the "shrunk middle"). It does so in high-SNR, stable domains. Proven for linear and kernel models; Supported for deep nets.
+  - **Measured:** where ML still pays, each through a QR-009 mechanism:
+    - M2: leaderboard best-of-N, emergence claims;
+    - broken holdouts: contamination, leakage;
+    - M7: Goodhart and reward hacking;
+    - M3/M6: shift and shortcuts;
+    - M5/M6: rare events;
+    - low-SNR finance.
+
+    Test-set reuse cost little, because the effective number of tries was small.
+  - **Open in the literature:** whether effective-complexity accounting fully explains feature learning (Wilson 2025 vs Nagarajan & Kolter; Poggio et al.); emergent abilities (Schaeffer 2023 vs Du 2024); the virtue of complexity in finance (KMZ vs three converging critiques); whether pre-training scaling has bent (no primary evidence found); what RL with verifiable rewards adds.
+  - **No eighth mechanism needed.** The "broken holdout" deserves its own row in ML. No gates run; no DB writes.
+- **Next.** The owner decides on the following:
+  - whether to fold in ML1, ML2 and ML5 (with QR-009's R1, R3, R4 and R9);
+  - gates: the main form is likely `answered`, giving FOLD (`found-under-other-vocabulary`); S4 is a likely RESTATEMENT; S7 is a Mode A search before any IT09 link.
 
 ## QR-001 · Why is nature describable with so few parameters?
 
@@ -361,3 +393,4 @@
 - **2026-10-19** — QR-006b window-0.5 sensitivity completed (S1–S3, SM): no improvement; data-hunger threat not supported.
 - **2026-10-19** — QR-009 literature-mapped (partial): map `prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md`, primer `primers/QR-009_COMPLEXITY_TAX_PRIMER.md`. Headline: the tax is documented across fields under other names. It comes from seven mechanisms; three share mathematics (estimation variance, selection, lag against noise). The proposed simulation is mostly answered already. P19 and P20 are flagged for owner review. Only QR-009's lines changed. No gates run; no DB writes.
 - **2026-10-19** — QR-010 raised (owner): why machine learning escapes the complexity tax, and where it doesn't. A deep-dive map and primer were launched.
+- **2026-10-19** — QR-010 literature-mapped (partial): map `prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md`, primer `primers/QR-010_ML_COMPLEXITY_PRIMER.md`. Headline: measured on effective rather than raw complexity, modern ML escapes the tax through QR-009's own cures (vastly more evidence per effective parameter, pooling, implicit regularisation) in high-SNR, stable domains, and still pays through M2, M3, M5–M7 and broken holdouts. Over-parameterisation's demonstrated extra benefit is easier optimisation. Open edges: feature-learning theory, emergence, finance. Only QR-010's lines changed. No gates run; no DB writes.
