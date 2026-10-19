@@ -121,6 +121,29 @@
 - **Depends on:** QR-006b's benchmark (stage 2 is its type-by-indicator table). Whether type can be read before the transition, formerly QR-007, is now this entry's own stage-1 question.
 - **Status:** Raised, 2026-10-18. Not gated. QR-006b's benchmark now exists. Its exploratory, not pre-registered, type-by-indicator table says the best warning indicator is a *non-information* one in every regime tested, and that the best classical one varies by regime (AC1 under multiplicative noise, MAD under α-stable noise, variance under flickering). So stage 2 would choose among classical indicators. Gate before any work.
 
+## QR-009 · The complexity tax: when does making a model smarter make it worse, and what sets the "tax rate"?
+
+- **Question.** When does adding complexity or adaptivity to a predictive or decision model — more parameters, dynamic switches, regime detectors, finer tuning — make out-of-sample performance *worse*? What determines how large that penalty is (data length relative to model flexibility, environmental stability, costs, the decision's sensitivity at turning points)? And when does complexity pay instead?
+- **Why the wiki raises it.** The owner's AlphaEntropy project coined "complexity tax": each attempt to make the trading algorithm more dynamic got in its own way. The project's 2026-04-02 ablation found every clever feature *off* beat everything *on* (Calmar 1.064 vs 0.904; read-only review 2026-10-19, `AlphaEntropy/strategies/research/ablation/output/ablation_results.json`). The same pattern runs through this wiki: the simple indicators won QR-006b, and the simple parts of the owner's frameworks survived while the elaborate ones folded. It is also proposed as a Season 3 podcast episode.
+- **Already known — first pass, 2026-10-19 (search results and abstracts only; not yet verified in full).** The phenomenon is well documented under other names:
+  - overfitting and the bias–variance trade-off;
+  - 1/N naive diversification beating 14 optimised portfolio models out of sample (DeMiguel, Garlappi & Uppal 2009, *Rev. Financ. Stud.* 22:1915);
+  - backtest overfitting (Bailey, Borwein, López de Prado & Zhu, *J. Comput. Finance*);
+  - the factor-zoo multiple-testing hurdle t > 3 (Harvey, Liu & Zhu 2016);
+  - the forecast-combination puzzle (Stock & Watson 2004; Smith & Wallis 2009);
+  - "less is more" heuristics (Gigerenzer & Brighton 2009; contested, Hilbig 2011);
+  - "The dog and the frisbee" (Haldane & Madouros 2012);
+  - "robust yet fragile" systems (Carlson & Doyle 2002, *PNAS* 99:2538).
+
+  The phrase "complexity tax" itself has no technical origin found.
+- **Counterpoints to map.** When complexity wins:
+  - abundant data and stable environments;
+  - modern machine learning and double descent;
+  - published rebuttals of 1/N (Kirby & Ostdiek 2012; Zakamulin 2017).
+- **Link to QR-001.** QR-001's settled answer (sloppy models) and QR-009 are two sides of one coin: the parameter combinations a model cannot pin down are exactly the ones whose estimation error is taxed.
+- **Candidate in-house sub-question (to gate later).** Measure the "tax rate" directly in simulation: out-of-sample loss of an adaptive rule against a static one, as a function of record length (number of events), model flexibility and regime-change rate. It is pre-registerable and laptop-sized.
+- **Status:** Raised 2026-10-19 (owner). Deep-dive literature map and primer launched the same day.
+
 ## QR-001 · Why is nature describable with so few parameters?
 
 - **Question.** Is there a measurable, domain-general signature of when a complex system — biological, ecological, economic — admits a low-dimensional effective description, and when it does not?
@@ -292,3 +315,4 @@
 - **2026-10-19** — QR-005 (QR-005b) parked by the owner, with resume conditions. GT12 gains a note and anchor for Plávala 2026's indirect route (`gsw-qr005-gates-2026-10-19`). Only QR-005's status and next lines changed.
 - **2026-10-19** — Housekeeping (main session): QR-006b status set to answered; QR-008 status notes the benchmark's type-by-indicator table; QR-002 and QR-003 marked as having met their park condition, still parked.
 - **2026-10-19** — Owner decision: QR-002 and QR-003 stay parked.
+- **2026-10-19** — QR-009 raised (owner): the complexity tax. A first-pass prior-art list was recorded; a deep-dive map and primer were launched.
