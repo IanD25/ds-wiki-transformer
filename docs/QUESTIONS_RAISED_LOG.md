@@ -190,10 +190,45 @@
 
 - **Question.** Will tabletop experiments show gravity carrying quantum information (mediating entanglement), or the decoherence and force noise that entropic and thermodynamic models predict?
 - **Why the wiki raises it.** It is the testable form of the Fisher–gravity and entropic-gravity strand, and of the owner's information-first worldview.
-- **Wiki holdings.** GT01, GT02, GT05 (corrected 2026-10-18), GT10, HB02, BR01. Coverage is good.
+- **Wiki holdings.** The thermodynamic and holographic side is well covered: GT01–GT08, GT10, HB01–HB10, BR01–BR05, plus IT02–IT05 on the Fisher–gravity chain. GT05 was corrected 2026-10-18. The map (§F) found 27 errors or needed qualifications in these entries, none applied (proposed tag `emergent-read-as-classical`). Examples:
+  - GT10 says gravity is "not transmitted by gravitons";
+  - GT10→IT03 "δS_EE = 0 ⇔ δD_KL = 0";
+  - GT01's Λ "exactly as in Einstein–Hilbert";
+  - GT03's "expansion halts";
+  - GT04's Bianconi description;
+  - HB01's "bits per unit volume";
+  - HB02's "exactly entanglement entropy";
+  - the BR03/HB07 RT-surface contradiction;
+  - three wrong anchors (two on GT02, one on HB09).
+- **Gaps.** The experimental side of the question is empty. The wiki has no entry on:
+  - gravitationally mediated entanglement (BMV) or its interpretation debate;
+  - the classical-channel model and its exclusion;
+  - Oppenheim's classical-quantum gravity;
+  - Diósi–Penrose collapse and its underground bounds;
+  - semiclassical (Schrödinger–Newton) gravity;
+  - the minimum-noise theorems;
+  - quantum matter in external gravity;
+  - the mass gap;
+  - graviton detectability;
+  - the scope of microstate counting;
+  - the Page curve;
+  - Verlinde 2016 as its own theory.
+
+  Map §G proposes 14 reference entries (R1–R14), owner's call.
 - **Starting literature:** Bose et al. 2017 (*PRL* 119:240401); Marletto & Vedral 2017 (*PRL* 119:240402); Carney, Karydas, Scharnhorst, Singh & Taylor 2025 (*PRX* 15:031038, **verified 2026-10-18**: free-energy models, with S_FF(0) force noise and decoherence signatures; the non-local λ = 0 model is already excluded).
 - **What would decide it.** A gravitational-entanglement witness, or the absence of predicted excess decoherence and force noise, at the relevant mass and separation scales.
-- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: the deciding experiments (gravitational-entanglement witnesses, force-noise tests) are years away, so nothing is decidable by us now. Flagged: the question closest to the owner's own gravity strand, where an aesthetic prior can stand in for evidence.
+- **Status:** **Literature-mapped (partial)** 2026-10-18; un-parked 2026-10-18 at owner's request. Map: [`prior_art_reviews/QR-005_GRAVITY_QUANTUM_VS_THERMO_MAP_2026_10_18.md`](prior_art_reviews/QR-005_GRAVITY_QUANTUM_VS_THERMO_MAP_2026_10_18.md). Primer for the owner: [`primers/QR-005_GRAVITY_PRIMER.md`](primers/QR-005_GRAVITY_PRIMER.md). It is partial because most sources were read at abstract level and several numbers are flagged unresolved (map §I). Headline:
+  - **"Quantum vs thermodynamic" is largely a false dichotomy.** Every thermodynamic derivation of gravity, like black-hole thermodynamics, rests on ħ-dependent quantum inputs. It concerns the field equations and is silent on whether the field is quantized. The live rivals to quantum gravity are *classical or noisy* gravity and collapse models.
+  - **Already excluded:** the pairwise classical channel (Altamirano et al. 2018); parameter-free Diósi–Penrose (Donadi et al. 2021; now R₀ > 4.5 × 10⁻¹⁰ m, XENONnT 2026); Oppenheim's "noise everywhere" kernel; Carney et al.'s non-local λ = 0 model.
+  - **Open in the literature:** what a positive entanglement witness would prove. It rules out LOCC-type classical gravity, but proving gravitons needs extra assumptions; framed by Bose et al. *RMP* 2025, Huggett et al. 2022 and Fragkos et al. 2022. Classical entanglement claims (Trillo & Navascués 2025; Aziz & Howl 2025) are contested.
+  - **Not decidable by us.** The mass gap is ~7.5 orders of magnitude in superposed mass and ~10 in measured source mass, and the noise route is ~9 orders short. No published timeline exists.
+  - Flagged: the question closest to the owner's own gravity strand, where an aesthetic prior can stand in for evidence (primer §(e)).
+- **Next.** Owner decisions, in order:
+  1. Whether to apply map §F (27 corrections; tag `emergent-read-as-classical`), including the three anchor fixes.
+  2. Whether to fold in §G entries, R1–R6 first. Before R3, do the small Mode A reconciliation S5: the Janse 2024 and Oppenheim 2023 windows disagree.
+  3. Whether to run the gates. Gate 1 looks headed for `open-in-literature` for the question as worded, and `answered` for its thermodynamic half (S1). S7 is a DROP candidate.
+
+  Nothing is runnable in-house beyond the S5 bookkeeping.
 
 ---
 
@@ -221,3 +256,10 @@
 - **2026-10-18** — QR-006b pilot run and protocol frozen (`experiments/QR006B_PILOT_REPORT_2026_10_18.md`; tag `qr006b-prereg-frozen`). The pilot passed; its results are discarded. The confirmatory run has not started. Only QR-006b's "Next" line changed.
 - **2026-10-18** — QR-004 sub-questions closed out (owner): S1–S3 answered and folded into NE07–NE10/BIO17–BIO23; S4–S5 recorded as open-in-literature, not pursued (need wet-lab data); S7 dropped. Only S6 remains, pending an owner decision to gate it. Only QR-004's status and next lines changed.
 - **2026-10-18** — QR-006b post-freeze deviations D1 (early-cut decisive score) and D2 (C0g MI tolerance), owner-approved, before any confirmatory data. Only QR-006b's "Next" line changed.
+- **2026-10-18** — QR-005 un-parked at the owner's request and literature-mapped (partial): map `prior_art_reviews/QR-005_GRAVITY_QUANTUM_VS_THERMO_MAP_2026_10_18.md`, primer `primers/QR-005_GRAVITY_PRIMER.md`. Headline:
+  - "quantum vs thermodynamic" is largely a false dichotomy: thermodynamic derivations use quantum inputs and are silent on quantization;
+  - the testable rivals are classical or noisy gravity and collapse models, several already excluded;
+  - what an entanglement witness would prove is open in the literature;
+  - the experiments are 7.5–10 orders of magnitude away.
+
+  Found 27 wiki errors or needed qualifications, none applied (proposed tag `emergent-read-as-classical`). Only QR-005's holdings, gaps, status and next lines changed. No gates run; no DB writes.
