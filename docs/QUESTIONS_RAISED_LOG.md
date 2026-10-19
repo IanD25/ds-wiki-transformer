@@ -128,7 +128,7 @@
 - **Wiki holdings.** RG01, RG04, M4 (Mori–Zwanzig), M6, IT03, IT05, P5, P7; sloppy models arriving via the fold-in (Machta 2013). Coverage is good.
 - **Starting literature:** Machta, Chachra, Transtrum & Sethna 2013 (*Science* 342:604; anchored); Transtrum et al. 2015 (*J. Chem. Phys.* 143:010901); Quinn et al. 2023 (*Rep. Prog. Phys.*).
 - **What would decide it.** A predictor of compressibility, such as the eigenvalue-spectrum shape of the Fisher information, tested on model classes from different fields before fitting.
-- **Status:** Raised. **Parked 2026-10-18** (owner) until QR-006b and QR-004 are finished. Reason: the established answer is the sloppy-models programme already in the wiki (Machta 2013; Transtrum 2015), and mapping it would mostly fold the wiki's own versions (P5–P7); nothing decidable by us.
+- **Status:** Literature-mapped (partial), 2026-10-19; un-parked 2026-10-19 (owner). Map: [`prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md`](prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md). Settled for smooth least-squares models (approximation-theory width bounds) and for RG coarse-graining; open in the literature for general probabilistic models (Quinn et al. 2023 §8.2). The wiki's own DFIG versions were reduction-tested the same day (`experiments/DFIG_REDUCTION_TEST_2026_10_19.md`). No gates run.
 
 ## QR-002 · Are living systems poised at criticality, and what tunes them there?
 
@@ -265,3 +265,4 @@
   Found 27 wiki errors or needed qualifications, none applied (proposed tag `emergent-read-as-classical`). Only QR-005's holdings, gaps, status and next lines changed. No gates run; no DB writes.
 - **2026-10-19** — QR-006b confirmatory run (primary analysis): controls pass; NO in S1, S2, S3 and SM; S4 undetectable; S5 inconclusive (`experiments/QR006B_CONFIRMATORY_RESULTS_2026_10_19.md`). The post-hoc lead-time audit finds a causal-detrending artefact (`experiments/QR006B_LEADTIME_AUDIT_2026_10_19.md`). Only QR-006b's status and "Next" lines changed; nothing promoted.
 - **2026-10-19** — QR-006b answer labelled "NO in all decidable regimes"; S5 accepted as inconclusive (owner; protocol §11 D3). Only QR-006b's "Next" line changed.
+- **2026-10-19** — QR-001 un-parked (owner) and literature-mapped (partial): map `prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md`. Headline: why few parameters suffice is settled for smooth least-squares models and RG coarse-graining, open for general probabilistic models (Quinn 2023 §8.2); the wiki's DFIG claims sit outside this literature (DFIG reduction test, same day). Only QR-001's status line changed. No gates run; no DB writes.
