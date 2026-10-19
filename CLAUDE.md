@@ -111,7 +111,12 @@ Claude's standing instructions when working on this platform:
 - **Glossary** — 41 entries; lint punch list 611 flags across 122 entries; `[[g:slug]]` markup not yet applied.
 
 **Open items:**
-1. Merge with the *Relatively Human* podcast — crosswalk ready at [`docs/PODCAST_CROSSWALK_2026-10-18.md`](docs/PODCAST_CROSSWALK_2026-10-18.md); the merge itself is not designed.
+1. *Relatively Human* podcast — **direction changed 2026-10-19 (owner).**
+    - No errata or retrospectives; Seasons 1–2 stand as an archive, and the [crosswalk](docs/PODCAST_CROSSWALK_2026-10-18.md) carries an archive-status note.
+    - Season 3 explores open questions across fields: established science tiered, a "same math or same mechanism?" segment, an optional labelled hunch segment.
+    - The wiki is the research desk: question log → map → primer → tiered script → fact-check against the wiki.
+    - First outline: `Season 3/S3E1 Can We See Collapse Coming/RH_S3E1_BeatOutline_v1.md` in the podcast folder, built on QR-006 / QR-006b.
+    - The owner allows writing to the podcast folder for transcripts and new-episode files only.
 2. Apply glossary markup from the lint punch list.
 3. Renames: CCA d_eff / η in body text; λ "phase coherence" → process-contribution fraction (H3 title, C1, P13, P15).
 4. P14a (branching-ratio variance vs BMR/MMR exponent gap) — runnable, not run.

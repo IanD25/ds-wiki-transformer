@@ -1,5 +1,17 @@
 # Podcast Crosswalk — *Relatively Human* claims vs current wiki status
 
+> **Archive status, 2026-10-19 (owner decision).** Seasons 1–2 explored the DS framework. Since this crosswalk was written, the framework's main claims have been tested and largely retired in the wiki:
+> - every CCA item Falsified or Retired;
+> - P6 and P7 Falsified, and P5 Speculative (DFIG reduction test, 2026-10-19);
+> - the Fisher–gravity chain an analogy;
+> - P2, P8, P11 and P12 folded or falsified.
+>
+> The owner has chosen **not** to produce errata or retrospective segments. The past episodes stand as an archive, and the current state of each topic is in the wiki (`CLAUDE.md`, `docs/QUESTIONS_RAISED_LOG.md`). This crosswalk is kept as a historical record and will not be refreshed item by item.
+>
+> Season 3 changes direction. It explores open questions across fields, with the established science tiered, a recurring "same math or same mechanism?" segment and an optional labelled hunch segment. The wiki is the research desk. The first outline is `Season 3/S3E1 Can We See Collapse Coming/RH_S3E1_BeatOutline_v1.md` in the podcast folder.
+>
+> Machine transcripts (whisper-large-v3-turbo) were added on 2026-10-19 to the nine episode folders that lacked one.
+
 **Date:** 2026-10-18 · **audit_ref:** `gsw-consistency-pass-2026-10-18` · **Purpose:** pre-merge bridge between the podcast (produced Feb–Mar 2026, before M0) and the wiki as it now stands.
 
 **How to read this.** For each podcast claim: the episode, the exact wording (quoted from the scripts/transcripts — the podcast folder was read only), the matching wiki ID(s), the wiki's current label from `claim_status_latest` (latest calibration row per scientific entity, `wiki_history.db`) with its `audit_ref`, and a one-line correction fit for an on-air errata segment. Where a wiki entity has **no calibration record**, that is stated and the entry's own `status` field and internal-construction flag are given instead — those are weaker evidence than a calibration row.
