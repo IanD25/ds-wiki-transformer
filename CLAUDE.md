@@ -62,6 +62,16 @@ Claude's standing instructions when working on this platform:
 > - **DFIG reduction test** `gsw-dfig-reduction-2026-10-19` ([report](docs/experiments/DFIG_REDUCTION_TEST_2026_10_19.md)): P6 and P7 Falsified, P5 → Speculative (owner); new drift tag `local-geometry-coincidence`.
 > - **QR-001** literature-mapped ([map](docs/prior_art_reviews/QR-001_SLOPPY_MODELS_MAP_2026_10_19.md)).
 > - **QR-005 gates** ([report](docs/prior_art_reviews/QR-005_GATES_2026_10_19.md)): re-scoped to QR-005b, parked as a watch item; GT12 Plávala note.
+> - **QR-009, the complexity tax** (owner's coinage): literature-mapped ([map](docs/prior_art_reviews/QR-009_COMPLEXITY_TAX_MAP_2026_10_19.md), [primer](docs/primers/QR-009_COMPLEXITY_TAX_PRIMER.md)).
+>   - It is about seven mechanisms, not one law; three share mathematics (estimation variance, selection over many tries, lag against noise).
+>   - The general question looks `answered`; it has not been gated yet.
+>   - AlphaEntropy case facts are in map §G.4.
+> - **QR-010, why machine learning escapes the tax:** mapped ([map](docs/prior_art_reviews/QR-010_ML_COMPLEXITY_MAP_2026_10_19.md), [primer](docs/primers/QR-010_ML_COMPLEXITY_PRIMER.md)).
+>   - Fold-in `gsw-qr010-fold-in-2026-10-19`: ML1, ML2, ML5.
+>   - Gated `answered` → FOLD ([report](docs/prior_art_reviews/QR-010_GATES_2026_10_19.md)); open edges are watch items.
+>   - S7 found no basis for an ML2 → IT09 link.
+> - **Podcast:** the Season 3 working files live in the podcast folder (`Season 3/`); start with `Season 3/RH_S3_Status.md`.
+>   - Episode 1 is "Too Clever by Half" (built on QR-009); Episode 2 is planned on QR-010.
 >
 > The latest per-pass hand-over notes are these reports; no newer `SESSION_HANDOVER` file exists.
 
@@ -258,7 +268,7 @@ ds_wiki.db (SQLite, READ-ONLY)           RRP bundles (rrp_*.db, per-dataset)
 | `docs/QUESTIONS_RAISED_LOG.md` | Open questions the wiki raises, with status (raised → mapped → gated → filed / parked) |
 | `docs/QUESTION_GATES.md` | Gate 1 (prior art) and Gate 2 (worth asking): rules and verdicts |
 | `docs/experiments/` | Pre-registered tests: reduction tests (CCA, DFIG), the QR-006b benchmark (pre-registration, predictions, pilot, results, audit) |
-| `docs/primers/` | Plain-language primers for the owner (QR-005 gravity) |
+| `docs/primers/` | Plain-language primers for the owner (QR-005 gravity, QR-009 complexity tax, QR-010 machine learning) |
 | `docs/M0_MILESTONE_COMPILATION.md` | M0 belief snapshot (2026-04-08) — post-audit conjecture calibration, headline downgrades, action items |
 | `src/config.py` | Paths, model, thresholds |
 | `src/sync.py` | Rebuild chroma_db + wiki_history.db from ds_wiki.db |
